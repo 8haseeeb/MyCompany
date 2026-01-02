@@ -1,0 +1,61 @@
+2025-12-30 13:21:00.674 +05:00 [INF]  API Gateway started successfully
+2025-12-30 13:23:16.203 +05:00 [INF]  API Gateway started successfully
+2025-12-30 14:05:32.864 +05:00 [INF]  API Gateway started successfully
+2025-12-30 14:09:05.208 +05:00 [INF]  API Gateway started successfully
+2025-12-30 14:11:43.543 +05:00 [INF]  API Gateway started successfully
+2025-12-30 14:13:24.563 +05:00 [INF]  API Gateway started successfully
+2025-12-30 14:13:31.133 +05:00 [INF] HTTP GET /swagger responded 404 in 333.9954 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 14:13:31.172 +05:00 [INF] HTTP GET /swagger responded 404 in 389.2945 ms
+2025-12-30 14:20:53.250 +05:00 [INF]  API Gateway started successfully
+2025-12-30 14:21:00.991 +05:00 [INF] HTTP GET /swagger responded 404 in 574.2242 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 14:21:01.056 +05:00 [INF] HTTP GET /swagger responded 404 in 667.6048 ms
+2025-12-30 14:42:15.719 +05:00 [INF]  API Gateway started successfully
+2025-12-30 14:42:26.910 +05:00 [INF] HTTP GET /swagger responded 404 in 651.1790 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 14:42:26.955 +05:00 [INF] HTTP GET /swagger responded 404 in 717.8630 ms
+2025-12-30 14:46:00.093 +05:00 [INF]  API Gateway started successfully
+2025-12-30 14:46:06.723 +05:00 [INF] HTTP GET /swagger responded 404 in 1078.8624 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 14:46:07.081 +05:00 [INF] HTTP GET /swagger responded 404 in 1488.3560 ms
+2025-12-30 15:01:05.915 +05:00 [INF]  API Gateway started successfully
+2025-12-30 15:01:16.811 +05:00 [INF] HTTP GET /swagger responded 404 in 342.3539 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 15:01:16.916 +05:00 [INF] HTTP GET /swagger responded 404 in 462.2116 ms
+2025-12-30 15:11:59.616 +05:00 [INF]  API Gateway started successfully
+2025-12-30 15:12:12.551 +05:00 [INF] HTTP GET /swagger responded 404 in 788.8300 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 15:12:12.898 +05:00 [INF] HTTP GET /swagger responded 404 in 1167.6024 ms
+2025-12-30 16:11:46.685 +05:00 [INF]  API Gateway started successfully
+2025-12-30 16:11:56.361 +05:00 [INF] HTTP GET /swagger responded 404 in 398.4100 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 16:11:56.402 +05:00 [INF] HTTP GET /swagger responded 404 in 466.6578 ms
+2025-12-30 16:22:13.546 +05:00 [INF]  API Gateway started successfully
+2025-12-30 16:22:22.833 +05:00 [INF] HTTP GET /swagger responded 404 in 479.5486 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 16:22:22.873 +05:00 [INF] HTTP GET /swagger responded 404 in 550.6876 ms
+2025-12-30 16:24:31.594 +05:00 [INF]  API Gateway started successfully
+2025-12-30 16:24:41.683 +05:00 [INF] HTTP GET /swagger responded 404 in 429.1159 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 16:24:41.721 +05:00 [INF] HTTP GET /swagger responded 404 in 479.7470 ms
+2025-12-30 16:43:55.559 +05:00 [INF]  API Gateway started successfully
+2025-12-30 16:44:05.949 +05:00 [INF] HTTP GET /swagger responded 404 in 304.6253 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 16:44:05.999 +05:00 [INF] HTTP GET /swagger responded 404 in 372.7122 ms
+2025-12-30 16:49:53.141 +05:00 [INF]  API Gateway started successfully
+2025-12-30 16:50:04.294 +05:00 [INF] HTTP GET /swagger responded 404 in 389.9412 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 16:50:04.328 +05:00 [INF] HTTP GET /swagger responded 404 in 432.3599 ms
+2025-12-30 16:53:01.538 +05:00 [INF]  API Gateway started successfully
+2025-12-30 16:53:11.618 +05:00 [INF] HTTP GET /swagger responded 404 in 436.1573 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 16:53:11.665 +05:00 [INF] HTTP GET /swagger responded 404 in 514.2761 ms
+2025-12-30 16:57:22.580 +05:00 [INF]  API Gateway started successfully
+2025-12-30 16:57:30.844 +05:00 [INF] HTTP GET /swagger responded 404 in 516.7579 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 16:57:30.902 +05:00 [INF] HTTP GET /swagger responded 404 in 584.0497 ms
+2025-12-30 17:03:32.738 +05:00 [INF]  API Gateway started successfully
+2025-12-30 17:03:43.390 +05:00 [INF] HTTP GET /swagger responded 404 in 732.0994 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 17:03:43.443 +05:00 [INF] HTTP GET /swagger responded 404 in 868.1618 ms
+2025-12-30 18:19:40.484 +05:00 [INF]  API Gateway started successfully
+2025-12-30 18:21:48.618 +05:00 [INF]  API Gateway started successfully
+2025-12-30 18:24:05.652 +05:00 [INF]  API Gateway started successfully
+2025-12-30 18:24:19.776 +05:00 [INF] HTTP GET /swagger responded 404 in 471.4852 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 18:24:19.830 +05:00 [INF] HTTP GET /swagger responded 404 in 539.6868 ms
+2025-12-30 18:28:04.099 +05:00 [INF]  API Gateway started successfully
+2025-12-30 18:28:19.441 +05:00 [INF] HTTP GET /swagger responded 404 in 334.7437 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 18:28:19.486 +05:00 [INF] HTTP GET /swagger responded 404 in 391.0778 ms
+2025-12-30 18:33:23.375 +05:00 [INF]  API Gateway started successfully
+2025-12-30 18:33:40.556 +05:00 [INF] HTTP GET /swagger responded 404 in 458.2266 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 18:33:40.653 +05:00 [INF] HTTP GET /swagger responded 404 in 578.7327 ms
+2025-12-30 18:36:02.944 +05:00 [INF]  API Gateway started successfully
+2025-12-30 18:36:12.593 +05:00 [INF] HTTP GET /swagger responded 404 in 717.6021 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2025-12-30 18:36:12.800 +05:00 [INF] HTTP GET /swagger responded 404 in 961.3863 ms

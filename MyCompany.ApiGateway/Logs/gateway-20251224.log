@@ -1,0 +1,12 @@
+2025-12-24 13:00:05.214 +05:00 [INF] 🚀 API Gateway started successfully
+2025-12-24 13:00:09.321 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 249.2461 ms
+2025-12-24 13:10:31.441 +05:00 [INF] 🚀 API Gateway started successfully
+2025-12-24 13:10:34.140 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 265.3682 ms
+2025-12-24 13:56:18.087 +05:00 [INF] 🚀 API Gateway started successfully
+2025-12-24 13:56:25.475 +05:00 [INF] HTTP GET /swagger responded 404 in 240.7923 ms
+2025-12-24 14:06:13.117 +05:00 [INF] 🚀 API Gateway started successfully
+2025-12-24 14:06:17.170 +05:00 [INF] HTTP GET /swagger responded 404 in 174.0280 ms
+2025-12-24 14:44:57.931 +05:00 [INF] 🚀 API Gateway started successfully
+2025-12-24 14:45:02.887 +05:00 [INF] HTTP GET /swagger responded 404 in 164.5609 ms
+2025-12-24 14:47:01.845 +05:00 [INF] 🚀 API Gateway started successfully
+2025-12-24 14:47:04.367 +05:00 [INF] HTTP GET /swagger responded 404 in 337.0007 ms

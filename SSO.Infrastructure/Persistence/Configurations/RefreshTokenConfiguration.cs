@@ -1,0 +1,17 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SSO.Domain.RefreshTokens;
+
+namespace SSO.Infrastructure.Persistence.Configurations
+{
+    public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
+    {
+        public void Configure(EntityTypeBuilder<RefreshToken> builder)
+        {
+            builder.HasKey(rt => rt.Id);
+            builder.Property(rt => rt.Token).IsRequired();
+            builder.Property(rt => rt.ExpiresAt).IsRequired();
+            builder.Property(rt => rt.IsRevoked).IsRequired();
+        }
+    }
+}
