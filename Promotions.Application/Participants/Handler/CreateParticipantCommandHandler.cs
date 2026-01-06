@@ -21,7 +21,12 @@ namespace Promotions.Application.Participants.Commands
             {
                 IdAction = request.IdAction,
                 CodParticipant = request.CodParticipant,
-                FlgInclusion = request.FlgInclusion
+                FlgInclusion = request.FlgInclusion,
+                CodHier = request.CodHier,
+                CodDiv = request.CodDiv,
+                CodNode = request.CodNode,
+                IdLevel = request.IdLevel,
+                DteStart = request.DteStart
             };
 
             await _repository.AddAsync(participant);

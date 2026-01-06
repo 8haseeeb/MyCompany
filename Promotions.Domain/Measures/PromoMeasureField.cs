@@ -2,22 +2,21 @@
 {
     public class PromoMeasureField
     {
-        public string CodDiv { get; }
-        public string CodMeasure { get; }
-        public string FieldName { get; }
-        public string Formula { get; private set; } // private setter
+        // Foreign Keys to PromoProduct (Parent)
+        public int IdAction { get; set; }
+        public string CodProduct { get; set; } = null!;
+        public int LevProduct { get; set; }
+        public string CodDisplay { get; set; } = null!;
 
-        public PromoMeasureField(string codDiv, string codMeasure, string fieldName, string formula)
-        {
-            CodDiv = codDiv ?? throw new ArgumentNullException(nameof(codDiv));
-            CodMeasure = codMeasure ?? throw new ArgumentNullException(nameof(codMeasure));
-            FieldName = fieldName ?? throw new ArgumentNullException(nameof(fieldName));
-            Formula = formula ?? throw new ArgumentNullException(nameof(formula));
-        }
+        // Primary Key fields
+        public string CodDiv { get; set; } = null!;
+        public string CodMeasure { get; set; } = null!;
+        public string FieldName { get; set; } = null!;
+        
+        // Properties
+        public string Formula { get; set; } = null!;
 
-        public void UpdateFormula(string newFormula)
-        {
-            Formula = newFormula ?? throw new ArgumentNullException(nameof(newFormula));
-        }
+        // Navigation Property
+        public virtual Products.PromoProduct Product { get; set; } = null!;
     }
 }

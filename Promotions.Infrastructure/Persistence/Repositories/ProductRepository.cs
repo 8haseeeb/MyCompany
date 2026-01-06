@@ -41,21 +41,19 @@ namespace Promotions.Infrastructure.Persistence.Repositories
 
         public async Task AddAsync(PromoProduct product)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            await _context.Products.AddAsync(product);
         }
 
-        public async Task UpdateAsync(PromoProduct product)
+        public Task UpdateAsync(PromoProduct product)
         {
             _context.Products.Update(product);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
-        public async Task DeleteAsync(PromoProduct product)
+        public Task DeleteAsync(PromoProduct product)
         {
             _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-
+            return Task.CompletedTask;
         }
 
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)

@@ -21,30 +21,28 @@ namespace Promotions.Api.Controllers
         }
 
 
-        // --------------------
-        // CREATE Promo Measure Field ✅
-        // --------------------
+       
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PromoMeasureFieldDto dto)
         {
             await _mediator.Send(new CreatePromoMeasureFieldCommand(
+                dto.IdAction,
+                dto.CodProduct,
+                dto.LevProduct,
+                dto.CodDisplay,
                 dto.CodDiv,
                 dto.CodMeasure,
                 dto.FieldName,
                 dto.Formula));
             return Ok();
-        }        // --------------------
-        // GET All Promo Measure Fields ✅
-        // --------------------
+        }        
         [HttpGet]
         public async Task<IActionResult> GetAllPromoMeasures()
         {
             var result = await _mediator.Send(new GetAllPromoMeasureFieldsQuery());
             return Ok(result);
         }
-        // --------------------
-        // GET by composite key
-        // --------------------
+        
         [HttpGet("{codMeasure}/{codDiv}/{fieldName}")]
         public async Task<IActionResult> Get(
             string codMeasure,
@@ -57,9 +55,7 @@ namespace Promotions.Api.Controllers
             return Ok(result);
         }
 
-        // --------------------
-        // UPDATE (formula only)
-        // --------------------
+       
         [HttpPut("{codMeasure}/{codDiv}/{fieldName}")]
         public async Task<IActionResult> Update(
             string codMeasure,
@@ -77,9 +73,7 @@ namespace Promotions.Api.Controllers
             return NoContent();
         }
 
-        // --------------------
-        // DELETE
-        // --------------------
+        
         [HttpDelete("{codMeasure}/{codDiv}/{fieldName}")]
         public async Task<IActionResult> Delete(
             string codMeasure,

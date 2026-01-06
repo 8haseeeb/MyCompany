@@ -50,17 +50,19 @@ namespace Promotions.Infrastructure.Persistence.Repositories
 
         public async Task AddAsync(PromoProductDetail entity)
         {
-            _context.ProductDetails.Add(entity);
+            await _context.ProductDetails.AddAsync(entity);
         }
 
-        public async Task UpdateAsync(PromoProductDetail entity)
+        public Task UpdateAsync(PromoProductDetail entity)
         {
             _context.ProductDetails.Update(entity);
+            return Task.CompletedTask;
         }
 
-        public async Task DeleteAsync(PromoProductDetail entity)
+        public Task DeleteAsync(PromoProductDetail entity)
         {
             _context.ProductDetails.Remove(entity);
+            return Task.CompletedTask;
         }
 
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)

@@ -20,9 +20,7 @@ namespace Promotions.Api.Controllers
             _mediator = mediator;
         }
 
-        // --------------------
-        // POST – Create Delivery Point
-        // --------------------
+       
         [HttpPost("{idAction}/{codDeliveryPoint}")]
         public async Task<IActionResult> Create(
             int idAction,
@@ -32,7 +30,12 @@ namespace Promotions.Api.Controllers
             var command = new CreateDeliveryPointCommand(
                 idAction,
                 codDeliveryPoint,
-                dto.FlgInclusion);
+                dto.FlgInclusion,
+                dto.CodHier,
+                dto.CodDiv,
+                dto.CodNode,
+                dto.IdLevel,
+                dto.DteStart);
 
             await _mediator.Send(command);
             return CreatedAtAction(nameof(GetById), new
@@ -42,9 +45,7 @@ namespace Promotions.Api.Controllers
             }, null);
         }
 
-        // --------------------
-        // GET – By Composite Key
-        // --------------------
+        
         [HttpGet("{idAction}/{codDeliveryPoint}")]
         public async Task<IActionResult> GetById(
             int idAction,
@@ -58,9 +59,6 @@ namespace Promotions.Api.Controllers
 
         
 
-        // --------------------
-        // GET ALL
-        // --------------------
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -68,9 +66,7 @@ namespace Promotions.Api.Controllers
             return Ok(result);
         }
 
-        // --------------------
-        // PUT – Update
-        // --------------------
+       
         [HttpPut("{idAction}/{codDeliveryPoint}")]
         public async Task<IActionResult> Update(
             int idAction,
@@ -86,9 +82,6 @@ namespace Promotions.Api.Controllers
             return NoContent();
         }
 
-        // --------------------
-        // DELETE
-        // --------------------
         [HttpDelete("{idAction}/{codDeliveryPoint}")]
         public async Task<IActionResult> Delete(
             int idAction,

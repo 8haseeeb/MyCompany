@@ -9,23 +9,14 @@ namespace Promotions.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<PromoDeliveryPoint> builder)
         {
-            // ================================
-            // TABLE
-            // ================================
             builder.ToTable("TA5014DELIVERYPOINTS");
 
-            // ================================
-            // COMPOSITE PRIMARY KEY
-            // ================================
+            
             builder.HasKey(x => new
             {
                 x.IdAction,
                 x.CodDeliveryPoint
             });
-
-            // ================================
-            // COLUMNS
-            // ================================
 
             builder.Property(x => x.IdAction)
                 .HasColumnName("ID_ACTION")
@@ -40,9 +31,17 @@ namespace Promotions.Infrastructure.Persistence.Configurations
                 .HasColumnName("FLGINCLUSION")
                 .IsRequired();
 
-            // ================================
-            // INDEX (Optional but recommended)
-            // ================================
+            // Foreign Key Properties for CustomerRelation
+            builder.Property(x => x.CodHier).HasMaxLength(10).IsRequired();
+            builder.Property(x => x.CodDiv).HasMaxLength(10).IsRequired();
+            builder.Property(x => x.CodNode).HasMaxLength(30).IsRequired();
+
+            // Relationships
+            builder.HasOne(x => x.Relation)
+                   .WithMany(r => r.DeliveryPoints)
+                   .HasForeignKey(x => new { x.CodHier, x.CodDiv, x.CodNode, x.IdLevel, x.DteStart });
+
+           
             builder.HasIndex(x => x.IdAction)
                 .HasDatabaseName("IX_TA5014DELIVERYPOINTS_ID_ACTION");
         }

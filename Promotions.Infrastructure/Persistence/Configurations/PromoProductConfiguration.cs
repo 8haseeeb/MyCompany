@@ -22,6 +22,11 @@ namespace Promotions.Infrastructure.Products.Configurations
             builder.Property(x => x.CodDisplay).HasMaxLength(50);
             builder.Property(x => x.CodDiv).HasMaxLength(20);
             builder.Property(x => x.CodMeasure).HasMaxLength(20);
+
+        // Relationships
+        builder.HasMany(x => x.Details)
+               .WithOne(x => x.Product)
+               .HasForeignKey(x => new { x.IdAction, x.CodProduct, x.LevProduct, x.CodDisplay });
         }
     }
 }

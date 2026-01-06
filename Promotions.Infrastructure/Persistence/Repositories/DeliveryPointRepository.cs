@@ -32,20 +32,28 @@ namespace Promotions.Infrastructure.Persistence.Repositories
 
         public async Task AddAsync(PromoDeliveryPoint deliveryPoint)
         {
-            _context.DeliveryPoints.Add(deliveryPoint);
-            await _context.SaveChangesAsync();
+            await _context.DeliveryPoints.AddAsync(deliveryPoint);
+            // SaveChangesAsync is typically called by a Unit of Work or a higher layer
+            // if it's removed from individual repository methods.
+            // If immediate saving is desired, uncomment the line below:
+            // await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(PromoDeliveryPoint deliveryPoint)
+        public Task UpdateAsync(PromoDeliveryPoint deliveryPoint)
         {
             _context.DeliveryPoints.Update(deliveryPoint);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
-        public async Task DeleteAsync(PromoDeliveryPoint deliveryPoint)
+        public Task DeleteAsync(PromoDeliveryPoint deliveryPoint)
         {
             _context.DeliveryPoints.Remove(deliveryPoint);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
+        }
+
+        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

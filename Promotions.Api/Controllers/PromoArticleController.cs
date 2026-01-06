@@ -20,14 +20,16 @@ namespace Promotions.Api.Controllers
             _mediator = mediator;
         }
 
-        // --------------------
-        // POST – Create Promo Article
-        // --------------------
+       
         [HttpPost]
         public async Task<IActionResult> Create(
             [FromBody] CreatePromoArticleDto dto)
         {
             await _mediator.Send(new CreatePromoArticleCommand(
+                dto.IdAction,
+                dto.CodProduct,
+                dto.LevProduct,
+                dto.CodDisplay,
                 dto.CodDiv,
                 dto.CodNode,
                 dto.CodNode1,
@@ -37,9 +39,7 @@ namespace Promotions.Api.Controllers
             return Ok();
         }
 
-        // --------------------
-        // GET ALL
-        // --------------------
+       
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -49,9 +49,7 @@ namespace Promotions.Api.Controllers
             return Ok(result);
         }
 
-        // --------------------
-        // GET – By Composite PK
-        // --------------------
+        
         [HttpGet("find")]
         public async Task<IActionResult> GetById(
             [FromQuery] string codDiv,
@@ -65,9 +63,6 @@ namespace Promotions.Api.Controllers
             return Ok(result);
         }
 
-        // --------------------
-        // PUT – Update Promo Article
-        // --------------------
         [HttpPut]
         public async Task<IActionResult> Update(
             [FromBody] UpdatePromoArticleDto dto,
@@ -84,9 +79,7 @@ namespace Promotions.Api.Controllers
             return NoContent();
         }
 
-        // --------------------
-        // DELETE – Promo Article
-        // --------------------
+       
         [HttpDelete]
         public async Task<IActionResult> Delete(
             [FromQuery] string codDiv,

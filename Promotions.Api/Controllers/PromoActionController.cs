@@ -20,9 +20,6 @@ namespace Promotions.Api.Controllers
             _mediator = mediator;
         }
 
-        // --------------------
-        // POST – Create Promo Action
-        // --------------------
         [HttpPost]
         public async Task<IActionResult> Create(
             [FromBody] CreatePromoActionDto dto)
@@ -32,6 +29,9 @@ namespace Promotions.Api.Controllers
                 dto.Name,
                 dto.CodDiv,
                 dto.CodContractor,
+                dto.ContractorCodHier,
+                dto.ContractorIdLevel,
+                dto.ContractorDteStart,
                 dto.DteStartSellIn,
                 dto.DteEndSellIn,
                 dto.DteStartSellOut,
@@ -43,9 +43,7 @@ namespace Promotions.Api.Controllers
             return Ok();
         }
 
-        // --------------------
-        // GET – All Promo Actions
-        // --------------------
+        
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -55,9 +53,7 @@ namespace Promotions.Api.Controllers
             return Ok(result);
         }
 
-        // --------------------
-        // GET – By IdAction (PK)
-        // --------------------
+      
         [HttpGet("{idAction}")]
         public async Task<IActionResult> GetById(int idAction)
         {
@@ -67,9 +63,6 @@ namespace Promotions.Api.Controllers
             return Ok(result);
         }
 
-        // --------------------
-        // PUT – Update Promo Action
-        // --------------------
         [HttpPut]
         public async Task<IActionResult> Update(
             [FromBody] UpdatePromoActionDto dto,
@@ -87,9 +80,6 @@ namespace Promotions.Api.Controllers
             return NoContent();
         }
 
-        // --------------------
-        // DELETE – Promo Action
-        // --------------------
         [HttpDelete]
         public async Task<IActionResult> Delete(
             [FromQuery] int idAction)

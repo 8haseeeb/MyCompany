@@ -16,5 +16,9 @@ namespace Promotions.Domain.ProductDetails
         public string CodDiv { get; set; } = null!;
 
         public bool FlgInclusion { get; set; }
+
+        // Navigation Properties
+        public virtual Products.PromoProduct Product { get; set; } = null!;
+        public virtual ICollection<Articles.PromoArticle> Articles { get; set; } = new List<Articles.PromoArticle>();
     }
 }

@@ -23,10 +23,16 @@ namespace Promotions.Application.DeliveryPoints.Commands
             {
                 IdAction = request.IdAction,
                 CodDeliveryPoint = request.CodDeliveryPoint,
-                FlgInclusion = request.FlgInclusion
+                FlgInclusion = request.FlgInclusion,
+                CodHier = request.CodHier,
+                CodDiv = request.CodDiv,
+                CodNode = request.CodNode,
+                IdLevel = request.IdLevel,
+                DteStart = request.DteStart
             };
 
             await _repository.AddAsync(entity);
+            await _repository.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

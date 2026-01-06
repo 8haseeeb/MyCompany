@@ -13,5 +13,10 @@
         public decimal? PerceDiscount2 { get; set; }
         public decimal? NumMeasure { get; set; }
         public string? CodMeasure { get; set; }
+
+        // Navigation Properties
+        public virtual PromoActions.PromoAction Action { get; set; } = null!;
+        public virtual System.Collections.Generic.ICollection<ProductDetails.PromoProductDetail> Details { get; set; } = new System.Collections.Generic.List<ProductDetails.PromoProductDetail>();
+        public virtual System.Collections.Generic.ICollection<Measures.PromoMeasureField> MeasureFields { get; set; } = new System.Collections.Generic.List<Measures.PromoMeasureField>();
     }
 }

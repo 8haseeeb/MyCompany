@@ -17,8 +17,18 @@ public class ParticipantsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateParticipant(CreateParticipantCommand command)
+    public async Task<IActionResult> CreateParticipant([FromRoute] int idAction, [FromBody] CreateParticipantDto dto)
     {
+        var command = new CreateParticipantCommand(
+            idAction,
+            dto.CodParticipant,
+            dto.FlgInclusion,
+            dto.CodHier,
+            dto.CodDiv,
+            dto.CodNode,
+            dto.IdLevel,
+            dto.DteStart);
+
         await _mediator.Send(command);
         return Ok();
     }

@@ -15,6 +15,16 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             builder.Property(p => p.IdAction).HasColumnName("ID_ACTION");
             builder.Property(p => p.CodParticipant).HasColumnName("CODPARTICIPANT");
             builder.Property(p => p.FlgInclusion).HasColumnName("FLGINCLUSION");
+
+            // Foreign Key Properties for CustomerRelation
+            builder.Property(p => p.CodHier).HasMaxLength(10).IsRequired();
+            builder.Property(p => p.CodDiv).HasMaxLength(10).IsRequired();
+            builder.Property(p => p.CodNode).HasMaxLength(30).IsRequired();
+
+            // Relationships
+            builder.HasOne(p => p.Relation)
+                   .WithMany(r => r.Participants)
+                   .HasForeignKey(p => new { p.CodHier, p.CodDiv, p.CodNode, p.IdLevel, p.DteStart });
         }
     }
 }

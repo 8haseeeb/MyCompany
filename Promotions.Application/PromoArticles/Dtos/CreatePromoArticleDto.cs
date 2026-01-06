@@ -8,6 +8,10 @@ namespace Promotions.Application.PromoArticles.Dtos
 {
     public class CreatePromoArticleDto
     {
+        public int IdAction { get; set; }
+        public string CodProduct { get; set; } = null!;
+        public int LevProduct { get; set; }
+        public string CodDisplay { get; set; } = null!;
         public string CodDiv { get; set; } = null!;
         public string CodNode { get; set; } = null!;
 

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MyCompany.Common.Logging;
-using MyCompany.Common.Logging.Serilog; // RequestLoggingMiddleware namespace
+using MyCompany.Common.Logging.Serilog; 
 using Promotions.Api.Controllers;
 using Promotions.Api.Security;
 using Promotions.Application;
@@ -12,30 +12,20 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-//  SERILOG SETUP
-
 builder.Host.AddSerilogLogging(builder.Configuration, "Promotions.Api");
-
-
-// Add services to the container
-
 builder.Services.AddControllers();
-
-// ✅ Swagger with JWT Authorization
 builder.Services.AddScoped<IParticipantRepository, ParticipantRepository>();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         Name = "Authorization",
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "bearer",
         BearerFormat = "JWT",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Description = "Enter 'Bearer' [space] and then your valid JWT token"
+        Description = "your valid token"
     });
 
     c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
@@ -54,13 +44,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
-// ✅ JWT Authentication
-
 builder.Services.AddJwtAuthentication(builder.Configuration);
-
-
-// ✅ MediatR
 
 builder.Services.AddMediatR(cfg =>
 {
@@ -68,23 +52,14 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
 
-
-// ✅ Infrastructure / DB
-
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddInfrastructure(connectionString!);
 
 
 var app = builder.Build();
 
-
-// 🔥 Serilog Request Logging
-
 app.UseSerilogRequestLogging();
-app.UseMiddleware<RequestLoggingMiddleware>(); // logs request/response bodies
-
-
-// ✅ Development tools
+app.UseMiddleware<RequestLoggingMiddleware>(); 
 
 if (app.Environment.IsDevelopment())
 {
@@ -92,25 +67,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-// ✅ Middleware
-
 app.UseHttpsRedirection();
-app.UseAuthentication(); // JWT authentication
+app.UseAuthentication(); 
 app.UseAuthorization();
-
 app.MapControllers();
 
-
-// 🚀 Startup log
-
-Log.Information("🚀 Promotion API started successfully");
-
-// 🛑 Shutdown log
+Log.Information(" Promotion API started successfully");
 
 app.Lifetime.ApplicationStopping.Register(() =>
 {
-    Log.Information("🛑 Promotion API is shutting down");
+    Log.Information(" Promotion API is shutting down");
     Log.CloseAndFlush();
 });
 

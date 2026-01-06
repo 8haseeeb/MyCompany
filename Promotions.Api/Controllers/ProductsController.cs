@@ -20,9 +20,6 @@ namespace Promotions.Api.Controllers
             _mediator = mediator;
         }
 
-        // --------------------
-        // POST – Create Product
-        // --------------------
         [HttpPost]
         public async Task<IActionResult> Create(
             [FromBody] CreateProductDto dto)
@@ -42,9 +39,6 @@ namespace Promotions.Api.Controllers
             return Ok();
         }
 
-        // --------------------
-        // GET ALL
-        // --------------------
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -52,9 +46,6 @@ namespace Promotions.Api.Controllers
             return Ok(result);
         }
 
-        // --------------------
-        // GET – By Action
-        // --------------------
         [HttpGet("action/{idAction}")]
         public async Task<IActionResult> GetByAction(int idAction)
         {
@@ -64,9 +55,6 @@ namespace Promotions.Api.Controllers
             return Ok(result);
         }
 
-        // --------------------
-        // GET – By Composite Key
-        // --------------------
         [HttpGet("{idAction}/{codProduct}/{levProduct}/{codDisplay}")]
         public async Task<IActionResult> GetById(
             int idAction,
@@ -84,9 +72,7 @@ namespace Promotions.Api.Controllers
             return Ok(result);
         }
 
-        // --------------------
-        // PUT – Update Product
-        // --------------------
+       
         [HttpPut]
         public async Task<IActionResult> Update(
             [FromBody] UpdateProductDto dto,
@@ -110,9 +96,7 @@ namespace Promotions.Api.Controllers
             return NoContent();
         }
 
-        // --------------------
-        // DELETE
-        // --------------------
+        
         [HttpDelete]
         public async Task<IActionResult> Delete(
             [FromQuery] int idAction,

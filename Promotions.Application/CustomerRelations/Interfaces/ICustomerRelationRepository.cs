@@ -18,5 +18,6 @@ namespace Promotions.Application.CustomerRelations.Interfaces
         Task AddAsync(CustomerRelation entity);
         Task UpdateAsync(CustomerRelation entity);
         Task DeleteAsync(CustomerRelation entity);
+        Task SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

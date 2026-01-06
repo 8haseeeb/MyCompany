@@ -18,6 +18,10 @@ namespace Promotions.Application.PromoArticles.Commands.Handlers
         {
             var article = new PromoArticle
             {
+                IdAction = request.IdAction,
+                CodProduct = request.CodProduct,
+                LevProduct = request.LevProduct,
+                CodDisplay = request.CodDisplay,
                 CodDiv = request.CodDiv,
                 CodNode = request.CodNode,
                 CodNode1 = request.CodNode1,

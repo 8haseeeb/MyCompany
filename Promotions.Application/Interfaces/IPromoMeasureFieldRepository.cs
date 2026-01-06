@@ -14,7 +14,7 @@ namespace Promotions.Application.Interfaces
         Task<List<PromoMeasureField>> GetByMeasureAsync(string codMeasure, CancellationToken cancellationToken);
 
         Task<List<PromoMeasureField>> GetAllAsync(CancellationToken cancellationToken);
-
+        Task SaveChangesAsync(CancellationToken cancellationToken);
     }
 
 }

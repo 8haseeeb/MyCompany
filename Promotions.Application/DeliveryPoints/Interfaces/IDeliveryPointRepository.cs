@@ -15,5 +15,6 @@ namespace Promotions.Application.DeliveryPoints.Interfaces
         Task AddAsync(PromoDeliveryPoint deliveryPoint);
         Task UpdateAsync(PromoDeliveryPoint deliveryPoint);
         Task DeleteAsync(PromoDeliveryPoint deliveryPoint);
+        Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

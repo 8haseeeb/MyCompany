@@ -16,8 +16,7 @@ namespace Promotions.Infrastructure.Persistence.Repositories
 
         public async Task AddAsync(PromoMeasureField entity, CancellationToken cancellationToken)
         {
-            _context.PromoMeasureFields.Add(entity);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _context.PromoMeasureFields.AddAsync(entity, cancellationToken);
         }
 
         public async Task<List<PromoMeasureField>> GetByMeasureAsync(
@@ -48,16 +47,21 @@ namespace Promotions.Infrastructure.Persistence.Repositories
         }
 
      
-        public async Task UpdateAsync(PromoMeasureField entity, CancellationToken cancellationToken)
+        public Task UpdateAsync(PromoMeasureField entity, CancellationToken cancellationToken)
         {
             _context.PromoMeasureFields.Update(entity);
-            await _context.SaveChangesAsync(cancellationToken);
+            return Task.CompletedTask;
         }
 
        
-        public async Task DeleteAsync(PromoMeasureField entity, CancellationToken cancellationToken)
+        public Task DeleteAsync(PromoMeasureField entity, CancellationToken cancellationToken)
         {
             _context.PromoMeasureFields.Remove(entity);
+            return Task.CompletedTask;
+        }
+
+        public async Task SaveChangesAsync(CancellationToken cancellationToken)
+        {
             await _context.SaveChangesAsync(cancellationToken);
         }
     }

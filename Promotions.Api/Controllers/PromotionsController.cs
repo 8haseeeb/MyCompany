@@ -6,7 +6,7 @@ namespace Promotions.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize] // JWT Token required
+    [Authorize] 
     public class PromotionsController : ControllerBase
     {
         [HttpGet]

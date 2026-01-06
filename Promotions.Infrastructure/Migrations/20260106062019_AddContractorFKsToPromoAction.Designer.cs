@@ -12,8 +12,8 @@ using Promotions.Infrastructure.Persistence;
 namespace Promotions.Infrastructure.Migrations
 {
     [DbContext(typeof(PromotionsDbContext))]
-    [Migration("20260101082634_AddPromoArticlesTable")]
-    partial class AddPromoArticlesTable
+    [Migration("20260106062019_AddContractorFKsToPromoAction")]
+    partial class AddContractorFKsToPromoAction
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,23 @@ namespace Promotions.Infrastructure.Migrations
 
             modelBuilder.Entity("Promotions.Domain.Articles.PromoArticle", b =>
                 {
+                    b.Property<int>("IdAction")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodProduct")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("LevProduct")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodDisplay")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("CodDiv")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("CODDIV");
 
                     b.Property<string>("CodNode")
@@ -52,7 +66,9 @@ namespace Promotions.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("CODNODE_N");
 
-                    b.HasKey("CodDiv", "CodNode");
+                    b.HasKey("IdAction", "CodProduct", "LevProduct", "CodDisplay", "CodDiv", "CodNode");
+
+                    b.HasIndex("IdAction", "CodProduct", "LevProduct", "CodDisplay", "CodNode", "CodDiv");
 
                     b.ToTable("TA5150PROMOARTICLE", (string)null);
                 });
@@ -101,38 +117,79 @@ namespace Promotions.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("CODDELIVERYPOINT");
 
+                    b.Property<string>("CodDiv")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("CodHier")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("CodNode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("DteStart")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("FlgInclusion")
                         .HasColumnType("bit")
                         .HasColumnName("FLGINCLUSION");
+
+                    b.Property<int>("IdLevel")
+                        .HasColumnType("int");
 
                     b.HasKey("IdAction", "CodDeliveryPoint");
 
                     b.HasIndex("IdAction")
                         .HasDatabaseName("IX_TA5014DELIVERYPOINTS_ID_ACTION");
 
+                    b.HasIndex("CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart");
+
                     b.ToTable("TA5014DELIVERYPOINTS", (string)null);
                 });
 
             modelBuilder.Entity("Promotions.Domain.Measures.PromoMeasureField", b =>
                 {
+                    b.Property<int>("IdAction")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodProduct")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("LevProduct")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodDisplay")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("CodDiv")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
                         .HasColumnName("CODDIV");
 
                     b.Property<string>("CodMeasure")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("CODMEASURE");
 
                     b.Property<string>("FieldName")
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnName("FIELDNAME");
 
                     b.Property<string>("Formula")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasColumnName("FORMULA");
 
-                    b.HasKey("CodDiv", "CodMeasure", "FieldName");
+                    b.HasKey("IdAction", "CodProduct", "LevProduct", "CodDisplay", "CodDiv", "CodMeasure", "FieldName");
 
                     b.ToTable("TA5118PROMOMEASUREFIELDS", (string)null);
                 });
@@ -147,11 +204,34 @@ namespace Promotions.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("CODPARTICIPANT");
 
+                    b.Property<string>("CodDiv")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("CodHier")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("CodNode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("DteStart")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("FlgInclusion")
                         .HasColumnType("bit")
                         .HasColumnName("FLGINCLUSION");
 
+                    b.Property<int>("IdLevel")
+                        .HasColumnType("int");
+
                     b.HasKey("IdAction", "CodParticipant");
+
+                    b.HasIndex("CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart");
 
                     b.ToTable("TA5012PARTICIPANTS", (string)null);
                 });
@@ -238,13 +318,25 @@ namespace Promotions.Infrastructure.Migrations
 
                     b.Property<string>("CodContractor")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(30)")
                         .HasColumnName("CODCONTRACTOR");
 
                     b.Property<string>("CodDiv")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(10)")
                         .HasColumnName("CODDIV");
+
+                    b.Property<string>("ContractorCodHier")
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("CONTRACTORCODHIER");
+
+                    b.Property<DateTime?>("ContractorDteStart")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CONTRACTORDTESTART");
+
+                    b.Property<int?>("ContractorIdLevel")
+                        .HasColumnType("int")
+                        .HasColumnName("CONTRACTORIDLEVEL");
 
                     b.Property<string>("DocumentKey")
                         .HasColumnType("nvarchar(max)")
@@ -281,7 +373,128 @@ namespace Promotions.Infrastructure.Migrations
 
                     b.HasKey("IdAction");
 
+                    b.HasIndex("ContractorCodHier", "CodDiv", "CodContractor", "ContractorIdLevel", "ContractorDteStart");
+
                     b.ToTable("TA500PROMOACTION", (string)null);
+                });
+
+            modelBuilder.Entity("Promotions.Domain.Articles.PromoArticle", b =>
+                {
+                    b.HasOne("Promotions.Domain.ProductDetails.PromoProductDetail", "ProductDetail")
+                        .WithMany("Articles")
+                        .HasForeignKey("IdAction", "CodProduct", "LevProduct", "CodDisplay", "CodNode", "CodDiv")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductDetail");
+                });
+
+            modelBuilder.Entity("Promotions.Domain.DeliveryPoints.PromoDeliveryPoint", b =>
+                {
+                    b.HasOne("Promotions.Domain.PromoActions.PromoAction", "Action")
+                        .WithMany("DeliveryPoints")
+                        .HasForeignKey("IdAction")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Promotions.Domain.CustomerRelations.CustomerRelation", "Relation")
+                        .WithMany("DeliveryPoints")
+                        .HasForeignKey("CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Action");
+
+                    b.Navigation("Relation");
+                });
+
+            modelBuilder.Entity("Promotions.Domain.Measures.PromoMeasureField", b =>
+                {
+                    b.HasOne("Promotions.Domain.Products.PromoProduct", "Product")
+                        .WithMany("MeasureFields")
+                        .HasForeignKey("IdAction", "CodProduct", "LevProduct", "CodDisplay")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Promotions.Domain.Participants.PromoParticipants", b =>
+                {
+                    b.HasOne("Promotions.Domain.PromoActions.PromoAction", "Action")
+                        .WithMany("Participants")
+                        .HasForeignKey("IdAction")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Promotions.Domain.CustomerRelations.CustomerRelation", "Relation")
+                        .WithMany("Participants")
+                        .HasForeignKey("CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Action");
+
+                    b.Navigation("Relation");
+                });
+
+            modelBuilder.Entity("Promotions.Domain.ProductDetails.PromoProductDetail", b =>
+                {
+                    b.HasOne("Promotions.Domain.Products.PromoProduct", "Product")
+                        .WithMany("Details")
+                        .HasForeignKey("IdAction", "CodProduct", "LevProduct", "CodDisplay")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Promotions.Domain.Products.PromoProduct", b =>
+                {
+                    b.HasOne("Promotions.Domain.PromoActions.PromoAction", "Action")
+                        .WithMany("Products")
+                        .HasForeignKey("IdAction")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Action");
+                });
+
+            modelBuilder.Entity("Promotions.Domain.PromoActions.PromoAction", b =>
+                {
+                    b.HasOne("Promotions.Domain.CustomerRelations.CustomerRelation", "Contractor")
+                        .WithMany()
+                        .HasForeignKey("ContractorCodHier", "CodDiv", "CodContractor", "ContractorIdLevel", "ContractorDteStart");
+
+                    b.Navigation("Contractor");
+                });
+
+            modelBuilder.Entity("Promotions.Domain.CustomerRelations.CustomerRelation", b =>
+                {
+                    b.Navigation("DeliveryPoints");
+
+                    b.Navigation("Participants");
+                });
+
+            modelBuilder.Entity("Promotions.Domain.ProductDetails.PromoProductDetail", b =>
+                {
+                    b.Navigation("Articles");
+                });
+
+            modelBuilder.Entity("Promotions.Domain.Products.PromoProduct", b =>
+                {
+                    b.Navigation("Details");
+
+                    b.Navigation("MeasureFields");
+                });
+
+            modelBuilder.Entity("Promotions.Domain.PromoActions.PromoAction", b =>
+                {
+                    b.Navigation("DeliveryPoints");
+
+                    b.Navigation("Participants");
+
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

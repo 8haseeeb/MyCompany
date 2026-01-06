@@ -31,6 +31,7 @@ namespace Promotions.Application.CustomerRelations.Commands.Handlers
             };
 
             await _repository.AddAsync(entity);
+            await _repository.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

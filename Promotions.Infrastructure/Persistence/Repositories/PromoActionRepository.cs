@@ -17,25 +17,34 @@ namespace Promotions.Infrastructure.Persistence.Repositories
 
         public async Task AddAsync(PromoAction action)
         {
-            _context.PromoActions.Add(action);
-            await _context.SaveChangesAsync();
+            await _context.PromoActions.AddAsync(action);
         }
 
-        public async Task UpdateAsync(PromoAction action)
+        public Task UpdateAsync(PromoAction action)
         {
             _context.PromoActions.Update(action);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
-        public async Task DeleteAsync(PromoAction action)
+        public Task DeleteAsync(PromoAction action)
         {
             _context.PromoActions.Remove(action);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
         public async Task<PromoAction?> GetByIdAsync(int idAction)
         {
-            return await _context.PromoActions.FindAsync(idAction);
+            return await _context.PromoActions
+                .Include(x => x.Contractor)
+                    .ThenInclude(c => c!.Participants)
+                .Include(x => x.Contractor)
+                    .ThenInclude(c => c!.DeliveryPoints)
+                .Include(x => x.Products)
+                    .ThenInclude(p => p.MeasureFields)
+                .Include(x => x.Products)
+                    .ThenInclude(p => p.Details)
+                        .ThenInclude(d => d.Articles)
+                .FirstOrDefaultAsync(x => x.IdAction == idAction);
         }
 
         public async Task<List<PromoAction>> GetAllAsync()

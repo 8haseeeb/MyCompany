@@ -3,6 +3,10 @@
 namespace Promotions.Application.PromoArticles.Commands
 {
     public record CreatePromoArticleCommand(
+        int IdAction,
+        string CodProduct,
+        int LevProduct,
+        string CodDisplay,
         string CodDiv,
         string CodNode,
         string? CodNode1,

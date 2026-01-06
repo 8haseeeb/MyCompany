@@ -34,20 +34,24 @@ namespace Promotions.Infrastructure.Persistence.Repositories
 
         public async Task AddAsync(CustomerRelation entity)
         {
-            _context.CustomerRelations.Add(entity);
-            await _context.SaveChangesAsync();
+            await _context.CustomerRelations.AddAsync(entity);
         }
 
-        public async Task UpdateAsync(CustomerRelation entity)
+        public Task UpdateAsync(CustomerRelation entity)
         {
             _context.CustomerRelations.Update(entity);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
-        public async Task DeleteAsync(CustomerRelation entity)
+        public Task DeleteAsync(CustomerRelation entity)
         {
             _context.CustomerRelations.Remove(entity);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
+        }
+
+        public async Task SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }
