@@ -27,14 +27,7 @@ public class PromoActionConfiguration : IEntityTypeConfiguration<PromoAction>
         builder.Property(x => x.LevParticipants).HasColumnName("LEVPARTICIPANTS");
 
         // Relationships
-        builder.Property(x => x.ContractorCodHier).HasColumnName("CONTRACTORCODHIER");
-        builder.Property(x => x.ContractorIdLevel).HasColumnName("CONTRACTORIDLEVEL");
-        builder.Property(x => x.ContractorDteStart).HasColumnName("CONTRACTORDTESTART");
 
-        // Relationships
-        builder.HasOne(x => x.Contractor)
-               .WithMany()
-               .HasForeignKey(x => new { x.ContractorCodHier, x.CodDiv, x.CodContractor, x.ContractorIdLevel, x.ContractorDteStart });
 
         builder.HasMany(x => x.Products)
                .WithOne(x => x.Action)

@@ -27,6 +27,15 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                 codHier, codDiv, codNode, idLevel, dteStart);
         }
 
+        public async Task<List<CustomerRelation>> GetByNodeAndDivAsync(string codNode, string codDiv)
+        {
+            return await _context.CustomerRelations
+                .Where(x => x.CodNode == codNode && x.CodDiv == codDiv)
+                .Include(x => x.Participants)
+                .Include(x => x.DeliveryPoints)
+                .ToListAsync();
+        }
+
         public async Task<List<CustomerRelation>> GetAllAsync()
         {
             return await _context.CustomerRelations.ToListAsync();

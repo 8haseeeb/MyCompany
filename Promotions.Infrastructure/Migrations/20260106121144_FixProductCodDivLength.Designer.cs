@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Promotions.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Promotions.Infrastructure.Persistence;
 namespace Promotions.Infrastructure.Migrations
 {
     [DbContext(typeof(PromotionsDbContext))]
-    partial class PromotionsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260106121144_FixProductCodDivLength")]
+    partial class FixProductCodDivLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -315,13 +318,25 @@ namespace Promotions.Infrastructure.Migrations
 
                     b.Property<string>("CodContractor")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(30)")
                         .HasColumnName("CODCONTRACTOR");
 
                     b.Property<string>("CodDiv")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(10)")
                         .HasColumnName("CODDIV");
+
+                    b.Property<string>("ContractorCodHier")
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("CONTRACTORCODHIER");
+
+                    b.Property<DateTime?>("ContractorDteStart")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CONTRACTORDTESTART");
+
+                    b.Property<int?>("ContractorIdLevel")
+                        .HasColumnType("int")
+                        .HasColumnName("CONTRACTORIDLEVEL");
 
                     b.Property<string>("DocumentKey")
                         .HasColumnType("nvarchar(max)")
@@ -357,6 +372,8 @@ namespace Promotions.Infrastructure.Migrations
                         .HasColumnName("DESACTION");
 
                     b.HasKey("IdAction");
+
+                    b.HasIndex("ContractorCodHier", "CodDiv", "CodContractor", "ContractorIdLevel", "ContractorDteStart");
 
                     b.ToTable("TA500PROMOACTION", (string)null);
                 });
@@ -441,6 +458,15 @@ namespace Promotions.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Action");
+                });
+
+            modelBuilder.Entity("Promotions.Domain.PromoActions.PromoAction", b =>
+                {
+                    b.HasOne("Promotions.Domain.CustomerRelations.CustomerRelation", "Contractor")
+                        .WithMany()
+                        .HasForeignKey("ContractorCodHier", "CodDiv", "CodContractor", "ContractorIdLevel", "ContractorDteStart");
+
+                    b.Navigation("Contractor");
                 });
 
             modelBuilder.Entity("Promotions.Domain.CustomerRelations.CustomerRelation", b =>

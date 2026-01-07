@@ -29,6 +29,7 @@ namespace Promotions.Application.CustomerRelations.Commands.Handlers
                 throw new Exception("Customer relation not found");
 
             await _repository.DeleteAsync(entity);
+            await _repository.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

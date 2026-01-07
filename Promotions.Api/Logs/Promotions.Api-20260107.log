@@ -1,0 +1,4256 @@
+2026-01-07 11:08:45.398 +05:00 [INF]  Promotion API started successfully
+2026-01-07 11:08:56.723 +05:00 [INF] HTTP GET /swagger/index.html responded 200 in 91.2135 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: <!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css">
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <style>
+
+        html {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            background: #fafafa;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div id="swagger-ui"></div>
+
+    <!-- Workaround for https://github.com/swagger-api/swagger-editor/issues/1371 -->
+    <script>
+        if (window.navigator.userAgent.indexOf("Edge") > -1) {
+            console.log("Removing native Edge fetch in favor of swagger-ui's polyfill")
+            window.fetch = undefined;
+        }
+    </script>
+
+    <script src="./swagger-ui-bundle.js"></script>
+    <script src="./swagger-ui-standalone-preset.js"></script>
+    <script>
+        /* Source: https://gist.github.com/lamberta/3768814
+         * Parse a string function definition and return a function object. Does not use eval.
+         * @param {string} str
+         * @return {function}
+         *
+         * Example:
+         *  var f = function (x, y) { return x * y; };
+         *  var g = parseFunction(f.toString());
+         *  g(33, 3); //=> 99
+         */
+        function parseFunction(str) {
+            if (!str) return void (0);
+
+            var fn_body_idx = str.indexOf('{'),
+                fn_body = str.substring(fn_body_idx + 1, str.lastIndexOf('}')),
+                fn_declare = str.substring(0, fn_body_idx),
+                fn_params = fn_declare.substring(fn_declare.indexOf('(') + 1, fn_declare.lastIndexOf(')')),
+                args = fn_params.split(',');
+
+            args.push(fn_body);
+
+            function Fn() {
+                return Function.apply(this, args);
+            }
+            Fn.prototype = Function.prototype;
+
+            return new Fn();
+        }
+
+        window.onload = function () {
+            var configObject = JSON.parse('{"urls":[{"url":"v1/swagger.json","name":"Promotions.Api v1"}],"deepLinking":false,"persistAuthorization":false,"displayOperationId":false,"defaultModelsExpandDepth":1,"defaultModelExpandDepth":1,"defaultModelRendering":"example","displayRequestDuration":false,"docExpansion":"list","showExtensions":false,"showCommonExtensions":false,"supportedSubmitMethods":["get","put","post","delete","options","head","patch","trace"],"tryItOutEnabled":false}');
+            var oauthConfigObject = JSON.parse('{"scopeSeparator":" ","scopes":[],"useBasicAuthenticationWithAccessCodeGrant":false,"usePkceWithAuthorizationCodeGrant":false}');
+
+            // Workaround for https://github.com/swagger-api/swagger-ui/issues/5945
+            configObject.urls.forEach(function (item) {
+                if (item.url.startsWith("http") || item.url.startsWith("/")) return;
+                item.url = window.location.href.replace("index.html", item.url).split('#')[0];
+            });
+
+            // If validatorUrl is not explicitly provided, disable the feature by setting to null
+            if (!configObject.hasOwnProperty("validatorUrl"))
+                configObject.validatorUrl = null
+
+            // If oauth2RedirectUrl isn't specified, use the built-in default
+            if (!configObject.hasOwnProperty("oauth2RedirectUrl"))
+                configObject.oauth2RedirectUrl = (new URL("oauth2-redirect.html", window.location.href)).href;
+
+            // Apply mandatory parameters
+            configObject.dom_id = "#swagger-ui";
+            configObject.presets = [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset];
+            configObject.layout = "StandaloneLayout";
+
+            // Parse and add interceptor functions
+            var interceptors = JSON.parse('{}');
+            if (interceptors.RequestInterceptorFunction)
+                configObject.requestInterceptor = parseFunction(interceptors.RequestInterceptorFunction);
+            if (interceptors.ResponseInterceptorFunction)
+                configObject.responseInterceptor = parseFunction(interceptors.ResponseInterceptorFunction);
+
+            // Begin Swagger UI call region
+
+            const ui = SwaggerUIBundle(configObject);
+
+            ui.initOAuth(oauthConfigObject);
+
+            // End Swagger UI call region
+
+            window.ui = ui
+        }
+    </script>
+</body>
+</html>
+
+2026-01-07 11:08:56.904 +05:00 [INF] HTTP GET /swagger/index.html responded 200 in 314.8518 ms
+2026-01-07 11:08:57.210 +05:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 40.7078 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Promotions.Api",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/promotions/customer-relations": {
+      "post": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRelationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRelationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRelationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "parameters": [
+          {
+            "name": "codHier",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idLevel",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dteStart",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRelationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRelationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRelationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "parameters": [
+          {
+            "name": "codHier",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idLevel",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dteStart",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/customer-relations/{codHier}/{codDiv}/{codNode}/{idLevel}/{dteStart}": {
+      "get": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "parameters": [
+          {
+            "name": "codHier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idLevel",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dteStart",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/actions/{idAction}/participants": {
+      "post": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateParticipantDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateParticipantDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateParticipantDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/actions/{idAction}/participants/{codParticipant}": {
+      "put": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codParticipant",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParticipantDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParticipantDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParticipantDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codParticipant",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/participants/all": {
+      "get": {
+        "tags": [
+          "Participants"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/actions": {
+      "post": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoActionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoActionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoActionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoActionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoActionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoActionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/actions/{idAction}": {
+      "get": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/promo-articles": {
+      "post": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoArticleDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoArticleDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoArticleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "parameters": [
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoArticleDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoArticleDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoArticleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "parameters": [
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/promo-articles/find": {
+      "get": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "parameters": [
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/delivery-points/{idAction}/{codDeliveryPoint}": {
+      "post": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDeliveryPoint",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDeliveryPointDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDeliveryPointDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDeliveryPointDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDeliveryPoint",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDeliveryPoint",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeliveryPointDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeliveryPointDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeliveryPointDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDeliveryPoint",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/delivery-points": {
+      "get": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/measures": {
+      "post": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromoMeasureFieldDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromoMeasureFieldDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromoMeasureFieldDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/measures/{codMeasure}/{codDiv}/{fieldName}": {
+      "get": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "parameters": [
+          {
+            "name": "codMeasure",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "parameters": [
+          {
+            "name": "codMeasure",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoMeasureFieldDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoMeasureFieldDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoMeasureFieldDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "parameters": [
+          {
+            "name": "codMeasure",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/product-details": {
+      "post": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDetailDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDetailDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDetailDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDetailDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDetailDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDetailDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/product-details/action/{idAction}": {
+      "get": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/product-details/find": {
+      "get": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/products": {
+      "post": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/products/action/{idAction}": {
+      "get": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/products/{idAction}/{codProduct}/{levProduct}/{codDisplay}": {
+      "get": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Promotions": {
+      "get": {
+        "tags": [
+          "Promotions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/WeatherForecast": {
+      "get": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateCustomerRelationDto": {
+        "type": "object",
+        "properties": {
+          "codHier": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "idLevel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dteStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "codParentNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateDeliveryPointDto": {
+        "type": "object",
+        "properties": {
+          "flgInclusion": {
+            "type": "boolean"
+          },
+          "codHier": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "idLevel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dteStart": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateParticipantDto": {
+        "type": "object",
+        "properties": {
+          "codParticipant": {
+            "type": "string",
+            "nullable": true
+          },
+          "flgInclusion": {
+            "type": "boolean"
+          },
+          "codHier": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "idLevel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dteStart": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateProductDetailDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codProduct": {
+            "type": "string",
+            "nullable": true
+          },
+          "levProduct": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "flgInclusion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateProductDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codProduct": {
+            "type": "string",
+            "nullable": true
+          },
+          "levProduct": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "qtyEstimated": {
+            "type": "number",
+            "format": "double"
+          },
+          "perceDiscount1": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "perceDiscount2": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "numMeasure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "codMeasure": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePromoActionDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codContractor": {
+            "type": "string",
+            "nullable": true
+          },
+          "contractorCodHier": {
+            "type": "string",
+            "nullable": true
+          },
+          "contractorIdLevel": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "contractorDteStart": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dteStartSellIn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteEndSellIn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteStartSellOut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteEndSellOut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "documentKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteToShost": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "levParticipants": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePromoArticleDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codProduct": {
+            "type": "string",
+            "nullable": true
+          },
+          "levProduct": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode1": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode2": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNodeN": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PromoMeasureFieldDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codProduct": {
+            "type": "string",
+            "nullable": true
+          },
+          "levProduct": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codMeasure": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldName": {
+            "type": "string",
+            "nullable": true
+          },
+          "formula": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateCustomerRelationDto": {
+        "type": "object",
+        "properties": {
+          "codParentNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateDeliveryPointDto": {
+        "type": "object",
+        "properties": {
+          "flgInclusion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateParticipantDto": {
+        "type": "object",
+        "properties": {
+          "flgInclusion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateProductDetailDto": {
+        "type": "object",
+        "properties": {
+          "flgInclusion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateProductDto": {
+        "type": "object",
+        "properties": {
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "qtyEstimated": {
+            "type": "number",
+            "format": "double"
+          },
+          "perceDiscount1": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "perceDiscount2": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "numMeasure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "codMeasure": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdatePromoActionDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteEndSellIn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteEndSellOut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "documentKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteToShost": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "levParticipants": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdatePromoArticleDto": {
+        "type": "object",
+        "properties": {
+          "codNode1": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode2": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNodeN": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdatePromoMeasureFieldDto": {
+        "type": "object",
+        "properties": {
+          "formula": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeatherForecast": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "temperatureC": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "temperatureF": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "your valid token",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}
+2026-01-07 11:08:57.245 +05:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 75.6613 ms
+2026-01-07 11:15:14.389 +05:00 [WRN] No store type was specified for the decimal property 'NumMeasure' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-07 11:15:14.426 +05:00 [WRN] No store type was specified for the decimal property 'PerceDiscount1' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-07 11:15:14.428 +05:00 [WRN] No store type was specified for the decimal property 'PerceDiscount2' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-07 11:15:14.429 +05:00 [WRN] No store type was specified for the decimal property 'QtyEstimated' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-07 11:15:14.552 +05:00 [WRN] No store type was specified for the decimal property 'NumMeasure' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-07 11:15:14.554 +05:00 [WRN] No store type was specified for the decimal property 'PerceDiscount1' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-07 11:15:14.555 +05:00 [WRN] No store type was specified for the decimal property 'PerceDiscount2' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-07 11:15:14.556 +05:00 [WRN] No store type was specified for the decimal property 'QtyEstimated' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-07 11:17:16.898 +05:00 [INF]  Promotion API started successfully
+2026-01-07 11:17:19.186 +05:00 [INF] HTTP GET /swagger/index.html responded 200 in 189.3487 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: <!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css">
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <style>
+
+        html {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            background: #fafafa;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div id="swagger-ui"></div>
+
+    <!-- Workaround for https://github.com/swagger-api/swagger-editor/issues/1371 -->
+    <script>
+        if (window.navigator.userAgent.indexOf("Edge") > -1) {
+            console.log("Removing native Edge fetch in favor of swagger-ui's polyfill")
+            window.fetch = undefined;
+        }
+    </script>
+
+    <script src="./swagger-ui-bundle.js"></script>
+    <script src="./swagger-ui-standalone-preset.js"></script>
+    <script>
+        /* Source: https://gist.github.com/lamberta/3768814
+         * Parse a string function definition and return a function object. Does not use eval.
+         * @param {string} str
+         * @return {function}
+         *
+         * Example:
+         *  var f = function (x, y) { return x * y; };
+         *  var g = parseFunction(f.toString());
+         *  g(33, 3); //=> 99
+         */
+        function parseFunction(str) {
+            if (!str) return void (0);
+
+            var fn_body_idx = str.indexOf('{'),
+                fn_body = str.substring(fn_body_idx + 1, str.lastIndexOf('}')),
+                fn_declare = str.substring(0, fn_body_idx),
+                fn_params = fn_declare.substring(fn_declare.indexOf('(') + 1, fn_declare.lastIndexOf(')')),
+                args = fn_params.split(',');
+
+            args.push(fn_body);
+
+            function Fn() {
+                return Function.apply(this, args);
+            }
+            Fn.prototype = Function.prototype;
+
+            return new Fn();
+        }
+
+        window.onload = function () {
+            var configObject = JSON.parse('{"urls":[{"url":"v1/swagger.json","name":"Promotions.Api v1"}],"deepLinking":false,"persistAuthorization":false,"displayOperationId":false,"defaultModelsExpandDepth":1,"defaultModelExpandDepth":1,"defaultModelRendering":"example","displayRequestDuration":false,"docExpansion":"list","showExtensions":false,"showCommonExtensions":false,"supportedSubmitMethods":["get","put","post","delete","options","head","patch","trace"],"tryItOutEnabled":false}');
+            var oauthConfigObject = JSON.parse('{"scopeSeparator":" ","scopes":[],"useBasicAuthenticationWithAccessCodeGrant":false,"usePkceWithAuthorizationCodeGrant":false}');
+
+            // Workaround for https://github.com/swagger-api/swagger-ui/issues/5945
+            configObject.urls.forEach(function (item) {
+                if (item.url.startsWith("http") || item.url.startsWith("/")) return;
+                item.url = window.location.href.replace("index.html", item.url).split('#')[0];
+            });
+
+            // If validatorUrl is not explicitly provided, disable the feature by setting to null
+            if (!configObject.hasOwnProperty("validatorUrl"))
+                configObject.validatorUrl = null
+
+            // If oauth2RedirectUrl isn't specified, use the built-in default
+            if (!configObject.hasOwnProperty("oauth2RedirectUrl"))
+                configObject.oauth2RedirectUrl = (new URL("oauth2-redirect.html", window.location.href)).href;
+
+            // Apply mandatory parameters
+            configObject.dom_id = "#swagger-ui";
+            configObject.presets = [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset];
+            configObject.layout = "StandaloneLayout";
+
+            // Parse and add interceptor functions
+            var interceptors = JSON.parse('{}');
+            if (interceptors.RequestInterceptorFunction)
+                configObject.requestInterceptor = parseFunction(interceptors.RequestInterceptorFunction);
+            if (interceptors.ResponseInterceptorFunction)
+                configObject.responseInterceptor = parseFunction(interceptors.ResponseInterceptorFunction);
+
+            // Begin Swagger UI call region
+
+            const ui = SwaggerUIBundle(configObject);
+
+            ui.initOAuth(oauthConfigObject);
+
+            // End Swagger UI call region
+
+            window.ui = ui
+        }
+    </script>
+</body>
+</html>
+
+2026-01-07 11:17:19.280 +05:00 [INF] HTTP GET /swagger/index.html responded 200 in 309.4079 ms
+2026-01-07 11:17:19.696 +05:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 74.0022 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Promotions.Api",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/promotions/customer-relations": {
+      "post": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRelationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRelationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRelationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "parameters": [
+          {
+            "name": "codHier",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idLevel",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dteStart",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRelationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRelationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRelationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "parameters": [
+          {
+            "name": "codHier",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idLevel",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dteStart",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/customer-relations/{codHier}/{codDiv}/{codNode}/{idLevel}/{dteStart}": {
+      "get": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "parameters": [
+          {
+            "name": "codHier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idLevel",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dteStart",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/actions/{idAction}/participants": {
+      "post": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateParticipantDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateParticipantDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateParticipantDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/actions/{idAction}/participants/{codParticipant}": {
+      "put": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codParticipant",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParticipantDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParticipantDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParticipantDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codParticipant",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/participants/all": {
+      "get": {
+        "tags": [
+          "Participants"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/actions": {
+      "post": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoActionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoActionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoActionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoActionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoActionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoActionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/actions/{idAction}": {
+      "get": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/promo-articles": {
+      "post": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoArticleDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoArticleDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoArticleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "parameters": [
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoArticleDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoArticleDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoArticleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "parameters": [
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/promo-articles/find": {
+      "get": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "parameters": [
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/delivery-points/{idAction}/{codDeliveryPoint}": {
+      "post": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDeliveryPoint",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDeliveryPointDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDeliveryPointDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDeliveryPointDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDeliveryPoint",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDeliveryPoint",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeliveryPointDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeliveryPointDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeliveryPointDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDeliveryPoint",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/delivery-points": {
+      "get": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/measures": {
+      "post": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromoMeasureFieldDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromoMeasureFieldDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromoMeasureFieldDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/measures/{codMeasure}/{codDiv}/{fieldName}": {
+      "get": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "parameters": [
+          {
+            "name": "codMeasure",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "parameters": [
+          {
+            "name": "codMeasure",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoMeasureFieldDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoMeasureFieldDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoMeasureFieldDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "parameters": [
+          {
+            "name": "codMeasure",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/product-details": {
+      "post": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDetailDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDetailDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDetailDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDetailDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDetailDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDetailDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/product-details/action/{idAction}": {
+      "get": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/product-details/find": {
+      "get": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/products": {
+      "post": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/products/action/{idAction}": {
+      "get": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/products/{idAction}/{codProduct}/{levProduct}/{codDisplay}": {
+      "get": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Promotions": {
+      "get": {
+        "tags": [
+          "Promotions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/WeatherForecast": {
+      "get": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateCustomerRelationDto": {
+        "type": "object",
+        "properties": {
+          "codHier": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "idLevel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dteStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "codParentNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateDeliveryPointDto": {
+        "type": "object",
+        "properties": {
+          "flgInclusion": {
+            "type": "boolean"
+          },
+          "codHier": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "idLevel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dteStart": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateParticipantDto": {
+        "type": "object",
+        "properties": {
+          "codParticipant": {
+            "type": "string",
+            "nullable": true
+          },
+          "flgInclusion": {
+            "type": "boolean"
+          },
+          "codHier": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "idLevel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dteStart": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateProductDetailDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codProduct": {
+            "type": "string",
+            "nullable": true
+          },
+          "levProduct": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "flgInclusion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateProductDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codProduct": {
+            "type": "string",
+            "nullable": true
+          },
+          "levProduct": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "qtyEstimated": {
+            "type": "number",
+            "format": "double"
+          },
+          "perceDiscount1": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "perceDiscount2": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "numMeasure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "codMeasure": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePromoActionDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codContractor": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteStartSellIn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteEndSellIn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteStartSellOut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteEndSellOut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "documentKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteToShost": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "levParticipants": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePromoArticleDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codProduct": {
+            "type": "string",
+            "nullable": true
+          },
+          "levProduct": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode1": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode2": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNodeN": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PromoMeasureFieldDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codProduct": {
+            "type": "string",
+            "nullable": true
+          },
+          "levProduct": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codMeasure": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldName": {
+            "type": "string",
+            "nullable": true
+          },
+          "formula": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateCustomerRelationDto": {
+        "type": "object",
+        "properties": {
+          "codParentNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateDeliveryPointDto": {
+        "type": "object",
+        "properties": {
+          "flgInclusion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateParticipantDto": {
+        "type": "object",
+        "properties": {
+          "flgInclusion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateProductDetailDto": {
+        "type": "object",
+        "properties": {
+          "flgInclusion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateProductDto": {
+        "type": "object",
+        "properties": {
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "qtyEstimated": {
+            "type": "number",
+            "format": "double"
+          },
+          "perceDiscount1": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "perceDiscount2": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "numMeasure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "codMeasure": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdatePromoActionDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteEndSellIn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteEndSellOut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "documentKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteToShost": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "levParticipants": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdatePromoArticleDto": {
+        "type": "object",
+        "properties": {
+          "codNode1": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode2": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNodeN": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdatePromoMeasureFieldDto": {
+        "type": "object",
+        "properties": {
+          "formula": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeatherForecast": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "temperatureC": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "temperatureF": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "your valid token",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}
+2026-01-07 11:17:19.733 +05:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 112.4214 ms
+2026-01-07 11:20:11.571 +05:00 [WRN] No store type was specified for the decimal property 'NumMeasure' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-07 11:20:11.579 +05:00 [WRN] No store type was specified for the decimal property 'PerceDiscount1' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-07 11:20:11.581 +05:00 [WRN] No store type was specified for the decimal property 'PerceDiscount2' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-07 11:20:11.582 +05:00 [WRN] No store type was specified for the decimal property 'QtyEstimated' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-07 11:20:12.751 +05:00 [INF] HTTP POST /api/promotions/customer-relations responded 200 in 3334.1816 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-07 11:20:12.754 +05:00 [INF] HTTP POST /api/promotions/customer-relations responded 200 in 3338.5999 ms
+2026-01-07 11:20:17.053 +05:00 [INF] HTTP GET /api/promotions/customer-relations responded 200 in 567.4716 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: [{"codHier":"H001","codDiv":"D001","codNode":"CUST001","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":"2026-12-31T00:00:00"},{"codHier":"H001","codDiv":"D001","codNode":"CUST99","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":"2026-12-31T00:00:00"},{"codHier":"H-4000","codDiv":"DIV-4000","codNode":"CUST-4000","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":"2026-12-31T00:00:00"},{"codHier":"H-5000","codDiv":"DIV-5000","codNode":"CUST-5000","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":"2026-12-31T00:00:00"},{"codHier":"z","codDiv":"x","codNode":"c","idLevel":30,"dteStart":"2026-01-06T06:27:53.298","codParentNode":"a","dteEnd":"2026-01-06T09:20:00.431"}]
+2026-01-07 11:20:17.058 +05:00 [INF] HTTP GET /api/promotions/customer-relations responded 200 in 573.2159 ms
+2026-01-07 11:21:08.504 +05:00 [INF] HTTP POST /api/promotions/actions responded 200 in 208.3317 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-07 11:21:08.514 +05:00 [INF] HTTP POST /api/promotions/actions responded 200 in 217.7053 ms
+2026-01-07 11:21:13.543 +05:00 [INF] HTTP GET /api/promotions/actions responded 200 in 62.1589 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: [{"idAction":10,"name":"a","codDiv":"a","codContractor":"a","dteStartSellIn":"2026-01-05T13:52:52.86","dteEndSellIn":"2026-01-05T13:52:52.86","dteStartSellOut":"2026-01-05T13:52:52.86","dteEndSellOut":"2026-01-05T13:52:52.86","documentKey":"a","dteToShost":"2026-01-05T13:52:52.86","levParticipants":10},{"idAction":20,"name":"aaa","codDiv":"a","codContractor":"a","dteStartSellIn":"2026-01-06T05:58:49.176","dteEndSellIn":"2026-01-06T05:58:49.176","dteStartSellOut":"2026-01-06T05:58:49.176","dteEndSellOut":"2026-01-06T05:58:49.176","documentKey":"a","dteToShost":"2026-01-06T05:58:49.176","levParticipants":20},{"idAction":2026,"name":"Super Mega Sale","codDiv":"D001","codContractor":"CUST99","dteStartSellIn":"2026-01-01T00:00:00","dteEndSellIn":"2026-01-31T00:00:00","dteStartSellOut":"2026-02-01T00:00:00","dteEndSellOut":"2026-02-28T00:00:00","documentKey":"DOC-2026","dteToShost":"2026-01-05T00:00:00","levParticipants":1},{"idAction":3000,"name":"Grand Sale 2026","codDiv":"D001","codContractor":"CUST99","dteStartSellIn":"2026-01-01T00:00:00","dteEndSellIn":"2026-01-31T00:00:00","dteStartSellOut":"2026-02-01T00:00:00","dteEndSellOut":"2026-02-28T00:00:00","documentKey":"DOC-3000","dteToShost":"2026-01-05T00:00:00","levParticipants":1},{"idAction":4000,"name":"Full Test Campaign 4000","codDiv":"DIV-4000","codContractor":"CUST-4000","dteStartSellIn":"2026-01-01T00:00:00","dteEndSellIn":"2026-01-31T00:00:00","dteStartSellOut":"2026-02-01T00:00:00","dteEndSellOut":"2026-02-28T00:00:00","documentKey":"DOC-4000","dteToShost":"2026-01-05T00:00:00","levParticipants":1},{"idAction":5000,"name":"Decoupled Campaign 5000","codDiv":"DIV-5000","codContractor":"CUST-5000","dteStartSellIn":"2026-01-01T00:00:00","dteEndSellIn":"2026-01-31T00:00:00","dteStartSellOut":"2026-02-01T00:00:00","dteEndSellOut":"2026-02-28T00:00:00","documentKey":"DOC-5000","dteToShost":"2026-01-05T00:00:00","levParticipants":1}]
+2026-01-07 11:21:13.548 +05:00 [INF] HTTP GET /api/promotions/actions responded 200 in 66.7010 ms
+2026-01-07 11:22:18.129 +05:00 [INF] HTTP POST /api/actions/5000/participants responded 200 in 103.4401 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-07 11:22:18.135 +05:00 [INF] HTTP POST /api/actions/5000/participants responded 200 in 109.3691 ms
+2026-01-07 11:23:26.127 +05:00 [INF] HTTP POST /api/promotions/delivery-points/5000/DP-5000 responded 201 in 167.6649 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-07 11:23:26.132 +05:00 [INF] HTTP POST /api/promotions/delivery-points/5000/DP-5000 responded 201 in 173.5659 ms
+2026-01-07 11:24:01.755 +05:00 [INF] HTTP POST /api/promotions/products responded 200 in 174.9733 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-07 11:24:01.764 +05:00 [INF] HTTP POST /api/promotions/products responded 200 in 184.1175 ms
+2026-01-07 11:24:06.405 +05:00 [INF] HTTP GET /api/promotions/products responded 200 in 42.9319 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: [{"idAction":20,"codProduct":"p1","levProduct":10,"codDisplay":"d1","codDiv":"d2","qtyEstimated":20.00,"perceDiscount1":20.00,"perceDiscount2":20.00,"numMeasure":20.00,"codMeasure":"d3"},{"idAction":3000,"codProduct":"P-100","levProduct":1,"codDisplay":"DISP-1","codDiv":"D001","qtyEstimated":500.00,"perceDiscount1":10.00,"perceDiscount2":null,"numMeasure":null,"codMeasure":null},{"idAction":4000,"codProduct":"PROD-4000","levProduct":1,"codDisplay":"DISP-4000","codDiv":"DIV-4000","qtyEstimated":100.00,"perceDiscount1":15.00,"perceDiscount2":0.00,"numMeasure":1.00,"codMeasure":"UNIT"},{"idAction":5000,"codProduct":"PROD-5000","levProduct":1,"codDisplay":"DISP-5000","codDiv":"DIV-5000","qtyEstimated":100.00,"perceDiscount1":15.00,"perceDiscount2":0.00,"numMeasure":1.00,"codMeasure":"UNIT"}]
+2026-01-07 11:24:06.409 +05:00 [INF] HTTP GET /api/promotions/products responded 200 in 46.8595 ms
+2026-01-07 11:24:48.910 +05:00 [INF] HTTP POST /api/promotions/product-details responded 200 in 86.4849 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-07 11:24:48.917 +05:00 [INF] HTTP POST /api/promotions/product-details responded 200 in 93.5841 ms
+2026-01-07 11:25:28.551 +05:00 [INF] HTTP POST /api/promotions/promo-articles responded 200 in 121.9188 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-07 11:25:28.555 +05:00 [INF] HTTP POST /api/promotions/promo-articles responded 200 in 125.6669 ms
+2026-01-07 11:26:13.349 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-01-07 11:26:13.630 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-01-07 11:26:13.740 +05:00 [INF] HTTP GET /api/promotions/actions/5000 responded 200 in 858.2957 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"idAction":5000,"name":"Decoupled Campaign 5000","codDiv":"DIV-5000","codContractor":"CUST-5000","dteStartSellIn":"2026-01-01T00:00:00","dteEndSellIn":"2026-01-31T00:00:00","dteStartSellOut":"2026-02-01T00:00:00","dteEndSellOut":"2026-02-28T00:00:00","documentKey":"DOC-5000","dteToShost":"2026-01-05T00:00:00","levParticipants":1,"customerRelation":{"participants":[{"idAction":5000,"codParticipant":"P-5000","flgInclusion":true,"codHier":"H-5000","codDiv":"DIV-5000","codNode":"CUST-5000","idLevel":10,"dteStart":"2026-01-01T00:00:00"}],"deliveryPoints":[{"idAction":5000,"codDeliveryPoint":"DP-5000","flgInclusion":true,"codHier":"H-5000","codDiv":"DIV-5000","codNode":"CUST-5000","idLevel":10,"dteStart":"2026-01-01T00:00:00"}],"codHier":"H-5000","codDiv":"DIV-5000","codNode":"CUST-5000","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":"2026-12-31T00:00:00"},"products":[{"codProduct":"PROD-5000","levProduct":1,"codDisplay":"DISP-5000","codDiv":"DIV-5000","qtyEstimated":100.00,"perceDiscount1":15.00,"perceDiscount2":0.00,"numMeasure":1.00,"codMeasure":"UNIT","measureFields":[],"details":[{"codNode":"DET-5000","flgInclusion":true,"articles":[{"idAction":5000,"codProduct":"PROD-5000","levProduct":1,"codDisplay":"DISP-5000","codDiv":"DIV-5000","codNode":"DET-5000","codNode1":"SKU-5001","codNode2":"V-BLUE","codNodeN":"SIZE-M"}]}]}]}
+2026-01-07 11:26:13.747 +05:00 [INF] HTTP GET /api/promotions/actions/5000 responded 200 in 865.5778 ms

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Promotions.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Promotions.Infrastructure.Persistence;
 namespace Promotions.Infrastructure.Migrations
 {
     [DbContext(typeof(PromotionsDbContext))]
-    partial class PromotionsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260107061515_RemovePromoActionCustomerFKs")]
+    partial class RemovePromoActionCustomerFKs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

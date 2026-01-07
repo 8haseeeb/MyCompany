@@ -20,7 +20,7 @@ namespace Promotions.Infrastructure.Products.Configurations
 
             builder.Property(x => x.CodProduct).HasMaxLength(50);
             builder.Property(x => x.CodDisplay).HasMaxLength(50);
-            builder.Property(x => x.CodDiv).HasMaxLength(20);
+            builder.Property(x => x.CodDiv).HasMaxLength(50);
             builder.Property(x => x.CodMeasure).HasMaxLength(20);
 
         // Relationships

@@ -14,6 +14,8 @@ namespace Promotions.Application.CustomerRelations.Interfaces
             int idLevel,
             DateTime dteStart);
 
+        Task<List<CustomerRelation>> GetByNodeAndDivAsync(string codNode, string codDiv);
+
         Task<List<CustomerRelation>> GetAllAsync();
         Task AddAsync(CustomerRelation entity);
         Task UpdateAsync(CustomerRelation entity);

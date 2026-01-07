@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Promotions.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Promotions.Infrastructure.Persistence;
 namespace Promotions.Infrastructure.Migrations
 {
     [DbContext(typeof(PromotionsDbContext))]
-    partial class PromotionsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260106110925_InvertActionCustomerRelation")]
+    partial class InvertActionCustomerRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,7 +101,13 @@ namespace Promotions.Infrastructure.Migrations
                     b.Property<DateTime?>("DteEnd")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("IdAction")
+                        .HasColumnType("int")
+                        .HasColumnName("ID_ACTION");
+
                     b.HasKey("CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart");
+
+                    b.HasIndex("IdAction");
 
                     b.ToTable("TB0042RELATIONS_CUST", (string)null);
                 });
@@ -283,8 +292,8 @@ namespace Promotions.Infrastructure.Migrations
 
                     b.Property<string>("CodDiv")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("CodMeasure")
                         .HasMaxLength(20)
@@ -370,6 +379,17 @@ namespace Promotions.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("ProductDetail");
+                });
+
+            modelBuilder.Entity("Promotions.Domain.CustomerRelations.CustomerRelation", b =>
+                {
+                    b.HasOne("Promotions.Domain.PromoActions.PromoAction", "Action")
+                        .WithMany("CustomerRelations")
+                        .HasForeignKey("IdAction")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Action");
                 });
 
             modelBuilder.Entity("Promotions.Domain.DeliveryPoints.PromoDeliveryPoint", b =>
@@ -464,6 +484,8 @@ namespace Promotions.Infrastructure.Migrations
 
             modelBuilder.Entity("Promotions.Domain.PromoActions.PromoAction", b =>
                 {
+                    b.Navigation("CustomerRelations");
+
                     b.Navigation("DeliveryPoints");
 
                     b.Navigation("Participants");

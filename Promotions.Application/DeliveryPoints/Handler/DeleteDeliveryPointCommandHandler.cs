@@ -26,6 +26,7 @@ namespace Promotions.Application.DeliveryPoints.Commands
                 throw new Exception("Delivery Point not found");
 
             await _repository.DeleteAsync(entity);
+            await _repository.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

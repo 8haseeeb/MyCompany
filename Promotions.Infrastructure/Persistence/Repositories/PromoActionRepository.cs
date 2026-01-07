@@ -35,10 +35,6 @@ namespace Promotions.Infrastructure.Persistence.Repositories
         public async Task<PromoAction?> GetByIdAsync(int idAction)
         {
             return await _context.PromoActions
-                .Include(x => x.Contractor)
-                    .ThenInclude(c => c!.Participants)
-                .Include(x => x.Contractor)
-                    .ThenInclude(c => c!.DeliveryPoints)
                 .Include(x => x.Products)
                     .ThenInclude(p => p.MeasureFields)
                 .Include(x => x.Products)

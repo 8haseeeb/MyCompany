@@ -37,3 +37,21 @@
 2026-01-06 13:22:34.992 +05:00 [INF]  API Gateway started successfully
 2026-01-06 13:22:39.849 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 446.1839 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
 2026-01-06 13:22:39.935 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 539.8683 ms
+2026-01-06 14:12:32.377 +05:00 [INF]  API Gateway started successfully
+2026-01-06 14:12:36.596 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 409.4662 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-06 14:12:36.679 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 503.8999 ms
+2026-01-06 14:18:42.798 +05:00 [INF]  API Gateway started successfully
+2026-01-06 14:18:47.449 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 624.5051 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-06 14:18:47.913 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 1099.6489 ms
+2026-01-06 16:12:19.562 +05:00 [INF]  API Gateway started successfully
+2026-01-06 16:12:28.148 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 351.5197 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-06 16:12:28.354 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 565.3465 ms
+2026-01-06 16:41:25.784 +05:00 [INF]  API Gateway started successfully
+2026-01-06 16:41:29.680 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 396.9814 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-06 16:41:29.805 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 534.0735 ms
+2026-01-06 17:12:20.111 +05:00 [INF]  API Gateway started successfully
+2026-01-06 17:12:25.865 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 692.0789 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-06 17:12:25.958 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 828.1549 ms
+2026-01-06 18:33:17.888 +05:00 [INF]  API Gateway started successfully
+2026-01-06 18:33:22.201 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 515.5254 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-06 18:33:22.311 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 641.3272 ms

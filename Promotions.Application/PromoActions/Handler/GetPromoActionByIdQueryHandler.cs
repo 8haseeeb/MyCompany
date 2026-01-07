@@ -15,10 +15,14 @@ namespace Promotions.Application.PromoActions.Handler
     public class GetPromoActionByIdQueryHandler : IRequestHandler<GetPromoActionByIdQuery, PromoActionDetailDto?>
     {
         private readonly IPromoActionRepository _repository;
+        private readonly Promotions.Application.CustomerRelations.Interfaces.ICustomerRelationRepository _customerRepository;
 
-        public GetPromoActionByIdQueryHandler(IPromoActionRepository repository)
+        public GetPromoActionByIdQueryHandler(
+            IPromoActionRepository repository,
+            Promotions.Application.CustomerRelations.Interfaces.ICustomerRelationRepository customerRepository)
         {
             _repository = repository;
+            _customerRepository = customerRepository;
         }
 
         public async Task<PromoActionDetailDto?> Handle(GetPromoActionByIdQuery request, CancellationToken cancellationToken)
@@ -26,6 +30,9 @@ namespace Promotions.Application.PromoActions.Handler
             var entity = await _repository.GetByIdAsync(request.IdAction);
 
             if (entity == null) return null;
+
+            var customerRelations = await _customerRepository.GetByNodeAndDivAsync(entity.CodContractor, entity.CodDiv);
+            var customerRelation = customerRelations.FirstOrDefault();
 
             return new PromoActionDetailDto
             {
@@ -41,16 +48,16 @@ namespace Promotions.Application.PromoActions.Handler
                 DteToShost = entity.DteToShost,
                 LevParticipants = entity.LevParticipants,
                 
-                CustomerRelation = entity.Contractor == null ? null : new CustomerRelationDetailDto
+                CustomerRelation = customerRelation == null ? null : new CustomerRelationDetailDto
                 {
-                    CodHier = entity.Contractor.CodHier,
-                    CodDiv = entity.Contractor.CodDiv,
-                    CodNode = entity.Contractor.CodNode,
-                    IdLevel = entity.Contractor.IdLevel,
-                    DteStart = entity.Contractor.DteStart,
-                    CodParentNode = entity.Contractor.CodParentNode,
-                    DteEnd = entity.Contractor.DteEnd,
-                    Participants = entity.Contractor.Participants.Select(p => new ParticipantDto
+                    CodHier = customerRelation.CodHier,
+                    CodDiv = customerRelation.CodDiv,
+                    CodNode = customerRelation.CodNode,
+                    IdLevel = customerRelation.IdLevel,
+                    DteStart = customerRelation.DteStart,
+                    CodParentNode = customerRelation.CodParentNode,
+                    DteEnd = customerRelation.DteEnd,
+                    Participants = customerRelation.Participants.Select(p => new ParticipantDto
                     {
                         IdAction = p.IdAction,
                         CodParticipant = p.CodParticipant,
@@ -61,7 +68,7 @@ namespace Promotions.Application.PromoActions.Handler
                         IdLevel = p.IdLevel,
                         DteStart = p.DteStart
                     }).ToList(),
-                    DeliveryPoints = entity.Contractor.DeliveryPoints.Select(dp => new DeliveryPointDto
+                    DeliveryPoints = customerRelation.DeliveryPoints.Select(dp => new DeliveryPointDto
                     {
                         IdAction = dp.IdAction,
                         CodDeliveryPoint = dp.CodDeliveryPoint,

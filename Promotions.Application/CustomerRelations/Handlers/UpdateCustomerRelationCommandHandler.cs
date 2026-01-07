@@ -32,6 +32,7 @@ namespace Promotions.Application.CustomerRelations.Commands.Handlers
             entity.DteEnd = request.DteEnd;
 
             await _repository.UpdateAsync(entity);
+            await _repository.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

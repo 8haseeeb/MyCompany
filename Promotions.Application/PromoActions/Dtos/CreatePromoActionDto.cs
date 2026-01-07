@@ -10,10 +10,6 @@ namespace Promotions.Application.PromoActions.Dtos
         public string CodDiv { get; set; } = null!;
         public string CodContractor { get; set; } = null!;
         
-        public string? ContractorCodHier { get; set; }
-        public int? ContractorIdLevel { get; set; }
-        public DateTime? ContractorDteStart { get; set; }
-
         public DateTime DteStartSellIn { get; set; }
         public DateTime DteEndSellIn { get; set; }
 

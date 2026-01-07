@@ -29,8 +29,16 @@ namespace Promotions.Application.Products.Commands.Handlers
                 CodMeasure = request.CodMeasure
             };
 
-            await _repository.AddAsync(product);
-            await _repository.SaveChangesAsync(cancellationToken);
+            try
+            {
+                await _repository.AddAsync(product);
+                await _repository.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                // This is temporary for debugging 500 errors
+                throw new Exception($"Failed to create Product: {ex.Message} {ex.InnerException?.Message}");
+            }
 
             return Unit.Value; 
         }

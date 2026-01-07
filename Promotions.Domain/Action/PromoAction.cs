@@ -12,10 +12,6 @@ namespace Promotions.Domain.PromoActions
         public string CodDiv { get; set; } = null!;
         public string CodContractor { get; set; } = null!; // Maps to CodNode
         
-        public string? ContractorCodHier { get; set; }
-        public int? ContractorIdLevel { get; set; }
-        public DateTime? ContractorDteStart { get; set; }
-
         public DateTime DteStartSellIn { get; set; }
         public DateTime DteEndSellIn { get; set; }
 
@@ -28,7 +24,7 @@ namespace Promotions.Domain.PromoActions
         public int? LevParticipants { get; set; }
 
         // Navigation Properties
-        public virtual Domain.CustomerRelations.CustomerRelation? Contractor { get; set; }
+        // Navigation Properties
         public virtual ICollection<Domain.Products.PromoProduct> Products { get; set; } = new List<Domain.Products.PromoProduct>();
         public virtual ICollection<Domain.Participants.PromoParticipants> Participants { get; set; } = new List<Domain.Participants.PromoParticipants>();
         public virtual ICollection<Domain.DeliveryPoints.PromoDeliveryPoint> DeliveryPoints { get; set; } = new List<Domain.DeliveryPoints.PromoDeliveryPoint>();
