@@ -15,7 +15,7 @@ public class PromoActionConfiguration : IEntityTypeConfiguration<PromoAction>
             .ValueGeneratedNever();
         builder.Property(x => x.Name).HasColumnName("DESACTION");
         builder.Property(x => x.CodDiv).HasColumnName("CODDIV");
-        builder.Property(x => x.CodContractor).HasColumnName("CODCONTRACTOR");
+
 
         builder.Property(x => x.DteStartSellIn).HasColumnName("DTESTARTSELLIN");
         builder.Property(x => x.DteEndSellIn).HasColumnName("DTEENDSELLIN");

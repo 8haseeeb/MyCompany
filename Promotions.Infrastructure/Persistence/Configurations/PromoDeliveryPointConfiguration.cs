@@ -39,7 +39,8 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             // Relationships
             builder.HasOne(x => x.Relation)
                    .WithMany(r => r.DeliveryPoints)
-                   .HasForeignKey(x => new { x.CodHier, x.CodDiv, x.CodNode, x.IdLevel, x.DteStart });
+                   .HasForeignKey(x => new { x.CodHier, x.CodDiv, x.CodNode, x.IdLevel, x.DteStart })
+                   .OnDelete(DeleteBehavior.NoAction);
 
            
             builder.HasIndex(x => x.IdAction)

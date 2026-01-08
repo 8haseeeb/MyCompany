@@ -24,7 +24,8 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             // Relationships
             builder.HasOne(p => p.Relation)
                    .WithMany(r => r.Participants)
-                   .HasForeignKey(p => new { p.CodHier, p.CodDiv, p.CodNode, p.IdLevel, p.DteStart });
+                   .HasForeignKey(p => new { p.CodHier, p.CodDiv, p.CodNode, p.IdLevel, p.DteStart })
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

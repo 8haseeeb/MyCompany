@@ -1,4 +1,8 @@
 ﻿using MediatR;
+using System.Collections.Generic;
+using Promotions.Application.Participants.Dtos;
+using Promotions.Application.Products.Dtos;
+using Promotions.Application.DeliveryPoints.Dtos;
 
 namespace Promotions.Application.PromoActions.Commands
 {
@@ -6,7 +10,6 @@ namespace Promotions.Application.PromoActions.Commands
         int IdAction,
         string Name,
         string CodDiv,
-        string CodContractor,
         DateTime DteStartSellIn,
         DateTime DteEndSellIn,
         DateTime DteStartSellOut,
@@ -16,3 +19,5 @@ namespace Promotions.Application.PromoActions.Commands
         int? LevParticipants
     ) : IRequest<Unit>;
 }
+
+

@@ -35,6 +35,8 @@ namespace Promotions.Infrastructure.Persistence.Repositories
         public async Task<PromoAction?> GetByIdAsync(int idAction)
         {
             return await _context.PromoActions
+                .Include(x => x.Participants)
+                .Include(x => x.DeliveryPoints)
                 .Include(x => x.Products)
                     .ThenInclude(p => p.MeasureFields)
                 .Include(x => x.Products)
@@ -50,5 +52,13 @@ namespace Promotions.Infrastructure.Persistence.Repositories
 
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
           => await _context.SaveChangesAsync(cancellationToken);
+
+        public async Task<Promotions.Application.Common.Interfaces.IAtomicTransaction> BeginTransactionAsync()
+        {
+            var transaction = await _context.Database.BeginTransactionAsync();
+            return new EfAtomicTransaction(transaction);
+        }
     }
 }
+
+

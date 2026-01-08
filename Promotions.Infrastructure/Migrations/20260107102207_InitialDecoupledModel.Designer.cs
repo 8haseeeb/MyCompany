@@ -12,8 +12,8 @@ using Promotions.Infrastructure.Persistence;
 namespace Promotions.Infrastructure.Migrations
 {
     [DbContext(typeof(PromotionsDbContext))]
-    [Migration("20260107061515_RemovePromoActionCustomerFKs")]
-    partial class RemovePromoActionCustomerFKs
+    [Migration("20260107102207_InitialDecoupledModel")]
+    partial class InitialDecoupledModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -316,11 +316,6 @@ namespace Promotions.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ID_ACTION");
 
-                    b.Property<string>("CodContractor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CODCONTRACTOR");
-
                     b.Property<string>("CodDiv")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -386,7 +381,7 @@ namespace Promotions.Infrastructure.Migrations
                     b.HasOne("Promotions.Domain.CustomerRelations.CustomerRelation", "Relation")
                         .WithMany("DeliveryPoints")
                         .HasForeignKey("CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Action");
@@ -416,7 +411,7 @@ namespace Promotions.Infrastructure.Migrations
                     b.HasOne("Promotions.Domain.CustomerRelations.CustomerRelation", "Relation")
                         .WithMany("Participants")
                         .HasForeignKey("CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Action");

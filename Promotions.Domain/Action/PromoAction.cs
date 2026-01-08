@@ -10,7 +10,6 @@ namespace Promotions.Domain.PromoActions
         public string Name { get; set; } = null!; // DESACTION
 
         public string CodDiv { get; set; } = null!;
-        public string CodContractor { get; set; } = null!; // Maps to CodNode
         
         public DateTime DteStartSellIn { get; set; }
         public DateTime DteEndSellIn { get; set; }

@@ -5,6 +5,8 @@ using Promotions.Application.PromoActions.Commands;
 using Promotions.Application.PromoActions.Dtos;
 using Promotions.Application.PromoActions.Queries;
 
+
+
 namespace Promotions.Api.Controllers
 {
     [ApiController]
@@ -28,7 +30,6 @@ namespace Promotions.Api.Controllers
                 dto.IdAction,
                 dto.Name,
                 dto.CodDiv,
-                dto.CodContractor,
                 dto.DteStartSellIn,
                 dto.DteEndSellIn,
                 dto.DteStartSellOut,
@@ -37,8 +38,19 @@ namespace Promotions.Api.Controllers
                 dto.DteToShost,
                 dto.LevParticipants));
 
+
+
             return Ok();
         }
+
+        [HttpPost("atomic")]
+        public async Task<IActionResult> CreateAtomic(
+            [FromBody] AtomicCreatePromoActionDto dto)
+        {
+            await _mediator.Send(new CreateAtomicPromoActionCommand(dto));
+            return Ok();
+        }
+
 
         
         [HttpGet]

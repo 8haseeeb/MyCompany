@@ -15,6 +15,8 @@ namespace Promotions.Application.PromoActions.Interfaces
         Task<List<PromoAction>> GetAllAsync();
 
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
+        Task<Common.Interfaces.IAtomicTransaction> BeginTransactionAsync();
+
 
     }
 }

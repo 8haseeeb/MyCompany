@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using Promotions.Application.Participants.Dtos;
+using Promotions.Application.Products.Dtos;
+using Promotions.Application.DeliveryPoints.Dtos;
 
 namespace Promotions.Application.PromoActions.Dtos
 {
@@ -8,7 +12,6 @@ namespace Promotions.Application.PromoActions.Dtos
         public string Name { get; set; } = null!; // DESACTION
 
         public string CodDiv { get; set; } = null!;
-        public string CodContractor { get; set; } = null!;
         
         public DateTime DteStartSellIn { get; set; }
         public DateTime DteEndSellIn { get; set; }
@@ -22,3 +25,4 @@ namespace Promotions.Application.PromoActions.Dtos
         public int? LevParticipants { get; set; }
     }
 }
+

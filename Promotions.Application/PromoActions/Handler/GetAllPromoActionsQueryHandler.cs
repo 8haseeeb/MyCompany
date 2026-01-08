@@ -27,7 +27,6 @@ namespace Promotions.Application.PromoActions.Handler
                 IdAction = x.IdAction,
                 Name = x.Name,
                 CodDiv = x.CodDiv,
-                CodContractor = x.CodContractor,
                 DteStartSellIn = x.DteStartSellIn,
                 DteEndSellIn = x.DteEndSellIn,
                 DteStartSellOut = x.DteStartSellOut,

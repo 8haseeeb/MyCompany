@@ -1,7 +1,11 @@
 ﻿using MediatR;
 using Promotions.Application.PromoActions.Interfaces;
 using Promotions.Domain.PromoActions;
+using Promotions.Domain.Participants;
+using Promotions.Domain.Products;
+using Promotions.Domain.DeliveryPoints;
 using System.Threading;
+using System.Linq;
 
 namespace Promotions.Application.PromoActions.Commands.Handlers
 {
@@ -22,7 +26,6 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                 IdAction = request.IdAction,
                 Name = request.Name,
                 CodDiv = request.CodDiv,
-                CodContractor = request.CodContractor,
                 DteStartSellIn = request.DteStartSellIn,
                 DteEndSellIn = request.DteEndSellIn,
                 DteStartSellOut = request.DteStartSellOut,
@@ -39,3 +42,4 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
         }
     }
 }
+

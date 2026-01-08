@@ -313,11 +313,6 @@ namespace Promotions.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ID_ACTION");
 
-                    b.Property<string>("CodContractor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CODCONTRACTOR");
-
                     b.Property<string>("CodDiv")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -383,7 +378,7 @@ namespace Promotions.Infrastructure.Migrations
                     b.HasOne("Promotions.Domain.CustomerRelations.CustomerRelation", "Relation")
                         .WithMany("DeliveryPoints")
                         .HasForeignKey("CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Action");
@@ -413,7 +408,7 @@ namespace Promotions.Infrastructure.Migrations
                     b.HasOne("Promotions.Domain.CustomerRelations.CustomerRelation", "Relation")
                         .WithMany("Participants")
                         .HasForeignKey("CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Action");

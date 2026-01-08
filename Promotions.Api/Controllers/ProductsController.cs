@@ -25,10 +25,11 @@ namespace Promotions.Api.Controllers
             [FromBody] CreateProductDto dto)
         {
             await _mediator.Send(new CreateProductCommand(
-                dto.IdAction,
-                dto.CodProduct,
-                dto.LevProduct,
-                dto.CodDisplay,
+                dto.IdAction ?? 0,
+                dto.CodProduct ?? string.Empty,
+                dto.LevProduct ?? 0,
+                dto.CodDisplay ?? string.Empty,
+
                 dto.CodDiv,
                 dto.QtyEstimated,
                 dto.PerceDiscount1,

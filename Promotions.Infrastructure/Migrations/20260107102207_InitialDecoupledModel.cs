@@ -6,11 +6,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Promotions.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialDecoupledModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "TA500PROMOACTION",
+                columns: table => new
+                {
+                    ID_ACTION = table.Column<int>(type: "int", nullable: false),
+                    DESACTION = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CODDIV = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DTESTARTSELLIN = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DTEENDSELLIN = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DTESTARTSELLOUT = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DTEENDSELLOUT = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DOCUMENTKEY = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DTETOSHOST = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LEVPARTICIPANTS = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TA500PROMOACTION", x => x.ID_ACTION);
+                });
+
             migrationBuilder.CreateTable(
                 name: "TB0042RELATIONS_CUST",
                 columns: table => new
@@ -29,34 +49,29 @@ namespace Promotions.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TA500PROMOACTION",
+                name: "TA5020PRODUCTS",
                 columns: table => new
                 {
-                    ID_ACTION = table.Column<int>(type: "int", nullable: false),
-                    DESACTION = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CODDIV = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CODCONTRACTOR = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DTESTARTSELLIN = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DTEENDSELLIN = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DTESTARTSELLOUT = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DTEENDSELLOUT = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DOCUMENTKEY = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DTETOSHOST = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LEVPARTICIPANTS = table.Column<int>(type: "int", nullable: true),
-                    ContractorCodHier = table.Column<string>(type: "nvarchar(10)", nullable: true),
-                    ContractorCodDiv = table.Column<string>(type: "nvarchar(10)", nullable: true),
-                    ContractorCodNode = table.Column<string>(type: "nvarchar(30)", nullable: true),
-                    ContractorIdLevel = table.Column<int>(type: "int", nullable: true),
-                    ContractorDteStart = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    IdAction = table.Column<int>(type: "int", nullable: false),
+                    CodProduct = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LevProduct = table.Column<int>(type: "int", nullable: false),
+                    CodDisplay = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CodDiv = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    QtyEstimated = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PerceDiscount1 = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    PerceDiscount2 = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    NumMeasure = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    CodMeasure = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TA500PROMOACTION", x => x.ID_ACTION);
+                    table.PrimaryKey("PK_TA5020PRODUCTS", x => new { x.IdAction, x.CodProduct, x.LevProduct, x.CodDisplay });
                     table.ForeignKey(
-                        name: "FK_TA500PROMOACTION_TB0042RELATIONS_CUST_ContractorCodHier_ContractorCodDiv_ContractorCodNode_ContractorIdLevel_ContractorDteSt~",
-                        columns: x => new { x.ContractorCodHier, x.ContractorCodDiv, x.ContractorCodNode, x.ContractorIdLevel, x.ContractorDteStart },
-                        principalTable: "TB0042RELATIONS_CUST",
-                        principalColumns: new[] { "CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart" });
+                        name: "FK_TA5020PRODUCTS_TA500PROMOACTION_IdAction",
+                        column: x => x.IdAction,
+                        principalTable: "TA500PROMOACTION",
+                        principalColumn: "ID_ACTION",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,8 +100,7 @@ namespace Promotions.Infrastructure.Migrations
                         name: "FK_TA5012PARTICIPANTS_TB0042RELATIONS_CUST_CodHier_CodDiv_CodNode_IdLevel_DteStart",
                         columns: x => new { x.CodHier, x.CodDiv, x.CodNode, x.IdLevel, x.DteStart },
                         principalTable: "TB0042RELATIONS_CUST",
-                        principalColumns: new[] { "CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart" },
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumns: new[] { "CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart" });
                 });
 
             migrationBuilder.CreateTable(
@@ -115,34 +129,7 @@ namespace Promotions.Infrastructure.Migrations
                         name: "FK_TA5014DELIVERYPOINTS_TB0042RELATIONS_CUST_CodHier_CodDiv_CodNode_IdLevel_DteStart",
                         columns: x => new { x.CodHier, x.CodDiv, x.CodNode, x.IdLevel, x.DteStart },
                         principalTable: "TB0042RELATIONS_CUST",
-                        principalColumns: new[] { "CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart" },
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TA5020PRODUCTS",
-                columns: table => new
-                {
-                    IdAction = table.Column<int>(type: "int", nullable: false),
-                    CodProduct = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LevProduct = table.Column<int>(type: "int", nullable: false),
-                    CodDisplay = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CodDiv = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    QtyEstimated = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PerceDiscount1 = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    PerceDiscount2 = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    NumMeasure = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    CodMeasure = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TA5020PRODUCTS", x => new { x.IdAction, x.CodProduct, x.LevProduct, x.CodDisplay });
-                    table.ForeignKey(
-                        name: "FK_TA5020PRODUCTS_TA500PROMOACTION_IdAction",
-                        column: x => x.IdAction,
-                        principalTable: "TA500PROMOACTION",
-                        principalColumn: "ID_ACTION",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumns: new[] { "CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart" });
                 });
 
             migrationBuilder.CreateTable(
@@ -218,11 +205,6 @@ namespace Promotions.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TA500PROMOACTION_ContractorCodHier_ContractorCodDiv_ContractorCodNode_ContractorIdLevel_ContractorDteStart",
-                table: "TA500PROMOACTION",
-                columns: new[] { "ContractorCodHier", "ContractorCodDiv", "ContractorCodNode", "ContractorIdLevel", "ContractorDteStart" });
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TA5012PARTICIPANTS_CodHier_CodDiv_CodNode_IdLevel_DteStart",
                 table: "TA5012PARTICIPANTS",
                 columns: new[] { "CodHier", "CodDiv", "CodNode", "IdLevel", "DteStart" });
@@ -259,6 +241,9 @@ namespace Promotions.Infrastructure.Migrations
                 name: "TA5150PROMOARTICLE");
 
             migrationBuilder.DropTable(
+                name: "TB0042RELATIONS_CUST");
+
+            migrationBuilder.DropTable(
                 name: "TA5026PRODUCTDETAILS");
 
             migrationBuilder.DropTable(
@@ -266,9 +251,6 @@ namespace Promotions.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "TA500PROMOACTION");
-
-            migrationBuilder.DropTable(
-                name: "TB0042RELATIONS_CUST");
         }
     }
 }

@@ -31,15 +31,18 @@ namespace Promotions.Application.PromoActions.Handler
 
             if (entity == null) return null;
 
-            var customerRelations = await _customerRepository.GetByNodeAndDivAsync(entity.CodContractor, entity.CodDiv);
-            var customerRelation = customerRelations.FirstOrDefault();
+            // Logic: Derive Contractor from the first Participant found
+            var firstParticipant = entity.Participants?.FirstOrDefault();
+            var customerRelation = firstParticipant != null 
+                ? (await _customerRepository.GetByNodeAndDivAsync(firstParticipant.CodNode, firstParticipant.CodDiv)).FirstOrDefault() 
+                : null;
 
             return new PromoActionDetailDto
             {
                 IdAction = entity.IdAction,
                 Name = entity.Name,
                 CodDiv = entity.CodDiv,
-                CodContractor = entity.CodContractor,
+                CodContractor = firstParticipant?.CodNode ?? "N/A", // Derived
                 DteStartSellIn = entity.DteStartSellIn,
                 DteEndSellIn = entity.DteEndSellIn,
                 DteStartSellOut = entity.DteStartSellOut,
