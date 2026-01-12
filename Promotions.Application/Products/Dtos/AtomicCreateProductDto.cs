@@ -10,6 +10,8 @@ namespace Promotions.Application.Products.Dtos
         public new int? IdAction { get; set; }
 
         public List<AtomicCreateProductDetailDto> Details { get; set; } = new();
+        public List<CreatePromoMeasureFieldDto> MeasureFields { get; set; } = new();
     }
 }
+
 

@@ -84,7 +84,7 @@ namespace Promotions.Application.PromoActions.Handler
                     }).ToList()
                 },
 
-                Products = entity.Products.Select(p => new PromoProductDetailViewDto
+                Products = (await Task.WhenAll(entity.Products.Select(async p => new PromoProductDetailViewDto
                 {
                     CodProduct = p.CodProduct,
                     LevProduct = p.LevProduct,
@@ -95,17 +95,14 @@ namespace Promotions.Application.PromoActions.Handler
                     PerceDiscount2 = p.PerceDiscount2,
                     NumMeasure = p.NumMeasure,
                     CodMeasure = p.CodMeasure,
-                    MeasureFields = p.MeasureFields.Select(mf => new PromoMeasureFieldDto
-                    {
-                        IdAction = mf.IdAction,
-                        CodProduct = mf.CodProduct,
-                        LevProduct = mf.LevProduct,
-                        CodDisplay = mf.CodDisplay,
-                        CodDiv = mf.CodDiv,
-                        CodMeasure = mf.CodMeasure,
-                        FieldName = mf.FieldName,
-                        Formula = mf.Formula
-                    }).ToList(),
+                    MeasureFields = (await _repository.GetMeasureFieldsByMeasureAsync(p.CodDiv, p.CodMeasure ?? string.Empty))
+                        .Select(mf => new PromoMeasureFieldDto
+                        {
+                            CodDiv = mf.CodDiv,
+                            CodMeasure = mf.CodMeasure,
+                            FieldName = mf.FieldName,
+                            Formula = mf.Formula
+                        }).ToList(),
                     Details = p.Details.Select(d => new ProductDetailHierarchyDto
                     {
                         CodNode = d.CodNode,
@@ -123,8 +120,9 @@ namespace Promotions.Application.PromoActions.Handler
                             CodNodeN = a.CodNodeN
                         }).ToList()
                     }).ToList()
-                }).ToList()
+                }))).ToList()
             };
         }
+
     }
 }

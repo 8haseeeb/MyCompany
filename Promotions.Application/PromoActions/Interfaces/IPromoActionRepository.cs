@@ -16,7 +16,11 @@ namespace Promotions.Application.PromoActions.Interfaces
 
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
         Task<Common.Interfaces.IAtomicTransaction> BeginTransactionAsync();
-
-
+        Task AddMeasureFieldAsync(Promotions.Domain.Measures.PromoMeasureField measureField);
+        Task<bool> ExistsMeasureFieldAsync(string codDiv, string codMeasure, string fieldName);
+        Task<List<Promotions.Domain.Measures.PromoMeasureField>> GetMeasureFieldsByMeasureAsync(string codDiv, string codMeasure);
     }
 }
+
+
+

@@ -30,8 +30,14 @@ namespace Promotions.Application.CustomerRelations.Commands.Handlers
                 DteEnd = request.DteEnd
             };
 
+            if (await _repository.ExistsAsync(request.CodHier, request.CodDiv, request.CodNode, request.IdLevel, request.DteStart))
+            {
+                return Unit.Value;
+            }
+
             await _repository.AddAsync(entity);
             await _repository.SaveChangesAsync(cancellationToken);
+
             return Unit.Value;
         }
     }

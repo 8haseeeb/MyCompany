@@ -47,8 +47,27 @@ namespace Promotions.Api.Controllers
         public async Task<IActionResult> CreateAtomic(
             [FromBody] AtomicCreatePromoActionDto dto)
         {
-            await _mediator.Send(new CreateAtomicPromoActionCommand(dto));
-            return Ok();
+            try
+            {
+                await _mediator.Send(new CreateAtomicPromoActionCommand(dto));
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                var messages = new List<string> { ex.Message };
+                var inner = ex.InnerException;
+                while (inner != null)
+                {
+                    messages.Add(inner.Message);
+                    inner = inner.InnerException;
+                }
+
+                return StatusCode(500, new
+                {
+                    error = "An error occurred while creating the atomic promotion.",
+                    details = messages
+                });
+            }
         }
 
 

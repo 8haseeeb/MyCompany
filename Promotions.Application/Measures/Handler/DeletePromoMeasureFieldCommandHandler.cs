@@ -18,10 +18,11 @@ namespace Promotions.Application.Measures.Commands
         {
            
             var entity = await _repository.GetByIdAsync(
-                request.CodMeasure,
                 request.CodDiv,
+                request.CodMeasure,
                 request.FieldName,
                 cancellationToken);
+
 
             if (entity == null)
                 throw new Exception("Record not found"); 

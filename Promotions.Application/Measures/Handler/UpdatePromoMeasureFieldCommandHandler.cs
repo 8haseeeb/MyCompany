@@ -19,8 +19,8 @@ namespace Promotions.Application.Measures.Commands
             CancellationToken cancellationToken)
         {
             var entity = await _repository.GetByIdAsync(
-                request.CodMeasure,
                 request.CodDiv,
+                request.CodMeasure,
                 request.FieldName,
                 cancellationToken);
 

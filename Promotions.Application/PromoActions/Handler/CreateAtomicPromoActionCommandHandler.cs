@@ -6,6 +6,8 @@ using Promotions.Domain.Products;
 using Promotions.Domain.DeliveryPoints;
 using Promotions.Domain.ProductDetails;
 using Promotions.Domain.Articles;
+using Promotions.Domain.Measures;
+
 using System.Threading;
 using System.Linq;
 using System.Threading.Tasks;
@@ -109,14 +111,39 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                 }).ToList()
             };
 
+            // Collect and Map Master Measure Fields (Unique by Div, Measure, and FieldName)
+            var measureFields = dto.Products
+                .Where(p => p.MeasureFields != null && p.MeasureFields.Any())
+                .SelectMany(p => p.MeasureFields.Select(mf => new PromoMeasureField
+                {
+                    CodDiv = p.CodDiv,
+                    CodMeasure = p.CodMeasure ?? string.Empty,
+                    FieldName = mf.FieldName,
+                    Formula = mf.Formula
+                }))
+                .GroupBy(mf => new { mf.CodDiv, mf.CodMeasure, mf.FieldName })
+                .Select(g => g.First())
+                .ToList();
+
             using var transaction = await _repository.BeginTransactionAsync();
             try
             {
+                // Save Master Data first (Measure Fields) - Skip if already exists
+                foreach (var mf in measureFields)
+                {
+                    if (!await _repository.ExistsMeasureFieldAsync(mf.CodDiv, mf.CodMeasure, mf.FieldName))
+                    {
+                        await _repository.AddMeasureFieldAsync(mf);
+                    }
+                }
+
+
                 await _repository.AddAsync(action);
                 await _repository.SaveChangesAsync(cancellationToken);
                 
                 await transaction.CommitAsync(cancellationToken);
             }
+
             catch
             {
                 await transaction.RollbackAsync(cancellationToken);

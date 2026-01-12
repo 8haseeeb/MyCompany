@@ -26,16 +26,13 @@ namespace Promotions.Api.Controllers
         public async Task<IActionResult> Create([FromBody] PromoMeasureFieldDto dto)
         {
             await _mediator.Send(new CreatePromoMeasureFieldCommand(
-                dto.IdAction,
-                dto.CodProduct,
-                dto.LevProduct,
-                dto.CodDisplay,
                 dto.CodDiv,
                 dto.CodMeasure,
                 dto.FieldName,
                 dto.Formula));
             return Ok();
         }        
+
         [HttpGet]
         public async Task<IActionResult> GetAllPromoMeasures()
         {

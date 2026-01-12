@@ -29,10 +29,11 @@ namespace Promotions.Infrastructure.Persistence.Repositories
         }
              
             public async Task<PromoMeasureField?> GetByIdAsync(
-            string codMeasure,
             string codDiv,
+            string codMeasure,
             string fieldName,
             CancellationToken cancellationToken)
+
         {
            
             return await _context.PromoMeasureFields.FindAsync(

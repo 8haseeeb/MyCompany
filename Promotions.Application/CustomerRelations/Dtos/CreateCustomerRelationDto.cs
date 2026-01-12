@@ -9,6 +9,8 @@
         public DateTime DteStart { get; set; }
 
         public string CodParentNode { get; set; } = null!;
+
         public DateTime? DteEnd { get; set; }
+
     }
 }
