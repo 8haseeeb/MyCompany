@@ -1,0 +1,2337 @@
+2026-01-13 12:56:29.499 +05:00 [INF]  Promotion API started successfully
+2026-01-13 12:56:38.827 +05:00 [INF] HTTP GET /swagger/index.html responded 200 in 122.0179 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: <!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css">
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <style>
+
+        html {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            background: #fafafa;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div id="swagger-ui"></div>
+
+    <!-- Workaround for https://github.com/swagger-api/swagger-editor/issues/1371 -->
+    <script>
+        if (window.navigator.userAgent.indexOf("Edge") > -1) {
+            console.log("Removing native Edge fetch in favor of swagger-ui's polyfill")
+            window.fetch = undefined;
+        }
+    </script>
+
+    <script src="./swagger-ui-bundle.js"></script>
+    <script src="./swagger-ui-standalone-preset.js"></script>
+    <script>
+        /* Source: https://gist.github.com/lamberta/3768814
+         * Parse a string function definition and return a function object. Does not use eval.
+         * @param {string} str
+         * @return {function}
+         *
+         * Example:
+         *  var f = function (x, y) { return x * y; };
+         *  var g = parseFunction(f.toString());
+         *  g(33, 3); //=> 99
+         */
+        function parseFunction(str) {
+            if (!str) return void (0);
+
+            var fn_body_idx = str.indexOf('{'),
+                fn_body = str.substring(fn_body_idx + 1, str.lastIndexOf('}')),
+                fn_declare = str.substring(0, fn_body_idx),
+                fn_params = fn_declare.substring(fn_declare.indexOf('(') + 1, fn_declare.lastIndexOf(')')),
+                args = fn_params.split(',');
+
+            args.push(fn_body);
+
+            function Fn() {
+                return Function.apply(this, args);
+            }
+            Fn.prototype = Function.prototype;
+
+            return new Fn();
+        }
+
+        window.onload = function () {
+            var configObject = JSON.parse('{"urls":[{"url":"v1/swagger.json","name":"Promotions.Api v1"}],"deepLinking":false,"persistAuthorization":false,"displayOperationId":false,"defaultModelsExpandDepth":1,"defaultModelExpandDepth":1,"defaultModelRendering":"example","displayRequestDuration":false,"docExpansion":"list","showExtensions":false,"showCommonExtensions":false,"supportedSubmitMethods":["get","put","post","delete","options","head","patch","trace"],"tryItOutEnabled":false}');
+            var oauthConfigObject = JSON.parse('{"scopeSeparator":" ","scopes":[],"useBasicAuthenticationWithAccessCodeGrant":false,"usePkceWithAuthorizationCodeGrant":false}');
+
+            // Workaround for https://github.com/swagger-api/swagger-ui/issues/5945
+            configObject.urls.forEach(function (item) {
+                if (item.url.startsWith("http") || item.url.startsWith("/")) return;
+                item.url = window.location.href.replace("index.html", item.url).split('#')[0];
+            });
+
+            // If validatorUrl is not explicitly provided, disable the feature by setting to null
+            if (!configObject.hasOwnProperty("validatorUrl"))
+                configObject.validatorUrl = null
+
+            // If oauth2RedirectUrl isn't specified, use the built-in default
+            if (!configObject.hasOwnProperty("oauth2RedirectUrl"))
+                configObject.oauth2RedirectUrl = (new URL("oauth2-redirect.html", window.location.href)).href;
+
+            // Apply mandatory parameters
+            configObject.dom_id = "#swagger-ui";
+            configObject.presets = [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset];
+            configObject.layout = "StandaloneLayout";
+
+            // Parse and add interceptor functions
+            var interceptors = JSON.parse('{}');
+            if (interceptors.RequestInterceptorFunction)
+                configObject.requestInterceptor = parseFunction(interceptors.RequestInterceptorFunction);
+            if (interceptors.ResponseInterceptorFunction)
+                configObject.responseInterceptor = parseFunction(interceptors.ResponseInterceptorFunction);
+
+            // Begin Swagger UI call region
+
+            const ui = SwaggerUIBundle(configObject);
+
+            ui.initOAuth(oauthConfigObject);
+
+            // End Swagger UI call region
+
+            window.ui = ui
+        }
+    </script>
+</body>
+</html>
+
+2026-01-13 12:56:38.901 +05:00 [INF] HTTP GET /swagger/index.html responded 200 in 207.1379 ms
+2026-01-13 12:56:39.230 +05:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 73.8990 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Promotions.Api",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/promotions/customer-relations": {
+      "post": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRelationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRelationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRelationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "parameters": [
+          {
+            "name": "codHier",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idLevel",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dteStart",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRelationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRelationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRelationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "parameters": [
+          {
+            "name": "codHier",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idLevel",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dteStart",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/customer-relations/{codHier}/{codDiv}/{codNode}/{idLevel}/{dteStart}": {
+      "get": {
+        "tags": [
+          "CustomerRelations"
+        ],
+        "parameters": [
+          {
+            "name": "codHier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idLevel",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dteStart",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/actions/{idAction}/participants": {
+      "post": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateParticipantDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateParticipantDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateParticipantDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/actions/{idAction}/participants/{codParticipant}": {
+      "put": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codParticipant",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParticipantDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParticipantDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParticipantDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codParticipant",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/participants/all": {
+      "get": {
+        "tags": [
+          "Participants"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/actions": {
+      "post": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoActionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoActionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoActionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoActionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoActionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoActionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/actions/atomic": {
+      "post": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtomicCreatePromoActionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtomicCreatePromoActionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtomicCreatePromoActionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/actions/{idAction}": {
+      "get": {
+        "tags": [
+          "Promotion Actions"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/promo-articles": {
+      "post": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoArticleDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoArticleDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoArticleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "parameters": [
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoArticleDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoArticleDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoArticleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "parameters": [
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/promo-articles/find": {
+      "get": {
+        "tags": [
+          "Promotion Articles"
+        ],
+        "parameters": [
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/delivery-points/{idAction}/{codDeliveryPoint}": {
+      "post": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDeliveryPoint",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDeliveryPointDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDeliveryPointDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDeliveryPointDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDeliveryPoint",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDeliveryPoint",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeliveryPointDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeliveryPointDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeliveryPointDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDeliveryPoint",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/delivery-points": {
+      "get": {
+        "tags": [
+          "Promotion Delivery Points"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/measures": {
+      "post": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromoMeasureFieldDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromoMeasureFieldDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromoMeasureFieldDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/measures/{codMeasure}/{codDiv}/{fieldName}": {
+      "get": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "parameters": [
+          {
+            "name": "codMeasure",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "parameters": [
+          {
+            "name": "codMeasure",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoMeasureFieldDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoMeasureFieldDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoMeasureFieldDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Measures"
+        ],
+        "parameters": [
+          {
+            "name": "codMeasure",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fieldName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/product-details": {
+      "post": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDetailDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDetailDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDetailDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDetailDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDetailDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDetailDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/product-details/action/{idAction}": {
+      "get": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/product-details/find": {
+      "get": {
+        "tags": [
+          "Promotion Product Details"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codNode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codDiv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/products": {
+      "post": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/products/action/{idAction}": {
+      "get": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/promotions/products/{idAction}/{codProduct}/{levProduct}/{codDisplay}": {
+      "get": {
+        "tags": [
+          "Promotion Products"
+        ],
+        "parameters": [
+          {
+            "name": "idAction",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codProduct",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "levProduct",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "codDisplay",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Promotions": {
+      "get": {
+        "tags": [
+          "Promotions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/WeatherForecast": {
+      "get": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AtomicCreateProductDetailDto": {
+        "type": "object",
+        "properties": {
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "flgInclusion": {
+            "type": "boolean"
+          },
+          "articles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AtomicCreatePromoArticleDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AtomicCreateProductDto": {
+        "type": "object",
+        "properties": {
+          "codProduct": {
+            "type": "string",
+            "nullable": true
+          },
+          "levProduct": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "codDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "qtyEstimated": {
+            "type": "number",
+            "format": "double"
+          },
+          "perceDiscount1": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "perceDiscount2": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "numMeasure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "codMeasure": {
+            "type": "string",
+            "nullable": true
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AtomicCreateProductDetailDto"
+            },
+            "nullable": true
+          },
+          "measureFields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreatePromoMeasureFieldDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AtomicCreatePromoActionDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteStartSellIn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteEndSellIn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteStartSellOut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteEndSellOut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "documentKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteToShost": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "levParticipants": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "participants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateParticipantDto"
+            },
+            "nullable": true
+          },
+          "deliveryPoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateDeliveryPointDto"
+            },
+            "nullable": true
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AtomicCreateProductDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AtomicCreatePromoArticleDto": {
+        "type": "object",
+        "properties": {
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode1": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode2": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNodeN": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateCustomerRelationDto": {
+        "type": "object",
+        "properties": {
+          "codHier": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "idLevel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dteStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "codParentNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateDeliveryPointDto": {
+        "type": "object",
+        "properties": {
+          "codDeliveryPoint": {
+            "type": "string",
+            "nullable": true
+          },
+          "flgInclusion": {
+            "type": "boolean"
+          },
+          "codHier": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "idLevel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dteStart": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateParticipantDto": {
+        "type": "object",
+        "properties": {
+          "codParticipant": {
+            "type": "string",
+            "nullable": true
+          },
+          "flgInclusion": {
+            "type": "boolean"
+          },
+          "codHier": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "idLevel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dteStart": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateProductDetailDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "codProduct": {
+            "type": "string",
+            "nullable": true
+          },
+          "levProduct": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "codDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "flgInclusion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateProductDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "codProduct": {
+            "type": "string",
+            "nullable": true
+          },
+          "levProduct": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "codDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "qtyEstimated": {
+            "type": "number",
+            "format": "double"
+          },
+          "perceDiscount1": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "perceDiscount2": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "numMeasure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "codMeasure": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePromoActionDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteStartSellIn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteEndSellIn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteStartSellOut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteEndSellOut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "documentKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteToShost": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "levParticipants": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePromoArticleDto": {
+        "type": "object",
+        "properties": {
+          "idAction": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "codProduct": {
+            "type": "string",
+            "nullable": true
+          },
+          "levProduct": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "codDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode1": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode2": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNodeN": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePromoMeasureFieldDto": {
+        "type": "object",
+        "properties": {
+          "fieldName": {
+            "type": "string",
+            "nullable": true
+          },
+          "formula": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PromoMeasureFieldDto": {
+        "type": "object",
+        "properties": {
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "codMeasure": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldName": {
+            "type": "string",
+            "nullable": true
+          },
+          "formula": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateCustomerRelationDto": {
+        "type": "object",
+        "properties": {
+          "codParentNode": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateDeliveryPointDto": {
+        "type": "object",
+        "properties": {
+          "flgInclusion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateParticipantDto": {
+        "type": "object",
+        "properties": {
+          "flgInclusion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateProductDetailDto": {
+        "type": "object",
+        "properties": {
+          "flgInclusion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateProductDto": {
+        "type": "object",
+        "properties": {
+          "codDiv": {
+            "type": "string",
+            "nullable": true
+          },
+          "qtyEstimated": {
+            "type": "number",
+            "format": "double"
+          },
+          "perceDiscount1": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "perceDiscount2": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "numMeasure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "codMeasure": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdatePromoActionDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteEndSellIn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dteEndSellOut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "documentKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "dteToShost": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "levParticipants": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdatePromoArticleDto": {
+        "type": "object",
+        "properties": {
+          "codNode1": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNode2": {
+            "type": "string",
+            "nullable": true
+          },
+          "codNodeN": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdatePromoMeasureFieldDto": {
+        "type": "object",
+        "properties": {
+          "formula": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeatherForecast": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "temperatureC": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "temperatureF": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "your valid token",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}
+2026-01-13 12:56:39.271 +05:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 116.3759 ms
+2026-01-13 12:58:58.422 +05:00 [WRN] No store type was specified for the decimal property 'NumMeasure' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-13 12:58:58.440 +05:00 [WRN] No store type was specified for the decimal property 'PerceDiscount1' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-13 12:58:58.445 +05:00 [WRN] No store type was specified for the decimal property 'PerceDiscount2' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-13 12:58:58.450 +05:00 [WRN] No store type was specified for the decimal property 'QtyEstimated' on entity type 'PromoProduct'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-01-13 12:59:00.817 +05:00 [INF] HTTP GET /api/promotions/customer-relations responded 200 in 5676.2930 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: [{"codHier":"H-1111","codDiv":"DIV-1111","codNode":"CUST-1111","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":null},{"codHier":"H-2255","codDiv":"DIV-2255","codNode":"CUST-2255","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":null},{"codHier":"H-3333","codDiv":"DIV-3333","codNode":"CUST-3333","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":null},{"codHier":"H-3344","codDiv":"DIV-3345","codNode":"CUST-3345","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":null},{"codHier":"H-3345","codDiv":"DIV-3345","codNode":"CUST-3345","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":null},{"codHier":"H-5555","codDiv":"DIV-5555","codNode":"CUST-5555","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":null},{"codHier":"H-6000","codDiv":"DIV-6000","codNode":"CUST-6000","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":"2026-12-31T00:00:00"},{"codHier":"H-7000","codDiv":"DIV-7000","codNode":"CUST-7000","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":null},{"codHier":"H-7777","codDiv":"DIV-7777","codNode":"CUST-7777","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":null},{"codHier":"H-8000","codDiv":"DIV-8000","codNode":"CUST-8000","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":null},{"codHier":"H-8888","codDiv":"DIV-8888","codNode":"CUST-8888","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":null},{"codHier":"H-9000","codDiv":"DIV-9000","codNode":"CUST-9000","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":null},{"codHier":"H-9999","codDiv":"DIV-9999","codNode":"CUST-9999","idLevel":10,"dteStart":"2026-01-01T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-01-13 12:59:00.838 +05:00 [INF] HTTP GET /api/promotions/customer-relations responded 200 in 5698.0076 ms
+2026-01-13 12:59:10.841 +05:00 [INF] HTTP GET /api/actions/1111/participants responded 200 in 536.7143 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: [{"idAction":1111,"codParticipant":"P-1111","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"}]
+2026-01-13 12:59:10.854 +05:00 [INF] HTTP GET /api/actions/1111/participants responded 200 in 549.6863 ms
+2026-01-13 12:59:25.168 +05:00 [INF] HTTP GET /api/participants/all responded 200 in 265.0721 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: [{"idAction":1111,"codParticipant":"P-1111","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"},{"idAction":5555,"codParticipant":"P-5555","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"},{"idAction":6000,"codParticipant":"P-6000","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"},{"idAction":7000,"codParticipant":"P-7000","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"},{"idAction":7777,"codParticipant":"P-7777","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"},{"idAction":8888,"codParticipant":"P-8888","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"},{"idAction":9000,"codParticipant":"P-9000","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"},{"idAction":9999,"codParticipant":"P-9999","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"}]
+2026-01-13 12:59:25.183 +05:00 [INF] HTTP GET /api/participants/all responded 200 in 280.1865 ms
+2026-01-13 12:59:35.516 +05:00 [INF] HTTP GET /api/promotions/promo-articles responded 200 in 140.8997 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: [{"idAction":1111,"codProduct":"PROD-1111","levProduct":1,"codDisplay":"DISP-1111","codDiv":"DIV-1111","codNode":"NODE-1111","codNode1":"A1","codNode2":null,"codNodeN":null,"productDetail":null},{"idAction":5555,"codProduct":"PROD-5555","levProduct":1,"codDisplay":"DISP-5555","codDiv":"DIV-5555","codNode":"NODE-5555","codNode1":null,"codNode2":null,"codNodeN":null,"productDetail":null},{"idAction":6000,"codProduct":"PROD-6000","levProduct":1,"codDisplay":"DISP-6000","codDiv":"DIV-6000","codNode":"DET-6000","codNode1":"SKU-6001","codNode2":"V-GOLD","codNodeN":"SIZE-XL","productDetail":null},{"idAction":7777,"codProduct":"PROD-7777","levProduct":1,"codDisplay":"DISP-7777","codDiv":"DIV-7777","codNode":"NODE-7777","codNode1":"A1","codNode2":"A2","codNodeN":null,"productDetail":null},{"idAction":8888,"codProduct":"PROD-8888","levProduct":1,"codDisplay":"DISP-8888","codDiv":"DIV-8888","codNode":"NODE-8888","codNode1":"A1","codNode2":null,"codNodeN":null,"productDetail":null},{"idAction":9000,"codProduct":"PROD-9000","levProduct":1,"codDisplay":"DISP-9000","codDiv":"DIV-9000","codNode":"NODE-9000","codNode1":"A1","codNode2":null,"codNodeN":null,"productDetail":null},{"idAction":9999,"codProduct":"PROD-9999","levProduct":1,"codDisplay":"DISP-9999","codDiv":"DIV-9999","codNode":"NODE-9999","codNode1":"ERR","codNode2":null,"codNodeN":null,"productDetail":null}]
+2026-01-13 12:59:35.525 +05:00 [INF] HTTP GET /api/promotions/promo-articles responded 200 in 149.2679 ms
+2026-01-13 12:59:45.263 +05:00 [INF] HTTP GET /api/promotions/delivery-points responded 200 in 133.6934 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: [{"idAction":1111,"codDeliveryPoint":"DP-1111","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"},{"idAction":6000,"codDeliveryPoint":"d-6000","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"},{"idAction":7000,"codDeliveryPoint":"DP-7000","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"},{"idAction":7777,"codDeliveryPoint":"DP-7777","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"},{"idAction":8888,"codDeliveryPoint":"DP-8888","flgInclusion":true,"codHier":null,"codDiv":null,"codNode":null,"idLevel":0,"dteStart":"0001-01-01T00:00:00"}]
+2026-01-13 12:59:45.275 +05:00 [INF] HTTP GET /api/promotions/delivery-points responded 200 in 145.5228 ms
+2026-01-13 12:59:53.803 +05:00 [INF] HTTP GET /api/promotions/measures responded 200 in 76.0876 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: [{"codDiv":"DIV-1111","codMeasure":"MEASURE-1111","fieldName":"TAX_PROMO","formula":"15.0"}]
+2026-01-13 12:59:53.824 +05:00 [INF] HTTP GET /api/promotions/measures responded 200 in 97.0559 ms
+2026-01-13 13:00:04.187 +05:00 [INF] HTTP GET /api/promotions/product-details responded 200 in 86.6907 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: [{"idAction":1111,"codProduct":"PROD-1111","levProduct":1,"codDisplay":"DISP-1111","codNode":"NODE-1111","codDiv":"DIV-1111","flgInclusion":true},{"idAction":5555,"codProduct":"PROD-5555","levProduct":1,"codDisplay":"DISP-5555","codNode":"NODE-5555","codDiv":"DIV-5555","flgInclusion":true},{"idAction":6000,"codProduct":"PROD-6000","levProduct":1,"codDisplay":"DISP-6000","codNode":"DET-6000","codDiv":"DIV-6000","flgInclusion":true},{"idAction":7777,"codProduct":"PROD-7777","levProduct":1,"codDisplay":"DISP-7777","codNode":"NODE-7777","codDiv":"DIV-7777","flgInclusion":true},{"idAction":8888,"codProduct":"PROD-8888","levProduct":1,"codDisplay":"DISP-8888","codNode":"NODE-8888","codDiv":"DIV-8888","flgInclusion":true},{"idAction":9000,"codProduct":"PROD-9000","levProduct":1,"codDisplay":"DISP-9000","codNode":"NODE-9000","codDiv":"DIV-9000","flgInclusion":true},{"idAction":9999,"codProduct":"PROD-9999","levProduct":1,"codDisplay":"DISP-9999","codNode":"NODE-9999","codDiv":"DIV-9999","flgInclusion":true}]
+2026-01-13 13:00:04.200 +05:00 [INF] HTTP GET /api/promotions/product-details responded 200 in 99.5174 ms
+2026-01-13 13:00:13.509 +05:00 [INF] HTTP GET /api/promotions/products responded 200 in 117.1470 ms | User: ssss (N/A) | IP: ::1 | RequestBody:  | ResponseBody: [{"idAction":1111,"codProduct":"PROD-1111","levProduct":1,"codDisplay":"DISP-1111","codDiv":"DIV-1111","qtyEstimated":12000.00,"perceDiscount1":null,"perceDiscount2":null,"numMeasure":null,"codMeasure":"MEASURE-1111"},{"idAction":5555,"codProduct":"PROD-5555","levProduct":1,"codDisplay":"DISP-5555","codDiv":"DIV-5555","qtyEstimated":500.00,"perceDiscount1":null,"perceDiscount2":null,"numMeasure":null,"codMeasure":null},{"idAction":6000,"codProduct":"PROD-6000","levProduct":1,"codDisplay":"DISP-6000","codDiv":"DIV-6000","qtyEstimated":100.00,"perceDiscount1":15.00,"perceDiscount2":0.00,"numMeasure":1.00,"codMeasure":"UNIT"},{"idAction":7000,"codProduct":"PROD-7000","levProduct":1,"codDisplay":"DISP-7000","codDiv":"DIV-7000","qtyEstimated":500.00,"perceDiscount1":null,"perceDiscount2":null,"numMeasure":null,"codMeasure":null},{"idAction":7777,"codProduct":"PROD-7777","levProduct":1,"codDisplay":"DISP-7777","codDiv":"DIV-7777","qtyEstimated":1500.00,"perceDiscount1":null,"perceDiscount2":null,"numMeasure":null,"codMeasure":null},{"idAction":8888,"codProduct":"PROD-8888","levProduct":1,"codDisplay":"DISP-8888","codDiv":"DIV-8888","qtyEstimated":2000.00,"perceDiscount1":null,"perceDiscount2":null,"numMeasure":null,"codMeasure":null},{"idAction":9000,"codProduct":"PROD-9000","levProduct":1,"codDisplay":"DISP-9000","codDiv":"DIV-9000","qtyEstimated":2000.00,"perceDiscount1":null,"perceDiscount2":null,"numMeasure":null,"codMeasure":null},{"idAction":9999,"codProduct":"PROD-9999","levProduct":1,"codDisplay":"DISP-9999","codDiv":"DIV-9999","qtyEstimated":777.00,"perceDiscount1":null,"perceDiscount2":null,"numMeasure":null,"codMeasure":null}]
+2026-01-13 13:00:13.519 +05:00 [INF] HTTP GET /api/promotions/products responded 200 in 126.6974 ms

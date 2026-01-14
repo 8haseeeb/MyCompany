@@ -43,7 +43,7 @@ public static class JwtAuthExtensions
                     )
                 };
 
-                // 🔥 JWT EVENTS + SERILOG
+                //  JWT EVENTS + SERILOG
                 options.Events = new JwtBearerEvents
                 {
                     OnTokenValidated = context =>
