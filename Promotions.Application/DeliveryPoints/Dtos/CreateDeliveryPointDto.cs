@@ -6,11 +6,11 @@ namespace Promotions.Application.DeliveryPoints.Dtos
         public bool FlgInclusion { get; set; }
 
         
-        // Foreign Keys for CustomerRelation
-        public string CodHier { get; set; } = null!;
-        public string CodDiv { get; set; } = null!;
-        public string CodNode { get; set; } = null!;
-        public int IdLevel { get; set; }
-        public DateTime DteStart { get; set; }
+        // Foreign Keys for CustomerRelation (Made optional for simplified UI)
+        public string? CodHier { get; set; }
+        public string? CodDiv { get; set; }
+        public string? CodNode { get; set; }
+        public int? IdLevel { get; set; }
+        public DateTime? DteStart { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿ using Microsoft.AspNetCore.Http;
 using MyCompany.ApiGateway.Middlewares;
 using MyCompany.ApiGateway.Routing;
 using MyCompany.ApiGateway.Security;
@@ -16,26 +16,53 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 
 
 builder.Services.AddHttpClient();
-builder.Services.AddHttpClient<DownstreamProxy>();
+builder.Services.AddHttpClient<DownstreamProxy>()
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+    });
 
 
 
 builder.Services.AddControllers();
 
+// ----------------------------
+// CORS
+// ----------------------------
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
+// ----------------------------
+// Middleware
+// ----------------------------
 
+// 1. Buffering (Important for Proxying)
+app.Use(async (context, next) =>
+{
+    context.Request.EnableBuffering();
+    await next();
+});
 
-Log.Information(" API Gateway started successfully");
+// 2. CORS (Must be early)
+app.UseCors("AllowReactApp");
 
-
-app.UseSerilogRequestLogging();
-
-
-
-app.UseMiddleware<CorrelationIdMiddleware>();
+// 3. Exception Handling
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+// 4. Logging & Metadata
+app.UseSerilogRequestLogging();
 app.UseMiddleware<RequestLoggingMiddleware>(); 
+app.UseMiddleware<CorrelationIdMiddleware>();
 
 
 app.UseAuthentication();
@@ -52,7 +79,9 @@ app.Map("/{**catch-all}", async context =>
         return;
     }
 
-    if (context.User?.Identity?.IsAuthenticated != true)
+    var isAuthPath = path != null && path.Contains("/api/auth");
+
+    if (!isAuthPath && context.User?.Identity?.IsAuthenticated != true)
     {
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         return;

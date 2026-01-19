@@ -31,6 +31,11 @@ namespace MyCompany.ApiGateway.Middlewares
                 //  Log full exception with stack trace
                 _logger.LogError(ex, "Unhandled exception occurred while processing request");
 
+                // Ensure CORS headers are present even on error
+                context.Response.Headers.Append("Access-Control-Allow-Origin", "http://localhost:5173");
+                context.Response.Headers.Append("Access-Control-Allow-Headers", "*");
+                context.Response.Headers.Append("Access-Control-Allow-Methods", "*");
+
                 context.Response.ContentType = "application/json";
 
                 //  Map exception types to HTTP status codes

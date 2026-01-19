@@ -25,7 +25,12 @@ namespace Promotions.Application.DeliveryPoints.Queries
             {
                 IdAction = x.IdAction,
                 CodDeliveryPoint = x.CodDeliveryPoint,
-                FlgInclusion = x.FlgInclusion
+                FlgInclusion = x.FlgInclusion,
+                CodHier = x.CodHier ?? x.Relation?.CodHier ?? string.Empty,
+                CodDiv = x.CodDiv ?? x.Relation?.CodDiv ?? string.Empty,
+                CodNode = x.CodNode ?? x.Relation?.CodNode ?? string.Empty,
+                IdLevel = x.IdLevel != 0 ? x.IdLevel : (x.Relation?.IdLevel ?? 0),
+                DteStart = x.DteStart != default ? x.DteStart : (x.Relation?.DteStart ?? default)
             }).ToList();
         }
     }

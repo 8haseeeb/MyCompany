@@ -47,41 +47,48 @@ namespace MyCompany.ApiGateway.Routing
                 !HttpMethods.IsDelete(context.Request.Method))
             {
                 context.Request.EnableBuffering();
+                context.Request.Body.Position = 0;
 
                 var streamContent = new StreamContent(context.Request.Body);
                 streamContent.Headers.ContentType =
                     MediaTypeHeaderValue.Parse(context.Request.ContentType ?? "application/json");
 
                 requestMessage.Content = streamContent;
-
-                context.Request.Body.Position = 0;
             }
 
             //  SEND REQUEST 
-            var response = await _httpClient.SendAsync(
-                requestMessage,
-                HttpCompletionOption.ResponseHeadersRead,
-                context.RequestAborted);
+            try
+            {
+                var response = await _httpClient.SendAsync(
+                    requestMessage,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    context.RequestAborted);
 
-            //  SERILOG - response info
-            Log.Information(
-                "Received response {StatusCode} from {TargetUrl}",
-                (int)response.StatusCode,
-                targetUrl
-            );
+                //  SERILOG - response info
+                Log.Information(
+                    "Received response {StatusCode} from {TargetUrl}",
+                    (int)response.StatusCode,
+                    targetUrl
+                );
 
-            //  COPY RESPONSE 
-            context.Response.StatusCode = (int)response.StatusCode;
+                //  COPY RESPONSE 
+                context.Response.StatusCode = (int)response.StatusCode;
 
-            foreach (var header in response.Headers)
-                context.Response.Headers[header.Key] = header.Value.ToArray();
+                foreach (var header in response.Headers)
+                    context.Response.Headers[header.Key] = header.Value.ToArray();
 
-            foreach (var header in response.Content.Headers)
-                context.Response.Headers[header.Key] = header.Value.ToArray();
+                foreach (var header in response.Content.Headers)
+                    context.Response.Headers[header.Key] = header.Value.ToArray();
 
-            context.Response.Headers.Remove("transfer-encoding");
+                context.Response.Headers.Remove("transfer-encoding");
 
-            await response.Content.CopyToAsync(context.Response.Body);
+                await response.Content.CopyToAsync(context.Response.Body);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "ERROR Proxying to {TargetUrl}", targetUrl);
+                throw; // Rethrow to let ExceptionHandlingMiddleware handle it
+            }
         }
     }
 }

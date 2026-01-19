@@ -17,15 +17,124 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
     public class CreateAtomicPromoActionCommandHandler : IRequestHandler<CreateAtomicPromoActionCommand, Unit>
     {
         private readonly IPromoActionRepository _repository;
+        private readonly CustomerRelations.Interfaces.ICustomerRelationRepository _relationRepository;
+        private readonly Participant.Interfaces.IParticipantRepository _participantRepository;
+        private readonly DeliveryPoints.Interfaces.IDeliveryPointRepository _dpRepository;
 
-        public CreateAtomicPromoActionCommandHandler(IPromoActionRepository repository)
+        public CreateAtomicPromoActionCommandHandler(
+            IPromoActionRepository repository,
+            CustomerRelations.Interfaces.ICustomerRelationRepository relationRepository,
+            Participant.Interfaces.IParticipantRepository participantRepository,
+            DeliveryPoints.Interfaces.IDeliveryPointRepository dpRepository)
         {
             _repository = repository;
+            _relationRepository = relationRepository;
+            _participantRepository = participantRepository;
+            _dpRepository = dpRepository;
         }
 
         public async Task<Unit> Handle(CreateAtomicPromoActionCommand request, CancellationToken cancellationToken)
         {
             var dto = request.Dto;
+            var allRelations = await _relationRepository.GetAllAsync();
+            var allParticipants = await _participantRepository.GetAllAsync();
+            var allDps = await _dpRepository.GetAllAsync();
+
+            // Resolve missing hierarchy data for Participants
+            foreach (var p in dto.Participants)
+            {
+                if (string.IsNullOrEmpty(p.CodHier) || string.IsNullOrEmpty(p.CodNode))
+                {
+                    // 1. Try matching against CustomerRelation table directly (Node or Hier)
+                    var match = allRelations.FirstOrDefault(r => 
+                        r.CodNode.Equals(p.CodParticipant, StringComparison.OrdinalIgnoreCase) || 
+                        r.CodHier.Equals(p.CodParticipant, StringComparison.OrdinalIgnoreCase));
+                    
+                    if (match == null)
+                    {
+                        // 2. Try matching against existing participants list if user provided a specific participant code
+                        var pMatch = allParticipants.FirstOrDefault(ap => ap.CodParticipant.Equals(p.CodParticipant, StringComparison.OrdinalIgnoreCase));
+                        if (pMatch != null)
+                        {
+                            p.CodHier = pMatch.CodHier;
+                            p.CodDiv = pMatch.CodDiv;
+                            p.CodNode = pMatch.CodNode;
+                            p.IdLevel = pMatch.IdLevel;
+                            p.DteStart = pMatch.DteStart;
+                            continue; // Resolved via existing participant
+                        }
+
+                        // 3. Smart Suffix Resolution (e.g., P-2323 matches C-2323 via "2323")
+                        var suffix = p.CodParticipant.Contains("-") ? p.CodParticipant.Split('-').Last() : p.CodParticipant;
+                        match = allRelations.FirstOrDefault(r => 
+                            r.CodNode.EndsWith("-" + suffix, StringComparison.OrdinalIgnoreCase) || 
+                            r.CodNode.Equals(suffix, StringComparison.OrdinalIgnoreCase) ||
+                            r.CodHier.EndsWith("-" + suffix, StringComparison.OrdinalIgnoreCase) ||
+                            r.CodHier.Equals(suffix, StringComparison.OrdinalIgnoreCase));
+                    }
+
+                    if (match != null)
+                    {
+                        p.CodHier = match.CodHier;
+                        p.CodDiv = match.CodDiv;
+                        p.CodNode = match.CodNode;
+                        p.IdLevel = match.IdLevel;
+                        p.DteStart = match.DteStart;
+                    }
+                    else
+                    {
+                        throw new System.Collections.Generic.KeyNotFoundException($"Participant hierarchy could not be resolved for code: {p.CodParticipant}. Please ensure a Customer Relation or an existing Participant record exists for this code.");
+                    }
+                }
+            }
+
+            // Resolve missing hierarchy data for Delivery Points
+            foreach (var dp in dto.DeliveryPoints)
+            {
+                if (string.IsNullOrEmpty(dp.CodHier) || string.IsNullOrEmpty(dp.CodNode))
+                {
+                    // 1. Try matching against CustomerRelation table directly
+                    var match = allRelations.FirstOrDefault(r => 
+                        r.CodNode.Equals(dp.CodDeliveryPoint, StringComparison.OrdinalIgnoreCase) || 
+                        r.CodHier.Equals(dp.CodDeliveryPoint, StringComparison.OrdinalIgnoreCase));
+                    
+                    if (match == null)
+                    {
+                        // 2. Try matching against existing delivery points list
+                        var dpMatch = allDps.FirstOrDefault(adp => adp.CodDeliveryPoint.Equals(dp.CodDeliveryPoint, StringComparison.OrdinalIgnoreCase));
+                        if (dpMatch != null)
+                        {
+                            dp.CodHier = dpMatch.CodHier;
+                            dp.CodDiv = dpMatch.CodDiv;
+                            dp.CodNode = dpMatch.CodNode;
+                            dp.IdLevel = dpMatch.IdLevel;
+                            dp.DteStart = dpMatch.DteStart;
+                            continue; // Resolved
+                        }
+
+                        // 3. Smart Suffix Resolution
+                        var suffix = dp.CodDeliveryPoint.Contains("-") ? dp.CodDeliveryPoint.Split('-').Last() : dp.CodDeliveryPoint;
+                        match = allRelations.FirstOrDefault(r => 
+                            r.CodNode.EndsWith("-" + suffix, StringComparison.OrdinalIgnoreCase) || 
+                            r.CodNode.Equals(suffix, StringComparison.OrdinalIgnoreCase) ||
+                            r.CodHier.EndsWith("-" + suffix, StringComparison.OrdinalIgnoreCase) ||
+                            r.CodHier.Equals(suffix, StringComparison.OrdinalIgnoreCase));
+                    }
+
+                    if (match != null)
+                    {
+                        dp.CodHier = match.CodHier;
+                        dp.CodDiv = match.CodDiv;
+                        dp.CodNode = match.CodNode;
+                        dp.IdLevel = match.IdLevel;
+                        dp.DteStart = match.DteStart;
+                    }
+                    else
+                    {
+                        throw new System.Collections.Generic.KeyNotFoundException($"Delivery Point hierarchy could not be resolved for code: {dp.CodDeliveryPoint}. Please ensure a Customer Relation or an existing Delivery Point record exists for this code.");
+                    }
+                }
+            }
 
             var action = new PromoAction
             {
@@ -46,11 +155,11 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                     IdAction = dto.IdAction,
                     CodParticipant = p.CodParticipant,
                     FlgInclusion = p.FlgInclusion,
-                    CodHier = p.CodHier,
-                    CodDiv = p.CodDiv,
-                    CodNode = p.CodNode,
-                    IdLevel = p.IdLevel,
-                    DteStart = p.DteStart
+                    CodHier = p.CodHier ?? string.Empty,
+                    CodDiv = p.CodDiv ?? string.Empty,
+                    CodNode = p.CodNode ?? string.Empty,
+                    IdLevel = p.IdLevel ?? 0,
+                    DteStart = p.DteStart ?? DateTime.MinValue
                 }).ToList(),
 
                 // Map Delivery Points
@@ -59,11 +168,11 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                     IdAction = dto.IdAction,
                     CodDeliveryPoint = dp.CodDeliveryPoint,
                     FlgInclusion = dp.FlgInclusion,
-                    CodHier = dp.CodHier,
-                    CodDiv = dp.CodDiv,
-                    CodNode = dp.CodNode,
-                    IdLevel = dp.IdLevel,
-                    DteStart = dp.DteStart
+                    CodHier = dp.CodHier ?? string.Empty,
+                    CodDiv = dp.CodDiv ?? string.Empty,
+                    CodNode = dp.CodNode ?? string.Empty,
+                    IdLevel = dp.IdLevel ?? 0,
+                    DteStart = dp.DteStart ?? DateTime.MinValue
                 }).ToList(),
 
                 // Map Products (Hierarchical)

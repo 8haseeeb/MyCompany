@@ -31,11 +31,11 @@ namespace Promotions.Api.Controllers
                 idAction,
                 codDeliveryPoint,
                 dto.FlgInclusion,
-                dto.CodHier,
-                dto.CodDiv,
-                dto.CodNode,
-                dto.IdLevel,
-                dto.DteStart);
+                dto.CodHier ?? string.Empty,
+                dto.CodDiv ?? string.Empty,
+                dto.CodNode ?? string.Empty,
+                dto.IdLevel ?? 0,
+                dto.DteStart ?? DateTime.MinValue);
 
             await _mediator.Send(command);
             return CreatedAtAction(nameof(GetById), new

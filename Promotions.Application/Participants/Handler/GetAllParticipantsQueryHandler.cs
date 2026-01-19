@@ -27,7 +27,12 @@ namespace Promotions.Application.Participant.Handler
             {
                 IdAction = p.IdAction,
                 CodParticipant = p.CodParticipant,
-                FlgInclusion = p.FlgInclusion
+                FlgInclusion = p.FlgInclusion,
+                CodHier = p.CodHier ?? p.Relation?.CodHier ?? string.Empty,
+                CodDiv = p.CodDiv ?? p.Relation?.CodDiv ?? string.Empty,
+                CodNode = p.CodNode ?? p.Relation?.CodNode ?? string.Empty,
+                IdLevel = p.IdLevel != 0 ? p.IdLevel : (p.Relation?.IdLevel ?? 0),
+                DteStart = p.DteStart != default ? p.DteStart : (p.Relation?.DteStart ?? default)
             }).ToList();
         }
     }

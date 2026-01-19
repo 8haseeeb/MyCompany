@@ -1,0 +1,646 @@
+2026-01-14 11:53:04.883 +05:00 [INF] HTTP POST /api/auth/register responded 200 in 6969.9957 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"message":"User registered successfully"}
+2026-01-14 12:01:48.355 +05:00 [INF] HTTP POST /api/auth/login responded 307 in 7.9649 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-14 12:02:11.045 +05:00 [INF] HTTP POST /api/auth/login responded 307 in 0.1838 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-14 12:04:19.788 +05:00 [INF] User aaa@gmail.com logged in successfully. UserId: 12
+2026-01-14 12:04:20.003 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 8665.7014 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMiIsImVtYWlsIjoiYWFhQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiYWFhIiwiZXhwIjoxNzY4MzgxNDU4LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.iH_7qAWE6NO-KXfe0se9E7a8UPf_2bxpPLt3Xsm2TwI","refreshToken":"37270aca-86b2-4a85-ba3d-9805672392ba"}
+2026-01-14 12:05:03.672 +05:00 [WRN] Login failed for user: aaa@gmail.com. Reason: Invalid password
+2026-01-14 12:05:04.547 +05:00 [INF] HTTP POST /api/auth/login responded 401 in 1407.8193 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"message":"Invalid email or password"}
+2026-01-14 12:05:14.191 +05:00 [INF] User aaa@gmail.com logged in successfully. UserId: 12
+2026-01-14 12:05:14.208 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 484.6778 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMiIsImVtYWlsIjoiYWFhQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiYWFhIiwiZXhwIjoxNzY4MzgxNTE0LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.-ndZOTutph92x29E2iQlwBP3knK-Dok585GCm23Fg-k","refreshToken":"5afecf87-43bb-4907-9795-e1995c1c2ea5"}
+2026-01-14 12:05:19.948 +05:00 [INF] User aaa@gmail.com logged in successfully. UserId: 12
+2026-01-14 12:05:19.959 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 326.4909 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMiIsImVtYWlsIjoiYWFhQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiYWFhIiwiZXhwIjoxNzY4MzgxNTE5LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.i5lquQwshpNBRh_Rkd3Vcmsu9KEb8kggfUFt8X4IoYw","refreshToken":"97bffb6b-c9fe-4072-8578-bde0b30094db"}
+2026-01-14 12:24:06.397 +05:00 [INF] HTTP POST /api/auth/register responded 200 in 6480.1149 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"message":"User registered successfully"}
+2026-01-14 12:24:47.026 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 12:24:47.045 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 1936.1160 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzgyNjg2LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.L7XZvF_ldVT75kt88jBqhCY5x1d6gdpGfPkrkzyI8Qk","refreshToken":"507c9d51-6bc7-4a02-83a8-fa2cc1fd54cc"}
+2026-01-14 12:55:40.317 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 12:55:40.564 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 8547.8585 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4Mzg0NTM5LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.YMRnINXw1TYvJKQnwhLuDLuzmywC_q4wrZiPqfGbKeo","refreshToken":"726f29cf-28da-4354-9e55-5546cf59c24a"}
+2026-01-14 12:56:01.603 +05:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 12:56:01.864 +05:00 [ERR] An exception was thrown attempting to display the error page.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.DisplayExceptionContent(ErrorContext errorContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 12:56:01.934 +05:00 [ERR] Connection id "0HNIJ88PR9U4L", Request id "0HNIJ88PR9U4L:00000002": An unhandled exception was thrown by the application.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2026-01-14 12:56:19.075 +05:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 12:56:19.137 +05:00 [ERR] An exception was thrown attempting to display the error page.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.DisplayExceptionContent(ErrorContext errorContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 12:56:19.175 +05:00 [ERR] Connection id "0HNIJ88PR9U4L", Request id "0HNIJ88PR9U4L:00000003": An unhandled exception was thrown by the application.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2026-01-14 12:56:51.176 +05:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 12:56:51.227 +05:00 [ERR] An exception was thrown attempting to display the error page.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.DisplayExceptionContent(ErrorContext errorContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 12:56:51.263 +05:00 [ERR] Connection id "0HNIJ88PR9U4L", Request id "0HNIJ88PR9U4L:00000004": An unhandled exception was thrown by the application.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2026-01-14 13:00:04.070 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 13:00:04.260 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 7723.7896 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4Mzg0ODAzLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.AypKVKIWeUNr8PGCxvpYqn2ig9DY0Q1VnqF9oKiBGrM","refreshToken":"6db0ed46-6cfa-42d8-a3d9-3f0900ce9c92"}
+2026-01-14 13:00:27.098 +05:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:00:27.171 +05:00 [ERR] An exception was thrown attempting to display the error page.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.DisplayExceptionContent(ErrorContext errorContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:00:27.221 +05:00 [ERR] Connection id "0HNIJ8B5Q02DF", Request id "0HNIJ8B5Q02DF:00000002": An unhandled exception was thrown by the application.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2026-01-14 13:00:33.618 +05:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:00:33.640 +05:00 [ERR] An exception was thrown attempting to display the error page.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.DisplayExceptionContent(ErrorContext errorContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:00:33.659 +05:00 [ERR] Connection id "0HNIJ8B5Q02DF", Request id "0HNIJ8B5Q02DF:00000003": An unhandled exception was thrown by the application.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2026-01-14 13:00:38.438 +05:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:00:38.462 +05:00 [ERR] An exception was thrown attempting to display the error page.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.DisplayExceptionContent(ErrorContext errorContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:00:38.478 +05:00 [ERR] Connection id "0HNIJ8B5Q02DF", Request id "0HNIJ8B5Q02DF:00000004": An unhandled exception was thrown by the application.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2026-01-14 13:00:55.404 +05:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:00:55.435 +05:00 [ERR] An exception was thrown attempting to display the error page.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.DisplayExceptionContent(ErrorContext errorContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:00:55.450 +05:00 [ERR] Connection id "0HNIJ8B5Q02DF", Request id "0HNIJ8B5Q02DF:00000005": An unhandled exception was thrown by the application.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2026-01-14 13:06:14.641 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 13:06:14.871 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 7589.1533 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4Mzg1MTczLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.4qJfNYtiIbk7pQVJyJQBaDAdVoClhLBNqmu5MyzCJO8","refreshToken":"3344f161-0d49-42ce-a33f-e9abbb4aa4cd"}
+2026-01-14 13:07:00.735 +05:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:07:00.796 +05:00 [ERR] An exception was thrown attempting to display the error page.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.DisplayExceptionContent(ErrorContext errorContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:07:00.815 +05:00 [ERR] Connection id "0HNIJ8EQGQTL6", Request id "0HNIJ8EQGQTL6:00000002": An unhandled exception was thrown by the application.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2026-01-14 13:07:28.344 +05:00 [INF] HTTP GET /api/auth/register responded 405 in 0.3059 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-14 13:07:33.945 +05:00 [INF] HTTP GET /api/auth/register responded 405 in 0.2578 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-01-14 13:09:45.142 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 13:09:45.431 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 7445.5460 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4Mzg1Mzg0LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.ZTw3ePo8rD9YGbI0amnsOyeWP0Y6d4TJGJvZ9bgwmNA","refreshToken":"1f34b110-6786-44c3-adce-875c7201ca50"}
+2026-01-14 13:10:03.166 +05:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:10:03.268 +05:00 [ERR] An exception was thrown attempting to display the error page.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.DisplayExceptionContent(ErrorContext errorContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:10:03.294 +05:00 [ERR] Connection id "0HNIJ8GODMMFB", Request id "0HNIJ8GODMMFB:00000002": An unhandled exception was thrown by the application.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2026-01-14 13:10:11.732 +05:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:10:11.749 +05:00 [ERR] An exception was thrown attempting to display the error page.
+System.ObjectDisposedException: Cannot access a closed Stream.
+   at System.IO.MemoryStream.Write(Byte[] buffer, Int32 offset, Int32 count)
+   at System.IO.MemoryStream.WriteAsync(ReadOnlyMemory`1 buffer, CancellationToken cancellationToken)
+--- End of stack trace from previous location ---
+   at System.IO.Pipelines.StreamPipeWriter.FlushAsyncInternal(Boolean writeToStream, ReadOnlyMemory`1 data, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Threading.Tasks.ValueTask`1.GetTaskForValueTaskSource(IValueTaskSource`1 t)
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.DisplayExceptionContent(ErrorContext errorContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-01-14 13:10:11.760 +05:00 [ERR] Connection id "0HNIJ8GODMMFB", Request id "0HNIJ8GODMMFB:00000003": An unhandled exception was thrown by the application.
+System.Exception: User already exists
+   at SSO.Application.Auth.Handlers.RegisterCommandHandler.Handle(RegisterCommand request, CancellationToken cancellationToken) in C:\MyCompany\MyCompany\SSO.Application\Auth\Handlers\RegisterCommandHandler.cs:line 26
+   at SSO.Api.Controllers.AuthController.Register(RegisterDto dto) in C:\MyCompany\MyCompany\SSO.Api\Controllers\AuthController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MyCompany.Common.Logging.Serilog.RequestLoggingMiddleware.Invoke(HttpContext context) in C:\MyCompany\MyCompany\BuildingBlocks\Common.Logging\Serilog\RequestLoggingMiddleware.cs:line 40
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+   at Microsoft.WebTools.BrowserLink.Net.BrowserLinkMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2026-01-14 13:10:31.167 +05:00 [INF] HTTP POST /api/auth/register responded 200 in 421.5549 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"message":"User registered successfully"}
+2026-01-14 13:10:57.888 +05:00 [INF] User ali@gmail.com logged in successfully. UserId: 14
+2026-01-14 13:10:57.893 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 244.9082 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNCIsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiYWxpIiwiZXhwIjoxNzY4Mzg1NDU3LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.HXqlRxWWZxO0f7Um0JsbFrR0LEXlLBLD2NoqWDBA_xQ","refreshToken":"d945c0f3-3b76-4209-9780-0caa57531337"}
+2026-01-14 13:11:34.498 +05:00 [INF] User ali@gmail.com logged in successfully. UserId: 14
+2026-01-14 13:11:34.505 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 316.7623 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNCIsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiYWxpIiwiZXhwIjoxNzY4Mzg1NDk0LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.0OlorzmIC14irK2izNqsEPnlkf5dF2jF-mvos62xuJw","refreshToken":"d2921ffa-3631-4b30-ace2-27262a0ee21e"}
+2026-01-14 14:36:42.625 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:36:42.904 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 8835.6186 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkwNjAxLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.r7kFUwCJwcX9M3e_FsRgiF-joAK2wl-mTYE_pDntPkA","refreshToken":"39be6ba8-ea9b-486b-9601-b6642239e846"}
+2026-01-14 14:38:16.348 +05:00 [INF] HTTP POST /api/auth/register responded 200 in 1161.2536 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"message":"User registered successfully"}
+2026-01-14 14:38:37.224 +05:00 [INF] User usman@gmail.com logged in successfully. UserId: 15
+2026-01-14 14:38:37.235 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 447.5245 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNSIsImVtYWlsIjoidXNtYW5AZ21haWwuY29tIiwidW5pcXVlX25hbWUiOiJ1c21hbiIsImV4cCI6MTc2ODM5MDcxNywiaXNzIjoiTXlDb21wYW55IiwiYXVkIjoiTXlDb21wYW55VXNlcnMifQ.T8EGGnZKld3f0OVripskdAlKzHuwOJrSSKQPVk6Jvg0","refreshToken":"3da0ee0d-6b5c-48ae-8aff-1209c5dc75e6"}
+2026-01-14 14:46:38.927 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:46:39.186 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 6722.0532 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxMTk4LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.kDDBlCEaLgO6DW4s3P1MpbSlc2OQQGML-DUhLmRSsV8","refreshToken":"1a1c642b-e23e-4ae0-8336-a1210e776994"}
+2026-01-14 14:46:48.156 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:46:48.167 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 642.2686 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxMjA4LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.MAxq5rG-0pl8M0Ep7igUPxVzDwIRJAkqLXfueR7grLI","refreshToken":"2ae99342-861d-48e5-a217-52010d10fc91"}
+2026-01-14 14:49:26.635 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:49:26.676 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 857.5690 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxMzY2LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.Tluf5L5gF6pTW4Cye32bWNKHiDe3d1XomtyY3bVSBSY","refreshToken":"712b9820-512e-4dd4-a7f6-4856501e618d"}
+2026-01-14 14:54:10.468 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:10.513 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 1120.5496 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjUwLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.jZZVOxKLu_lFQ0mPdVULWaUhu3sEMEUC1nYK4GSRIj8","refreshToken":"0e3d857a-fada-4a58-a209-760f95d81f0a"}
+2026-01-14 14:54:15.308 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:15.314 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 391.1989 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjU1LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.3STITIk3bmwdicH2JFp2cTDzmfLPIromcS0IPq7jszU","refreshToken":"7c8d5984-dd77-4d94-abbe-ecc179cdf7e2"}
+2026-01-14 14:54:17.192 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:17.203 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 401.8329 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjU3LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.o4H93rK9fKRYhEAb-y_-zrxYsMk8RRMji6JfzeuJX_A","refreshToken":"53e0d5da-9ff5-499e-aa26-0d6963cba25a"}
+2026-01-14 14:54:18.085 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:18.102 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 376.1015 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjU4LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9._ifFNbPjuy4nOLO80Oit2ei6M9Sag6kziQZixtbzK8s","refreshToken":"919e4afc-a0a3-470e-871d-a2c11a6afcf0"}
+2026-01-14 14:54:18.799 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:18.808 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 366.3670 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjU4LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9._ifFNbPjuy4nOLO80Oit2ei6M9Sag6kziQZixtbzK8s","refreshToken":"171b6c5d-c3a3-4ddc-8d6b-c2543f22134a"}
+2026-01-14 14:54:19.359 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:19.380 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 371.7009 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjU5LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.Xh3XwvKJg0L_piOokefZaMPaqpBB1YD6JKco5cIw38s","refreshToken":"951db2e0-cea7-40ad-bf58-9f5c4f57b148"}
+2026-01-14 14:54:20.006 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:20.015 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 349.4128 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjYwLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.wMm0d3wSHvBWwGDMiBNilxZDOrDFpFskmYFClBOi2J8","refreshToken":"b3e620f6-eee5-4467-8794-58d6431e91a2"}
+2026-01-14 14:54:20.642 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:20.652 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 371.0921 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjYwLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.wMm0d3wSHvBWwGDMiBNilxZDOrDFpFskmYFClBOi2J8","refreshToken":"c7e683fe-98dc-47c4-8d21-08227b0bbb63"}
+2026-01-14 14:54:21.210 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:21.220 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 369.9418 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjYxLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.9_s4uoNGMOfscxvhSxMSumyj3t9NpnbWS4zHXWTBxxs","refreshToken":"3cddd3d9-cf3e-45bd-9dd5-8dd3dbf208cf"}
+2026-01-14 14:54:21.897 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:21.904 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 377.0454 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjYxLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.9_s4uoNGMOfscxvhSxMSumyj3t9NpnbWS4zHXWTBxxs","refreshToken":"f1db2622-b91f-416f-91e2-023a58909af7"}
+2026-01-14 14:54:22.498 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:22.505 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 356.1689 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjYyLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.jEB_zynqetwDByoE4jvv8Btw582o1TXvWYv2KwO4cnI","refreshToken":"8f370961-d438-4a9f-aee3-524038bb63e8"}
+2026-01-14 14:54:23.058 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:23.069 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 376.1540 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjYzLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.D2XR5F8xnU7-Q64MIeOyEJPSjCLQSFIMBrWsJEuC43Y","refreshToken":"aff6e8c1-933b-4966-b95f-d4eed3afb067"}
+2026-01-14 14:54:28.877 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:28.882 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 362.0189 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjY4LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.WxPcWEI2vuB_de52TmhRhrPmSajKJmum_c--vXaBLnY","refreshToken":"69a9de46-425a-44dd-86f5-ba9f485c1232"}
+2026-01-14 14:54:29.370 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:54:29.380 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 380.8905 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxNjY5LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.5_2qHh79PKvsSuhw19gMITDcCrAvkdPIruB7SiWlHAo","refreshToken":"6c6763a9-f411-4970-a151-3a7a24ec05f5"}
+2026-01-14 14:58:03.184 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:58:03.250 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 1012.3421 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxODgzLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.8eQMNb5F4dgqdMv8RYx3eHvqBfYSGZYhgt8mnUl_Ngg","refreshToken":"c04a1643-44a4-4ee5-85ae-2aaa37c2ddf6"}
+2026-01-14 14:58:37.145 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:58:37.162 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 427.2459 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxOTE3LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.knxRZRGUZkKp3qr6nyC3qvKkRntvaaMcQ-2Ux4MX690","refreshToken":"383ec970-7e21-453b-95a7-068be5ef258a"}
+2026-01-14 14:58:38.257 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:58:38.265 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 389.4319 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxOTE4LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.h5XQPiQuCbDsW_G0UYB0UDW3kBGKf6pOgjKXgTyNzQA","refreshToken":"ac02726e-a112-4039-b366-7a2f9538a06f"}
+2026-01-14 14:58:44.561 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:58:44.568 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 413.2810 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxOTI0LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.ohNigfUtgqRXfd8mMzv71p9rZ1PDqmV4ilrV-qA_1lQ","refreshToken":"e0b7f5f0-d5e6-4073-91bb-f7e1ed9269c5"}
+2026-01-14 14:58:45.935 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:58:45.949 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 357.9907 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxOTI1LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.fCRt4YgH7XRYnXkOUWeKpNOcGtH8Y9HUADBbwVChzig","refreshToken":"420ac3ec-f50f-435d-99fe-2dd4ad20ab36"}
+2026-01-14 14:58:47.965 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:58:47.974 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 360.6631 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxOTI3LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.QQNUEv7gPk8-GxaBa65REtlcrx2j7Wv2gkLtSXlvTXA","refreshToken":"c2ac2437-675a-4300-b348-ea3f3504391a"}
+2026-01-14 14:58:51.491 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 14:58:51.499 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 396.0607 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkxOTMxLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.P8A7fEcrOXG_uw1SQyZuvgB00hKN3BStyV5azkql9k0","refreshToken":"710fe544-6da1-4a67-bde5-9faf34397a70"}
+2026-01-14 15:03:38.348 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 15:03:38.561 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 7502.8913 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkyMjE3LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.SLsK6ubaRjwG6T6idUsw3xqFzOAln_grIPJlcQdSY9w","refreshToken":"6b918119-e315-4d64-b9f5-e47ec82167c5"}
+2026-01-14 15:04:12.688 +05:00 [INF] HTTP POST /api/auth/register responded 200 in 830.6581 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"message":"User registered successfully"}
+2026-01-14 15:04:30.781 +05:00 [INF] User maaz@gmail.com logged in successfully. UserId: 16
+2026-01-14 15:04:30.787 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 418.5379 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNiIsImVtYWlsIjoibWFhekBnbWFpbC5jb20iLCJ1bmlxdWVfbmFtZSI6Im1hYXoiLCJleHAiOjE3NjgzOTIyNzAsImlzcyI6Ik15Q29tcGFueSIsImF1ZCI6Ik15Q29tcGFueVVzZXJzIn0.yB0fTUM_HFL9IZF7FhcWW2YfpUVw8aoaiKRXv8r-xRg","refreshToken":"dc30fa92-f8ce-4993-bc62-ba790e8e5a00"}
+2026-01-14 15:08:31.731 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 15:08:31.764 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 1060.8832 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkyNTExLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.0pc06_F7Y4Jy0G4FMiAcPZLpgk2gdr0LcKhSyp9Meo8","refreshToken":"8f43beb0-a49e-4df7-b418-d59563a043d9"}
+2026-01-14 15:12:41.476 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 15:12:41.522 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 1164.1761 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkyNzYxLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.NrCzaYNU6wph_lJt83Xe7rHt7jx933CZeLIlI5SAaho","refreshToken":"64864cfc-ff10-4ef9-8cc8-026bc9a36d1c"}
+2026-01-14 15:13:27.065 +05:00 [WRN] Login failed for user: haseeb@gmail.com. Reason: Invalid password
+2026-01-14 15:13:27.586 +05:00 [INF] HTTP POST /api/auth/login responded 401 in 854.2272 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"message":"Invalid email or password"}
+2026-01-14 15:13:40.351 +05:00 [WRN] Login failed for user: haseeb@gmail.com. Reason: Invalid password
+2026-01-14 15:13:40.568 +05:00 [INF] HTTP POST /api/auth/login responded 401 in 583.1329 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"message":"Invalid email or password"}
+2026-01-14 15:13:55.983 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 15:13:55.992 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 398.1256 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkyODM1LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.Ou_Q9KndE-6uFz9KqOyVocSte4CzTeIgZ2jLkqKjgig","refreshToken":"993b1343-642a-47c9-8323-21c3fef5ebb4"}
+2026-01-14 15:18:17.617 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 15:18:17.833 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 6738.0214 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4MzkzMDk2LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.XC4h3gZX2OrLkEd1xFJaxpiI418bsVL8xyZpy_n9UVQ","refreshToken":"fc20f71b-a16e-4b10-921b-e9684fc11bfa"}
+2026-01-14 15:34:35.160 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 15:34:35.369 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 5902.6245 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4Mzk0MDc0LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.Y6K9Zyr1_tfoiRW1ntWwv2QpVlMcZIOdyCu4bkrSzNQ","refreshToken":"646a3f3e-02b8-4399-9d53-d316113cd610"}
+2026-01-14 15:45:13.642 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 15:45:13.822 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 6190.2844 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4Mzk0NzEyLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.ncxj_yh5QT3wSYwQlAS2jvI43xdOv22-Xy-H3eiZDxU","refreshToken":"8d74fca7-a074-4ded-85ab-d7ad04450433"}
+2026-01-14 15:51:54.041 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 15:51:54.253 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 6844.1293 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4Mzk1MTEzLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.uABgGc2UO1KEhp825lF6FO7oN3Hzni2jmnE2oS_fchk","refreshToken":"ab231dec-7803-42fb-a563-34e3d387dd28"}
+2026-01-14 16:02:42.604 +05:00 [INF] User ali@gmail.com logged in successfully. UserId: 14
+2026-01-14 16:02:42.754 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 4500.3715 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNCIsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiYWxpIiwiZXhwIjoxNzY4Mzk1NzYyLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.YyAxpsG1b4ER9ykKExF3JgZ7UZvmEQyYaaciLeLgOnU","refreshToken":"b7125e90-e9e8-4551-bb39-8adb2ebe07c9"}
+2026-01-14 17:00:05.512 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 17:00:05.546 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 1025.8358 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4Mzk5MjA1LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.A9mfqOUW9F7Npr-uJ0w66X4WJJmUrO2iTY90QeRuBJc","refreshToken":"fdabd5ff-a87e-438a-8e35-f61e87e27c83"}
+2026-01-14 17:18:33.002 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 17:18:33.188 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 6042.7689 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4NDAwMzEyLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.d52m8WRsZ9vuud-8uZuDnP547wGZ44ueuopVqYOKmgY","refreshToken":"786d75e0-5787-42fd-8e0d-d0c9be750285"}
+2026-01-14 18:00:53.389 +05:00 [INF] User haseeb@gmail.com logged in successfully. UserId: 13
+2026-01-14 18:00:53.434 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 1417.6777 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsImVtYWlsIjoiaGFzZWViQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiaGFzZWViIiwiZXhwIjoxNzY4NDAyODUzLCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.41Hy017xJV3g0kc_NwNAlUxPbZ0cXGXvPRsnj3tZFKc","refreshToken":"75428d35-b8a2-4eca-9ca9-ff46c90f6046"}
+2026-01-14 19:07:30.643 +05:00 [INF] HTTP POST /api/auth/register responded 200 in 5141.8254 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"message":"User registered successfully"}
+2026-01-14 19:08:16.523 +05:00 [INF] User ddd@gmail.com logged in successfully. UserId: 17
+2026-01-14 19:08:16.538 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 1261.8341 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNyIsImVtYWlsIjoiZGRkQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiZGRkIiwiZXhwIjoxNzY4NDA2ODk2LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.V-jn2kc2JiUpZwVYxxgWV9HqSdjO2wH4ZL_7ZP48Q1o","refreshToken":"965b1674-5be7-43f2-96eb-6df85405286b"}

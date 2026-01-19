@@ -16,12 +16,19 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             builder.Property(p => p.CodParticipant).HasColumnName("CODPARTICIPANT");
             builder.Property(p => p.FlgInclusion).HasColumnName("FLGINCLUSION");
 
-            // Foreign Key Properties for CustomerRelation
+            // Mapping hierarchy fields explicitly to match screenshot exactly, 
+            // even if snapshot defaults to property name.
             builder.Property(p => p.CodHier).HasMaxLength(10).IsRequired();
             builder.Property(p => p.CodDiv).HasMaxLength(10).IsRequired();
             builder.Property(p => p.CodNode).HasMaxLength(30).IsRequired();
+            builder.Property(p => p.IdLevel).IsRequired();
+            builder.Property(p => p.DteStart).IsRequired();
 
-            // Relationships
+            builder.HasOne(p => p.Action)
+                   .WithMany(a => a.Participants)
+                   .HasForeignKey(p => p.IdAction)
+                   .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasOne(p => p.Relation)
                    .WithMany(r => r.Participants)
                    .HasForeignKey(p => new { p.CodHier, p.CodDiv, p.CodNode, p.IdLevel, p.DteStart })

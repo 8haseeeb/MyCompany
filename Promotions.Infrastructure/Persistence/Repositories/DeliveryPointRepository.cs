@@ -15,19 +15,24 @@ namespace Promotions.Infrastructure.Persistence.Repositories
 
         public async Task<PromoDeliveryPoint?> GetByIdAsync(int idAction, string codDeliveryPoint)
         {
-            return await _context.DeliveryPoints.FindAsync(idAction, codDeliveryPoint);
+            return await _context.DeliveryPoints
+                .Include(x => x.Relation)
+                .FirstOrDefaultAsync(x => x.IdAction == idAction && x.CodDeliveryPoint == codDeliveryPoint);
         }
 
         public async Task<List<PromoDeliveryPoint>> GetByActionIdAsync(int idAction)
         {
             return await _context.DeliveryPoints
+                .Include(x => x.Relation)
                 .Where(x => x.IdAction == idAction)
                 .ToListAsync();
         }
 
         public async Task<List<PromoDeliveryPoint>> GetAllAsync()
         {
-            return await _context.DeliveryPoints.ToListAsync();
+            return await _context.DeliveryPoints
+                .Include(x => x.Relation)
+                .ToListAsync();
         }
 
         public async Task AddAsync(PromoDeliveryPoint deliveryPoint)

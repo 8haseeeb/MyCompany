@@ -7,7 +7,6 @@ using Promotions.Domain.Participants;
 using Promotions.Domain.ProductDetails;
 using Promotions.Domain.Products;
 using Promotions.Domain.PromoActions;
-using Promotions.Domain.Articles;
 using Promotions.Infrastructure.Persistence.Configurations;
 using Promotions.Infrastructure.Products.Configurations;
 

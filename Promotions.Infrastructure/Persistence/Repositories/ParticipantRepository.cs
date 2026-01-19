@@ -17,6 +17,7 @@ namespace Promotions.Infrastructure.Participant
         public async Task<PromoParticipants?> GetByIdAsync(int idAction, string codParticipant)
         {
             return await _context.Participants
+                .Include(p => p.Relation)
                 .FirstOrDefaultAsync(p =>
                     p.IdAction == idAction &&
                     p.CodParticipant == codParticipant);
@@ -42,13 +43,16 @@ namespace Promotions.Infrastructure.Participant
         public async Task<List<PromoParticipants>> GetByActionIdAsync(int idAction)
         {
             return await _context.Participants
+                .Include(p => p.Relation)
                 .Where(p => p.IdAction == idAction)
                 .ToListAsync();
         }
 
         public async Task<List<PromoParticipants>> GetAllAsync()
         {
-            return await _context.Participants.ToListAsync();
+            return await _context.Participants
+                .Include(p => p.Relation)
+                .ToListAsync();
         }
 
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)

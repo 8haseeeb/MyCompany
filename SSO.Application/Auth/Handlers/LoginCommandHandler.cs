@@ -64,7 +64,8 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResultDto>
         return new LoginResultDto
         {
             AccessToken = accessToken,
-            RefreshToken = refreshToken.Token
+            RefreshToken = refreshToken.Token,
+            UserName = user.UserName
         };
     }
 }

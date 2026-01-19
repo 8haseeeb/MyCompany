@@ -40,6 +40,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // ----------------------------
+// CORS
+// ----------------------------
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+// ----------------------------
 // Build App
 // ----------------------------
 var app = builder.Build();
@@ -47,6 +61,7 @@ var app = builder.Build();
 // ----------------------------
 // Middleware
 // ----------------------------
+app.UseCors("AllowReactApp");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

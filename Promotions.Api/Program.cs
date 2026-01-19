@@ -67,6 +67,24 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Global Exception Handler for clear API Errors
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var exceptionHandlerPathFeature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature>();
+        var exception = exceptionHandlerPathFeature?.Error;
+
+        if (exception is System.Collections.Generic.KeyNotFoundException)
+        {
+            context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+            context.Response.ContentType = "application/json";
+            var result = System.Text.Json.JsonSerializer.Serialize(new { message = exception.Message });
+            await context.Response.WriteAsync(result);
+        }
+    });
+});
+
 app.UseHttpsRedirection();
 app.UseAuthentication(); 
 app.UseAuthorization();
