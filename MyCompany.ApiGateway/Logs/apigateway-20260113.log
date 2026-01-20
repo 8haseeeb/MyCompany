@@ -1,3 +1,0 @@
-2026-01-13 12:56:24.531 +05:00 [INF]  API Gateway started successfully
-2026-01-13 12:56:29.491 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 265.0493 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
-2026-01-13 12:56:29.587 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 371.3530 ms

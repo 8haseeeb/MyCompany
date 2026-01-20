@@ -111,7 +111,7 @@ const Promotions = () => {
         try {
             await promotionService.deletePromotion(idAction);
             alert("Promotion deleted successfully!");
-            fetchHistory(); // Refresh the list
+            fetchHistory(); // Refresh the list     
         } catch (error) {
             console.error("Error deleting promotion:", error);
             alert("Failed to delete promotion: " + (error.response?.data?.error || error.message));
@@ -649,7 +649,7 @@ const Promotions = () => {
                                     <th>Initiator</th>
                                     <th>Date & Time</th>
                                     <th>Status</th>
-                                    <th style={{ textAlign: 'right' }}>Actions</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>

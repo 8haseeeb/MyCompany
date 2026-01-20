@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import Login from './components/Login';
 import Register from './components/Register';
+import ErrorBoundary from './components/ErrorBoundary';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
-import Promotions from './components/Promotions';
-import CustomerRelation from './components/CustomerRelation';
-import Participant from './components/Participant';
-import DeliveryPoint from './components/DeliveryPoint';
+
+const Promotions = lazy(() => import('promotions_app/Promotions'));
+const CustomerRelation = lazy(() => import('promotions_app/CustomerRelation'));
+const Participant = lazy(() => import('promotions_app/Participant'));
+const DeliveryPoint = lazy(() => import('promotions_app/DeliveryPoint'));
+
 import './App.css';
 
 function App() {
@@ -23,15 +26,24 @@ function App() {
     setUserName('User');
   };
 
+
   const renderView = () => {
-    switch (currentView) {
-      case 'dashboard': return <Dashboard />;
-      case 'promotions': return <Promotions />;
-      case 'customer_relation': return <CustomerRelation />;
-      case 'participant': return <Participant />;
-      case 'delivery_point': return <DeliveryPoint />;
-      default: return <Dashboard />;
-    }
+    return (
+      <ErrorBoundary>
+        <Suspense fallback={<div className="loading-mfe">Loading Module...</div>}>
+          {(() => {
+            switch (currentView) {
+              case 'dashboard': return <Dashboard />;
+              case 'promotions': return <Promotions />;
+              case 'customer_relation': return <CustomerRelation />;
+              case 'participant': return <Participant />;
+              case 'delivery_point': return <DeliveryPoint />;
+              default: return <Dashboard />;
+            }
+          })()}
+        </Suspense>
+      </ErrorBoundary>
+    );
   };
 
   if (!token) {
@@ -63,7 +75,7 @@ function App() {
           </div>
 
           <div className="header-actions">
-           
+
             <div className="user-profile">
               <div className="avatar">
                 <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userName}`} alt={userName} />
