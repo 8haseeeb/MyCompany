@@ -3,7 +3,12 @@ import React from 'react';
 class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { hasError: false, error: null, errorInfo: null };
+       this.state = {
+                        hasError: false, //if error occour or not 
+                        error: null,     //Actual JS error
+                        errorInfo: null //Component stack trace
+                    };
+
     }
 
     static getDerivedStateFromError(error) {
