@@ -1,6 +1,5 @@
 
-**                    XTEL PROMO TOOL - COMPREHENSIVE SETUP GUIDE
-**
+                   XTEL PROMO TOOL - COMPREHENSIVE SETUP GUIDE
 This document serves as a complete manual for installing, configuring, and running
 the XTEL Promo Tool solution.
 
