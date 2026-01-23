@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Plus, UserPlus, Check, X, Eye } from 'lucide-react';
+import { Users, Plus, UserPlus, Check, X, Eye, ChevronRight } from 'lucide-react';
 import './CustomerRelation.css';
 import { customerService } from '../services/customerService';
 
@@ -16,6 +16,7 @@ const CustomerRelation = () => {
     });
 
     const [searchCriterion, setSearchCriterion] = useState('Select an option');
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [customers, setCustomers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -69,17 +70,39 @@ const CustomerRelation = () => {
                         <h3 className="search-by-title">Search By</h3>
                         <div className="search-controls">
                             <div style={{ display: 'flex', gap: '12px', flex: 1 }}>
-                                <select
-                                    className="criterion-select"
-                                    value={searchCriterion}
-                                    onChange={(e) => setSearchCriterion(e.target.value)}
-                                >
-                                    <option>Select an option</option>
-                                    <option>Code Hier</option>
-                                    <option>Code Div</option>
-                                    <option>Code Node</option>
-                                    <option>Level</option>
-                                </select>
+                                <div className="custom-dropdown-container" style={{ width: '200px' }}>
+                                    <div 
+                                        className={`custom-dropdown-header ${isDropdownOpen ? 'active' : ''}`}
+                                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                    >
+                                        <span>{searchCriterion}</span>
+                                        <ChevronRight 
+                                            size={18} 
+                                            style={{ 
+                                                transform: isDropdownOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                                                transition: 'transform 0.2s ease',
+                                                color: '#9333ea'
+                                            }} 
+                                        />
+                                    </div>
+                                    
+                                    {isDropdownOpen && (
+                                        <div className="custom-dropdown-list">
+                                            {['Select an option', 'Code Hier', 'Code Div', 'Code Node', 'Level'].map(opt => (
+                                                <div 
+                                                    key={opt}
+                                                    className={`custom-dropdown-item ${searchCriterion === opt ? 'selected' : ''}`}
+                                                    onClick={() => {
+                                                        setSearchCriterion(opt);
+                                                        setIsDropdownOpen(false);
+                                                    }}
+                                                >
+                                                    {opt}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                                 <input
                                     type="text"
                                     className="search-term-input"

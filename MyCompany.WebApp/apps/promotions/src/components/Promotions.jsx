@@ -9,6 +9,7 @@ const Promotions = () => {
     const [showFormModal, setShowFormModal] = useState(false);
     const [selectedViewType, setSelectedViewType] = useState('');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isSearchDropdownOpen, setIsSearchDropdownOpen] = useState(false);
     const [searchCriterion, setSearchCriterion] = useState('Select an option');
     const [searchTerm, setSearchTerm] = useState('');
     const [activities, setActivities] = useState([]);
@@ -805,21 +806,52 @@ const Promotions = () => {
                                 )}
                             </div>
 
-                            {/* Search Section */}
-                            {selectedViewType && (
+                            {/* Search Section - Hidden when main dropdown is open to prevent overlap */}
+                            {selectedViewType && !isDropdownOpen && (
                                 <div className="search-by-section fade-in">
                                     <h3 className="search-by-title">Search By</h3>
                                     <div className="search-controls">
-                                        <select
-                                            className="criterion-select"
-                                            value={searchCriterion}
-                                            onChange={(e) => setSearchCriterion(e.target.value)}
-                                        >
-                                            <option>Select an option</option>
-                                            {renderTableHeaders(selectedViewType).map(h => (
-                                                <option key={h} value={h}>{h}</option>
-                                            ))}
-                                        </select>
+                                        <div className="custom-dropdown-container" style={{ width: '200px' }}>
+                                            <div
+                                                className={`custom-dropdown-header ${isSearchDropdownOpen ? 'active' : ''}`}
+                                                onClick={() => setIsSearchDropdownOpen(!isSearchDropdownOpen)}
+                                            >
+                                                <span>{searchCriterion}</span>
+                                                <ChevronRight
+                                                    size={18}
+                                                    style={{
+                                                        transform: isSearchDropdownOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                                                        transition: 'transform 0.2s ease',
+                                                        color: '#9333ea'
+                                                    }}
+                                                />
+                                            </div>
+                                            {isSearchDropdownOpen && (
+                                                <div className="custom-dropdown-list">
+                                                    <div
+                                                        className={`custom-dropdown-item ${searchCriterion === 'Select an option' ? 'selected' : ''}`}
+                                                        onClick={() => {
+                                                            setSearchCriterion('Select an option');
+                                                            setIsSearchDropdownOpen(false);
+                                                        }}
+                                                    >
+                                                        Select an option
+                                                    </div>
+                                                    {renderTableHeaders(selectedViewType).map(h => (
+                                                        <div
+                                                            key={h}
+                                                            className={`custom-dropdown-item ${searchCriterion === h ? 'selected' : ''}`}
+                                                            onClick={() => {
+                                                                setSearchCriterion(h);
+                                                                setIsSearchDropdownOpen(false);
+                                                            }}
+                                                        >
+                                                            {h}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
                                         <input
                                             type="text"
                                             className="search-term-input"

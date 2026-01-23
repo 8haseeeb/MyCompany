@@ -399,10 +399,10 @@
 .search-term-input {
     flex: 1;
     padding: 12px 16px;
-    border: 1px solid #e5e7eb;
     border-radius: 8px;
     font-size: 14px;
-    color: #374151;
+    border-color: #7e22ce;
+    border: 2px solid #9333ea;
 }
 
 .search-action-btn {
@@ -510,12 +510,8 @@
     left: 0;
     right: 0;
     background: white;
-    
     border-bottom: 5px solid #9333ea;
-    /* Thick purple bottom border like screenshot */
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    z-index: 50;
+    z-index: 1050;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
@@ -523,11 +519,12 @@
 .custom-dropdown-item {
     padding: 14px 20px;
     color: #4b5563;
-    font-size: 10px;
+    font-size: 15px;
     cursor: pointer;
     transition: all 0.2s;
     background: white;
     border-bottom: 1px solid #f3f4f6;
+    overflow: hidden;
 }
 
 .custom-dropdown-item:hover {

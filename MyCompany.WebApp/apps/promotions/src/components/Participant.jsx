@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Eye, Search } from 'lucide-react';
+import { Users, Eye, Search, ChevronRight } from 'lucide-react';
 import './CustomerRelation.css'; // Reusing established table styles
 import { promotionService } from '../services/promotionService';
 
@@ -7,6 +7,8 @@ const Participant = () => {
     const [participants, setParticipants] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [searchCriterion, setSearchCriterion] = useState('Select an option');
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
@@ -27,10 +29,20 @@ const Participant = () => {
         }
     };
 
-    const filteredData = participants.filter(p =>
-        (p.codParticipant || p.CodParticipant || '').toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (p.codHier || p.CodHier || '').toString().toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredData = participants.filter(p => {
+        if (searchCriterion === 'Select an option' || !searchTerm) return true;
+
+        const term = searchTerm.toLowerCase();
+        switch (searchCriterion) {
+            case 'ID Action': return (p.idAction || p.IdAction || '').toString().toLowerCase().includes(term);
+            case 'Cod Participant': return (p.codParticipant || p.CodParticipant || '').toString().toLowerCase().includes(term);
+            case 'Code Hier': return (p.codHier || p.CodHier || '').toString().toLowerCase().includes(term);
+            case 'Code Div': return (p.codDiv || p.CodDiv || '').toString().toLowerCase().includes(term);
+            case 'Code Node': return (p.codNode || p.CodNode || '').toString().toLowerCase().includes(term);
+            case 'ID Level': return (p.idLevel ?? p.IdLevel ?? '').toString().toLowerCase().includes(term);
+            default: return true;
+        }
+    });
 
     return (
         <div className="cr-container">
@@ -39,11 +51,43 @@ const Participant = () => {
                     <h3 className="search-by-title">Participants List</h3>
                     <div className="search-controls">
                         <div style={{ display: 'flex', gap: '12px', flex: 1 }}>
+                            <div className="custom-dropdown-container" style={{ width: '200px' }}>
+                                <div
+                                    className={`custom-dropdown-header ${isDropdownOpen ? 'active' : ''}`}
+                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                >
+                                    <span>{searchCriterion}</span>
+                                    <ChevronRight
+                                        size={18}
+                                        style={{
+                                            transform: isDropdownOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                                            transition: 'transform 0.2s ease',
+                                            color: '#9333ea'
+                                        }}
+                                    />
+                                </div>
+                                {isDropdownOpen && (
+                                    <div className="custom-dropdown-list">
+                                        {['Select an option', 'ID Action', 'Cod Participant', 'Code Hier', 'Code Div', 'Code Node', 'ID Level'].map(opt => (
+                                            <div
+                                                key={opt}
+                                                className={`custom-dropdown-item ${searchCriterion === opt ? 'selected' : ''}`}
+                                                onClick={() => {
+                                                    setSearchCriterion(opt);
+                                                    setIsDropdownOpen(false);
+                                                }}
+                                            >
+                                                {opt}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                             <div className="search-input-wrapper" style={{ position: 'relative', flex: 1 }}>
                                 <input
                                     type="text"
                                     className="search-term-input"
-                                    placeholder="Search by ID or Hierarchy..."
+                                    placeholder="Search Term..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     style={{ paddingLeft: '40px' }}
