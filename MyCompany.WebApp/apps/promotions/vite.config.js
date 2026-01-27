@@ -13,6 +13,7 @@ export default defineConfig({
                 './CustomerRelation': './src/components/CustomerRelation.jsx',
                 './Participant': './src/components/Participant.jsx',
                 './DeliveryPoint': './src/components/DeliveryPoint.jsx',
+                './Products': './src/components/Products.jsx',
             },
             shared: {
                 react: { singleton: true },

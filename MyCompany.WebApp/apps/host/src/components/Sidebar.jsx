@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, Tag, Users, ChevronLeft, ChevronRight, LogOut, ChevronDown, ChevronUp, User, MapPin } from 'lucide-react';
+import { LayoutDashboard, Tag, Users, ChevronLeft, ChevronRight, LogOut, ChevronDown, ChevronUp, User, MapPin, ShoppingBag } from 'lucide-react';
 import './Sidebar.css';
 
 const Sidebar = ({ isCollapsed, setIsCollapsed, currentView, setView, onLogout }) => {
@@ -8,6 +8,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed, currentView, setView, onLogout }
     const menuItems = [
         { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
         { id: 'promotions', label: 'Promotions', icon: <Tag size={20} /> },
+        { id: 'products', label: 'Products', icon: <ShoppingBag size={20} /> },
         {
             id: 'customer_relation',
             label: 'Customer Relation',

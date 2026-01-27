@@ -12,6 +12,8 @@ namespace Promotions.Application.Products.Commands
         decimal? PerceDiscount1,
         decimal? PerceDiscount2,
         decimal? NumMeasure,
-        string? CodMeasure
+        string? CodMeasure,
+        List<Promotions.Application.ProductDetails.Dtos.AtomicCreateProductDetailDto> Details,
+        List<Promotions.Application.Products.Dtos.CreatePromoMeasureFieldDto> MeasureFields
     ) : IRequest<Unit>;
 }

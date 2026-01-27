@@ -2,6 +2,8 @@ using MediatR;
 using Promotions.Application.Products.Dtos;
 using Promotions.Application.Products.Interfaces;
 using Promotions.Application.Products.Queries;
+using Promotions.Application.ProductDetails.Dtos;
+using Promotions.Application.PromoArticles.Dtos;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -33,7 +35,29 @@ namespace Promotions.Application.Products.Handlers
                 PerceDiscount1 = x.PerceDiscount1,
                 PerceDiscount2 = x.PerceDiscount2,
                 NumMeasure = x.NumMeasure,
-                CodMeasure = x.CodMeasure
+                CodMeasure = x.CodMeasure,
+                Details = x.Details.Select(d => new ProductDetailDto
+                {
+                    IdAction = d.IdAction,
+                    CodProduct = d.CodProduct,
+                    LevProduct = d.LevProduct,
+                    CodDisplay = d.CodDisplay,
+                    CodNode = d.CodNode,
+                    CodDiv = d.CodDiv,
+                    FlgInclusion = d.FlgInclusion,
+                    Articles = d.Articles.Select(a => new PromoArticleDto
+                    {
+                        IdAction = a.IdAction,
+                        CodProduct = a.CodProduct,
+                        LevProduct = a.LevProduct,
+                        CodDisplay = a.CodDisplay,
+                        CodDiv = a.CodDiv,
+                        CodNode = a.CodNode,
+                        CodNode1 = a.CodNode1,
+                        CodNode2 = a.CodNode2,
+                        CodNodeN = a.CodNodeN
+                    }).ToList()
+                }).ToList()
             }).ToList();
         }
     }

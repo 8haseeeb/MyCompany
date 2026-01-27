@@ -40,6 +40,21 @@ const CustomerRelation = () => {
         }
     };
 
+
+
+    const filteredData = customers.filter(customer => {
+        if (searchCriterion === 'Select an option' || !searchTerm) return true;
+
+        const term = searchTerm.toLowerCase();
+        switch (searchCriterion) {
+            case 'Code Hier': return (customer.codHier || customer.CodHier || '').toString().toLowerCase().includes(term);
+            case 'Code Div': return (customer.codDiv || customer.CodDiv || '').toString().toLowerCase().includes(term);
+            case 'Code Node': return (customer.codNode || customer.CodNode || '').toString().toLowerCase().includes(term);
+            case 'Level': return (customer.idLevel ?? customer.IdLevel ?? '').toString().toLowerCase().includes(term);
+            default: return true;
+        }
+    });
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -71,25 +86,25 @@ const CustomerRelation = () => {
                         <div className="search-controls">
                             <div style={{ display: 'flex', gap: '12px', flex: 1 }}>
                                 <div className="custom-dropdown-container" style={{ width: '200px' }}>
-                                    <div 
+                                    <div
                                         className={`custom-dropdown-header ${isDropdownOpen ? 'active' : ''}`}
                                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                     >
                                         <span>{searchCriterion}</span>
-                                        <ChevronRight 
-                                            size={18} 
-                                            style={{ 
+                                        <ChevronRight
+                                            size={18}
+                                            style={{
                                                 transform: isDropdownOpen ? 'rotate(90deg)' : 'rotate(0deg)',
                                                 transition: 'transform 0.2s ease',
                                                 color: '#9333ea'
-                                            }} 
+                                            }}
                                         />
                                     </div>
-                                    
+
                                     {isDropdownOpen && (
                                         <div className="custom-dropdown-list">
                                             {['Select an option', 'Code Hier', 'Code Div', 'Code Node', 'Level'].map(opt => (
-                                                <div 
+                                                <div
                                                     key={opt}
                                                     className={`custom-dropdown-item ${searchCriterion === opt ? 'selected' : ''}`}
                                                     onClick={() => {
@@ -141,8 +156,8 @@ const CustomerRelation = () => {
                                 <tbody>
                                     {isLoading ? (
                                         <tr><td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>Loading Customers...</td></tr>
-                                    ) : customers.length > 0 ? (
-                                        customers.map((customer, idx) => (
+                                    ) : filteredData.length > 0 ? (
+                                        filteredData.map((customer, idx) => (
                                             <tr key={idx}>
                                                 <td>{customer.codHier || customer.CodHier}</td>
                                                 <td>{customer.codDiv || customer.CodDiv}</td>

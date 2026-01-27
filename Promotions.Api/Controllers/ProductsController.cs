@@ -35,7 +35,9 @@ namespace Promotions.Api.Controllers
                 dto.PerceDiscount1,
                 dto.PerceDiscount2,
                 dto.NumMeasure,
-                dto.CodMeasure));
+                dto.CodMeasure,
+                dto.Details,
+                dto.MeasureFields));
 
             return Ok();
         }

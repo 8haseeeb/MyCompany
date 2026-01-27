@@ -9,6 +9,7 @@ const Promotions = lazy(() => import('promotions_app/Promotions'));
 const CustomerRelation = lazy(() => import('promotions_app/CustomerRelation'));
 const Participant = lazy(() => import('promotions_app/Participant'));
 const DeliveryPoint = lazy(() => import('promotions_app/DeliveryPoint'));
+const Products = lazy(() => import('promotions_app/Products'));
 
 import './App.css';
 
@@ -38,6 +39,7 @@ function App() {
               case 'customer_relation': return <CustomerRelation />;
               case 'participant': return <Participant />;
               case 'delivery_point': return <DeliveryPoint />;
+              case 'products': return <Products />;
               default: return <Dashboard />;
             }
           })()}

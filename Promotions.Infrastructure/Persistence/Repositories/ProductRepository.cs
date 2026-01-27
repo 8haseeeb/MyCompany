@@ -20,23 +20,31 @@ namespace Promotions.Infrastructure.Persistence.Repositories
             int levProduct,
             string codDisplay)
         {
-            return await _context.Products.FirstOrDefaultAsync(x =>
-                x.IdAction == idAction &&
-                x.CodProduct == codProduct &&
-                x.LevProduct == levProduct &&
-                x.CodDisplay == codDisplay);
+            return await _context.Products
+                .Include(x => x.Details)
+                .ThenInclude(d => d.Articles)
+                .FirstOrDefaultAsync(x =>
+                    x.IdAction == idAction &&
+                    x.CodProduct == codProduct &&
+                    x.LevProduct == levProduct &&
+                    x.CodDisplay == codDisplay);
         }
 
         public async Task<List<PromoProduct>> GetByActionAsync(int idAction)
         {
             return await _context.Products
+                .Include(x => x.Details)
+                .ThenInclude(d => d.Articles)
                 .Where(x => x.IdAction == idAction)
                 .ToListAsync();
         }
 
         public async Task<List<PromoProduct>> GetAllAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products
+                .Include(x => x.Details)
+                .ThenInclude(d => d.Articles)
+                .ToListAsync();
         }
 
         public async Task AddAsync(PromoProduct product)

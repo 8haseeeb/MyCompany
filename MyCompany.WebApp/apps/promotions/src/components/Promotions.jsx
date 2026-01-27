@@ -340,6 +340,77 @@ const Promotions = () => {
         return headerMap[dataType] || [];
     };
 
+    const filteredViewData = viewData.filter(row => {
+        if (searchCriterion === 'Select an option' || !searchTerm) return true;
+
+        const term = searchTerm.toLowerCase();
+        let val = '';
+
+        switch (selectedViewType) {
+            case 'Promo Action':
+                switch (searchCriterion) {
+                    case 'ID': val = row.idAction || row.IdAction; break;
+                    case 'Name': val = row.name || row.Name; break;
+                    case 'Code Div': val = row.codDiv || row.CodDiv; break;
+                    case 'Document Key': val = row.documentKey || row.DocumentKey; break;
+                    default: break;
+                }
+                break;
+            case 'Participants':
+                switch (searchCriterion) {
+                    case 'Cod Participant': val = row.codParticipant || row.CodParticipant; break;
+                    case 'Code Hier': val = row.codHier || row.CodHier; break;
+                    case 'Code Div': val = row.codDiv || row.CodDiv; break;
+                    case 'Code Node': val = row.codNode || row.CodNode; break;
+                    default: break;
+                }
+                break;
+            case 'Delivery Points':
+                switch (searchCriterion) {
+                    case 'Cod Delivery Point': val = row.codDeliveryPoint || row.CodDeliveryPoint; break;
+                    case 'Code Hier': val = row.codHier || row.CodHier; break;
+                    case 'Code Div': val = row.codDiv || row.CodDiv; break;
+                    case 'Code Node': val = row.codNode || row.CodNode; break;
+                    default: break;
+                }
+                break;
+            case 'Products':
+                switch (searchCriterion) {
+                    case 'Cod Product': val = row.codProduct || row.CodProduct; break;
+                    case 'Cod Display': val = row.codDisplay || row.CodDisplay; break;
+                    case 'Code Div': val = row.codDiv || row.CodDiv; break;
+                    default: break;
+                }
+                break;
+            case 'Details':
+                switch (searchCriterion) {
+                    case 'Code Node': val = row.codNode || row.CodNode; break;
+                    case 'Code Div': val = row.codDiv || row.CodDiv; break;
+                    default: break;
+                }
+                break;
+            case 'Articles':
+                switch (searchCriterion) {
+                    case 'Code Div': val = row.codDiv || row.CodDiv; break;
+                    case 'Code Node': val = row.codNode || row.CodNode; break;
+                    default: break;
+                }
+                break;
+            case 'Measure Fields':
+                switch (searchCriterion) {
+                    case 'Code Div': val = row.codDiv || row.CodDiv; break;
+                    case 'Code Measure': val = row.codMeasure || row.CodMeasure; break;
+                    case 'Field Name': val = row.fieldName || row.FieldName; break;
+                    default: break;
+                }
+                break;
+            default:
+                break;
+        }
+
+        return (val || '').toString().toLowerCase().includes(term);
+    });
+
     const renderTableRows = (dataType) => {
         if (isViewLoading) {
             return <tr><td colSpan="10" style={{ textAlign: 'center', padding: '40px' }}>Loading data...</td></tr>;
@@ -349,11 +420,11 @@ const Promotions = () => {
             return <tr><td colSpan="10" style={{ textAlign: 'center', padding: '40px', color: '#ef4444' }}>Error: {viewError}</td></tr>;
         }
 
-        if (viewData.length === 0) {
-            return <tr><td colSpan="10" style={{ textAlign: 'center', padding: '40px' }}>No records found in the database.</td></tr>;
+        if (filteredViewData.length === 0) {
+            return <tr><td colSpan="10" style={{ textAlign: 'center', padding: '40px' }}>No records found matching your search.</td></tr>;
         }
 
-        return viewData.map((row, idx) => {
+        return filteredViewData.map((row, idx) => {
             switch (dataType) {
                 case 'Promo Action':
                     return (
@@ -646,54 +717,81 @@ const Promotions = () => {
                             <thead>
                                 <tr>
                                     <th>Promotion ID</th>
-                                    <th>Transaction Type</th>
+                                    <th>Name</th>
                                     <th>Initiator</th>
-                                    <th>Date & Time</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {isLoading ? (
-                                    <tr><td colSpan="6" style={{ textAlign: 'center', padding: '40px' }}>Loading Activities...</td></tr>
+                                    <tr><td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>Loading Activities...</td></tr>
                                 ) : activities.length > 0 ? (
-                                    activities.map((activity, idx) => (
-                                        <tr key={idx}>
-                                            <td className="id-cell">{activity.idAction || activity.IdAction || activity.codAction || activity.CodAction}</td>
-                                            <td>{activity.actionType || activity.ActionType || 'Atomic Action'}</td>
-                                            <td>{activity.createdBy || activity.CreatedBy || 'System'}</td>
-                                            <td>{activity.createdDate || activity.CreatedDate ? new Date(activity.createdDate || activity.CreatedDate).toLocaleString() : 'N/A'}</td>
-                                            <td>
-                                                <span className={`status-badge completed`}>
-                                                    Success
-                                                </span>
-                                            </td>
-                                            <td style={{ textAlign: 'right', position: 'relative' }}>
-                                                <button
-                                                    className="action-menu-btn"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        setActiveActionMenu(activeActionMenu === idx ? null : idx);
-                                                    }}
-                                                >
-                                                    <MoreVertical size={18} />
-                                                </button>
+                                    activities.map((activity, idx) => {
+                                        const startDate = activity.dteStartSellIn || activity.DteStartSellIn;
+                                        const endDate = activity.dteEndSellIn || activity.DteEndSellIn;
 
-                                                {activeActionMenu === idx && (
-                                                    <div className="action-dropdown-menu fade-in">
-                                                        <button
-                                                            className="action-item delete"
-                                                            onClick={() => handleDelete(activity.idAction || activity.IdAction || activity.codAction || activity.CodAction)}
-                                                        >
-                                                            <Trash2 size={14} /> Delete
-                                                        </button>
-                                                    </div>
-                                                )}
-                                            </td>
-                                        </tr>
-                                    ))
+                                        let status = 'Unknown';
+                                        let statusClass = 'pending';
+
+                                        if (startDate && endDate) {
+                                            const now = new Date();
+                                            const start = new Date(startDate);
+                                            const end = new Date(endDate);
+
+                                            if (now < start) {
+                                                status = 'Upcoming';
+                                                statusClass = 'pending'; // or a new 'upcoming' class
+                                            } else if (now >= start && now <= end) {
+                                                status = 'Active';
+                                                statusClass = 'completed'; // Reusing green style for Active
+                                            } else {
+                                                status = 'Expired';
+                                                statusClass = 'expired'; // Need to add style for this
+                                            }
+                                        }
+
+                                        return (
+                                            <tr key={idx}>
+                                                <td className="id-cell">{activity.idAction || activity.IdAction || activity.codAction || activity.CodAction}</td>
+                                                <td>{activity.name || activity.Name || activity.actionType || 'Atomic Action'}</td>
+                                                <td>{activity.createdBy || activity.CreatedBy || 'System'}</td>
+                                                <td>{startDate ? new Date(startDate).toLocaleDateString() : 'N/A'}</td>
+                                                <td>{endDate ? new Date(endDate).toLocaleDateString() : 'N/A'}</td>
+                                                <td>
+                                                    <span className={`status-badge ${statusClass}`}>
+                                                        {status}
+                                                    </span>
+                                                </td>
+                                                <td style={{ textAlign: 'right', position: 'relative' }}>
+                                                    <button
+                                                        className="action-menu-btn"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setActiveActionMenu(activeActionMenu === idx ? null : idx);
+                                                        }}
+                                                    >
+                                                        <MoreVertical size={18} />
+                                                    </button>
+
+                                                    {activeActionMenu === idx && (
+                                                        <div className="action-dropdown-menu fade-in">
+                                                            <button
+                                                                className="action-item delete"
+                                                                onClick={() => handleDelete(activity.idAction || activity.IdAction || activity.codAction || activity.CodAction)}
+                                                            >
+                                                                <Trash2 size={14} /> Delete
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
                                 ) : (
-                                    <tr><td colSpan="6" style={{ textAlign: 'center', padding: '40px' }}>No recent promotion activities found.</td></tr>
+                                    <tr><td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>No recent promotion activities found.</td></tr>
                                 )}
                             </tbody>
                         </table>

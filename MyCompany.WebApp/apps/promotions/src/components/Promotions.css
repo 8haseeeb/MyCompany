@@ -113,6 +113,21 @@
     color: #991b1b;
 }
 
+.status-badge.expired {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.status-badge.pending {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.status-badge.unknown {
+    background-color: #f3f4f6;
+    color: #9ca3af;
+}
+
 .table-action-link {
     background: none;
     border: none;
@@ -403,6 +418,7 @@
     font-size: 14px;
     border-color: #7e22ce;
     border: 2px solid #9333ea;
+    outline: none;
 }
 
 .search-action-btn {
