@@ -46,6 +46,11 @@ export const promotionService = {
         return response.data;
     },
 
+    updatePromotion: async (idAction, data) => {
+        const response = await api.put(`/api/promotions/actions?idAction=${idAction}`, data);
+        return response.data;
+    },
+
     createAtomicPromotion: async (payload) => {
         const response = await api.post('/api/promotions/actions/atomic', payload);
         return response.data;
@@ -80,12 +85,11 @@ export const promotionService = {
     },
 
     createProduct: async (product) => {
-        // Endpoint: POST /api/promotions/products
-        // Mapped to camelCase
+        // ... (existing implementation)
         const payload = {
             codProduct: product.codProduct || product.CodProduct,
             codDisplay: product.codDisplay || product.CodDisplay,
-            levProduct: product.levProduct || product.LevProduct || 1, // Added missing required field
+            levProduct: product.levProduct || product.LevProduct || 1,
             codDiv: product.codDiv || product.CodDiv,
             codMeasure: product.codMeasure || product.CodMeasure,
             qtyEstimated: Number(product.qtyEstimated || product.QtyEstimated || 0),
@@ -93,7 +97,6 @@ export const promotionService = {
             perceDiscount2: Number(product.perceDiscount2 || product.PerceDiscount2 || 0),
             numMeasure: Number(product.numMeasure || product.NumMeasure || 0),
             idAction: Number(product.idAction || product.IdAction || 0),
-            // Atomic Lists
             details: (product.details || product.Details || []).map(d => ({
                 codNode: d.codNode || d.CodNode,
                 codDiv: d.codDiv || d.CodDiv,
@@ -112,6 +115,44 @@ export const promotionService = {
             }))
         };
         const response = await api.post('/api/promotions/products', payload);
+        return response.data;
+    },
+
+    updateProduct: async (idAction, codProduct, levProduct, codDisplay, data) => {
+        const payload = {
+            codDiv: data.codDiv || data.CodDiv,
+            qtyEstimated: Number(data.qtyEstimated || data.QtyEstimated || 0),
+            perceDiscount1: Number(data.perceDiscount1 || data.PerceDiscount1 || 0),
+            perceDiscount2: Number(data.perceDiscount2 || data.PerceDiscount2 || 0),
+            numMeasure: Number(data.numMeasure || data.NumMeasure || 0),
+            codMeasure: data.codMeasure || data.CodMeasure
+        };
+        const response = await api.put(`/api/promotions/products?idAction=${idAction}&codProduct=${codProduct}&levProduct=${levProduct}&codDisplay=${codDisplay}`, payload);
+        return response.data;
+    },
+
+    deleteProduct: async (idAction, codProduct, levProduct, codDisplay) => {
+        const response = await api.delete(`/api/promotions/products?idAction=${idAction}&codProduct=${codProduct}&levProduct=${levProduct}&codDisplay=${codDisplay}`);
+        return response.data;
+    },
+
+    updateParticipant: async (idAction, codParticipant, flgInclusion) => {
+        const response = await api.put(`/api/actions/${idAction}/participants/${codParticipant}`, { flgInclusion });
+        return response.data;
+    },
+
+    deleteParticipant: async (idAction, codParticipant) => {
+        const response = await api.delete(`/api/actions/${idAction}/participants/${codParticipant}`);
+        return response.data;
+    },
+
+    updateDeliveryPoint: async (idAction, codDeliveryPoint, flgInclusion) => {
+        const response = await api.put(`/api/promotions/delivery-points/${idAction}/${codDeliveryPoint}`, { flgInclusion });
+        return response.data;
+    },
+
+    deleteDeliveryPoint: async (idAction, codDeliveryPoint) => {
+        const response = await api.delete(`/api/promotions/delivery-points/${idAction}/${codDeliveryPoint}`);
         return response.data;
     }
 };

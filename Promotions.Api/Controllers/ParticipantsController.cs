@@ -34,14 +34,14 @@ public class ParticipantsController : ControllerBase
     }
 
     [HttpPut("{codParticipant}")]
-    public async Task<IActionResult> UpdateParticipant(int idAction, string codParticipant, [FromBody] UpdateParticipantDto request)
+    public async Task<IActionResult> UpdateParticipant([FromRoute] int idAction, [FromRoute] string codParticipant, [FromBody] UpdateParticipantDto request)
     {
         await _mediator.Send(new UpdateParticipantCommand(idAction, codParticipant, request.FlgInclusion));
         return Ok();
     }
 
     [HttpDelete("{codParticipant}")]
-    public async Task<IActionResult> DeleteParticipant(int idAction, string codParticipant)
+    public async Task<IActionResult> DeleteParticipant([FromRoute] int idAction, [FromRoute] string codParticipant)
     {
         await _mediator.Send(new DeleteParticipantCommand(idAction, codParticipant));
         return Ok();

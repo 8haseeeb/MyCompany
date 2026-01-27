@@ -2,7 +2,7 @@
 
 namespace Promotions.Application.Participants.Commands
 {
-    public class DeleteParticipantCommand : IRequest
+    public class DeleteParticipantCommand : IRequest<Unit>
     {
         public int IdAction { get; set; }
         public string CodParticipant { get; set; } = null!;

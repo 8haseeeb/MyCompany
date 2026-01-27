@@ -22,6 +22,7 @@ namespace Promotions.Application.DeliveryPoints.Commands
             entity.FlgInclusion = request.FlgInclusion;
 
             await _repository.UpdateAsync(entity);
+            await _repository.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

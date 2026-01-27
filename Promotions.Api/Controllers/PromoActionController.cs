@@ -99,7 +99,9 @@ namespace Promotions.Api.Controllers
             await _mediator.Send(new UpdatePromoActionCommand(
                 idAction,
                 dto.Name,
+                dto.DteStartSellIn,
                 dto.DteEndSellIn,
+                dto.DteStartSellOut,
                 dto.DteEndSellOut,
                 dto.DocumentKey,
                 dto.DteToShost,

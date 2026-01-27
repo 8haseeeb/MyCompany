@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Eye, Search, ChevronRight } from 'lucide-react';
+import { Users, Eye, Search, ChevronRight, MoreVertical, Edit2, Trash2, Check, X } from 'lucide-react';
 import './CustomerRelation.css'; // Reusing established table styles
 import { promotionService } from '../services/promotionService';
 
@@ -10,6 +10,10 @@ const Participant = () => {
     const [searchCriterion, setSearchCriterion] = useState('Select an option');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [activeKebab, setActiveKebab] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editingParticipant, setEditingParticipant] = useState(null);
+    const [editFlagInclusion, setEditFlagInclusion] = useState(true);
 
     useEffect(() => {
         fetchParticipants();
@@ -27,6 +31,45 @@ const Participant = () => {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const handleEdit = (participant) => {
+        setEditingParticipant(participant);
+        setEditFlagInclusion(participant.flgInclusion ?? participant.FlgInclusion ?? true);
+        setShowEditModal(true);
+        setActiveKebab(null);
+    };
+
+    const handleUpdate = async () => {
+        const idAction = editingParticipant.idAction || editingParticipant.IdAction;
+        const codParticipant = editingParticipant.codParticipant || editingParticipant.CodParticipant;
+
+        try {
+            await promotionService.updateParticipant(idAction, codParticipant, editFlagInclusion);
+            alert("Participant updated successfully!");
+            setShowEditModal(false);
+            fetchParticipants();
+        } catch (err) {
+            console.error("Error updating participant:", err);
+            alert("Failed to update participant: " + err.message);
+        }
+    };
+
+    const handleDelete = async (participant) => {
+        const idAction = participant.idAction || participant.IdAction;
+        const codParticipant = participant.codParticipant || participant.CodParticipant;
+
+        if (window.confirm(`Are you sure you want to delete participant ${codParticipant}?`)) {
+            try {
+                await promotionService.deleteParticipant(idAction, codParticipant);
+                alert("Participant deleted successfully!");
+                fetchParticipants();
+            } catch (err) {
+                console.error("Error deleting participant:", err);
+                alert("Failed to delete participant: " + err.message);
+            }
+        }
+        setActiveKebab(null);
     };
 
     const filteredData = participants.filter(p => {
@@ -111,6 +154,7 @@ const Participant = () => {
                                     <th>Code Node</th>
                                     <th>ID Level</th>
                                     <th>Flag Inclusion</th>
+                                    <th style={{ width: '80px', textAlign: 'center' }}>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -126,6 +170,28 @@ const Participant = () => {
                                             <td>{row.codNode || row.CodNode}</td>
                                             <td>{row.idLevel ?? row.IdLevel}</td>
                                             <td>{row.flgInclusion ?? row.FlgInclusion ? 'Yes' : 'No'}</td>
+                                            <td style={{ textAlign: 'center', position: 'relative' }}>
+                                                <button
+                                                    className="action-menu-btn"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setActiveKebab(activeKebab === idx ? null : idx);
+                                                    }}
+                                                >
+                                                    <MoreVertical size={18} />
+                                                </button>
+
+                                                {activeKebab === idx && (
+                                                    <div className="kebab-dropdown fade-in">
+                                                        <button className="dropdown-item" onClick={() => handleEdit(row)}>
+                                                            <Edit2 size={14} style={{ marginRight: '8px' }} /> Edit
+                                                        </button>
+                                                        <button className="dropdown-item delete" onClick={() => handleDelete(row)}>
+                                                            <Trash2 size={14} style={{ marginRight: '8px' }} /> Delete
+                                                        </button>
+                                                    </div>
+                                                )}
+                                            </td>
                                         </tr>
                                     ))
                                 ) : (
@@ -136,6 +202,49 @@ const Participant = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Edit Modal */}
+            {showEditModal && (
+                <div className="modal-overlay">
+                    <div className="modal-content fade-in" style={{ maxWidth: '400px' }}>
+                        <div className="modal-header">
+                            <h3 className="modal-title">Edit Participant: {editingParticipant.codParticipant || editingParticipant.CodParticipant}</h3>
+                            <button className="close-btn" onClick={() => setShowEditModal(false)}>
+                                <X size={20} />
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label className="form-label">Flag Inclusion</label>
+                                <div style={{ display: 'flex', gap: '20px', marginTop: '10px' }}>
+                                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                                        <input
+                                            type="radio"
+                                            checked={editFlagInclusion === true}
+                                            onChange={() => setEditFlagInclusion(true)}
+                                            style={{ cursor: 'pointer' }}
+                                        />
+                                        Yes (Include)
+                                    </label>
+                                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                                        <input
+                                            type="radio"
+                                            checked={editFlagInclusion === false}
+                                            onChange={() => setEditFlagInclusion(false)}
+                                            style={{ cursor: 'pointer' }}
+                                        />
+                                        No (Exclude)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer" style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '24px', paddingTop: '16px', borderTop: '1px solid #e5e7eb' }}>
+                            <button className="btn-secondary" onClick={() => setShowEditModal(false)}>Cancel</button>
+                            <button className="btn-primary" onClick={handleUpdate}>Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

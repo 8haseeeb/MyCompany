@@ -8,10 +8,5 @@ namespace Promotions.Application.Products.Dtos
     {
         [JsonIgnore]
         public new int? IdAction { get; set; }
-
-        public List<AtomicCreateProductDetailDto> Details { get; set; } = new();
-        public List<CreatePromoMeasureFieldDto> MeasureFields { get; set; } = new();
     }
 }
-
-

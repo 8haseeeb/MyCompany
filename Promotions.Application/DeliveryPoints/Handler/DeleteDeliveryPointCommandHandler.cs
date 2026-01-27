@@ -18,16 +18,25 @@ namespace Promotions.Application.DeliveryPoints.Commands
             DeleteDeliveryPointCommand request,
             CancellationToken cancellationToken)
         {
-            var entity = await _repository.GetByIdAsync(
-                request.IdAction,
-                request.CodDeliveryPoint);
+            try
+            {
+                var entity = await _repository.GetByIdAsync(
+                    request.IdAction,
+                    request.CodDeliveryPoint);
 
-            if (entity == null)
-                throw new Exception("Delivery Point not found");
+                if (entity == null)
+                {
+                    throw new KeyNotFoundException($"Delivery Point with IdAction {request.IdAction} and CodDeliveryPoint '{request.CodDeliveryPoint}' not found.");
+                }
 
-            await _repository.DeleteAsync(entity);
-            await _repository.SaveChangesAsync(cancellationToken);
-            return Unit.Value;
+                await _repository.DeleteAsync(entity);
+                await _repository.SaveChangesAsync(cancellationToken);
+                return Unit.Value;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error deleting delivery point: {ex.Message}", ex);
+            }
         }
     }
 }

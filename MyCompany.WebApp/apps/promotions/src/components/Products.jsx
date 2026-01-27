@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Package, Plus, Check, X, Eye, ChevronRight, ShoppingBag, Trash2 } from 'lucide-react';
+import { Package, Plus, Check, X, Eye, ChevronRight, ShoppingBag, Trash2, MoreVertical, Edit2 } from 'lucide-react';
 import './Products.css';
 import { promotionService } from '../services/promotionService';
 
@@ -49,6 +49,20 @@ const Products = () => {
     // Product Selection Modal State
     const [showProductModal, setShowProductModal] = useState(false);
     const [productSearchTerm, setProductSearchTerm] = useState('');
+
+    // Edit/Delete State
+    const [activeKebab, setActiveKebab] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editingProduct, setEditingProduct] = useState(null);
+    const [editFormData, setEditFormData] = useState({
+        codDiv: '',
+        qtyEstimated: 0,
+        perceDiscount1: 0,
+        perceDiscount2: 0,
+        numMeasure: 0,
+        codMeasure: '',
+        codDisplay: ''
+    });
 
     // We reuse 'products' as the source for the modal if available, 
     // or fetch if empty (though logic below assumes 'products' is populated on load)
@@ -143,6 +157,57 @@ const Products = () => {
 
     const removeSelectedProduct = (indexToRemove) => {
         setSelectedProducts(prev => prev.filter((_, idx) => idx !== indexToRemove));
+    };
+
+    const handleDelete = async (product) => {
+        const idAction = product.idAction || product.IdAction;
+        const codProduct = product.codProduct || product.CodProduct;
+        const levProduct = product.levProduct ?? product.LevProduct ?? 0;
+        const codDisplay = product.codDisplay || product.CodDisplay;
+
+        if (window.confirm(`Are you sure you want to delete product ${codProduct}?`)) {
+            try {
+                await promotionService.deleteProduct(idAction, codProduct, levProduct, codDisplay);
+                alert("Product deleted successfully");
+                fetchProducts();
+            } catch (error) {
+                console.error("Error deleting product:", error);
+                alert("Failed to delete product: " + error.message);
+            }
+        }
+        setActiveKebab(null);
+    };
+
+    const handleEdit = (product) => {
+        setEditingProduct(product);
+        setEditFormData({
+            codDiv: product.codDiv || product.CodDiv || '',
+            qtyEstimated: product.qtyEstimated ?? product.QtyEstimated ?? 0,
+            perceDiscount1: product.perceDiscount1 ?? product.PerceDiscount1 ?? 0,
+            perceDiscount2: product.perceDiscount2 ?? product.PerceDiscount2 ?? 0,
+            numMeasure: product.numMeasure ?? product.NumMeasure ?? 0,
+            codMeasure: product.codMeasure || product.CodMeasure || '',
+            codDisplay: product.codDisplay || product.CodDisplay || ''
+        });
+        setShowEditModal(true);
+        setActiveKebab(null);
+    };
+
+    const handleUpdate = async () => {
+        const idAction = editingProduct.idAction || editingProduct.IdAction;
+        const codProduct = editingProduct.codProduct || editingProduct.CodProduct;
+        const levProduct = editingProduct.levProduct ?? editingProduct.LevProduct ?? 0;
+        const codDisplay = editingProduct.codDisplay || editingProduct.CodDisplay;
+
+        try {
+            await promotionService.updateProduct(idAction, codProduct, levProduct, codDisplay, editFormData);
+            alert("Product updated successfully");
+            setShowEditModal(false);
+            fetchProducts();
+        } catch (error) {
+            console.error("Error updating product:", error);
+            alert("Failed to update product: " + error.message);
+        }
     };
 
     const handleSubmit = async () => {
@@ -333,11 +398,13 @@ const Products = () => {
                                         <th>Discount 2 (%)</th>
                                         <th>Num Measure</th>
                                         <th>Code Measure</th>
+
+                                        <th style={{ width: '80px', textAlign: 'center' }}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {isLoading ? (
-                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '40px' }}>Loading Products...</td></tr>
+                                        <tr><td colSpan="11" style={{ textAlign: 'center', padding: '40px' }}>Loading Products...</td></tr>
                                     ) : filteredData.length > 0 ? (
                                         filteredData.map((product, idx) => (
                                             <tr key={idx}>
@@ -350,17 +417,113 @@ const Products = () => {
                                                 <td>{product.perceDiscount2 ?? product.PerceDiscount2}</td>
                                                 <td>{product.numMeasure ?? product.NumMeasure}</td>
                                                 <td>{product.codMeasure || product.CodMeasure}</td>
+                                                <td style={{ textAlign: 'center', position: 'relative' }}>
+                                                    <button
+                                                        className="action-menu-btn"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setActiveKebab(activeKebab === idx ? null : idx);
+                                                        }}
+                                                    >
+                                                        <MoreVertical size={18} />
+                                                    </button>
+
+                                                    {activeKebab === idx && (
+                                                        <div className="kebab-dropdown fade-in">
+                                                            <button className="dropdown-item" onClick={() => handleEdit(product)}>
+                                                                <Edit2 size={14} style={{ marginRight: '8px' }} /> Edit
+                                                            </button>
+                                                            <button className="dropdown-item delete" onClick={() => handleDelete(product)}>
+                                                                <Trash2 size={14} style={{ marginRight: '8px' }} /> Delete
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </td>
                                             </tr>
                                         ))
                                     ) : fetchError ? (
-                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '40px', color: '#ef4444' }}>Error: {fetchError} (Check if Backend is running)</td></tr>
+                                        <tr><td colSpan="11" style={{ textAlign: 'center', padding: '40px', color: '#ef4444' }}>Error: {fetchError} (Check if Backend is running)</td></tr>
                                     ) : (
-                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '40px' }}>No products found in the database.</td></tr>
+                                        <tr><td colSpan="11" style={{ textAlign: 'center', padding: '40px' }}>No products found in the database.</td></tr>
                                     )}
                                 </tbody>
                             </table>
                         </div>
                     </div>
+
+                    {/* Edit Modal */}
+                    {showEditModal && (
+                        <div className="modal-overlay">
+                            <div className="modal-content fade-in" style={{ maxWidth: '600px' }}>
+                                <div className="modal-header">
+                                    <h3 className="modal-title">Edit Product: {editingProduct.codProduct || editingProduct.CodProduct}</h3>
+                                    <button className="close-btn" onClick={() => setShowEditModal(false)}>
+                                        <X size={20} />
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <div className="form-grid">
+                                        <div className="form-group">
+                                            <label className="form-label">Code Div</label>
+                                            <input
+                                                className="form-input"
+                                                value={editFormData.codDiv}
+                                                onChange={(e) => setEditFormData({ ...editFormData, codDiv: e.target.value })}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="form-label">Qty Estimated</label>
+                                            <input
+                                                type="number"
+                                                className="form-input"
+                                                value={editFormData.qtyEstimated}
+                                                onChange={(e) => setEditFormData({ ...editFormData, qtyEstimated: Number(e.target.value) })}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="form-label">Discount 1 (%)</label>
+                                            <input
+                                                type="number"
+                                                className="form-input"
+                                                value={editFormData.perceDiscount1}
+                                                onChange={(e) => setEditFormData({ ...editFormData, perceDiscount1: Number(e.target.value) })}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="form-label">Discount 2 (%)</label>
+                                            <input
+                                                type="number"
+                                                className="form-input"
+                                                value={editFormData.perceDiscount2}
+                                                onChange={(e) => setEditFormData({ ...editFormData, perceDiscount2: Number(e.target.value) })}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="form-label">Num Measure</label>
+                                            <input
+                                                type="number"
+                                                className="form-input"
+                                                value={editFormData.numMeasure}
+                                                onChange={(e) => setEditFormData({ ...editFormData, numMeasure: Number(e.target.value) })}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="form-label">Code Measure</label>
+                                            <input
+                                                className="form-input"
+                                                value={editFormData.codMeasure}
+                                                onChange={(e) => setEditFormData({ ...editFormData, codMeasure: e.target.value })}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="modal-footer">
+                                    <button className="btn-secondary" onClick={() => setShowEditModal(false)}>Cancel</button>
+                                    <button className="btn-primary" onClick={handleUpdate}>Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div className="form-card fade-in">

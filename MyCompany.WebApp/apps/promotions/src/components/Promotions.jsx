@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, ChevronRight, ChevronLeft, Check, Plus, Ticket, Eye, X, MoreVertical, Trash2 } from 'lucide-react';
+import { MessageSquare, ChevronRight, ChevronLeft, Check, Plus, Ticket, Eye, X, MoreVertical, Trash2, Edit2 } from 'lucide-react';
 import './Promotions.css';
 import { promotionService } from '../services/promotionService';
 
@@ -19,6 +19,18 @@ const Promotions = () => {
     const [customerRelations, setCustomerRelations] = useState([]);
     const [masterParticipants, setMasterParticipants] = useState([]);
     const [masterDps, setMasterDps] = useState([]);
+    const [showEditPromoModal, setShowEditPromoModal] = useState(false);
+    const [editingPromotion, setEditingPromotion] = useState(null);
+    const [editPromoFormData, setEditPromoFormData] = useState({
+        name: '',
+        dteStartSellIn: '',
+        dteEndSellIn: '',
+        dteStartSellOut: '',
+        dteEndSellOut: '',
+        documentKey: '',
+        dteToShost: '',
+        levParticipants: 0
+    });
 
     useEffect(() => {
         fetchHistory();
@@ -101,6 +113,45 @@ const Promotions = () => {
             setViewData([]);
         } finally {
             setIsViewLoading(false);
+        }
+    };
+
+    const handleEditPromo = (promo) => {
+        setEditingPromotion(promo);
+        setEditPromoFormData({
+            name: promo.name || promo.Name || '',
+            dteStartSellIn: (promo.dteStartSellIn || promo.DteStartSellIn || '').split('T')[0],
+            dteEndSellIn: (promo.dteEndSellIn || promo.DteEndSellIn || '').split('T')[0],
+            dteStartSellOut: (promo.dteStartSellOut || promo.DteStartSellOut || '').split('T')[0],
+            dteEndSellOut: (promo.dteEndSellOut || promo.DteEndSellOut || '').split('T')[0],
+            documentKey: promo.documentKey || promo.DocumentKey || '',
+            dteToShost: (promo.dteToShost || promo.DteToShost || '').split('T')[0],
+            levParticipants: promo.levParticipants ?? promo.LevParticipants ?? 0
+        });
+        setShowEditPromoModal(true);
+        setActiveActionMenu(null);
+    };
+
+    const handleUpdatePromo = async () => {
+        const idAction = editingPromotion.idAction ?? editingPromotion.IdAction ?? editingPromotion.codAction ?? editingPromotion.CodAction;
+        try {
+            // Ensure payload fields are correctly typed for .NET binding
+            const payload = {
+                ...editPromoFormData,
+                levParticipants: editPromoFormData.levParticipants === '' ? null : Number(editPromoFormData.levParticipants),
+                dteToShost: editPromoFormData.dteToShost === '' ? null : editPromoFormData.dteToShost,
+                dteStartSellIn: editPromoFormData.dteStartSellIn === '' ? null : editPromoFormData.dteStartSellIn,
+                dteEndSellIn: editPromoFormData.dteEndSellIn === '' ? null : editPromoFormData.dteEndSellIn,
+                dteStartSellOut: editPromoFormData.dteStartSellOut === '' ? null : editPromoFormData.dteStartSellOut,
+                dteEndSellOut: editPromoFormData.dteEndSellOut === '' ? null : editPromoFormData.dteEndSellOut
+            };
+            await promotionService.updatePromotion(idAction, payload);
+            alert("Promotion updated successfully!");
+            setShowEditPromoModal(false);
+            fetchHistory();
+        } catch (error) {
+            console.error("Error updating promotion:", error);
+            alert("Failed to update promotion: " + (error.response?.data?.error || error.message));
         }
     };
 
@@ -779,8 +830,14 @@ const Promotions = () => {
                                                     {activeActionMenu === idx && (
                                                         <div className="action-dropdown-menu fade-in">
                                                             <button
+                                                                className="action-item edit"
+                                                                onClick={() => handleEditPromo(activity)}
+                                                            >
+                                                                <Edit2 size={14} /> Edit
+                                                            </button>
+                                                            <button
                                                                 className="action-item delete"
-                                                                onClick={() => handleDelete(activity.idAction || activity.IdAction || activity.codAction || activity.CodAction)}
+                                                                onClick={() => handleDelete(activity.idAction ?? activity.IdAction ?? activity.codAction ?? activity.CodAction)}
                                                             >
                                                                 <Trash2 size={14} /> Delete
                                                             </button>
@@ -1005,6 +1062,103 @@ const Promotions = () => {
                             <div className="form-content-wrapper">
                                 {renderStepContent()}
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* Edit Promotion Modal */}
+            {showEditPromoModal && (
+                <div className="modal-overlay fade-in">
+                    <div className="modal-container active">
+                        <div className="modal-header">
+                            <h2 className="modal-title">Edit Promotion</h2>
+                            <button className="modal-close" onClick={() => setShowEditPromoModal(false)}>
+                                <X size={20} />
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-section">
+                                <div className="form-grid">
+                                    <div className="form-group">
+                                        <label className="form-label">Name <span className="required">*</span></label>
+                                        <input
+                                            type="text"
+                                            className="form-input"
+                                            value={editPromoFormData.name}
+                                            onChange={(e) => setEditPromoFormData({ ...editPromoFormData, name: e.target.value })}
+                                            placeholder="Enter name"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Document Key</label>
+                                        <input
+                                            type="text"
+                                            className="form-input"
+                                            value={editPromoFormData.documentKey}
+                                            onChange={(e) => setEditPromoFormData({ ...editPromoFormData, documentKey: e.target.value })}
+                                            placeholder="Enter document key"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Start Sell In</label>
+                                        <input
+                                            type="date"
+                                            className="form-input"
+                                            value={editPromoFormData.dteStartSellIn}
+                                            onChange={(e) => setEditPromoFormData({ ...editPromoFormData, dteStartSellIn: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">End Sell In</label>
+                                        <input
+                                            type="date"
+                                            className="form-input"
+                                            value={editPromoFormData.dteEndSellIn}
+                                            onChange={(e) => setEditPromoFormData({ ...editPromoFormData, dteEndSellIn: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Start Sell Out</label>
+                                        <input
+                                            type="date"
+                                            className="form-input"
+                                            value={editPromoFormData.dteStartSellOut}
+                                            onChange={(e) => setEditPromoFormData({ ...editPromoFormData, dteStartSellOut: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">End Sell Out</label>
+                                        <input
+                                            type="date"
+                                            className="form-input"
+                                            value={editPromoFormData.dteEndSellOut}
+                                            onChange={(e) => setEditPromoFormData({ ...editPromoFormData, dteEndSellOut: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Date To Host</label>
+                                        <input
+                                            type="date"
+                                            className="form-input"
+                                            value={editPromoFormData.dteToShost}
+                                            onChange={(e) => setEditPromoFormData({ ...editPromoFormData, dteToShost: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Level Participants</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={editPromoFormData.levParticipants}
+                                            onChange={(e) => setEditPromoFormData({ ...editPromoFormData, levParticipants: e.target.value })}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn-secondary" onClick={() => setShowEditPromoModal(false)}>Cancel</button>
+                            <button className="btn-primary" onClick={handleUpdatePromo}>Save Changes</button>
                         </div>
                     </div>
                 </div>

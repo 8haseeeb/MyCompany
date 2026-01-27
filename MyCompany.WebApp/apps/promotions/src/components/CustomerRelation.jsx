@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Plus, UserPlus, Check, X, Eye, ChevronRight } from 'lucide-react';
+import { Users, Plus, UserPlus, Check, X, Eye, ChevronRight, MoreVertical, Edit2, Trash2 } from 'lucide-react';
 import './CustomerRelation.css';
 import { customerService } from '../services/customerService';
 
@@ -21,6 +21,13 @@ const CustomerRelation = () => {
     const [customers, setCustomers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [fetchError, setFetchError] = useState(null);
+    const [activeKebab, setActiveKebab] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editingCustomer, setEditingCustomer] = useState(null);
+    const [editFormData, setEditFormData] = useState({
+        codParentNode: '',
+        dteEnd: ''
+    });
 
     useEffect(() => {
         fetchCustomers();
@@ -73,6 +80,54 @@ const CustomerRelation = () => {
             console.error("Error creating customer:", error);
             alert("Failed to create customer. Check console for details.");
         }
+    };
+
+    const handleEdit = (customer) => {
+        setEditingCustomer(customer);
+        setEditFormData({
+            codParentNode: customer.codParentNode || customer.CodParentNode || '',
+            dteEnd: (customer.dteEnd || customer.DteEnd || '').split('T')[0]
+        });
+        setShowEditModal(true);
+        setActiveKebab(null);
+    };
+
+    const handleUpdate = async () => {
+        const codHier = editingCustomer.codHier || editingCustomer.CodHier;
+        const codDiv = editingCustomer.codDiv || editingCustomer.CodDiv;
+        const codNode = editingCustomer.codNode || editingCustomer.CodNode;
+        const idLevel = editingCustomer.idLevel ?? editingCustomer.IdLevel;
+        const dteStart = editingCustomer.dteStart || editingCustomer.DteStart;
+
+        try {
+            await customerService.updateCustomer(codHier, codDiv, codNode, idLevel, dteStart, editFormData);
+            alert("Customer updated successfully!");
+            setShowEditModal(false);
+            fetchCustomers();
+        } catch (error) {
+            console.error("Error updating customer:", error);
+            alert("Failed to update customer: " + error.message);
+        }
+    };
+
+    const handleDelete = async (customer) => {
+        const codHier = customer.codHier || customer.CodHier;
+        const codDiv = customer.codDiv || customer.CodDiv;
+        const codNode = customer.codNode || customer.CodNode;
+        const idLevel = customer.idLevel ?? customer.IdLevel;
+        const dteStart = customer.dteStart || customer.DteStart;
+
+        if (window.confirm(`Are you sure you want to delete customer ${codNode}?`)) {
+            try {
+                await customerService.deleteCustomer(codHier, codDiv, codNode, idLevel, dteStart);
+                alert("Customer deleted successfully!");
+                fetchCustomers();
+            } catch (error) {
+                console.error("Error deleting customer:", error);
+                alert("Failed to delete customer: " + error.message);
+            }
+        }
+        setActiveKebab(null);
     };
 
     return (
@@ -151,6 +206,7 @@ const CustomerRelation = () => {
                                         <th>Start Date</th>
                                         <th>Parent Node</th>
                                         <th>End Date</th>
+                                        <th style={{ width: '80px', textAlign: 'center' }}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -166,6 +222,28 @@ const CustomerRelation = () => {
                                                 <td>{customer.dteStart || customer.DteStart ? new Date(customer.dteStart || customer.DteStart).toLocaleDateString() : '-'}</td>
                                                 <td>{customer.codParentNode || customer.CodParentNode}</td>
                                                 <td>{customer.dteEnd || customer.DteEnd ? new Date(customer.dteEnd || customer.DteEnd).toLocaleDateString() : '-'}</td>
+                                                <td style={{ textAlign: 'center', position: 'relative' }}>
+                                                    <button
+                                                        className="action-menu-btn"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setActiveKebab(activeKebab === idx ? null : idx);
+                                                        }}
+                                                    >
+                                                        <MoreVertical size={18} />
+                                                    </button>
+
+                                                    {activeKebab === idx && (
+                                                        <div className="kebab-dropdown fade-in">
+                                                            <button className="dropdown-item" onClick={() => handleEdit(customer)}>
+                                                                <Edit2 size={14} style={{ marginRight: '8px' }} /> Edit
+                                                            </button>
+                                                            <button className="dropdown-item delete" onClick={() => handleDelete(customer)}>
+                                                                <Trash2 size={14} style={{ marginRight: '8px' }} /> Delete
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </td>
                                             </tr>
                                         ))
                                     ) : fetchError ? (
@@ -289,6 +367,46 @@ const CustomerRelation = () => {
                                     Create Customer <Check size={18} />
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Edit Modal */}
+            {showEditModal && (
+                <div className="modal-overlay">
+                    <div className="modal-content fade-in" style={{ maxWidth: '500px' }}>
+                        <div className="modal-header">
+                            <h3 className="modal-title">Edit Customer Node: {editingCustomer.codNode || editingCustomer.CodNode}</h3>
+                            <button className="close-btn" onClick={() => setShowEditModal(false)}>
+                                <X size={20} />
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-grid">
+                                <div className="form-group" style={{ marginBottom: '16px' }}>
+                                    <label className="form-label">Parent Node</label>
+                                    <input
+                                        className="form-input"
+                                        value={editFormData.codParentNode}
+                                        onChange={(e) => setEditFormData({ ...editFormData, codParentNode: e.target.value })}
+                                        placeholder="Enter parent node code"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">End Date</label>
+                                    <input
+                                        type="date"
+                                        className="form-input"
+                                        value={editFormData.dteEnd}
+                                        onChange={(e) => setEditFormData({ ...editFormData, dteEnd: e.target.value })}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer" style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '24px', paddingTop: '16px', borderTop: '1px solid #e5e7eb' }}>
+                            <button className="btn-secondary" onClick={() => setShowEditModal(false)} style={{ padding: '8px 16px', borderRadius: '6px', border: '1px solid #d1d5db', background: '#fff', cursor: 'pointer' }}>Cancel</button>
+                            <button className="btn-primary" onClick={handleUpdate} style={{ padding: '8px 16px', borderRadius: '6px', border: 'none', background: '#9333ea', color: '#fff', cursor: 'pointer' }}>Save Changes</button>
                         </div>
                     </div>
                 </div>
