@@ -32,8 +32,10 @@ const Register = ({ onToggle }) => {
 
     return (
         <div className="login-page-wrapper">
-            <div className="login-card-v2">
-                <div className="login-header-v2">
+            <div className="xtel-dots-circle"></div>
+
+            <div className="login-container">
+                <div className="registration-header">
                     <div className="brand-logo-v2">
                         <span className="logo-promo">Promo</span>
                         <span className="logo-express">EXPRESS</span>
@@ -42,53 +44,53 @@ const Register = ({ onToggle }) => {
                     <p>Join the future of promotion management</p>
                 </div>
 
-                {error && <div className="error-badge">{error}</div>}
+                <div className="login-card-v2">
+                    {error && <div className="error-badge-v2">{error}</div>}
 
-                <form onSubmit={handleSubmit} className="login-form-v2">
-                    <div className="input-group-v2">
-                        <label>Username *</label>
-                        <input
-                            type="text"
-                            placeholder="Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                    </div>
+                    <form onSubmit={handleSubmit} className="login-form-v2" noValidate>
+                        <div className="input-group-v2">
+                            <label>Username *</label>
+                            <input
+                                type="text"
+                                placeholder="Username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    <div className="input-group-v2">
-                        <label>Email Address *</label>
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
+                        <div className="input-group-v2">
+                            <label>Email Address *</label>
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    <div className="input-group-v2">
-                        <label>Password *</label>
-                        <input
-                            type="password"
-                            placeholder="••••••••"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
+                        <div className="input-group-v2">
+                            <label>Password *</label>
+                            <input
+                                type="password"
+                                placeholder="••••••••"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    <button type="submit" disabled={loading} className="login-btn-v2">
-                        {loading ? 'Registering...' : 'Sign Up'}
-                    </button>
+                        <button type="submit" disabled={loading} className="login-btn-v2" style={{ marginTop: '10px' }}>
+                            {loading ? <Loader2 className="animate-spin" /> : 'Sign Up'}
+                        </button>
 
-                    <div className="login-footer-v2">
-                        <p>Already have an account? <span onClick={onToggle} className="signup-link-btn">Sign In</span></p>
-                    </div>
-                </form>
+                        <div className="login-footer-v2" style={{ marginTop: '24px' }}>
+                            Already have an account? <span onClick={onToggle} className="signup-link-v2">Sign In</span>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div className="truck-illustration"></div>
         </div>
     );
 };

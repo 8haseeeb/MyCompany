@@ -2,6 +2,7 @@
 {
     public class CustomerRelationDto
     {
+        public int IdAction { get; set; }
         public string CodHier { get; set; } = null!;
         public string CodDiv { get; set; } = null!;
         public string CodNode { get; set; } = null!;

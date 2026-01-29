@@ -12,92 +12,126 @@
     font-family: 'Inter', sans-serif;
 }
 
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 440px;
+    z-index: 10;
+}
+
 /* Background Dot Patterns */
 .login-page-wrapper::before {
     content: '';
     position: absolute;
-    width: 400px;
-    height: 400px;
-    background-image: radial-gradient(#d1d5db 1px, transparent 1px);
-    background-size: 20px 20px;
-    top: 50px;
-    right: 50px;
-    opacity: 0.6;
-    z-index: 0;
-}
+    width: 200px;
+    height: 180px;
+    background-image: radial-gradient(#d1d5db 1.5px, transparent 1.5px);
+    background-size: 15px 15px;
 
-.login-page-wrapper::after {
-    content: '';
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background-image: radial-gradient(#d1d5db 1px, transparent 1px);
-    background-size: 20px 20px;
-    bottom: 50px;
-    left: 50px;
-    opacity: 0.6;
+    top: 15%;
+    right: 15%;
+    opacity: 0.8;
     z-index: 0;
 }
 
 .xtel-dots-circle {
     position: absolute;
-    width: 600px;
-    height: 600px;
+    width: 400px;
+    height: 400px;
+    background-image: radial-gradient(#d1d5db 1.2px, transparent 1.2px);
+    background-size: 12px 12px;
+    bottom: -100px;
+    left: -50px;
     border-radius: 50%;
-    border: 1px dashed #e5e7eb;
-    top: 50%;
-    left: 10%;
-    transform: translateY(-50%);
-    opacity: 0.5;
+    mask-image: radial-gradient(circle, black 40%, transparent 70%);
+    -webkit-mask-image: radial-gradient(circle, black 40%, transparent 70%);
+    opacity: 0.6;
     z-index: 0;
 }
 
 .login-card-v2 {
     background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 20px;
-    padding: 30px 45px 40px 45px;
+    border: 1.5px solid #f3f4f6;
+    border-radius: 12px;
+    padding: 40px;
     width: 100%;
-    max-width: 420px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    max-width: 440px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
     z-index: 10;
     position: relative;
-    margin-top: 40px;
 }
 
 .brand-logo-xtel {
-    font-size: 52px;
-    font-weight: 900;
+    font-size: 80px;
+    font-weight: 800;
     color: #000;
     letter-spacing: -2px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 25px;
-    margin-top: -65px;
-    /* Overlap top slightly like in original */
-    background: white;
-    padding: 0 10px;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 30px;
+    font-family: 'Inter', sans-serif;
 }
 
-/* Designing the X logo with gradient as per image */
 .xtel-x {
     position: relative;
     display: inline-block;
-    background: linear-gradient(135deg, #2563eb, #3b82f6, #4ade80);
+    background: linear-gradient(135deg, #2563eb 30%, #4ade80 70%, #facc15 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-right: -2px;
+    margin-right: 2px;
 }
 
 .login-form-v2 {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 20px;
+}
+
+/* Registration Branding */
+.brand-logo-v2 {
+    font-size: 40px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+}
+
+.logo-promo {
+    color: #1f2937;
+}
+
+.logo-express {
+    background: linear-gradient(135deg, #2563eb 30%, #4ade80 70%, #facc15 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 2px;
+}
+
+.registration-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.registration-header h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #111827;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+}
+
+.registration-header p {
+    font-size: 15px;
+    color: #6b7280;
+    margin: 0;
 }
 
 .input-group-v2 {

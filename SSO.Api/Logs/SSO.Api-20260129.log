@@ -1,0 +1,4 @@
+2026-01-29 10:46:39.499 +05:00 [WRN] Login failed for user: talha@gmail.com. Reason: Invalid password
+2026-01-29 10:46:39.853 +05:00 [INF] HTTP POST /api/auth/login responded 401 in 4461.0184 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"message":"Invalid email or password"}
+2026-01-29 10:47:27.131 +05:00 [INF] User talha@gmail.com logged in successfully. UserId: 20
+2026-01-29 10:47:27.144 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 1371.1347 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMCIsImVtYWlsIjoidGFsaGFAZ21haWwuY29tIiwidW5pcXVlX25hbWUiOiJUYWxoYSIsImV4cCI6MTc2OTY3Mjg0NiwiaXNzIjoiTXlDb21wYW55IiwiYXVkIjoiTXlDb21wYW55VXNlcnMifQ.OvGHqqqevOhlSb4EGPuea3wImG9SdYsf8TIYENloAkc","refreshToken":"8490f4aa-8616-4904-9847-18a378c052dc","userName":"Talha"}

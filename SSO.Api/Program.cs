@@ -12,9 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.AddSerilogLogging(builder.Configuration, "SSO.Api");
 
-// ----------------------------
-// Database
-// ----------------------------
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<IdentityDbContext>(options =>
@@ -26,22 +24,17 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
-// ----------------------------
 // MediatR
-// ----------------------------
+
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(RegisterCommandHandler).Assembly));
 
-// ----------------------------
 // Controllers & Swagger
-// ----------------------------
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// ----------------------------
 // CORS
-// ----------------------------
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
@@ -53,14 +46,8 @@ builder.Services.AddCors(options =>
         });
 });
 
-// ----------------------------
-// Build App
-// ----------------------------
 var app = builder.Build();
 
-// ----------------------------
-// Middleware
-// ----------------------------
 app.UseCors("AllowReactApp");
 if (app.Environment.IsDevelopment())
 {

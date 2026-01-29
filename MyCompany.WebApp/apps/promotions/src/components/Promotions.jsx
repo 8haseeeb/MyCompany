@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, ChevronRight, ChevronLeft, Check, Plus, Ticket, Eye, X, MoreVertical, Trash2, Edit2 } from 'lucide-react';
+import { MessageSquare, ChevronRight, ChevronLeft, Check, Plus, Ticket, Eye, X, MoreVertical, Trash2, Edit2, Search } from 'lucide-react';
 import './Promotions.css';
 import { promotionService } from '../services/promotionService';
+import PromotionDetailView from './PromotionDetailView';
 
 const Promotions = () => {
     const [showForm, setShowForm] = useState(false);
     const [showViewModal, setShowViewModal] = useState(false);
-    const [showFormModal, setShowFormModal] = useState(false);
+    const [showDetailView, setShowDetailView] = useState(false);
     const [selectedViewType, setSelectedViewType] = useState('');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isSearchDropdownOpen, setIsSearchDropdownOpen] = useState(false);
@@ -115,6 +116,19 @@ const Promotions = () => {
             setIsViewLoading(false);
         }
     };
+
+    // Prevent background scrolling when modals are open
+    useEffect(() => {
+        const anyModalOpen = showDetailView || showViewModal || showEditPromoModal;
+        if (anyModalOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [showDetailView, showViewModal, showEditPromoModal]);
 
     const handleEditPromo = (promo) => {
         setEditingPromotion(promo);
@@ -561,7 +575,7 @@ const Promotions = () => {
     };
 
     const renderStepContent = () => {
-        const step = showFormModal ? selectedViewType : currentStep;
+        const step = currentStep;
         switch (step) {
             case 'Promo Action':
                 return (
@@ -752,6 +766,10 @@ const Promotions = () => {
                             <Eye size={18} />
                             View
                         </button>
+                        <button className="view-btn" style={{ marginLeft: '12px' }} onClick={() => setShowDetailView(true)}>
+                            <Search size={18} />
+                            Detail View
+                        </button>
                         <button className="create-btn" onClick={() => setShowForm(true)}>
                             <Plus size={18} />
                             Create Promotion
@@ -908,7 +926,7 @@ const Promotions = () => {
             )}
 
             {/* View Page */}
-            {showViewModal && !showFormModal && (
+            {showViewModal && (
                 <div className="view-page-overlay">
                     <div className="view-page-container">
                         <div className="view-page-header">
@@ -1042,30 +1060,6 @@ const Promotions = () => {
                 </div>
             )}
 
-            {/* Form Display Modal */}
-            {showFormModal && (
-                <div className="modal-overlay" onClick={() => setShowFormModal(false)}>
-                    <div className="modal-content form-modal-content" onClick={(e) => e.stopPropagation()}>
-                        <div className="modal-header">
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <div className="icon-wrapper">
-                                    <MessageSquare size={20} />
-                                </div>
-                                <h2 className="modal-title">{selectedViewType}</h2>
-                            </div>
-                            <button className="close-btn" onClick={() => setShowFormModal(false)}>
-                                <X size={20} />
-                            </button>
-                        </div>
-
-                        <div className="modal-body">
-                            <div className="form-content-wrapper">
-                                {renderStepContent()}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
             {/* Edit Promotion Modal */}
             {showEditPromoModal && (
                 <div className="modal-overlay fade-in">
@@ -1159,6 +1153,17 @@ const Promotions = () => {
                         <div className="modal-footer">
                             <button className="btn-secondary" onClick={() => setShowEditPromoModal(false)}>Cancel</button>
                             <button className="btn-primary" onClick={handleUpdatePromo}>Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Detail View Modal */}
+            {showDetailView && (
+                <div className="view-page-overlay">
+                    <div className="view-page-container" style={{ maxWidth: '1400px', padding: '0 20px 40px' }}>
+                        <div className="view-page-content" style={{ padding: 0, background: 'transparent' }}>
+                            <PromotionDetailView onClose={() => setShowDetailView(false)} />
                         </div>
                     </div>
                 </div>

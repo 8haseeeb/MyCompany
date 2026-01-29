@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Promotions.Application.PromoActions.Commands;
 using Promotions.Application.PromoActions.Dtos;
 using Promotions.Application.PromoActions.Queries;
+using Promotions.Application.PromotionDetails.Queries;
 
 
 
@@ -87,6 +88,20 @@ namespace Promotions.Api.Controllers
         {
             var result = await _mediator.Send(
                 new GetPromoActionByIdQuery(idAction));
+
+            return Ok(result);
+        }
+
+        [HttpGet("{idAction}/complete")]
+        public async Task<IActionResult> GetComplete(int idAction)
+        {
+            var result = await _mediator.Send(
+                new GetCompletePromotionQuery(idAction));
+
+            if (result.PromoAction == null)
+            {
+                return NotFound(new { message = $"Promotion with ID {idAction} not found." });
+            }
 
             return Ok(result);
         }

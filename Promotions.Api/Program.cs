@@ -7,14 +7,13 @@ using Promotions.Application;
 using Promotions.Application.Common;
 using Promotions.Application.Participant.Interfaces;
 using Promotions.Infrastructure;
-using Promotions.Infrastructure.Participant;
+using Promotions.Infrastructure.Persistence.Repositories;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.AddSerilogLogging(builder.Configuration, "Promotions.Api");
 builder.Services.AddControllers();
-builder.Services.AddScoped<IParticipantRepository, ParticipantRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {

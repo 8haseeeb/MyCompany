@@ -515,3 +515,202 @@
     box-shadow: 0 10px 15px -3px rgba(147, 51, 234, 0.3);
     transform: translateY(-1px);
 }
+
+/* ========================================
+   RESPONSIVE STYLES
+   ======================================== */
+
+/* Tablet - Medium screens (768px and below) */
+@media (max-width: 768px) {
+    .cr-container {
+        padding: 20px 16px;
+    }
+
+    .cr-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .cr-title {
+        font-size: 20px;
+    }
+
+    .create-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .cr-table-container {
+        padding: 16px 0;
+    }
+
+    .search-controls {
+        flex-direction: column;
+        padding: 0 16px;
+    }
+
+    .search-term-input {
+        width: 100%;
+    }
+
+    .search-action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .form-card {
+        max-width: 100%;
+    }
+
+    .form-header {
+        padding: 16px;
+    }
+
+    .form-body {
+        padding: 16px;
+    }
+
+    .modal-content {
+        width: 100%;
+        max-height: 95vh;
+        border-radius: 12px;
+    }
+
+    .modal-header {
+        padding: 16px;
+    }
+
+    .modal-body {
+        padding: 16px;
+    }
+
+    .modal-footer {
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    .view-data-table {
+        min-width: 600px;
+    }
+
+    .view-data-table th,
+    .view-data-table td {
+        padding: 12px 16px;
+        font-size: 13px;
+    }
+
+    .submit-btn-wrapper {
+        flex-direction: column-reverse;
+        gap: 12px;
+    }
+
+    .submit-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .custom-dropdown-header {
+        padding: 12px 16px;
+    }
+
+    .kebab-dropdown {
+        right: 12px;
+    }
+}
+
+/* Mobile - Small screens (480px and below) */
+@media (max-width: 480px) {
+    .cr-container {
+        padding: 16px 12px;
+    }
+
+    .cr-title {
+        font-size: 18px;
+    }
+
+    .create-btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .search-by-title {
+        font-size: 13px;
+        padding: 0 12px;
+    }
+
+    .search-controls {
+        padding: 0 12px;
+        gap: 8px;
+    }
+
+    .view-data-table th,
+    .view-data-table td {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .form-input {
+        height: 44px;
+        font-size: 16px;
+        /* Prevents iOS zoom on focus */
+    }
+
+    .form-label {
+        font-size: 13px;
+    }
+
+    .modal-content {
+        border-radius: 8px;
+    }
+
+    .modal-title {
+        font-size: 16px;
+    }
+
+    .form-header {
+        padding: 12px;
+    }
+
+    .form-title {
+        font-size: 16px;
+    }
+
+    .section-title {
+        font-size: 14px;
+    }
+
+    .icon-wrapper {
+        width: 36px;
+        height: 36px;
+    }
+
+    .submit-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    .action-menu-btn {
+        padding: 6px;
+    }
+
+    .kebab-dropdown {
+        min-width: 120px;
+    }
+
+    .dropdown-item {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}

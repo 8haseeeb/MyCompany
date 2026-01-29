@@ -151,6 +151,11 @@ export const promotionService = {
         return response.data;
     },
 
+    getCompletePromotion: async (idAction) => {
+        const response = await api.get(`/api/promotions/actions/${idAction}/complete`);
+        return response.data;
+    },
+
     deleteDeliveryPoint: async (idAction, codDeliveryPoint) => {
         const response = await api.delete(`/api/promotions/delivery-points/${idAction}/${codDeliveryPoint}`);
         return response.data;

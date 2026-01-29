@@ -3,7 +3,7 @@ using Promotions.Application.Participant.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Promotions.Infrastructure.Persistence;
 
-namespace Promotions.Infrastructure.Participant
+namespace Promotions.Infrastructure.Persistence.Repositories
 {
     public class ParticipantRepository : IParticipantRepository
     {
