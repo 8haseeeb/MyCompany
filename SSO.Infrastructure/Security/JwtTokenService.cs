@@ -1,5 +1,4 @@
-﻿// File: SSO.Infrastructure/Security/JwtTokenService.cs
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SSO.Application.Interfaces;
 using SSO.Domain.Users;

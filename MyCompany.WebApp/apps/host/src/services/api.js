@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-//  API Gateway or SSO Service URL
 const api = axios.create({
-    baseURL: '', // Relative URL for Proxy (`/api` will be proxied)
+    baseURL: '', 
     headers: {
         'Content-Type': 'application/json'
     }
@@ -25,7 +24,6 @@ api.interceptors.response.use(
         if (error.response?.status === 401) {
             console.error("Session expired or unauthorized. Logging out...");
             localStorage.removeItem('token');
-            // Force a reload to the home page to reset App state
             window.location.href = '/';
         }
 

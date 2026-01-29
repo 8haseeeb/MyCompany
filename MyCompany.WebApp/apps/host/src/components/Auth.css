@@ -22,7 +22,6 @@
     z-index: 10;
 }
 
-/* Background Dot Patterns */
 .login-page-wrapper::before {
     content: '';
     position: absolute;
@@ -92,7 +91,6 @@
     gap: 20px;
 }
 
-/* Registration Branding */
 .brand-logo-v2 {
     font-size: 40px;
     font-weight: 800;

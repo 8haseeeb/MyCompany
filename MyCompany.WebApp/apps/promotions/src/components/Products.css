@@ -426,7 +426,7 @@
     }
 }
 
-/* Kebab Actions */
+/* Action menue */
 .action-menu-btn {
     background: none;
     border: none;
@@ -524,11 +524,8 @@
     background-color: #7e22ce;
 }
 
-/* ========================================
-   RESPONSIVE STYLES
-   ======================================== */
 
-/* Tablet - Medium screens (768px and below) */
+
 @media (max-width: 768px) {
     .products-container {
         padding: 20px 16px;
@@ -642,7 +639,6 @@
     }
 }
 
-/* Mobile - Small screens (480px and below) */
 @media (max-width: 480px) {
     .products-container {
         padding: 16px 12px;
@@ -676,7 +672,6 @@
     .form-input {
         height: 44px;
         font-size: 16px;
-        /* Prevents iOS zoom on focus */
     }
 
     .form-label {

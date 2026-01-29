@@ -26,9 +26,8 @@ builder.Services.AddHttpClient<DownstreamProxy>()
 
 builder.Services.AddControllers();
 
-// ----------------------------
 // CORS
-// ----------------------------
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
@@ -42,9 +41,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// ----------------------------
 // Middleware
-// ----------------------------
 
 // 1. Buffering (Important for Proxying)
 app.Use(async (context, next) =>
