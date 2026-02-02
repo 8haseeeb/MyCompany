@@ -27,18 +27,47 @@ public class GetDashboardMetricsQueryHandler : IRequestHandler<GetDashboardMetri
 
     public async Task<DashboardMetricsDto> Handle(GetDashboardMetricsQuery request, CancellationToken cancellationToken)
     {
-        // Fetch data using repositories to avoid Infrastructure dependency
         var promoActionsList = await _promoActions.GetAllAsync();
         var productsList = await _products.GetAllAsync();
         var allParticipants = await _participants.GetAllAsync();
+
+        var now = DateTime.UtcNow;
+
+        var activeCount = promoActionsList.Count(p => p.DteStartSellIn <= now && p.DteEndSellIn >= now);
+        var pendingCount = promoActionsList.Count(p => p.DteStartSellIn > now);
+        var expiredCount = promoActionsList.Count(p => p.DteEndSellIn < now);
+
+        // Calculate Activity Trend (Last 30 Days)
+        var trend = new List<DailyActivityDto>();
+        for (int i = 0; i < 30; i += 3) // Every 3rd day to match UI graph density
+        {
+            var date = now.AddDays(-i);
+            var active = promoActionsList.Count(p => p.DteStartSellIn <= date && p.DteEndSellIn >= date);
+            var pending = promoActionsList.Count(p => p.DteStartSellIn > date);
+            var failed = promoActionsList.Count(p => p.DteEndSellIn < date);
+
+            trend.Add(new DailyActivityDto
+            {
+                DateLabel = date.ToString("dd"), // Just the day number e.g. "02"
+                Active = active,
+                Pending = pending,
+                Failed = failed
+            });
+        }
+        
+        // Reverse so it goes from old -> new (Left to Right on Graph)
+        trend.Reverse();
 
         return new DashboardMetricsDto
         {
             TotalPromotions = promoActionsList.Count,
             TotalProducts = productsList.Count,
             TotalParticipants = allParticipants.Count,
-            ActiveActions = promoActionsList.Count, // Logic placeholder
-            EstimatedRevenue = 0 // Logic placeholder
+            ActiveActions = activeCount,
+            PendingActions = pendingCount,
+            ExpiredActions = expiredCount,
+            EstimatedRevenue = 0,
+            ActivityTrend = trend
         };
     }
 }

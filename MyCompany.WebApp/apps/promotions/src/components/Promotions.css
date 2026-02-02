@@ -89,7 +89,7 @@
 
 .id-cell {
     font-weight: 600;
-    color: #9333ea !important;
+    color: #111827 !important;
 }
 
 /* Status Badges */
@@ -289,6 +289,7 @@
     background-color: #fff;
     box-sizing: border-box;
     transition: all 0.2s;
+    cursor: pointer;
 }
 
 .form-input:focus {
@@ -953,6 +954,7 @@
 
     .dashboard-table th,
     .dashboard-table td {
+        color: #111827;
         padding: 12px 16px;
         font-size: 13px;
     }

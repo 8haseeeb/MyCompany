@@ -49,5 +49,10 @@ export const promotionService = {
     createAtomicPromotion: async (payload) => {
         const response = await api.post('/api/promotions/actions/atomic', payload);
         return response.data;
+    },
+
+    getDashboardStats: async () => {
+        const response = await api.get('/api/promotions/dashboard/metrics');
+        return response.data;
     }
 };

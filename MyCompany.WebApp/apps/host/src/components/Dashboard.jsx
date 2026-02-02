@@ -27,18 +27,21 @@ const Dashboard = () => {
     const fetchDashboardData = async () => {
         setIsLoading(true);
         try {
-            const [promos, parts, points, custs] = await Promise.all([
+            const [promos, parts, points, custs, dashboardMetrics] = await Promise.all([
                 promotionService.getPromotionHistory(),
                 promotionService.getParticipants(),
                 promotionService.getDeliveryPoints(),
-                customerService.getCustomers()
+                customerService.getCustomers(),
+                promotionService.getDashboardStats()
             ]);
 
             setStats({
                 promotions: promos?.length || 0,
                 participants: parts?.length || 0,
                 deliveryPoints: points?.length || 0,
-                customers: custs?.length || 0
+                customers: custs?.length || 0,
+                activePromotions: dashboardMetrics?.activeActions || 0,
+                activityTrend: dashboardMetrics?.activityTrend || []
             });
         } catch (error) {
             console.error("Error fetching dashboard stats:", error);
@@ -54,20 +57,10 @@ const Dashboard = () => {
         { name: 'Customers', value: stats.customers, color: '#eab308' },
     ];
 
-    const trendData = [
-        { name: '1', active: 40, pending: 24, failed: 24 },
-        { name: '4', active: 30, pending: 13, failed: 22 },
-        { name: '7', active: 20, pending: 98, failed: 22 },
-        { name: '10', active: 27, pending: 39, failed: 20 },
-        { name: '13', active: 18, pending: 48, failed: 21 },
-        { name: '16', active: 23, pending: 38, failed: 25 },
-        { name: '19', active: 34, pending: 43, failed: 21 },
-    ];
-
     return (
         <div className="dashboard-container fade-in">
             <div className="dashboard-header">
-                
+
                 <div className="header-actions">
                     <div className="time-select">
                         <span>This Month</span>
@@ -120,9 +113,9 @@ const Dashboard = () => {
                 <div className="stat-card pink">
                     <div className="stat-icon"><CheckCircle size={20} /></div>
                     <div className="stat-info">
-                        <span className="stat-label">Recent Success</span>
-                        <span className="stat-value">1,899</span>
-                        <span className="stat-sub">Validated Actions</span>
+                        <span className="stat-label">Active Promotions</span>
+                        <span className="stat-value">{stats.activePromotions || 0}</span>
+                        <span className="stat-sub">Live in stores</span>
                     </div>
                 </div>
             </div>
@@ -155,9 +148,9 @@ const Dashboard = () => {
                     <h3 className="chart-title">Activity Trend (30 Days)</h3>
                     <div className="chart-content">
                         <ResponsiveContainer width="100%" height={300}>
-                            <BarChart data={trendData}>
+                            <BarChart data={stats.activityTrend || []}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                                <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                                <XAxis dataKey="dateLabel" axisLine={false} tickLine={false} />
                                 <YAxis axisLine={false} tickLine={false} />
                                 <Tooltip cursor={{ fill: '#f8fafc' }} />
                                 <Legend verticalAlign="bottom" height={36} />
