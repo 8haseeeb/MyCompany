@@ -51,7 +51,7 @@ const Products = () => {
     const [productSearchTerm, setProductSearchTerm] = useState('');
 
     // Edit/Delete State
-    const [activeKebab, setActiveKebab] = useState(null);
+    const [activeActionMenu, setActiveActionMenu] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
     const [editFormData, setEditFormData] = useState({
@@ -175,7 +175,7 @@ const Products = () => {
                 alert("Failed to delete product: " + error.message);
             }
         }
-        setActiveKebab(null);
+        setActiveActionMenu(null);
     };
 
     const handleEdit = (product) => {
@@ -190,7 +190,7 @@ const Products = () => {
             codDisplay: product.codDisplay || product.CodDisplay || ''
         });
         setShowEditModal(true);
-        setActiveKebab(null);
+        setActiveActionMenu(null);
     };
 
     const handleUpdate = async () => {
@@ -422,14 +422,14 @@ const Products = () => {
                                                         className="action-menu-btn"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
-                                                            setActiveKebab(activeKebab === idx ? null : idx);
+                                                            setActiveActionMenu(activeActionMenu === idx ? null : idx);
                                                         }}
                                                     >
                                                         <MoreVertical size={18} />
                                                     </button>
 
-                                                    {activeKebab === idx && (
-                                                        <div className="kebab-dropdown fade-in">
+                                                    {activeActionMenu === idx && (
+                                                        <div className="action-menu fade-in">
                                                             <button className="dropdown-item" onClick={() => handleEdit(product)}>
                                                                 <Edit2 size={14} style={{ marginRight: '8px' }} /> Edit
                                                             </button>

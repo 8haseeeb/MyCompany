@@ -156,6 +156,72 @@ export const promotionService = {
         return response.data;
     },
 
+    createParticipant: async (participant) => {
+        const payload = {
+            idAction: Number(participant.idAction),
+            codParticipant: participant.codParticipant,
+            codHier: participant.codHier,
+            codDiv: participant.codDiv,
+            codNode: participant.codNode,
+            idLevel: Number(participant.idLevel || 0),
+            flgInclusion: participant.flgInclusion ?? true,
+            dteStart: participant.dteStart || new Date().toISOString()
+        };
+        const response = await api.post(`/api/actions/${payload.idAction}/participants`, payload);
+        return response.data;
+    },
+
+    addParticipantsToPromotion: async (participants) => {
+        const promises = participants.map(p => {
+            const payload = {
+                idAction: Number(p.idAction),
+                codParticipant: p.codParticipant || p.CodParticipant,
+                codHier: p.codHier || p.CodHier,
+                codDiv: p.codDiv || p.CodDiv,
+                codNode: p.codNode || p.CodNode,
+                idLevel: Number(p.idLevel || p.IdLevel || 0),
+                flgInclusion: p.flgInclusion ?? p.FlgInclusion ?? true,
+                dteStart: p.dteStart || p.DteStart || new Date().toISOString()
+            };
+            return api.post(`/api/actions/${payload.idAction}/participants`, payload);
+        });
+        return Promise.all(promises);
+    },
+
+    createDeliveryPoint: async (deliveryPoint) => {
+        const idAction = Number(deliveryPoint.idAction);
+        const codDeliveryPoint = deliveryPoint.codDeliveryPoint;
+        const payload = {
+            codDeliveryPoint: codDeliveryPoint,
+            codHier: deliveryPoint.codHier,
+            codDiv: deliveryPoint.codDiv,
+            codNode: deliveryPoint.codNode,
+            idLevel: Number(deliveryPoint.idLevel || 0),
+            flgInclusion: deliveryPoint.flgInclusion ?? true,
+            dteStart: deliveryPoint.dteStart || new Date().toISOString()
+        };
+        const response = await api.post(`/api/promotions/delivery-points/${idAction}/${codDeliveryPoint}`, payload);
+        return response.data;
+    },
+
+    addDeliveryPointsToPromotion: async (deliveryPoints) => {
+        const promises = deliveryPoints.map(dp => {
+            const idAction = Number(dp.idAction);
+            const codDeliveryPoint = dp.codDeliveryPoint || dp.CodDeliveryPoint;
+            const payload = {
+                codDeliveryPoint: codDeliveryPoint,
+                codHier: dp.codHier || dp.CodHier,
+                codDiv: dp.codDiv || dp.CodDiv,
+                codNode: dp.codNode || dp.CodNode,
+                idLevel: Number(dp.idLevel || dp.IdLevel || 0),
+                flgInclusion: dp.flgInclusion ?? dp.FlgInclusion ?? true,
+                dteStart: dp.dteStart || dp.DteStart || new Date().toISOString()
+            };
+            return api.post(`/api/promotions/delivery-points/${idAction}/${codDeliveryPoint}`, payload);
+        });
+        return Promise.all(promises);
+    },
+
     deleteDeliveryPoint: async (idAction, codDeliveryPoint) => {
         const response = await api.delete(`/api/promotions/delivery-points/${idAction}/${codDeliveryPoint}`);
         return response.data;

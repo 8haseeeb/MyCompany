@@ -112,6 +112,54 @@ body {
   flex: 1;
 }
 
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1010;
+}
+
+.hamburger-bar {
+  width: 24px;
+  height: 3px;
+  background-color: var(--primary);
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .main-content.expanded,
+  .main-content.collapsed {
+    margin-left: 0;
+  }
+
+  .app-header {
+    padding: 0 15px;
+  }
+
+  .header-title {
+    font-size: 16px;
+  }
+
+  .user-name {
+    display: none;
+  }
+}
+
 /* Login/Auth Styles */
 .auth-wrapper {
   min-height: 100vh;

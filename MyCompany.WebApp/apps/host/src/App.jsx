@@ -19,6 +19,7 @@ function App() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [currentView, setCurrentView] = useState('dashboard');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -68,10 +69,20 @@ function App() {
         currentView={currentView}
         setView={setCurrentView}
         onLogout={handleLogout}
+        isMobileOpen={isMobileMenuOpen}
+        setIsMobileOpen={setIsMobileMenuOpen}
       />
 
       <div className={`main-content ${isSidebarCollapsed ? 'collapsed' : 'expanded'}`}>
         <header className="app-header">
+          <button
+            className="mobile-menu-toggle"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <span className="hamburger-bar"></span>
+            <span className="hamburger-bar"></span>
+            <span className="hamburger-bar"></span>
+          </button>
           <div className="header-title">
             {currentView === 'promotions' ? 'Create Promotion' : currentView.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
           </div>

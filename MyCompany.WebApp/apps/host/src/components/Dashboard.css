@@ -186,6 +186,7 @@
     }
 }
 
+/* Media Queries for Responsiveness */
 @media (max-width: 1200px) {
     .stats-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -196,8 +197,35 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-wrapper {
+        padding: 15px;
+    }
+
+    .header-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .time-select,
+    .refresh-btn {
+        width: 100%;
+        justify-content: center;
     }
 }

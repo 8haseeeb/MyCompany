@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import api from '../services/api';
 import { Mail, Lock, LogIn, Loader2, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import xtelLogo from '../assets/xtel-logo.png';
+import dotsCircle from '../assets/dots-circle.png';
+import dotsSquare from '../assets/dots-square.png';
 import './Auth.css';
 
 const Login = ({ setToken, setUserName, onToggle }) => {
@@ -71,12 +74,15 @@ const Login = ({ setToken, setUserName, onToggle }) => {
 
     return (
         <div className="login-page-wrapper">
-            <div className="xtel-dots-circle"></div>
 
             <div className="login-container">
+                <img src={dotsSquare} alt="" className="xtel-dots-square" />
+                <img src={dotsCircle} alt="" className="xtel-dots-circle" />
                 <div className="brand-logo-xtel">
-                    <span className="xtel-x">X</span>TEL
+                    <img src={xtelLogo} alt="XTEL Logo" className="xtel-logo-img" />
+                    <span className="logo-express">PROMO</span>
                 </div>
+
 
                 <div className="login-card-v2">
                     {error && <div className="error-badge-v2">{error}</div>}

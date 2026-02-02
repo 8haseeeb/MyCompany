@@ -8,7 +8,7 @@
     left: 0;
     display: flex;
     flex-direction: column;
-    transition: width 0.3s ease;
+    transition: width 0.3s ease, transform 0.3s ease;
     z-index: 1000;
 }
 
@@ -31,8 +31,8 @@
     gap: 4px;
 }
 
-.brand-tine {
-    color: #10b981;
+.brand-xtel {
+    color: #1e293b;
 }
 
 .brand-promo {
@@ -172,4 +172,38 @@
 .logout-item:hover {
     background-color: #fef2f2;
     color: #dc2626;
+}
+
+/* Mobile Responsive Sidebar */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 280px !important;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
+        left: 0;
+    }
+
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    .sidebar-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+    }
+
+    .sidebar.collapsed {
+        width: 280px;
+    }
+
+    .sidebar.collapsed .nav-label,
+    .sidebar.collapsed .brand {
+        display: flex;
+    }
 }

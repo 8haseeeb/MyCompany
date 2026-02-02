@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import api from '../services/api';
 import { Mail, Lock, User, UserPlus, Loader2, ArrowLeft } from 'lucide-react';
+import dotsCircle from '../assets/dots-circle.png';
+import dotsSquare from '../assets/dots-square.png';
 import './Auth.css';
 
 const Register = ({ onToggle }) => {
@@ -32,9 +34,10 @@ const Register = ({ onToggle }) => {
 
     return (
         <div className="login-page-wrapper">
-            <div className="xtel-dots-circle"></div>
 
             <div className="login-container">
+                <img src={dotsSquare} alt="" className="xtel-dots-square" />
+                <img src={dotsCircle} alt="" className="xtel-dots-circle" />
                 <div className="registration-header">
                     <div className="brand-logo-v2">
                         <span className="logo-promo">Promo</span>

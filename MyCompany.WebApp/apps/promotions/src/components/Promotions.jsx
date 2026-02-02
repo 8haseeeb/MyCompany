@@ -318,6 +318,7 @@ const Promotions = () => {
     };
 
     const handleSubmit = async () => {
+        debugger;
         setIsLoading(true);
         const finalPayload = {
             idAction: parseInt(formData.idAction),
@@ -984,7 +985,7 @@ const Promotions = () => {
                                 <div className="search-by-section fade-in">
                                     <h3 className="search-by-title">Search By</h3>
                                     <div className="search-controls">
-                                        <div className="custom-dropdown-container" style={{ width: '200px' }}>
+                                        <div className="custom-dropdown-container">
                                             <div
                                                 className={`custom-dropdown-header ${isSearchDropdownOpen ? 'active' : ''}`}
                                                 onClick={() => setIsSearchDropdownOpen(!isSearchDropdownOpen)}
