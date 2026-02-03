@@ -1,0 +1,4 @@
+2026-02-03 10:41:11.694 +05:00 [WRN] Login failed for unknown user: a;i@gmail.com
+2026-02-03 10:41:12.342 +05:00 [INF] HTTP POST /api/auth/login responded 401 in 11351.0992 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"message":"Invalid email or password"}
+2026-02-03 10:41:28.017 +05:00 [INF] User ali@gmail.com logged in successfully. UserId: 14
+2026-02-03 10:41:28.079 +05:00 [INF] HTTP POST /api/auth/login responded 200 in 2576.6212 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNCIsImVtYWlsIjoiYWxpQGdtYWlsLmNvbSIsInVuaXF1ZV9uYW1lIjoiYWxpIiwiZXhwIjoxNzcwMTA0NDg2LCJpc3MiOiJNeUNvbXBhbnkiLCJhdWQiOiJNeUNvbXBhbnlVc2VycyJ9.S02m2vXsXW8gpm2xknpTX9wY9bFI7UAlepxejOwNYgE","refreshToken":"fa3f364e-a62f-4d71-8f10-c75fd8c95d79","userName":"ali"}
