@@ -45,9 +45,13 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResultDto>
         }
 
         // 3️⃣ Generate Access Token
-        var accessToken = _jwt.GenerateToken(user);
+        var newSessionId = Guid.NewGuid().ToString();
+        var accessToken = _jwt.GenerateToken(user, newSessionId);
 
-        // 4️⃣ Generate Refresh Token
+        // 4️⃣ Update Session ID in DB and Generate Refresh Token
+        user.CurrentSessionId = newSessionId;
+        _context.Users.Update(user);
+
         var refreshToken = new RefreshToken
         {
             Token = Guid.NewGuid().ToString(),

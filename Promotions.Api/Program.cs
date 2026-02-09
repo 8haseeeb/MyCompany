@@ -1,12 +1,15 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using MyCompany.Common.Logging;
 using MyCompany.Common.Logging.Serilog; 
 using Promotions.Api.Controllers;
+using Promotions.Api.Middleware;
 using Promotions.Api.Security;
 using Promotions.Application;
 using Promotions.Application.Common;
 using Promotions.Application.Participant.Interfaces;
 using Promotions.Infrastructure;
+using Promotions.Infrastructure.Persistence.External;
 using Promotions.Infrastructure.Persistence.Repositories;
 using Serilog;
 
@@ -45,6 +48,8 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
+builder.Services.AddAutoMapper(typeof(AssemblyMarker).Assembly);
+
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(AssemblyMarker).Assembly);
@@ -52,7 +57,13 @@ builder.Services.AddMediatR(cfg =>
 });
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var ssoConnectionString = builder.Configuration.GetConnectionString("SsoConnection");
+
 builder.Services.AddInfrastructure(connectionString!);
+
+// Add SsoDbContext for Session Validation
+builder.Services.AddDbContext<SsoDbContext>(options =>
+    options.UseSqlServer(ssoConnectionString));
 
 
 var app = builder.Build();
@@ -86,6 +97,7 @@ app.UseExceptionHandler(errorApp =>
 
 app.UseHttpsRedirection();
 app.UseAuthentication(); 
+app.UseMiddleware<SessionValidationMiddleware>(); // Added Session Validation Middleware
 app.UseAuthorization();
 app.MapControllers();
 

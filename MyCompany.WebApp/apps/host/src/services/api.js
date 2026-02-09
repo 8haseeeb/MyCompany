@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: '', 
+    baseURL: '',
     headers: {
         'Content-Type': 'application/json'
     }
@@ -24,7 +24,13 @@ api.interceptors.response.use(
         if (error.response?.status === 401) {
             console.error("Session expired or unauthorized. Logging out...");
             localStorage.removeItem('token');
-            window.location.href = '/';
+            localStorage.removeItem('refreshToken');
+            window.dispatchEvent(new Event("logout"));
+
+            // Allow a small delay for other components to react if needed, then redirect
+            setTimeout(() => {
+                window.location.href = '/login'; // Redirect specifically to login, not just root
+            }, 100);
         }
 
         console.error(`API Error: ${error.config?.method.toUpperCase()} ${error.config?.url}`, {

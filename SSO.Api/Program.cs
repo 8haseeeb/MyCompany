@@ -8,6 +8,10 @@ using SSO.Infrastructure.Security;
 using MyCompany.Common.Logging;
 using MyCompany.Common.Logging.Serilog;
 
+using SSO.Api.Security;
+
+// ... (keep existing usings)
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.AddSerilogLogging(builder.Configuration, "SSO.Api");
@@ -19,12 +23,16 @@ builder.Services.AddDbContext<IdentityDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 // DI registrations
-builder.Services.AddScoped<IIdentityDbContext, IdentityDbContext>();
+builder.Services.AddScoped<IIdentityDbContext>(provider => provider.GetRequiredService<IdentityDbContext>());
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
+builder.Services.AddJwtAuthentication(builder.Configuration); // Added Auth service
+
 // MediatR
+
+builder.Services.AddAutoMapper(typeof(RegisterCommandHandler).Assembly);
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(RegisterCommandHandler).Assembly));
@@ -58,6 +66,10 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication(); // Added Auth Middleware
+app.UseMiddleware<SSO.Api.Middleware.SessionValidationMiddleware>(); // Added Session Middleware
+
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

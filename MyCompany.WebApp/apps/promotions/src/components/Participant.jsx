@@ -3,7 +3,7 @@ import { Users, Eye, Search, ChevronRight, MoreVertical, Edit2, Trash2, Check, X
 import './CustomerRelation.css'; // Reusing established table styles
 import { promotionService } from '../services/promotionService';
 
-const Participant = () => {
+const Participant = ({ userRole }) => {
     const [showForm, setShowForm] = useState(false);
     const [participants, setParticipants] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +15,10 @@ const Participant = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [editingParticipant, setEditingParticipant] = useState(null);
     const [editFlagInclusion, setEditFlagInclusion] = useState(true);
+
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
 
     // Promotion Linking States
     const [promotions, setPromotions] = useState([]);
@@ -248,6 +252,27 @@ const Participant = () => {
         }
     });
 
+    // Pagination Logic
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        setActiveActionMenu(null);
+    };
+
+    const handleItemsPerPageChange = (e) => {
+        setItemsPerPage(Number(e.target.value));
+        setCurrentPage(1);
+    };
+
+    // Reset pagination on search
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm, searchCriterion]);
+
     const filteredPromotions = promotions.filter(p => {
         if (!promotionSearchTerm) return true;
         const term = promotionSearchTerm.toLowerCase();
@@ -318,10 +343,12 @@ const Participant = () => {
                                 </button>
                             </div>
 
-                            <button className="create-btn" onClick={() => setShowForm(true)}>
-                                <Plus size={18} />
-                                Add Participant
-                            </button>
+                            {userRole === 'Admin' && (
+                                <button className="create-btn" onClick={() => setShowForm(true)}>
+                                    <Plus size={18} />
+                                    Add Participant
+                                </button>
+                            )}
                         </div>
 
                         <div className="view-table-wrapper">
@@ -341,8 +368,8 @@ const Participant = () => {
                                 <tbody>
                                     {isLoading ? (
                                         <tr><td colSpan="8" style={{ textAlign: 'center', padding: '40px' }}>Loading Participants...</td></tr>
-                                    ) : filteredData.length > 0 ? (
-                                        filteredData.map((row, idx) => (
+                                    ) : currentItems.length > 0 ? (
+                                        currentItems.map((row, idx) => (
                                             <tr key={idx}>
                                                 <td>{row.idAction || row.IdAction}</td>
                                                 <td>{row.codParticipant || row.CodParticipant}</td>
@@ -364,12 +391,20 @@ const Participant = () => {
 
                                                     {activeActionMenu === idx && (
                                                         <div className="action-menu fade-in">
-                                                            <button className="dropdown-item" onClick={() => handleEdit(row)}>
-                                                                <Edit2 size={14} style={{ marginRight: '8px' }} /> Edit
-                                                            </button>
-                                                            <button className="dropdown-item delete" onClick={() => handleDelete(row)}>
-                                                                <Trash2 size={14} style={{ marginRight: '8px' }} /> Delete
-                                                            </button>
+                                                            {userRole === 'Admin' ? (
+                                                                <>
+                                                                    <button className="dropdown-item" onClick={() => handleEdit(row)}>
+                                                                        <Edit2 size={14} style={{ marginRight: '8px' }} /> Edit
+                                                                    </button>
+                                                                    <button className="dropdown-item delete" onClick={() => handleDelete(row)}>
+                                                                        <Trash2 size={14} style={{ marginRight: '8px' }} /> Delete
+                                                                    </button>
+                                                                </>
+                                                            ) : (
+                                                                <div className="dropdown-item disabled" style={{ fontSize: '12px', color: '#94a3b8', cursor: 'not-allowed', padding: '8px 12px' }}>
+                                                                    Admin only
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     )}
                                                 </td>
@@ -380,6 +415,47 @@ const Participant = () => {
                                     )}
                                 </tbody>
                             </table>
+                        </div>
+
+                        {/* Pagination UI */}
+                        <div className="pagination-container">
+                            <div className="pagination-info">
+                                Showing {currentItems.length > 0 ? indexOfFirstItem + 1 : 0} to {Math.min(indexOfLastItem, filteredData.length)} of {filteredData.length} results
+                            </div>
+                            <div className="pagination-controls">
+                                <div className="per-page-wrapper">
+                                    <select className="per-page-select" value={itemsPerPage} onChange={handleItemsPerPageChange}>
+                                        {[5, 10, 20, 50].map(val => (
+                                            <option key={val} value={val}>{val} per page</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="pagination-buttons">
+                                    <button
+                                        className="page-btn nav-btn"
+                                        onClick={() => handlePageChange(currentPage - 1)}
+                                        disabled={currentPage === 1}
+                                    >
+                                        Previous
+                                    </button>
+                                    {[...Array(totalPages)].map((_, i) => (
+                                        <button
+                                            key={i + 1}
+                                            className={`page-btn ${currentPage === i + 1 ? 'active' : ''}`}
+                                            onClick={() => handlePageChange(i + 1)}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    ))}
+                                    <button
+                                        className="page-btn nav-btn"
+                                        onClick={() => handlePageChange(currentPage + 1)}
+                                        disabled={currentPage === totalPages || totalPages === 0}
+                                    >
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

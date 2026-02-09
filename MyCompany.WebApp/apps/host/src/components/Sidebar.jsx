@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { LayoutDashboard, Tag, Users, ChevronLeft, ChevronRight, LogOut, ChevronDown, ChevronUp, User, MapPin, ShoppingBag } from 'lucide-react';
 import './Sidebar.css';
 
-const Sidebar = ({ isCollapsed, setIsCollapsed, currentView, setView, onLogout, isMobileOpen, setIsMobileOpen }) => {
+const Sidebar = ({ isCollapsed, setIsCollapsed, currentView, setView, onLogout, isMobileOpen, setIsMobileOpen, userRole }) => {
     const [expandedMenus, setExpandedMenus] = useState(['customer_relation']); // Default open like screenshot
 
     const menuItems = [

@@ -6,7 +6,7 @@ import dotsCircle from '../assets/dots-circle.png';
 import dotsSquare from '../assets/dots-square.png';
 import './Auth.css';
 
-const Login = ({ setToken, setUserName, onToggle }) => {
+const Login = ({ setToken, setUserName, setUserRole, onToggle }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -35,6 +35,20 @@ const Login = ({ setToken, setUserName, onToggle }) => {
         return Object.keys(errors).length === 0;
     };
 
+    const parseJwt = (token) => {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        } catch (e) {
+            return null;
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -57,8 +71,19 @@ const Login = ({ setToken, setUserName, onToggle }) => {
                 localStorage.setItem('token', token);
                 const userName = response.data.userName || response.data.UserName || "User";
                 localStorage.setItem('userName', userName);
+
+                // Decode Role from Token
+                const decoded = parseJwt(token);
+                // Look for standard .NET claim name for roles
+                const role = decoded?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] ||
+                    decoded?.role ||
+                    "User";
+
+                localStorage.setItem('userRole', role);
+
                 setToken(token);
                 if (setUserName) setUserName(userName);
+                if (setUserRole) setUserRole(role);
             } else {
                 setError("Login worked, but the server didn't send a token correctly.");
             }

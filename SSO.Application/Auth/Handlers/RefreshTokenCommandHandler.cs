@@ -43,8 +43,15 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, R
         _context.RefreshTokens.Add(newRefreshToken);
         await _context.SaveChangesAsync(cancellationToken);
 
-        // Generate new access token
-        var newAccessToken = _jwtTokenService.GenerateToken(tokenEntity.User);
+
+        var sessionId = tokenEntity.User.CurrentSessionId ?? Guid.NewGuid().ToString(); 
+        if (tokenEntity.User.CurrentSessionId == null) 
+        {
+             tokenEntity.User.CurrentSessionId = sessionId;
+          
+        }
+
+        var newAccessToken = _jwtTokenService.GenerateToken(tokenEntity.User, sessionId);
 
         return new RefreshTokenResponseDto
         {

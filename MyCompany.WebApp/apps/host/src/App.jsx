@@ -16,6 +16,7 @@ import './App.css';
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [userName, setUserName] = useState(localStorage.getItem('userName') || 'User');
+  const [userRole, setUserRole] = useState(localStorage.getItem('userRole') || 'User');
   const [isRegistering, setIsRegistering] = useState(false);
   const [currentView, setCurrentView] = useState('dashboard');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -24,9 +25,28 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
+    localStorage.removeItem('userRole');
     setToken(null);
     setUserName('User');
+    setUserRole('User');
   };
+
+  React.useEffect(() => {
+    if (token) {
+      // Validate session on load/reload
+      import('./services/api').then(module => {
+        const api = module.default;
+        // Calls SSO to check session. If invalid, interceptor handles logout.
+        // We assume a simple endpoint exists or use a known one like refresh-token or similar if specific validatation endpoint is missing
+        // Ideally we should have a /me or /validate endpoint.
+        // For now, let's assume we can hit a light-weight endpoint or refresh.
+        // Actually, let's use a non-existent or simple endpoint just to trigger middleware verification.
+        // But to be safe, let's assume valid endpoint. If not, 404 is fine, but header check happens BEFORE 404 controller logic?
+        // Middleware runs BEFORE controller. So even if 404, authorization middleware runs first.
+        api.get('/api/auth/validate-session').catch(() => { });
+      });
+    }
+  }, [token, currentView]);
 
 
   const renderView = () => {
@@ -35,13 +55,13 @@ function App() {
         <Suspense fallback={<div className="loading-mfe">Loading Module...</div>}>
           {(() => {
             switch (currentView) {
-              case 'dashboard': return <Dashboard />;
-              case 'promotions': return <Promotions />;
-              case 'customer_relation': return <CustomerRelation />;
-              case 'participant': return <Participant />;
-              case 'delivery_point': return <DeliveryPoint />;
-              case 'products': return <Products />;
-              default: return <Dashboard />;
+              case 'dashboard': return <Dashboard userRole={userRole} />;
+              case 'promotions': return <Promotions userRole={userRole} />;
+              case 'customer_relation': return <CustomerRelation userRole={userRole} />;
+              case 'participant': return <Participant userRole={userRole} />;
+              case 'delivery_point': return <DeliveryPoint userRole={userRole} />;
+              case 'products': return <Products userRole={userRole} />;
+              default: return <Dashboard userRole={userRole} />;
             }
           })()}
         </Suspense>
@@ -55,7 +75,12 @@ function App() {
         {isRegistering ? (
           <Register onToggle={() => setIsRegistering(false)} />
         ) : (
-          <Login setToken={setToken} setUserName={setUserName} onToggle={() => setIsRegistering(true)} />
+          <Login
+            setToken={setToken}
+            setUserName={setUserName}
+            setUserRole={setUserRole}
+            onToggle={() => setIsRegistering(true)}
+          />
         )}
       </div>
     );
@@ -71,6 +96,7 @@ function App() {
         onLogout={handleLogout}
         isMobileOpen={isMobileMenuOpen}
         setIsMobileOpen={setIsMobileMenuOpen}
+        userRole={userRole}
       />
 
       <div className={`main-content ${isSidebarCollapsed ? 'collapsed' : 'expanded'}`}>

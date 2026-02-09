@@ -3,7 +3,7 @@ import { Users, Plus, UserPlus, Check, X, Eye, ChevronRight, MoreVertical, Edit2
 import './CustomerRelation.css';
 import { customerService } from '../services/customerService';
 
-const CustomerRelation = () => {
+const CustomerRelation = ({ userRole }) => {
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState({
         codHier: '',
@@ -28,6 +28,10 @@ const CustomerRelation = () => {
         codParentNode: '',
         dteEnd: ''
     });
+
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
 
     useEffect(() => {
         fetchCustomers();
@@ -61,6 +65,27 @@ const CustomerRelation = () => {
             default: return true;
         }
     });
+
+    // Pagination Logic
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        setActiveActionMenu(null);
+    };
+
+    const handleItemsPerPageChange = (e) => {
+        setItemsPerPage(Number(e.target.value));
+        setCurrentPage(1);
+    };
+
+    // Reset pagination on search
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm, searchCriterion]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -188,7 +213,7 @@ const CustomerRelation = () => {
                                 </button>
                             </div>
 
-                            {!showForm && (
+                            {!showForm && userRole === 'Admin' && (
                                 <button className="create-btn" onClick={() => setShowForm(true)}>
                                     <Plus size={18} />
                                     Create Customer
@@ -213,9 +238,9 @@ const CustomerRelation = () => {
                                 </thead>
                                 <tbody>
                                     {isLoading ? (
-                                        <tr><td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>Loading Customers...</td></tr>
-                                    ) : filteredData.length > 0 ? (
-                                        filteredData.map((customer, idx) => (
+                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '40px' }}>Loading Customers...</td></tr>
+                                    ) : currentItems.length > 0 ? (
+                                        currentItems.map((customer, idx) => (
                                             <tr key={idx}>
                                                 <td>{customer.codHier || customer.CodHier}</td>
                                                 <td>{customer.codDiv || customer.CodDiv}</td>
@@ -237,24 +262,73 @@ const CustomerRelation = () => {
 
                                                     {activeActionMenu === idx && (
                                                         <div className="action-menu fade-in">
-                                                            <button className="dropdown-item" onClick={() => handleEdit(customer)}>
-                                                                <Edit2 size={14} style={{ marginRight: '8px' }} /> Edit
-                                                            </button>
-                                                            <button className="dropdown-item delete" onClick={() => handleDelete(customer)}>
-                                                                <Trash2 size={14} style={{ marginRight: '8px' }} /> Delete
-                                                            </button>
+                                                            {userRole === 'Admin' ? (
+                                                                <>
+                                                                    <button className="dropdown-item" onClick={() => handleEdit(customer)}>
+                                                                        <Edit2 size={14} style={{ marginRight: '8px' }} /> Edit
+                                                                    </button>
+                                                                    <button className="dropdown-item delete" onClick={() => handleDelete(customer)}>
+                                                                        <Trash2 size={14} style={{ marginRight: '8px' }} /> Delete
+                                                                    </button>
+                                                                </>
+                                                            ) : (
+                                                                <div className="dropdown-item disabled" style={{ fontSize: '12px', color: '#94a3b8', cursor: 'not-allowed', padding: '8px 12px' }}>
+                                                                    Admin only
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     )}
                                                 </td>
                                             </tr>
                                         ))
                                     ) : fetchError ? (
-                                        <tr><td colSpan="7" style={{ textAlign: 'center', padding: '40px', color: '#ef4444' }}>Error: {fetchError} (Check if Backend is running)</td></tr>
+                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '40px', color: '#ef4444' }}>Error: {fetchError} (Check if Backend is running)</td></tr>
                                     ) : (
-                                        <tr><td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>No customers found in the database.</td></tr>
+                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '40px' }}>No customers found in the database.</td></tr>
                                     )}
                                 </tbody>
                             </table>
+                        </div>
+
+                        {/* Pagination UI */}
+                        <div className="pagination-container">
+                            <div className="pagination-info">
+                                Showing {currentItems.length > 0 ? indexOfFirstItem + 1 : 0} to {Math.min(indexOfLastItem, filteredData.length)} of {filteredData.length} results
+                            </div>
+                            <div className="pagination-controls">
+                                <div className="per-page-wrapper">
+                                    <select className="per-page-select" value={itemsPerPage} onChange={handleItemsPerPageChange}>
+                                        {[5, 10, 20, 50].map(val => (
+                                            <option key={val} value={val}>{val} per page</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="pagination-buttons">
+                                    <button
+                                        className="page-btn nav-btn"
+                                        onClick={() => handlePageChange(currentPage - 1)}
+                                        disabled={currentPage === 1}
+                                    >
+                                        Previous
+                                    </button>
+                                    {[...Array(totalPages)].map((_, i) => (
+                                        <button
+                                            key={i + 1}
+                                            className={`page-btn ${currentPage === i + 1 ? 'active' : ''}`}
+                                            onClick={() => handlePageChange(i + 1)}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    ))}
+                                    <button
+                                        className="page-btn nav-btn"
+                                        onClick={() => handlePageChange(currentPage + 1)}
+                                        disabled={currentPage === totalPages || totalPages === 0}
+                                    >
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

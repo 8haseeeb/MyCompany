@@ -11,6 +11,15 @@ const PromotionDetailView = ({ onClose }) => {
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('promoAction');
 
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
+
+    // Reset pagination on tab change or data refresh
+    React.useEffect(() => {
+        setCurrentPage(1);
+    }, [activeTab, detailData]);
+
     const handleSearch = async () => {
         if (!idAction || !idAction.trim()) {
             setError('Please enter a Promotion ID');
@@ -236,22 +245,80 @@ const PromotionDetailView = ({ onClose }) => {
             );
         }
 
+        // Pagination Logic
+        const indexOfLastItem = currentPage * itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+        const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+        const totalPages = Math.ceil(data.length / itemsPerPage);
+
+        const handlePageChange = (pageNumber) => {
+            setCurrentPage(pageNumber);
+        };
+
+        const handleItemsPerPageChange = (e) => {
+            setItemsPerPage(Number(e.target.value));
+            setCurrentPage(1);
+        };
+
         return (
-            <div className="view-table-wrapper">
-                <table className="view-data-table">
-                    <thead>
-                        <tr>
-                            {headers.map(h => <th key={h}>{h}</th>)}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((item, idx) => (
-                            <tr key={idx}>
-                                {rowMapper(item).map((cell, i) => <td key={i}>{cell}</td>)}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div className="view-table-wrapper">
+                    <table className="view-data-table">
+                        <thead>
+                            <tr>
+                                {headers.map(h => <th key={h}>{h}</th>)}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {currentItems.map((item, idx) => (
+                                <tr key={idx}>
+                                    {rowMapper(item).map((cell, i) => <td key={i}>{cell}</td>)}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                {/* Pagination UI */}
+                <div className="pagination-container">
+                    <div className="pagination-info">
+                        Showing {currentItems.length > 0 ? indexOfFirstItem + 1 : 0} to {Math.min(indexOfLastItem, data.length)} of {data.length} results
+                    </div>
+                    <div className="pagination-controls">
+                        <div className="per-page-wrapper">
+                            <select className="per-page-select" value={itemsPerPage} onChange={handleItemsPerPageChange}>
+                                {[5, 10, 20, 50].map(val => (
+                                    <option key={val} value={val}>{val} per page</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="pagination-buttons">
+                            <button
+                                className="page-btn nav-btn"
+                                onClick={() => handlePageChange(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                Previous
+                            </button>
+                            {[...Array(totalPages)].map((_, i) => (
+                                <button
+                                    key={i + 1}
+                                    className={`page-btn ${currentPage === i + 1 ? 'active' : ''}`}
+                                    onClick={() => handlePageChange(i + 1)}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))}
+                            <button
+                                className="page-btn nav-btn"
+                                onClick={() => handlePageChange(currentPage + 1)}
+                                disabled={currentPage === totalPages || totalPages === 0}
+                            >
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     };

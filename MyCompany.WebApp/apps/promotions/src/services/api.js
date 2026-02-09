@@ -25,8 +25,12 @@ api.interceptors.response.use(
         if (error.response?.status === 401) {
             console.error("Session expired or unauthorized. Logging out...");
             localStorage.removeItem('token');
-            // Force a reload to the home page to reset App state
-            window.location.href = '/';
+            localStorage.removeItem('refreshToken');
+            window.dispatchEvent(new Event("logout"));
+
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 100);
         }
 
         console.error(`API Error: ${error.config?.method.toUpperCase()} ${error.config?.url}`, {

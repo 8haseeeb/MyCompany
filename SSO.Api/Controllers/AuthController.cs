@@ -34,7 +34,7 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto dto)
     {
-        var message = await _mediator.Send(new RegisterCommand(dto.UserName, dto.Email, dto.Password));
+        var message = await _mediator.Send(new RegisterCommand(dto.UserName, dto.Email, dto.Password, dto.Role ?? "User"));
 
         return Ok(new
         {

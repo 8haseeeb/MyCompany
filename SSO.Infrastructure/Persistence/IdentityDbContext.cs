@@ -18,7 +18,7 @@ namespace SSO.Infrastructure.Persistence
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
             return base.SaveChangesAsync(cancellationToken);
         }

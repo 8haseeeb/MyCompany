@@ -27,7 +27,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, string>
 
         var hash = _passwordHasher.Hash(request.Password);
 
-        var user = new User(request.UserName, request.Email, hash);
+        var user = new User(request.UserName, request.Email, hash, request.Role);
         _context.Users.Add(user);
         await _context.SaveChangesAsync(cancellationToken);
 

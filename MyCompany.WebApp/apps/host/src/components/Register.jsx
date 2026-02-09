@@ -9,6 +9,7 @@ const Register = ({ onToggle }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const [role, setRole] = useState('User');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -21,7 +22,8 @@ const Register = ({ onToggle }) => {
             await api.post('/api/auth/register', {
                 userName: username,
                 email,
-                password
+                password,
+                role
             });
             alert('Registration Successful! Please login.');
             onToggle();
@@ -82,6 +84,27 @@ const Register = ({ onToggle }) => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
+                        </div>
+
+                        <div className="input-group-v2">
+                            <label>Role</label>
+                            <select
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                                className="role-select-v2"
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    border: '1px solid #e2e8f0',
+                                    backgroundColor: 'white',
+                                    marginTop: '8px',
+                                    fontSize: '14px'
+                                }}
+                            >
+                                <option value="User">User</option>
+                                <option value="Admin">Admin</option>
+                            </select>
                         </div>
 
                         <button type="submit" disabled={loading} className="login-btn-v2" style={{ marginTop: '10px' }}>

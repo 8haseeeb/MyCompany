@@ -4,7 +4,7 @@ import './Promotions.css';
 import { promotionService } from '../services/promotionService';
 import PromotionDetailView from './PromotionDetailView';
 
-const Promotions = () => {
+const Promotions = ({ userRole }) => {
     const [showForm, setShowForm] = useState(false);
     const [showViewModal, setShowViewModal] = useState(false);
     const [showDetailView, setShowDetailView] = useState(false);
@@ -32,6 +32,14 @@ const Promotions = () => {
         dteToShost: '',
         levParticipants: 0
     });
+
+    // Pagination State for History Table
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
+
+    // Pagination State for Support Form View
+    const [viewCurrentPage, setViewCurrentPage] = useState(1);
+    const [viewItemsPerPage, setViewItemsPerPage] = useState(5);
 
     useEffect(() => {
         fetchHistory();
@@ -61,12 +69,30 @@ const Promotions = () => {
         try {
             const data = await promotionService.getPromotionHistory();
             setActivities(data || []);
+            // Reset to first page when new data is fetched
+            setCurrentPage(1);
         } catch (error) {
             console.error("Error fetching promotion history:", error);
             setFetchError(error.message || "Failed to fetch activities");
         } finally {
             setIsLoading(false);
         }
+    };
+
+    // Pagination Logic for History Table
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentActivities = activities.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(activities.length / itemsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        setActiveActionMenu(null);
+    };
+
+    const handleItemsPerPageChange = (e) => {
+        setItemsPerPage(Number(e.target.value));
+        setCurrentPage(1);
     };
 
     const steps = [
@@ -477,6 +503,26 @@ const Promotions = () => {
         return (val || '').toString().toLowerCase().includes(term);
     });
 
+    // Pagination Logic for Support Form View
+    const viewIndexOfLastItem = viewCurrentPage * viewItemsPerPage;
+    const viewIndexOfFirstItem = viewIndexOfLastItem - viewItemsPerPage;
+    const currentViewItems = filteredViewData.slice(viewIndexOfFirstItem, viewIndexOfLastItem);
+    const viewTotalPages = Math.ceil(filteredViewData.length / viewItemsPerPage);
+
+    const handleViewPageChange = (pageNumber) => {
+        setViewCurrentPage(pageNumber);
+    };
+
+    const handleViewItemsPerPageChange = (e) => {
+        setViewItemsPerPage(Number(e.target.value));
+        setViewCurrentPage(1);
+    };
+
+    // Reset view pagination on search or type change
+    useEffect(() => {
+        setViewCurrentPage(1);
+    }, [searchTerm, searchCriterion, selectedViewType]);
+
     const renderTableRows = (dataType) => {
         if (isViewLoading) {
             return <tr><td colSpan="10" style={{ textAlign: 'center', padding: '40px' }}>Loading data...</td></tr>;
@@ -490,7 +536,7 @@ const Promotions = () => {
             return <tr><td colSpan="10" style={{ textAlign: 'center', padding: '40px' }}>No records found matching your search.</td></tr>;
         }
 
-        return filteredViewData.map((row, idx) => {
+        return currentViewItems.map((row, idx) => {
             switch (dataType) {
                 case 'Promo Action':
                     return (
@@ -771,10 +817,12 @@ const Promotions = () => {
                             <Search size={18} />
                             Detail View
                         </button>
-                        <button className="create-btn" onClick={() => setShowForm(true)}>
-                            <Plus size={18} />
-                            Create Promotion
-                        </button>
+                        {userRole === 'Admin' && (
+                            <button className="create-btn" onClick={() => setShowForm(true)}>
+                                <Plus size={18} />
+                                Create Promotion
+                            </button>
+                        )}
                     </div>
                 )}
             </div>
@@ -798,8 +846,8 @@ const Promotions = () => {
                             <tbody>
                                 {isLoading ? (
                                     <tr><td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>Loading Activities...</td></tr>
-                                ) : activities.length > 0 ? (
-                                    activities.map((activity, idx) => {
+                                ) : currentActivities.length > 0 ? (
+                                    currentActivities.map((activity, idx) => {
                                         const startDate = activity.dteStartSellIn || activity.DteStartSellIn;
                                         const endDate = activity.dteEndSellIn || activity.DteEndSellIn;
 
@@ -848,18 +896,26 @@ const Promotions = () => {
 
                                                     {activeActionMenu === idx && (
                                                         <div className="action-dropdown-menu fade-in">
-                                                            <button
-                                                                className="action-item edit"
-                                                                onClick={() => handleEditPromo(activity)}
-                                                            >
-                                                                <Edit2 size={14} /> Edit
-                                                            </button>
-                                                            <button
-                                                                className="action-item delete"
-                                                                onClick={() => handleDelete(activity.idAction ?? activity.IdAction ?? activity.codAction ?? activity.CodAction)}
-                                                            >
-                                                                <Trash2 size={14} /> Delete
-                                                            </button>
+                                                            {userRole === 'Admin' ? (
+                                                                <>
+                                                                    <button
+                                                                        className="action-item edit"
+                                                                        onClick={() => handleEditPromo(activity)}
+                                                                    >
+                                                                        <Edit2 size={14} /> Edit
+                                                                    </button>
+                                                                    <button
+                                                                        className="action-item delete"
+                                                                        onClick={() => handleDelete(activity.idAction ?? activity.IdAction ?? activity.codAction ?? activity.CodAction)}
+                                                                    >
+                                                                        <Trash2 size={14} /> Delete
+                                                                    </button>
+                                                                </>
+                                                            ) : (
+                                                                <div className="action-item disabled" style={{ fontSize: '12px', color: '#94a3b8', cursor: 'not-allowed', padding: '8px 12px' }}>
+                                                                    Admin only
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     )}
                                                 </td>
@@ -871,6 +927,47 @@ const Promotions = () => {
                                 )}
                             </tbody>
                         </table>
+                    </div>
+
+                    {/* Pagination UI */}
+                    <div className="pagination-container">
+                        <div className="pagination-info">
+                            Showing {currentActivities.length > 0 ? indexOfFirstItem + 1 : 0} to {Math.min(indexOfLastItem, activities.length)} of {activities.length} results
+                        </div>
+                        <div className="pagination-controls">
+                            <div className="per-page-wrapper">
+                                <select className="per-page-select" value={itemsPerPage} onChange={handleItemsPerPageChange}>
+                                    {[5, 10, 20, 50].map(val => (
+                                        <option key={val} value={val}>{val} per page</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="pagination-buttons">
+                                <button
+                                    className="page-btn nav-btn"
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    disabled={currentPage === 1}
+                                >
+                                    Previous
+                                </button>
+                                {[...Array(totalPages)].map((_, i) => (
+                                    <button
+                                        key={i + 1}
+                                        className={`page-btn ${currentPage === i + 1 ? 'active' : ''}`}
+                                        onClick={() => handlePageChange(i + 1)}
+                                    >
+                                        {i + 1}
+                                    </button>
+                                ))}
+                                <button
+                                    className="page-btn nav-btn"
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    disabled={currentPage === totalPages || totalPages === 0}
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             ) : (
@@ -1053,6 +1150,47 @@ const Promotions = () => {
                                                 {renderTableRows(selectedViewType)}
                                             </tbody>
                                         </table>
+                                    </div>
+
+                                    {/* Pagination UI for View */}
+                                    <div className="pagination-container">
+                                        <div className="pagination-info">
+                                            Showing {currentViewItems.length > 0 ? viewIndexOfFirstItem + 1 : 0} to {Math.min(viewIndexOfLastItem, filteredViewData.length)} of {filteredViewData.length} results
+                                        </div>
+                                        <div className="pagination-controls">
+                                            <div className="per-page-wrapper">
+                                                <select className="per-page-select" value={viewItemsPerPage} onChange={handleViewItemsPerPageChange}>
+                                                    {[5, 10, 20, 50].map(val => (
+                                                        <option key={val} value={val}>{val} per page</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <div className="pagination-buttons">
+                                                <button
+                                                    className="page-btn nav-btn"
+                                                    onClick={() => handleViewPageChange(viewCurrentPage - 1)}
+                                                    disabled={viewCurrentPage === 1}
+                                                >
+                                                    Previous
+                                                </button>
+                                                {[...Array(viewTotalPages)].map((_, i) => (
+                                                    <button
+                                                        key={i + 1}
+                                                        className={`page-btn ${viewCurrentPage === i + 1 ? 'active' : ''}`}
+                                                        onClick={() => handleViewPageChange(i + 1)}
+                                                    >
+                                                        {i + 1}
+                                                    </button>
+                                                ))}
+                                                <button
+                                                    className="page-btn nav-btn"
+                                                    onClick={() => handleViewPageChange(viewCurrentPage + 1)}
+                                                    disabled={viewCurrentPage === viewTotalPages || viewTotalPages === 0}
+                                                >
+                                                    Next
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             )}

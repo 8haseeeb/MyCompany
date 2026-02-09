@@ -7,11 +7,13 @@ public class RegisterCommand : IRequest<string>
     public string UserName { get; }
     public string Email { get; }
     public string Password { get; }
+    public string Role { get; }
 
-    public RegisterCommand(string userName, string email, string password)
+    public RegisterCommand(string userName, string email, string password, string role = "User")
     {
         UserName = userName;
         Email = email;
         Password = password;
+        Role = role;
     }
 }

@@ -1,11 +1,9 @@
+using AutoMapper;
 using MediatR;
 using Promotions.Application.PromoActions.Dtos;
 using Promotions.Application.PromoActions.Interfaces;
 using Promotions.Application.PromoActions.Queries;
 using Promotions.Application.CustomerRelations.Dtos;
-using Promotions.Application.Participants.Dtos;
-using Promotions.Application.DeliveryPoints.Dtos;
-using Promotions.Application.Measures.Dtos;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,13 +14,16 @@ namespace Promotions.Application.PromoActions.Handler
     {
         private readonly IPromoActionRepository _repository;
         private readonly Promotions.Application.CustomerRelations.Interfaces.ICustomerRelationRepository _customerRepository;
+        private readonly IMapper _mapper;
 
         public GetPromoActionByIdQueryHandler(
             IPromoActionRepository repository,
-            Promotions.Application.CustomerRelations.Interfaces.ICustomerRelationRepository customerRepository)
+            Promotions.Application.CustomerRelations.Interfaces.ICustomerRelationRepository customerRepository,
+            IMapper mapper)
         {
             _repository = repository;
             _customerRepository = customerRepository;
+            _mapper = mapper;
         }
 
         public async Task<PromoActionDetailDto?> Handle(GetPromoActionByIdQuery request, CancellationToken cancellationToken)
@@ -34,95 +35,24 @@ namespace Promotions.Application.PromoActions.Handler
             // Logic: Derive Contractor from the first Participant found
             var firstParticipant = entity.Participants?.FirstOrDefault();
             var customerRelation = firstParticipant != null 
-                ? (await _customerRepository.GetByNodeAndDivAsync(firstParticipant.CodNode, firstParticipant.CodDiv)).FirstOrDefault() 
+                ? (await _customerRepository.GetByNodeAndDivAsync(firstParticipant.CodNode!, firstParticipant.CodDiv!)).FirstOrDefault() 
                 : null;
 
-            return new PromoActionDetailDto
+            var dto = _mapper.Map<PromoActionDetailDto>(entity);
+
+            if (customerRelation != null)
             {
-                IdAction = entity.IdAction,
-                Name = entity.Name,
-                CodDiv = entity.CodDiv,
-                CodContractor = firstParticipant?.CodNode ?? "N/A", // Derived
-                DteStartSellIn = entity.DteStartSellIn,
-                DteEndSellIn = entity.DteEndSellIn,
-                DteStartSellOut = entity.DteStartSellOut,
-                DteEndSellOut = entity.DteEndSellOut,
-                DocumentKey = entity.DocumentKey,
-                DteToShost = entity.DteToShost,
-                LevParticipants = entity.LevParticipants,
-                
-                CustomerRelation = customerRelation == null ? null : new CustomerRelationDetailDto
-                {
-                    CodHier = customerRelation.CodHier,
-                    CodDiv = customerRelation.CodDiv,
-                    CodNode = customerRelation.CodNode,
-                    IdLevel = customerRelation.IdLevel,
-                    DteStart = customerRelation.DteStart,
-                    CodParentNode = customerRelation.CodParentNode,
-                    DteEnd = customerRelation.DteEnd,
-                    Participants = customerRelation.Participants.Select(p => new ParticipantDto
-                    {
-                        IdAction = p.IdAction,
-                        CodParticipant = p.CodParticipant,
-                        FlgInclusion = p.FlgInclusion,
-                        CodHier = p.CodHier,
-                        CodDiv = p.CodDiv,
-                        CodNode = p.CodNode,
-                        IdLevel = p.IdLevel,
-                        DteStart = p.DteStart
-                    }).ToList(),
-                    DeliveryPoints = customerRelation.DeliveryPoints.Select(dp => new DeliveryPointDto
-                    {
-                        IdAction = dp.IdAction,
-                        CodDeliveryPoint = dp.CodDeliveryPoint,
-                        FlgInclusion = dp.FlgInclusion,
-                        CodHier = dp.CodHier,
-                        CodDiv = dp.CodDiv,
-                        CodNode = dp.CodNode,
-                        IdLevel = dp.IdLevel,
-                        DteStart = dp.DteStart
-                    }).ToList()
-                },
+                dto.CustomerRelation = _mapper.Map<CustomerRelationDetailDto>(customerRelation);
+            }
 
-                Products = (await Task.WhenAll(entity.Products.Select(async p => new PromoProductDetailViewDto
-                {
-                    CodProduct = p.CodProduct,
-                    LevProduct = p.LevProduct,
-                    CodDisplay = p.CodDisplay,
-                    CodDiv = p.CodDiv,
-                    QtyEstimated = p.QtyEstimated,
-                    PerceDiscount1 = p.PerceDiscount1,
-                    PerceDiscount2 = p.PerceDiscount2,
-                    NumMeasure = p.NumMeasure,
-                    CodMeasure = p.CodMeasure,
-                    MeasureFields = (await _repository.GetMeasureFieldsByMeasureAsync(p.CodDiv, p.CodMeasure ?? string.Empty))
-                        .Select(mf => new PromoMeasureFieldDto
-                        {
-                            CodDiv = mf.CodDiv,
-                            CodMeasure = mf.CodMeasure,
-                            FieldName = mf.FieldName,
-                            Formula = mf.Formula
-                        }).ToList(),
-                    Details = p.Details.Select(d => new ProductDetailHierarchyDto
-                    {
-                        CodNode = d.CodNode,
-                        FlgInclusion = d.FlgInclusion,
-                        Articles = d.Articles.Select(a => new PromoArticleDto
-                        {
-                            IdAction = a.IdAction,
-                            CodProduct = a.CodProduct,
-                            LevProduct = a.LevProduct,
-                            CodDisplay = a.CodDisplay,
-                            CodDiv = a.CodDiv,
-                            CodNode = a.CodNode,
-                            CodNode1 = a.CodNode1,
-                            CodNode2 = a.CodNode2,
-                            CodNodeN = a.CodNodeN
-                        }).ToList()
-                    }).ToList()
-                }))).ToList()
-            };
+            // Map Measure Fields for each product
+            foreach (var productDto in dto.Products)
+            {
+                var measureFields = await _repository.GetMeasureFieldsByMeasureAsync(productDto.CodDiv, productDto.CodMeasure ?? string.Empty);
+                productDto.MeasureFields = _mapper.Map<List<Promotions.Application.Measures.Dtos.PromoMeasureFieldDto>>(measureFields);
+            }
+
+            return dto;
         }
-
     }
 }
