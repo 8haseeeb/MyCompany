@@ -2,6 +2,7 @@
 using MyCompany.ApiGateway.Middlewares;
 using MyCompany.ApiGateway.Routing;
 using MyCompany.ApiGateway.Security;
+using MyCompany.ApiGateway.Resilience;
 using MyCompany.Common.Logging;
 using MyCompany.Common.Logging.Serilog;
 using Serilog;
@@ -17,6 +18,8 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<DownstreamProxy>()
+    .AddPolicyHandler(RetryPolicies.GetRetryPolicy())
+    .AddPolicyHandler(CircuitBreakerPolicies.GetCircuitBreakerPolicy())
     .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
     {
         ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true

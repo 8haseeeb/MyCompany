@@ -2,7 +2,6 @@
 using Promotions.Application.ProductDetails.Interfaces;
 using Promotions.Domain.ProductDetails;
 using Promotions.Infrastructure.Persistence;
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
