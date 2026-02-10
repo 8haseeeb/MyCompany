@@ -27,7 +27,7 @@ namespace Promotions.Application.Measures.Commands
             if (entity == null)
                 throw new Exception("Promo Measure Field not found");
 
-            entity.Formula = request.Formula;
+            entity.UpdateFormula(request.Formula);
 
             await _repository.UpdateAsync(entity, cancellationToken);
 

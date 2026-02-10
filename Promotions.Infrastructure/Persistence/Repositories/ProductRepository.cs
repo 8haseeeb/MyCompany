@@ -21,6 +21,7 @@ namespace Promotions.Infrastructure.Persistence.Repositories
             string codDisplay)
         {
             return await _context.Products
+                .Include(x => x.Action)
                 .Include(x => x.Details)
                 .ThenInclude(d => d.Articles)
                 .FirstOrDefaultAsync(x =>
@@ -33,6 +34,7 @@ namespace Promotions.Infrastructure.Persistence.Repositories
         public async Task<List<PromoProduct>> GetByActionAsync(int idAction)
         {
             return await _context.Products
+                .Include(x => x.Action)
                 .Include(x => x.Details)
                 .ThenInclude(d => d.Articles)
                 .Where(x => x.IdAction == idAction)
@@ -42,6 +44,7 @@ namespace Promotions.Infrastructure.Persistence.Repositories
         public async Task<List<PromoProduct>> GetAllAsync()
         {
             return await _context.Products
+                .Include(x => x.Action)
                 .Include(x => x.Details)
                 .ThenInclude(d => d.Articles)
                 .ToListAsync();

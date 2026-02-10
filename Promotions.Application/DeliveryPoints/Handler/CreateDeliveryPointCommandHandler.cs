@@ -34,30 +34,28 @@ namespace Promotions.Application.DeliveryPoints.Commands
 
             if (!exists)
             {
-                var newRelation = new CustomerRelation
-                {
-                    CodHier = request.CodHier,
-                    CodDiv = request.CodDiv,
-                    CodNode = request.CodNode,
-                    IdLevel = request.IdLevel,
-                    DteStart = request.DteStart,
-                    CodParentNode = "ROOT" // Default value
-                };
+                var newRelation = new CustomerRelation(
+                    request.CodHier,
+                    request.CodDiv,
+                    request.CodNode,
+                    request.IdLevel,
+                    request.DteStart,
+                    "ROOT"
+                );
                 await _customerRelationRepository.AddAsync(newRelation);
                 await _customerRelationRepository.SaveChangesAsync(cancellationToken);
             }
 
-            var entity = new PromoDeliveryPoint
-            {
-                IdAction = request.IdAction,
-                CodDeliveryPoint = request.CodDeliveryPoint,
-                FlgInclusion = request.FlgInclusion,
-                CodHier = request.CodHier,
-                CodDiv = request.CodDiv,
-                CodNode = request.CodNode,
-                IdLevel = request.IdLevel,
-                DteStart = request.DteStart
-            };
+            var entity = new PromoDeliveryPoint(
+                request.IdAction,
+                request.CodDeliveryPoint,
+                request.FlgInclusion,
+                request.CodHier,
+                request.CodDiv,
+                request.CodNode,
+                request.IdLevel,
+                request.DteStart
+            );
 
             await _repository.AddAsync(entity);
             await _repository.SaveChangesAsync(cancellationToken);

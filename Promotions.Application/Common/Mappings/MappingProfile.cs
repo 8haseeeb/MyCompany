@@ -23,46 +23,169 @@ namespace Promotions.Application.Common.Mappings
     {
         public MappingProfile()
         {
+            // Global configuration for Rich Domain Model (Private Setters)
+            // Note: In modern AutoMapper, this is typically handled by setting ShouldMapProperty in the Profile or MapperConfiguration
+            // But we can also be explicit here.
+
             // PromoAction mappings
-            CreateMap<PromoAction, PromoActionDto>().ReverseMap();
-            CreateMap<PromoAction, CreatePromoActionDto>().ReverseMap();
-            CreateMap<PromoAction, UpdatePromoActionDto>().ReverseMap();
+            CreateMap<PromoActionDto, PromoAction>()
+                .ConstructUsing(src => new PromoAction(src.IdAction, src.Name, src.CodDiv))
+                .AfterMap((src, dest) => {
+                    dest.UpdateSellInDates(src.DteStartSellIn, src.DteEndSellIn);
+                    dest.UpdateSellOutDates(src.DteStartSellOut, src.DteEndSellOut);
+                    dest.SetHostDate(src.DteToShost);
+                    dest.UpdateBasicInfo(src.Name, src.CodDiv, src.DocumentKey, src.LevParticipants);
+                });
+
+            CreateMap<CreatePromoActionDto, PromoAction>()
+                .ConstructUsing(src => new PromoAction(src.IdAction, src.Name, src.CodDiv))
+                .AfterMap((src, dest) => {
+                    dest.UpdateSellInDates(src.DteStartSellIn, src.DteEndSellIn);
+                    dest.UpdateSellOutDates(src.DteStartSellOut, src.DteEndSellOut);
+                    dest.SetHostDate(src.DteToShost);
+                    dest.UpdateBasicInfo(src.Name, src.CodDiv, src.DocumentKey, src.LevParticipants);
+                });
+
+            CreateMap<AtomicCreatePromoActionDto, PromoAction>()
+                .ConstructUsing(src => new PromoAction(src.IdAction, src.Name, src.CodDiv))
+                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Products))
+                .ForMember(dest => dest.Participants, opt => opt.MapFrom(src => src.Participants))
+                .ForMember(dest => dest.DeliveryPoints, opt => opt.MapFrom(src => src.DeliveryPoints))
+                .AfterMap((src, dest) => {
+                    dest.UpdateSellInDates(src.DteStartSellIn, src.DteEndSellIn);
+                    dest.UpdateSellOutDates(src.DteStartSellOut, src.DteEndSellOut);
+                    dest.SetHostDate(src.DteToShost);
+                    dest.UpdateBasicInfo(src.Name, src.CodDiv, src.DocumentKey, src.LevParticipants);
+                });
+
+            CreateMap<PromoAction, PromoActionDto>();
+            CreateMap<PromoAction, CreatePromoActionDto>();
+            CreateMap<PromoAction, UpdatePromoActionDto>();
             CreateMap<PromoAction, PromoActionDetailDto>()
                 .ForMember(dest => dest.CodContractor, opt => opt.MapFrom(src => src.Participants.FirstOrDefault() != null ? src.Participants.FirstOrDefault()!.CodNode : "N/A"));
 
             // Product mappings
-            CreateMap<PromoProduct, ProductDto>().ReverseMap();
-            CreateMap<PromoProduct, CreateProductDto>().ReverseMap();
-            CreateMap<PromoProduct, UpdateProductDto>().ReverseMap();
-            CreateMap<PromoProduct, PromoProductDetailViewDto>().ReverseMap();
+            CreateMap<ProductDto, PromoProduct>()
+                .ConstructUsing((src, context) => new PromoProduct(
+                    src.IdAction > 0 ? src.IdAction : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
+                    src.CodProduct, src.LevProduct, src.CodDisplay, src.CodDiv))
+                .AfterMap((src, dest) => {
+                    dest.UpdateQuantities(src.QtyEstimated, src.NumMeasure, src.CodMeasure);
+                    dest.UpdateDiscounts(src.PerceDiscount1, src.PerceDiscount2);
+                });
+            
+            CreateMap<CreateProductDto, PromoProduct>()
+                .ConstructUsing((src, context) => new PromoProduct(
+                    (src.IdAction ?? 0) > 0 ? (src.IdAction ?? 0) : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
+                    src.CodProduct ?? "", src.LevProduct ?? 0, src.CodDisplay ?? "", src.CodDiv))
+                .AfterMap((src, dest) => {
+                    dest.UpdateQuantities(src.QtyEstimated, src.NumMeasure, src.CodMeasure);
+                    dest.UpdateDiscounts(src.PerceDiscount1, src.PerceDiscount2);
+                });
+
+            CreateMap<AtomicCreateProductDto, PromoProduct>()
+                .ConstructUsing((src, context) => new PromoProduct(
+                    (src.IdAction ?? 0) > 0 ? (src.IdAction ?? 0) : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
+                    src.CodProduct ?? "", src.LevProduct ?? 0, src.CodDisplay ?? "", src.CodDiv))
+                .AfterMap((src, dest) => {
+                    dest.UpdateQuantities(src.QtyEstimated, src.NumMeasure, src.CodMeasure);
+                    dest.UpdateDiscounts(src.PerceDiscount1, src.PerceDiscount2);
+                });
+
+            CreateMap<PromoProduct, ProductDto>();
+            CreateMap<PromoProduct, CreateProductDto>();
+            CreateMap<PromoProduct, UpdateProductDto>();
+            CreateMap<PromoProduct, PromoProductDetailViewDto>();
 
             // Participant mappings
-            CreateMap<PromoParticipants, ParticipantDto>().ReverseMap();
-            CreateMap<PromoParticipants, CreateParticipantDto>().ReverseMap();
-            CreateMap<PromoParticipants, UpdateParticipantDto>().ReverseMap();
+            CreateMap<ParticipantDto, PromoParticipants>()
+                .ConstructUsing((src, context) => new PromoParticipants(
+                    src.IdAction > 0 ? src.IdAction : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
+                    src.CodParticipant, src.FlgInclusion, src.CodHier ?? "", src.CodDiv ?? "", src.CodNode ?? "", src.IdLevel, src.DteStart));
+            
+            CreateMap<CreateParticipantDto, PromoParticipants>()
+                .ConstructUsing((src, context) => new PromoParticipants(
+                    context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0, 
+                    src.CodParticipant, src.FlgInclusion, src.CodHier ?? "", src.CodDiv ?? "", src.CodNode ?? "", src.IdLevel ?? 0, src.DteStart.GetValueOrDefault()));
+
+            CreateMap<PromoParticipants, ParticipantDto>();
+            CreateMap<PromoParticipants, CreateParticipantDto>();
+            CreateMap<PromoParticipants, UpdateParticipantDto>();
 
             // DeliveryPoint mappings
-            CreateMap<PromoDeliveryPoint, DeliveryPointDto>().ReverseMap();
-            CreateMap<PromoDeliveryPoint, CreateDeliveryPointDto>().ReverseMap();
-            CreateMap<PromoDeliveryPoint, UpdateDeliveryPointDto>().ReverseMap();
+            CreateMap<DeliveryPointDto, PromoDeliveryPoint>()
+                .ConstructUsing((src, context) => new PromoDeliveryPoint(
+                    src.IdAction > 0 ? src.IdAction : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
+                    src.CodDeliveryPoint, src.FlgInclusion, src.CodHier ?? "", src.CodDiv ?? "", src.CodNode ?? "", src.IdLevel, src.DteStart));
+            
+            CreateMap<CreateDeliveryPointDto, PromoDeliveryPoint>()
+                .ConstructUsing((src, context) => new PromoDeliveryPoint(
+                    context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0, 
+                    src.CodDeliveryPoint, src.FlgInclusion, src.CodHier ?? "", src.CodDiv ?? "", src.CodNode ?? "", src.IdLevel ?? 0, src.DteStart.GetValueOrDefault()));
+
+
+            CreateMap<PromoDeliveryPoint, DeliveryPointDto>();
+            CreateMap<PromoDeliveryPoint, CreateDeliveryPointDto>();
+            CreateMap<PromoDeliveryPoint, UpdateDeliveryPointDto>();
 
             // CustomerRelation mappings
-            CreateMap<CustomerRelation, CustomerRelationDto>().ReverseMap();
-            CreateMap<CustomerRelation, CreateCustomerRelationDto>().ReverseMap();
-            CreateMap<CustomerRelation, UpdateCustomerRelationDto>().ReverseMap();
-            CreateMap<CustomerRelation, CustomerRelationDetailDto>().ReverseMap();
+            CreateMap<CustomerRelationDto, CustomerRelation>()
+                .ConstructUsing(src => new CustomerRelation(src.CodHier, src.CodDiv, src.CodNode, src.IdLevel, src.DteStart, src.CodParentNode));
 
-            // Article mappings
-            CreateMap<PromoArticle, Promotions.Application.PromoActions.Dtos.PromoArticleDto>().ReverseMap();
-            CreateMap<PromoArticle, Promotions.Application.PromoArticles.Dtos.PromoArticleDto>().ReverseMap();
+            CreateMap<CreateCustomerRelationDto, CustomerRelation>()
+                .ConstructUsing(src => new CustomerRelation(src.CodHier, src.CodDiv, src.CodNode, src.IdLevel, src.DteStart, src.CodParentNode));
+
+            CreateMap<CustomerRelation, CustomerRelationDto>();
+            CreateMap<CustomerRelation, CreateCustomerRelationDto>();
+            CreateMap<CustomerRelation, UpdateCustomerRelationDto>();
+            CreateMap<CustomerRelation, CustomerRelationDetailDto>();
+
+            // Article mappings (using fully qualified names due to namespace collision)
+            CreateMap<Promotions.Application.PromoArticles.Dtos.PromoArticleDto, PromoArticle>()
+                .ConstructUsing((src, context) => new PromoArticle(
+                    src.IdAction > 0 ? src.IdAction : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
+                    src.CodProduct, src.LevProduct, src.CodDisplay, src.CodDiv, src.CodNode, src.CodNode1, src.CodNode2, src.CodNodeN));
+            
+            CreateMap<Promotions.Application.PromoActions.Dtos.PromoArticleDto, PromoArticle>()
+                .ConstructUsing((src, context) => new PromoArticle(
+                    src.IdAction > 0 ? src.IdAction : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
+                    src.CodProduct, src.LevProduct, src.CodDisplay, src.CodDiv, src.CodNode, src.CodNode1, src.CodNode2, src.CodNodeN));
+            
+            CreateMap<CreatePromoArticleDto, PromoArticle>()
+                .ConstructUsing((src, context) => new PromoArticle(
+                    (src.IdAction ?? 0) > 0 ? (src.IdAction ?? 0) : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
+                    src.CodProduct ?? "", src.LevProduct ?? 0, src.CodDisplay ?? "", src.CodDiv ?? "", src.CodNode ?? "", src.CodNode1, src.CodNode2, src.CodNodeN));
+
+            CreateMap<AtomicCreatePromoArticleDto, PromoArticle>()
+                .ConstructUsing((src, context) => new PromoArticle(
+                    (src.IdAction ?? 0) > 0 ? (src.IdAction ?? 0) : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
+                    src.CodProduct ?? "", src.LevProduct ?? 0, src.CodDisplay ?? "", src.CodDiv ?? "", src.CodNode ?? "", src.CodNode1, src.CodNode2, src.CodNodeN));
+
+            CreateMap<PromoArticle, Promotions.Application.PromoArticles.Dtos.PromoArticleDto>();
+            CreateMap<PromoArticle, Promotions.Application.PromoActions.Dtos.PromoArticleDto>();
+            CreateMap<PromoArticle, CreatePromoArticleDto>();
 
             // Measure mappings
-            CreateMap<PromoMeasureField, PromoMeasureFieldDto>().ReverseMap();
-            CreateMap<PromoMeasureField, UpdatePromoMeasureFieldDto>().ReverseMap();
+            CreateMap<PromoMeasureFieldDto, PromoMeasureField>()
+                .ConstructUsing(src => new PromoMeasureField(src.CodDiv, src.CodMeasure, src.FieldName, src.Formula));
+
+            CreateMap<PromoMeasureField, PromoMeasureFieldDto>();
+            CreateMap<PromoMeasureField, UpdatePromoMeasureFieldDto>();
 
             // ProductDetail mappings
-            CreateMap<PromoProductDetail, ProductDetailDto>().ReverseMap();
-            CreateMap<PromoProductDetail, ProductDetailHierarchyDto>().ReverseMap();
+            CreateMap<ProductDetailDto, PromoProductDetail>()
+                .ConstructUsing((src, context) => new PromoProductDetail(
+                    src.IdAction > 0 ? src.IdAction : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
+                    src.CodProduct, src.LevProduct, src.CodDisplay, src.CodNode, src.CodDiv, src.FlgInclusion));
+            
+            CreateMap<AtomicCreateProductDetailDto, PromoProductDetail>()
+                .ConstructUsing((src, context) => new PromoProductDetail(
+                    (src.IdAction ?? 0) > 0 ? (src.IdAction ?? 0) : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
+                    src.CodProduct ?? "", src.LevProduct ?? 0, src.CodDisplay ?? "", src.CodNode ?? "", src.CodDiv ?? "", src.FlgInclusion))
+                .ForMember(dest => dest.Articles, opt => opt.MapFrom(src => src.Articles));
+
+            CreateMap<PromoProductDetail, ProductDetailDto>();
+            CreateMap<PromoProductDetail, ProductDetailHierarchyDto>();
         }
     }
 }

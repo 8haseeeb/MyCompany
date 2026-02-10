@@ -130,19 +130,25 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                 }
             }
 
-            // Map DTO to Entity using AutoMapper
-            var action = _mapper.Map<PromoAction>(dto);
+            // Generate an IdAction if 0 (Needed for Rich Domain Model construction)
+            if (dto.IdAction == 0)
+            {
+                var maxId = await _repository.GetMaxIdAsync();
+                dto.IdAction = maxId + 1;
+            }
+
+            // Map DTO to Entity using AutoMapper with context to pass IdAction down to nested children
+            var action = _mapper.Map<PromoAction>(dto, opt => opt.Items["IdAction"] = dto.IdAction);
 
             // Collect and Map Master Measure Fields
             var measureFields = dto.Products
                 .Where(p => p.MeasureFields != null && p.MeasureFields.Any())
-                .SelectMany(p => p.MeasureFields.Select(mf => new PromoMeasureField
-                {
-                    CodDiv = p.CodDiv!,
-                    CodMeasure = p.CodMeasure ?? string.Empty,
-                    FieldName = mf.FieldName!,
-                    Formula = mf.Formula!
-                }))
+                .SelectMany(p => p.MeasureFields.Select(mf => new PromoMeasureField(
+                    p.CodDiv!,
+                    p.CodMeasure ?? string.Empty,
+                    mf.FieldName!,
+                    mf.Formula!
+                )))
                 .GroupBy(mf => new { mf.CodDiv, mf.CodMeasure, mf.FieldName })
                 .Select(g => g.First())
                 .ToList();

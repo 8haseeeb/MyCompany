@@ -19,16 +19,15 @@ namespace Promotions.Application.CustomerRelations.Commands.Handlers
             CreateCustomerRelationCommand request,
             CancellationToken cancellationToken)
         {
-            var entity = new CustomerRelation
-            {
-                CodHier = request.CodHier,
-                CodDiv = request.CodDiv,
-                CodNode = request.CodNode,
-                IdLevel = request.IdLevel,
-                DteStart = request.DteStart,
-                CodParentNode = request.CodParentNode,
-                DteEnd = request.DteEnd
-            };
+            var entity = new CustomerRelation(
+                request.CodHier,
+                request.CodDiv,
+                request.CodNode,
+                request.IdLevel,
+                request.DteStart,
+                request.CodParentNode
+            );
+            entity.SetEndDate(request.DteEnd);
 
             if (await _repository.ExistsAsync(request.CodHier, request.CodDiv, request.CodNode, request.IdLevel, request.DteStart))
             {

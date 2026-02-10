@@ -21,19 +21,11 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
 
         public async Task<Unit> Handle(CreatePromoActionCommand request, CancellationToken cancellationToken)
         {
-            var action = new PromoAction
-            {
-                IdAction = request.IdAction,
-                Name = request.Name,
-                CodDiv = request.CodDiv,
-                DteStartSellIn = request.DteStartSellIn,
-                DteEndSellIn = request.DteEndSellIn,
-                DteStartSellOut = request.DteStartSellOut,
-                DteEndSellOut = request.DteEndSellOut,
-                DocumentKey = request.DocumentKey,
-                DteToShost = request.DteToShost,
-                LevParticipants = request.LevParticipants
-            };
+            var action = new PromoAction(request.IdAction, request.Name, request.CodDiv);
+            action.UpdateBasicInfo(request.Name, request.CodDiv, request.DocumentKey, request.LevParticipants);
+            action.UpdateSellInDates(request.DteStartSellIn, request.DteEndSellIn);
+            action.UpdateSellOutDates(request.DteStartSellOut, request.DteEndSellOut);
+            action.SetHostDate(request.DteToShost);
 
             await _repository.AddAsync(action);
             await _repository.SaveChangesAsync(cancellationToken);

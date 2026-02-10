@@ -31,15 +31,18 @@ namespace Promotions.Application.Products.Commands.Handlers
 
             // Update allowed fields
             if (request.CodDiv != null)
-                product.CodDiv = request.CodDiv;
+                product.UpdateDivision(request.CodDiv);
                 
-            if (request.QtyEstimated.HasValue)
-                product.QtyEstimated = request.QtyEstimated.Value;
+            product.UpdateQuantities(
+                request.QtyEstimated ?? product.QtyEstimated,
+                request.NumMeasure ?? product.NumMeasure,
+                request.CodMeasure ?? product.CodMeasure
+            );
 
-            product.PerceDiscount1 = request.PerceDiscount1;
-            product.PerceDiscount2 = request.PerceDiscount2;
-            product.NumMeasure = request.NumMeasure;
-            product.CodMeasure = request.CodMeasure;
+            product.UpdateDiscounts(
+                request.PerceDiscount1 ?? product.PerceDiscount1,
+                request.PerceDiscount2 ?? product.PerceDiscount2
+            );
 
             try
             {

@@ -19,7 +19,10 @@ namespace Promotions.Application.Participants.Commands
             if (participant == null)
                 throw new Exception("Participant not found");
 
-            participant.FlgInclusion = request.FlgInclusion;
+            if (request.FlgInclusion)
+                participant.Include();
+            else
+                participant.Exclude();
 
             await _repository.UpdateAsync(participant);
             await _repository.SaveChangesAsync(cancellationToken);

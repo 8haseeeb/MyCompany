@@ -21,9 +21,7 @@ namespace Promotions.Application.PromoArticles.Commands.Handlers
             if (article == null)
                 throw new KeyNotFoundException("PromoArticle not found");
 
-            article.CodNode1 = request.CodNode1;
-            article.CodNode2 = request.CodNode2;
-            article.CodNodeN = request.CodNodeN;
+            article.UpdateNodes(request.CodNode1, request.CodNode2, request.CodNodeN);
 
             await _repository.UpdateAsync(article);
             await _repository.SaveChangesAsync(ct);

@@ -8,17 +8,40 @@ namespace Promotions.Domain.ProductDetails
 {
     public class PromoProductDetail
     {
-        public int IdAction { get; set; }
-        public string CodProduct { get; set; } = null!;
-        public int LevProduct { get; set; }
-        public string CodDisplay { get; set; } = null!;
-        public string CodNode { get; set; } = null!;
-        public string CodDiv { get; set; } = null!;
-
-        public bool FlgInclusion { get; set; }
+        public int IdAction { get; private set; }
+        public string CodProduct { get; private set; } = null!;
+        public int LevProduct { get; private set; }
+        public string CodDisplay { get; private set; } = null!;
+        public string CodNode { get; private set; } = null!;
+        public string CodDiv { get; private set; } = null!;
+        public bool FlgInclusion { get; private set; }
 
         // Navigation Properties
-        public virtual Products.PromoProduct Product { get; set; } = null!;
-        public virtual ICollection<Articles.PromoArticle> Articles { get; set; } = new List<Articles.PromoArticle>();
+        public virtual Products.PromoProduct Product { get; private set; } = null!;
+        public virtual ICollection<Articles.PromoArticle> Articles { get; private set; } = new List<Articles.PromoArticle>();
+
+        private PromoProductDetail() { }
+
+        public PromoProductDetail(int idAction, string codProduct, int levProduct, string codDisplay, string codNode, string codDiv, bool flgInclusion)
+        {
+            IdAction = idAction;
+            CodProduct = codProduct;
+            LevProduct = levProduct;
+            CodDisplay = codDisplay;
+            CodNode = codNode;
+            CodDiv = codDiv;
+            FlgInclusion = flgInclusion;
+        }
+
+        public void AddArticle(Articles.PromoArticle article)
+        {
+            if (article == null) throw new ArgumentNullException(nameof(article));
+            Articles.Add(article);
+        }
+
+        public void UpdateInclusion(bool flgInclusion)
+        {
+            FlgInclusion = flgInclusion;
+        }
     }
 }

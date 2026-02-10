@@ -31,30 +31,28 @@ namespace Promotions.Application.Participants.Commands
 
             if (!exists)
             {
-                var newRelation = new CustomerRelation
-                {
-                    CodHier = request.CodHier,
-                    CodDiv = request.CodDiv,
-                    CodNode = request.CodNode,
-                    IdLevel = request.IdLevel,
-                    DteStart = request.DteStart,
-                    CodParentNode = "ROOT" // Default value
-                };
+                var newRelation = new CustomerRelation(
+                    request.CodHier,
+                    request.CodDiv,
+                    request.CodNode,
+                    request.IdLevel,
+                    request.DteStart,
+                    "ROOT"
+                );
                 await _customerRelationRepository.AddAsync(newRelation);
                 await _customerRelationRepository.SaveChangesAsync(cancellationToken);
             }
 
-            var participant = new PromoParticipants
-            {
-                IdAction = request.IdAction,
-                CodParticipant = request.CodParticipant,
-                FlgInclusion = request.FlgInclusion,
-                CodHier = request.CodHier,
-                CodDiv = request.CodDiv,
-                CodNode = request.CodNode,
-                IdLevel = request.IdLevel,
-                DteStart = request.DteStart
-            };
+            var participant = new PromoParticipants(
+                request.IdAction,
+                request.CodParticipant,
+                request.FlgInclusion,
+                request.CodHier,
+                request.CodDiv,
+                request.CodNode,
+                request.IdLevel,
+                request.DteStart
+            );
 
             await _repository.AddAsync(participant);
             await _repository.SaveChangesAsync(cancellationToken);

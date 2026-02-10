@@ -14,16 +14,15 @@ public class CreateProductDetailCommandHandler
 
     public async Task<Unit> Handle(CreateProductDetailCommand r, CancellationToken ct)
     {
-        var entity = new PromoProductDetail
-        {
-            IdAction = r.IdAction,
-            CodProduct = r.CodProduct,
-            LevProduct = r.LevProduct,
-            CodDisplay = r.CodDisplay,
-            CodNode = r.CodNode,
-            CodDiv = r.CodDiv,
-            FlgInclusion = r.FlgInclusion
-        };
+        var entity = new PromoProductDetail(
+            r.IdAction,
+            r.CodProduct,
+            r.LevProduct,
+            r.CodDisplay,
+            r.CodNode,
+            r.CodDiv,
+            r.FlgInclusion
+        );
 
         await _repo.AddAsync(entity);
         await _repo.SaveChangesAsync(ct);

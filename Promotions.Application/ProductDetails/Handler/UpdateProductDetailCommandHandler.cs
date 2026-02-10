@@ -20,7 +20,7 @@ public class UpdateProductDetailCommandHandler
         if (entity == null)
             throw new KeyNotFoundException("Product Detail not found");
 
-        entity.FlgInclusion = r.FlgInclusion;
+        entity.UpdateInclusion(r.FlgInclusion);
 
         await _repo.UpdateAsync(entity);
         await _repo.SaveChangesAsync(ct);

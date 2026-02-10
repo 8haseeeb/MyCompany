@@ -4,18 +4,45 @@ namespace Promotions.Domain.CustomerRelations
 {
     public class CustomerRelation
     {
-        public string CodHier { get; set; } = null!;
-        public string CodDiv { get; set; } = null!;
-        public string CodNode { get; set; } = null!;
-        public int IdLevel { get; set; }
-        public DateTime DteStart { get; set; }
+        public string CodHier { get; private set; } = null!;
+        public string CodDiv { get; private set; } = null!;
+        public string CodNode { get; private set; } = null!;
+        public int IdLevel { get; private set; }
+        public DateTime DteStart { get; private set; }
 
-        public string CodParentNode { get; set; } = null!;
-        public DateTime? DteEnd { get; set; }
+        public string CodParentNode { get; private set; } = null!;
+        public DateTime? DteEnd { get; private set; }
 
         // Navigation Properties
-        public virtual ICollection<Domain.Participants.PromoParticipants> Participants { get; set; } = new List<Domain.Participants.PromoParticipants>();
-        public virtual ICollection<Domain.DeliveryPoints.PromoDeliveryPoint> DeliveryPoints { get; set; } = new List<Domain.DeliveryPoints.PromoDeliveryPoint>();
+        public virtual ICollection<Domain.Participants.PromoParticipants> Participants { get; private set; } = new List<Domain.Participants.PromoParticipants>();
+        public virtual ICollection<Domain.DeliveryPoints.PromoDeliveryPoint> DeliveryPoints { get; private set; } = new List<Domain.DeliveryPoints.PromoDeliveryPoint>();
         
+        private CustomerRelation() { }
+
+        public CustomerRelation(string codHier, string codDiv, string codNode, int idLevel, DateTime dteStart, string codParentNode = "ROOT")
+        {
+            if (string.IsNullOrWhiteSpace(codHier)) throw new ArgumentException("CodHier is required.");
+            if (string.IsNullOrWhiteSpace(codDiv)) throw new ArgumentException("CodDiv is required.");
+            if (string.IsNullOrWhiteSpace(codNode)) throw new ArgumentException("CodNode is required.");
+
+            CodHier = codHier;
+            CodDiv = codDiv;
+            CodNode = codNode;
+            IdLevel = idLevel;
+            DteStart = dteStart;
+            CodParentNode = codParentNode;
+        }
+
+        public void SetEndDate(DateTime? dteEnd)
+        {
+            if (dteEnd.HasValue && dteEnd.Value < DteStart)
+                throw new ArgumentException("End date cannot be before start date.");
+            DteEnd = dteEnd;
+        }
+
+        public void UpdateHierarchy(string codParentNode)
+        {
+            CodParentNode = codParentNode;
+        }
     }
 }

@@ -1,0 +1,65 @@
+.service-alert-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background-color: #fee2e2;
+    border-bottom: 2px solid #ef4444;
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.alert-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.alert-icon {
+    font-size: 24px;
+}
+
+.alert-message {
+    flex: 1;
+    color: #991b1b;
+    font-size: 14px;
+}
+
+.alert-message strong {
+    font-weight: 700;
+}
+
+.refresh-btn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.refresh-btn:hover {
+    background-color: #dc2626;
+}
+
+/* Adjust main content when banner is visible */
+.app-wrapper.with-alert {
+    padding-top: 50px;
+}

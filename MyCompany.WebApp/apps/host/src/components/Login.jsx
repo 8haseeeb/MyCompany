@@ -90,7 +90,7 @@ const Login = ({ setToken, setUserName, setUserRole, onToggle }) => {
         } catch (err) {
             const msg = err.response?.data?.message ||
                 err.response?.data?.error ||
-                "Connection Error. Please check if Gateway is running.";
+                "Service Unavailable. Please check the health status above.";
             setError(msg);
         } finally {
             setLoading(false);

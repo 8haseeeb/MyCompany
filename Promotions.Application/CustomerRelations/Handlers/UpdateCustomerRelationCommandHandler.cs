@@ -28,8 +28,8 @@ namespace Promotions.Application.CustomerRelations.Commands.Handlers
             if (entity == null)
                 throw new Exception("Customer relation not found");
 
-            entity.CodParentNode = request.CodParentNode;
-            entity.DteEnd = request.DteEnd;
+            entity.UpdateHierarchy(request.CodParentNode);
+            entity.SetEndDate(request.DteEnd);
 
             await _repository.UpdateAsync(entity);
             await _repository.SaveChangesAsync(cancellationToken);

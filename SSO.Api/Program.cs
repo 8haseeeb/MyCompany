@@ -65,7 +65,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<RequestLoggingMiddleware>();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Removed to prevent Authorization header stripping during internal redirects in Development
 
 app.UseAuthentication(); // Added Auth Middleware
 app.UseMiddleware<SSO.Api.Middleware.SessionValidationMiddleware>(); // Added Session Middleware

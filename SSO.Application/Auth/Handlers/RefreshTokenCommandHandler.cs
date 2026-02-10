@@ -47,8 +47,7 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, R
         var sessionId = tokenEntity.User.CurrentSessionId ?? Guid.NewGuid().ToString(); 
         if (tokenEntity.User.CurrentSessionId == null) 
         {
-             tokenEntity.User.CurrentSessionId = sessionId;
-          
+             tokenEntity.User.UpdateSession(sessionId);
         }
 
         var newAccessToken = _jwtTokenService.GenerateToken(tokenEntity.User, sessionId);

@@ -16,6 +16,7 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.AddSerilogLogging(builder.Configuration, "Promotions.Api");
+builder.Services.AddLoggingLevelSwitch(); // Enable dynamic logging level control
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -47,6 +48,10 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
+
+// Add Health Monitoring Service
+builder.Services.AddHostedService<Promotions.Api.Services.HealthMonitoringService>();
+
 
 builder.Services.AddAutoMapper(typeof(AssemblyMarker).Assembly);
 
@@ -95,7 +100,7 @@ app.UseExceptionHandler(errorApp =>
     });
 });
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Removed to prevent Authorization header stripping during internal redirects in Development
 app.UseAuthentication(); 
 app.UseMiddleware<SessionValidationMiddleware>(); // Added Session Validation Middleware
 app.UseAuthorization();

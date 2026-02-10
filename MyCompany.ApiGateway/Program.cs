@@ -65,6 +65,7 @@ app.UseMiddleware<CorrelationIdMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapControllers();
 
 app.Map("/{**catch-all}", async context =>
 {
@@ -80,6 +81,11 @@ app.Map("/{**catch-all}", async context =>
 
     if (!isAuthPath && context.User?.Identity?.IsAuthenticated != true)
     {
+        Log.Warning("Blocking unauthorized request to downstream {Path}. IsAuthenticated: {IsAuth}, User: {User}", 
+            path, 
+            context.User?.Identity?.IsAuthenticated,
+            context.User?.Identity?.Name ?? "Anonymous");
+
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         return;
     }

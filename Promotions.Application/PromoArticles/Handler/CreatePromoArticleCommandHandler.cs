@@ -16,18 +16,17 @@ namespace Promotions.Application.PromoArticles.Commands.Handlers
 
         public async Task<Unit> Handle(CreatePromoArticleCommand request, CancellationToken ct)
         {
-            var article = new PromoArticle
-            {
-                IdAction = request.IdAction,
-                CodProduct = request.CodProduct,
-                LevProduct = request.LevProduct,
-                CodDisplay = request.CodDisplay,
-                CodDiv = request.CodDiv,
-                CodNode = request.CodNode,
-                CodNode1 = request.CodNode1,
-                CodNode2 = request.CodNode2,
-                CodNodeN = request.CodNodeN
-            };
+            var article = new PromoArticle(
+                idAction: request.IdAction,
+                codProduct: request.CodProduct,
+                levProduct: request.LevProduct,
+                codDisplay: request.CodDisplay,
+                codDiv: request.CodDiv,
+                codNode: request.CodNode,
+                codNode1: request.CodNode1,
+                codNode2: request.CodNode2,
+                codNodeN: request.CodNodeN
+            );
 
             await _repository.AddAsync(article);
             await _repository.SaveChangesAsync(ct);

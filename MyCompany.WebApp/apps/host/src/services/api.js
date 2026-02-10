@@ -21,15 +21,29 @@ api.interceptors.response.use(
         return response;
     },
     (error) => {
-        if (error.response?.status === 401) {
-            console.error("Session expired or unauthorized. Logging out...");
+        // Don't trigger global logout for login attempts or background health checks
+        const url = error.config?.url || '';
+        const isLoginRequest = url.includes('/api/auth/login');
+        const isHealthCheck = url.includes('/api/gateway/health');
+
+        if (error.response?.status === 401 && !isLoginRequest && !isHealthCheck) {
+            // Check if the token sent in the request is the current token.
+            // If they don't match, it's a stale request from a previous session being ignored.
+            const currentToken = localStorage.getItem('token');
+            const requestToken = error.config?.headers?.Authorization?.replace('Bearer ', '');
+
+            if (currentToken && requestToken && currentToken !== requestToken) {
+                console.warn(`401 detected for stale token at ${url}. Ignoring logout.`);
+                return Promise.reject(error);
+            }
+
+            console.error(`Unauthorized (401) at ${url}. Logging out...`);
             localStorage.removeItem('token');
             localStorage.removeItem('refreshToken');
             window.dispatchEvent(new Event("logout"));
 
-            // Allow a small delay for other components to react if needed, then redirect
             setTimeout(() => {
-                window.location.href = '/login'; // Redirect specifically to login, not just root
+                window.location.href = '/login';
             }, 100);
         }
 

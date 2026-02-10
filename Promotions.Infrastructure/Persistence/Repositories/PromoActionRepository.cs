@@ -50,6 +50,11 @@ namespace Promotions.Infrastructure.Persistence.Repositories
             return await _context.PromoActions.ToListAsync();
         }
 
+        public async Task<int> GetMaxIdAsync()
+        {
+            return await _context.PromoActions.AnyAsync() ? await _context.PromoActions.MaxAsync(x => x.IdAction) : 0;
+        }
+
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
           => await _context.SaveChangesAsync(cancellationToken);
 

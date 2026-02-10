@@ -28,7 +28,7 @@ const Register = ({ onToggle }) => {
             alert('Registration Successful! Please login.');
             onToggle();
         } catch (err) {
-            setError(err.response?.data?.error || 'Registration failed.');
+            setError(err.response?.data?.error || 'Registration failed. Please check the health status above.');
         } finally {
             setLoading(false);
         }

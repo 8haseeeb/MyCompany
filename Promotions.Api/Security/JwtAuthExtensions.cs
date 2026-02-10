@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Serilog;
 
 namespace Promotions.Api.Security;
 
@@ -16,6 +19,9 @@ public static class JwtAuthExtensions
             .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.MapInboundClaims = false;
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -30,7 +36,33 @@ public static class JwtAuthExtensions
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(jwtSettings["Secret"]!)
-                    )
+                    ),
+
+                    NameClaimType = "unique_name",
+                    RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                };
+
+                //  DIAGNOSTIC LOGGING
+                options.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        Log.Information("Downstream JWT validated for {User}", 
+                            context.Principal?.Identity?.Name ?? "Anonymous");
+                        return Task.CompletedTask;
+                    },
+                    OnAuthenticationFailed = context =>
+                    {
+                        Log.Error(context.Exception, "Downstream JWT Authentication Failed for {Path}", 
+                            context.HttpContext.Request.Path);
+                        return Task.CompletedTask;
+                    },
+                    OnChallenge = context =>
+                    {
+                        Log.Warning("Downstream JWT Challenge triggered for {Path}. Error: {Error}, Description: {Desc}",
+                            context.HttpContext.Request.Path, context.Error, context.ErrorDescription);
+                        return Task.CompletedTask;
+                    }
                 };
             });
 

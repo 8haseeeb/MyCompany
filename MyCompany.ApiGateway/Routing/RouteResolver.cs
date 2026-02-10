@@ -9,12 +9,12 @@ namespace MyCompany.ApiGateway.Routing
             var path = context.Request.Path.Value?.ToLower();
 
             if (path.StartsWith("/api/promotions"))
-                return "https://localhost:7043";
+                return "http://localhost:5137";
 
             if (path.StartsWith("/api/auth"))
-                return "https://localhost:7222";
+                return "http://localhost:5253";
 
-            return "https://localhost:7043";
+            return "http://localhost:5137";
         }
 
     }

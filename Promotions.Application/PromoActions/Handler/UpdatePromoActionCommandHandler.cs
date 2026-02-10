@@ -24,23 +24,19 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
             if (action == null)
                 throw new KeyNotFoundException("Promotion not found");
 
-            action.Name = request.Name;
+            action.UpdateBasicInfo(request.Name, action.CodDiv, request.DocumentKey, request.LevParticipants);
             
-            if (request.DteStartSellIn.HasValue)
-                action.DteStartSellIn = request.DteStartSellIn.Value;
-                
-            if (request.DteEndSellIn.HasValue)
-                action.DteEndSellIn = request.DteEndSellIn.Value;
-                
-            if (request.DteStartSellOut.HasValue)
-                action.DteStartSellOut = request.DteStartSellOut.Value;
-                
-            if (request.DteEndSellOut.HasValue)
-                action.DteEndSellOut = request.DteEndSellOut.Value;
+            action.UpdateSellInDates(
+                request.DteStartSellIn ?? action.DteStartSellIn,
+                request.DteEndSellIn ?? action.DteEndSellIn
+            );
 
-            action.DocumentKey = request.DocumentKey;
-            action.DteToShost = request.DteToShost;
-            action.LevParticipants = request.LevParticipants;
+            action.UpdateSellOutDates(
+                request.DteStartSellOut ?? action.DteStartSellOut,
+                request.DteEndSellOut ?? action.DteEndSellOut
+            );
+
+            action.SetHostDate(request.DteToShost);
 
             await _repository.UpdateAsync(action);
             await _repository.SaveChangesAsync(cancellationToken);

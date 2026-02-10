@@ -21,44 +21,62 @@ namespace Promotions.Application.Products.Commands.Handlers
 
         public async Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = new PromoProduct
+            var product = new PromoProduct(
+                request.IdAction,
+                request.CodProduct,
+                request.LevProduct,
+                request.CodDisplay,
+                request.CodDiv
+            );
+
+            product.UpdateQuantities(request.QtyEstimated, request.NumMeasure, request.CodMeasure);
+            product.UpdateDiscounts(request.PerceDiscount1, request.PerceDiscount2);
+
+            foreach (var detailDto in request.Details)
             {
-                IdAction = request.IdAction,
-                CodProduct = request.CodProduct,
-                LevProduct = request.LevProduct,
-                CodDisplay = request.CodDisplay,
-                CodDiv = request.CodDiv,
-                QtyEstimated = request.QtyEstimated,
-                PerceDiscount1 = request.PerceDiscount1,
-                PerceDiscount2 = request.PerceDiscount2,
-                NumMeasure = request.NumMeasure,
-                CodMeasure = request.CodMeasure,
-                Details = request.Details.Select(d => new PromoProductDetail
+                var detail = new PromoProductDetail(
+                    request.IdAction,
+                    request.CodProduct,
+                    request.LevProduct,
+                    request.CodDisplay,
+                    detailDto.CodNode,
+                    detailDto.CodDiv,
+                    detailDto.FlgInclusion
+                );
+
+                foreach (var articleDto in detailDto.Articles)
                 {
-                    IdAction = request.IdAction,
-                    CodProduct = request.CodProduct,
-                    LevProduct = request.LevProduct,
-                    CodDisplay = request.CodDisplay,
-                    CodNode = d.CodNode,
-                    CodDiv = d.CodDiv,
-                    FlgInclusion = d.FlgInclusion,
-                    Articles = d.Articles.Select(a => new PromoArticle
-                    {
-                        IdAction = request.IdAction,
-                        CodProduct = request.CodProduct,
-                        LevProduct = request.LevProduct,
-                        CodDisplay = request.CodDisplay,
-                        CodDiv = a.CodDiv,
-                        CodNode = a.CodNode,
-                        CodNode1 = a.CodNode1,
-                        CodNode2 = a.CodNode2,
-                        CodNodeN = a.CodNodeN
-                    }).ToList()
-                }).ToList()
-            };
+                    var article = new PromoArticle(
+                        idAction: request.IdAction,
+                        codProduct: request.CodProduct,
+                        levProduct: request.LevProduct,
+                        codDisplay: request.CodDisplay,
+                        codDiv: articleDto.CodDiv,
+                        codNode: articleDto.CodNode,
+                        codNode1: articleDto.CodNode1,
+                        codNode2: articleDto.CodNode2,
+                        codNodeN: articleDto.CodNodeN
+                    );
+                    detail.AddArticle(article);
+                }
+                product.AddDetail(detail);
+            }
 
             try
             {
+                // Check if product already exists
+                var existingProduct = await _repository.GetByIdAsync(
+                    request.IdAction,
+                    request.CodProduct,
+                    request.LevProduct,
+                    request.CodDisplay);
+
+                if (existingProduct != null)
+                {
+                    // Product already exists for this action, skip creation
+                    return Unit.Value;
+                }
+
                 await _repository.AddAsync(product);
 
                 // Handle Measure Fields
@@ -66,13 +84,12 @@ namespace Promotions.Application.Products.Commands.Handlers
                 {
                     foreach (var field in request.MeasureFields)
                     {
-                        var measureField = new PromoMeasureField
-                        {
-                            CodDiv = request.CodDiv,
-                            CodMeasure = request.CodMeasure,
-                            FieldName = field.FieldName,
-                            Formula = field.Formula
-                        };
+                        var measureField = new PromoMeasureField(
+                            request.CodDiv,
+                            request.CodMeasure,
+                            field.FieldName,
+                            field.Formula
+                        );
                         await _measureFieldRepository.AddAsync(measureField, cancellationToken);
                     }
                 }

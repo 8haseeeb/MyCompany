@@ -14,13 +14,12 @@ public class CreatePromoMeasureFieldHandler
 
     public async Task<Unit> Handle(CreatePromoMeasureFieldCommand request, CancellationToken cancellationToken)
     {
-        var entity = new PromoMeasureField
-        {
-            CodDiv = request.CodDiv,
-            CodMeasure = request.CodMeasure,
-            FieldName = request.FieldName,
-            Formula = request.Formula
-        };
+        var entity = new PromoMeasureField(
+            request.CodDiv,
+            request.CodMeasure,
+            request.FieldName,
+            request.Formula
+        );
 
 
         await _repository.AddAsync(entity, cancellationToken);

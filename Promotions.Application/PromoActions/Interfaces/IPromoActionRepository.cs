@@ -13,6 +13,7 @@ namespace Promotions.Application.PromoActions.Interfaces
 
         Task<PromoAction?> GetByIdAsync(int idAction);
         Task<List<PromoAction>> GetAllAsync();
+        Task<int> GetMaxIdAsync();
 
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
         Task<Common.Interfaces.IAtomicTransaction> BeginTransactionAsync();

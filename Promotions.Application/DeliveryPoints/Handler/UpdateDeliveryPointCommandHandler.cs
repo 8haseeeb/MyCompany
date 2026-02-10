@@ -19,7 +19,10 @@ namespace Promotions.Application.DeliveryPoints.Commands
             if (entity == null)
                 throw new Exception("Delivery Point not found.");
 
-            entity.FlgInclusion = request.FlgInclusion;
+            if (request.FlgInclusion)
+                entity.Include();
+            else
+                entity.Exclude();
 
             await _repository.UpdateAsync(entity);
             await _repository.SaveChangesAsync(cancellationToken);

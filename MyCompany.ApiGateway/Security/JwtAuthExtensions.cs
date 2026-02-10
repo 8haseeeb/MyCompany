@@ -2,6 +2,8 @@
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace MyCompany.ApiGateway.Security;
 
@@ -25,6 +27,7 @@ public static class JwtAuthExtensions
             {
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
+                options.MapInboundClaims = false; // Prevent mapping to SOAP namespaces
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -40,7 +43,11 @@ public static class JwtAuthExtensions
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(secret)
-                    )
+                    ),
+
+                    // Map specific claim types to ensure IsAuthenticated is set correctly
+                    NameClaimType = "unique_name",
+                    RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
                 };
 
                 //  JWT EVENTS + SERILOG

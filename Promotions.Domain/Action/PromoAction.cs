@@ -4,28 +4,66 @@ namespace Promotions.Domain.PromoActions
 {
     public class PromoAction
     {
+        public int IdAction { get; private set; }
+        public string Name { get; private set; } = null!;
+        public string CodDiv { get; private set; } = null!;
         
-        public int IdAction { get; set; }        // ID_ACTION
+        public DateTime DteStartSellIn { get; private set; }
+        public DateTime DteEndSellIn { get; private set; }
 
-        public string Name { get; set; } = null!; // DESACTION
+        public DateTime DteStartSellOut { get; private set; }
+        public DateTime DteEndSellOut { get; private set; }
 
-        public string CodDiv { get; set; } = null!;
-        
-        public DateTime DteStartSellIn { get; set; }
-        public DateTime DteEndSellIn { get; set; }
+        public string? DocumentKey { get; private set; }
+        public DateTime? DteToShost { get; private set; }
 
-        public DateTime DteStartSellOut { get; set; }
-        public DateTime DteEndSellOut { get; set; }
-
-        public string? DocumentKey { get; set; }
-        public DateTime? DteToShost { get; set; }
-
-        public int? LevParticipants { get; set; }
+        public int? LevParticipants { get; private set; }
 
         // Navigation Properties
         // Navigation Properties
-        public virtual ICollection<Domain.Products.PromoProduct> Products { get; set; } = new List<Domain.Products.PromoProduct>();
-        public virtual ICollection<Domain.Participants.PromoParticipants> Participants { get; set; } = new List<Domain.Participants.PromoParticipants>();
-        public virtual ICollection<Domain.DeliveryPoints.PromoDeliveryPoint> DeliveryPoints { get; set; } = new List<Domain.DeliveryPoints.PromoDeliveryPoint>();
+        public virtual ICollection<Domain.Products.PromoProduct> Products { get; private set; } = new List<Domain.Products.PromoProduct>();
+        public virtual ICollection<Domain.Participants.PromoParticipants> Participants { get; private set; } = new List<Domain.Participants.PromoParticipants>();
+        public virtual ICollection<Domain.DeliveryPoints.PromoDeliveryPoint> DeliveryPoints { get; private set; } = new List<Domain.DeliveryPoints.PromoDeliveryPoint>();
+
+        private PromoAction() { }
+
+        public PromoAction(int idAction, string name, string codDiv)
+        {
+            if (idAction <= 0) throw new ArgumentException("IdAction must be positive.");
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required.");
+            if (string.IsNullOrWhiteSpace(codDiv)) throw new ArgumentException("CodDiv is required.");
+
+            IdAction = idAction;
+            Name = name;
+            CodDiv = codDiv;
+        }
+
+        public void UpdateBasicInfo(string name, string codDiv, string? documentKey, int? levParticipants)
+        {
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required.");
+            Name = name;
+            CodDiv = codDiv;
+            DocumentKey = documentKey;
+            LevParticipants = levParticipants;
+        }
+
+        public void UpdateSellInDates(DateTime start, DateTime end)
+        {
+            if (start >= end) throw new ArgumentException("Start Sell In date must be before End Sell In date.");
+            DteStartSellIn = start;
+            DteEndSellIn = end;
+        }
+
+        public void UpdateSellOutDates(DateTime start, DateTime end)
+        {
+            if (start >= end) throw new ArgumentException("Start Sell Out date must be before End Sell Out date.");
+            DteStartSellOut = start;
+            DteEndSellOut = end;
+        }
+
+        public void SetHostDate(DateTime? hostDate)
+        {
+            DteToShost = hostDate;
+        }
     }
 }
