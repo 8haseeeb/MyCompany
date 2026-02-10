@@ -24,7 +24,7 @@ namespace Promotions.Application.Measures.Queries
             GetAllPromoMeasureFieldsQuery request,
             CancellationToken cancellationToken)
         {
-            var entities = await _repository.GetAllAsync(cancellationToken);
+            var entities = await _repository.GetAllAsync();
 
             return entities.Select(x => new PromoMeasureFieldDto
             {

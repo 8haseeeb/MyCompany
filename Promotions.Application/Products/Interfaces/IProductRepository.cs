@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Promotions.Application.Products.Interfaces
 {
-    public interface IProductRepository
+    public interface IProductRepository : Promotions.Domain.Shared.IRepository<PromoProduct>
     {
         Task<PromoProduct?> GetByIdAsync(
             int idAction,
@@ -16,12 +16,5 @@ namespace Promotions.Application.Products.Interfaces
             string codDisplay);
 
         Task<List<PromoProduct>> GetByActionAsync(int idAction);
-        Task<List<PromoProduct>> GetAllAsync();
-
-        Task AddAsync(PromoProduct product);
-        Task UpdateAsync(PromoProduct product);
-        Task DeleteAsync(PromoProduct product);
-
-        Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

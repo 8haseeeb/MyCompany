@@ -5,17 +5,12 @@ using Promotions.Domain.PromoActions;
 
 namespace Promotions.Application.PromoActions.Interfaces
 {
-    public interface IPromoActionRepository
+    public interface IPromoActionRepository : Promotions.Domain.Shared.IRepository<PromoAction>
     {
-        Task AddAsync(PromoAction action);
-        Task UpdateAsync(PromoAction action);
-        Task DeleteAsync(PromoAction action);
+        // Standard CRUD handled by IRepository
 
-        Task<PromoAction?> GetByIdAsync(int idAction);
-        Task<List<PromoAction>> GetAllAsync();
         Task<int> GetMaxIdAsync();
 
-        Task SaveChangesAsync(CancellationToken cancellationToken = default);
         Task<Common.Interfaces.IAtomicTransaction> BeginTransactionAsync();
         Task AddMeasureFieldAsync(Promotions.Domain.Measures.PromoMeasureField measureField);
         Task<bool> ExistsMeasureFieldAsync(string codDiv, string codMeasure, string fieldName);

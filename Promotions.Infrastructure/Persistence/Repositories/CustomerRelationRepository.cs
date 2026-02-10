@@ -7,13 +7,10 @@ using Promotions.Domain.CustomerRelations;
 
 namespace Promotions.Infrastructure.Persistence.Repositories
 {
-    public class CustomerRelationRepository : ICustomerRelationRepository
+    public class CustomerRelationRepository : Repository<CustomerRelation>, ICustomerRelationRepository
     {
-        private readonly PromotionsDbContext _context;
-
-        public CustomerRelationRepository(PromotionsDbContext context)
+        public CustomerRelationRepository(PromotionsDbContext context) : base(context)
         {
-            _context = context;
         }
 
         public async Task<CustomerRelation?> GetByIdAsync(
@@ -46,32 +43,6 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                 x.DteStart == dteStart);
         }
 
-        public async Task<List<CustomerRelation>> GetAllAsync()
-
-        {
-            return await _context.CustomerRelations.ToListAsync();
-        }
-
-        public async Task AddAsync(CustomerRelation entity)
-        {
-            await _context.CustomerRelations.AddAsync(entity);
-        }
-
-        public Task UpdateAsync(CustomerRelation entity)
-        {
-            _context.CustomerRelations.Update(entity);
-            return Task.CompletedTask;
-        }
-
-        public Task DeleteAsync(CustomerRelation entity)
-        {
-            _context.CustomerRelations.Remove(entity);
-            return Task.CompletedTask;
-        }
-
-        public async Task SaveChangesAsync(CancellationToken cancellationToken)
-        {
-            await _context.SaveChangesAsync(cancellationToken);
-        }
+        // Standard CRUD & SaveChangesAsync are in base class
     }
 }

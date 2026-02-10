@@ -5,13 +5,10 @@ using Promotions.Infrastructure.Persistence;
 
 namespace Promotions.Infrastructure.Persistence.Repositories
 {
-    public class ParticipantRepository : IParticipantRepository
+    public class ParticipantRepository : Repository<PromoParticipants>, IParticipantRepository
     {
-        private readonly PromotionsDbContext _context;
-
-        public ParticipantRepository(PromotionsDbContext context)
+        public ParticipantRepository(PromotionsDbContext context) : base(context)
         {
-            _context = context;
         }
 
         public async Task<PromoParticipants?> GetByIdAsync(int idAction, string codParticipant)
@@ -23,24 +20,7 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                     p.CodParticipant == codParticipant);
         }
 
-        public async Task AddAsync(PromoParticipants participant)
-        {
-            await _context.Participants.AddAsync(participant);
-        }
-
-        public Task UpdateAsync(PromoParticipants participant)
-        {
-            _context.Participants.Update(participant);
-            return Task.CompletedTask;
-        }
-
-        public Task DeleteAsync(PromoParticipants participant)
-        {
-            _context.Participants.Remove(participant);
-            return Task.CompletedTask;
-        }
-
-        public async Task<List<PromoParticipants>> GetByActionIdAsync(int idAction)
+        public async Task<List<PromoParticipants>> GetByActionAsync(int idAction)
         {
             return await _context.Participants
                 .Include(p => p.Relation)
@@ -48,16 +28,13 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<PromoParticipants>> GetAllAsync()
+        public override async Task<List<PromoParticipants>> GetAllAsync()
         {
             return await _context.Participants
                 .Include(p => p.Relation)
                 .ToListAsync();
         }
 
-        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            await _context.SaveChangesAsync(cancellationToken);
-        }
+        // Standard CRUD & SaveChangesAsync are in base class
     }
 }

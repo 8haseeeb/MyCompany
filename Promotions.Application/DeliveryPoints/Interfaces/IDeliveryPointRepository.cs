@@ -7,14 +7,9 @@ using System.Threading.Tasks;
 
 namespace Promotions.Application.DeliveryPoints.Interfaces
 {
-    public interface IDeliveryPointRepository
+    public interface IDeliveryPointRepository : Promotions.Domain.Shared.IRepository<PromoDeliveryPoint>
     {
         Task<PromoDeliveryPoint?> GetByIdAsync(int idAction, string codDeliveryPoint);
-        Task<List<PromoDeliveryPoint>> GetByActionIdAsync(int idAction);
-        Task<List<PromoDeliveryPoint>> GetAllAsync();
-        Task AddAsync(PromoDeliveryPoint deliveryPoint);
-        Task UpdateAsync(PromoDeliveryPoint deliveryPoint);
-        Task DeleteAsync(PromoDeliveryPoint deliveryPoint);
-        Task SaveChangesAsync(CancellationToken cancellationToken = default);
+        Task<List<PromoDeliveryPoint>> GetByActionAsync(int idAction);
     }
 }

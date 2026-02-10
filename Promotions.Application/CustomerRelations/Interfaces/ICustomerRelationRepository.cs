@@ -5,7 +5,7 @@ using Promotions.Domain.CustomerRelations;
 
 namespace Promotions.Application.CustomerRelations.Interfaces
 {
-    public interface ICustomerRelationRepository
+    public interface ICustomerRelationRepository : Promotions.Domain.Shared.IRepository<CustomerRelation>
     {
         Task<CustomerRelation?> GetByIdAsync(
             string codHier,
@@ -16,12 +16,5 @@ namespace Promotions.Application.CustomerRelations.Interfaces
 
         Task<List<CustomerRelation>> GetByNodeAndDivAsync(string codNode, string codDiv);
         Task<bool> ExistsAsync(string codHier, string codDiv, string codNode, int idLevel, DateTime dteStart);
-
-
-        Task<List<CustomerRelation>> GetAllAsync();
-        Task AddAsync(CustomerRelation entity);
-        Task UpdateAsync(CustomerRelation entity);
-        Task DeleteAsync(CustomerRelation entity);
-        Task SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

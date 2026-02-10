@@ -90,7 +90,7 @@ namespace Promotions.Application.Products.Commands.Handlers
                             field.FieldName,
                             field.Formula
                         );
-                        await _measureFieldRepository.AddAsync(measureField, cancellationToken);
+                        await _measureFieldRepository.AddAsync(measureField);
                     }
                 }
 

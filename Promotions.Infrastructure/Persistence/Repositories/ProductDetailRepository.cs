@@ -10,13 +10,10 @@ using System.Threading.Tasks;
 
 namespace Promotions.Infrastructure.Persistence.Repositories
 {
-    public class ProductDetailRepository : IProductDetailRepository
+    public class ProductDetailRepository : Repository<PromoProductDetail>, IProductDetailRepository
     {
-        private readonly PromotionsDbContext _context;
-
-        public ProductDetailRepository(PromotionsDbContext context)
+        public ProductDetailRepository(PromotionsDbContext context) : base(context)
         {
-            _context = context;
         }
 
         public async Task<PromoProductDetail?> GetByIdAsync(
@@ -43,31 +40,6 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<PromoProductDetail>> GetAllAsync()
-        {
-            return await _context.ProductDetails.ToListAsync();
-        }
-
-        public async Task AddAsync(PromoProductDetail entity)
-        {
-            await _context.ProductDetails.AddAsync(entity);
-        }
-
-        public Task UpdateAsync(PromoProductDetail entity)
-        {
-            _context.ProductDetails.Update(entity);
-            return Task.CompletedTask;
-        }
-
-        public Task DeleteAsync(PromoProductDetail entity)
-        {
-            _context.ProductDetails.Remove(entity);
-            return Task.CompletedTask;
-        }
-
-        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            await _context.SaveChangesAsync(cancellationToken);
-        }
+        // Standard CRUD & SaveChangesAsync are in base class
     }
 }

@@ -5,13 +5,10 @@ using Promotions.Infrastructure.Persistence;
 
 namespace Promotions.Infrastructure.Persistence.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : Repository<PromoProduct>, IProductRepository
     {
-        private readonly PromotionsDbContext _context;
-
-        public ProductRepository(PromotionsDbContext context)
+        public ProductRepository(PromotionsDbContext context) : base(context)
         {
-            _context = context;
         }
 
         public async Task<PromoProduct?> GetByIdAsync(
@@ -41,7 +38,7 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<PromoProduct>> GetAllAsync()
+        public override async Task<List<PromoProduct>> GetAllAsync()
         {
             return await _context.Products
                 .Include(x => x.Action)
@@ -50,24 +47,6 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task AddAsync(PromoProduct product)
-        {
-            await _context.Products.AddAsync(product);
-        }
-
-        public Task UpdateAsync(PromoProduct product)
-        {
-            _context.Products.Update(product);
-            return Task.CompletedTask;
-        }
-
-        public Task DeleteAsync(PromoProduct product)
-        {
-            _context.Products.Remove(product);
-            return Task.CompletedTask;
-        }
-
-        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
-           => await _context.SaveChangesAsync(cancellationToken);
+        // Standard CRUD & SaveChangesAsync are in base class
     }
 }

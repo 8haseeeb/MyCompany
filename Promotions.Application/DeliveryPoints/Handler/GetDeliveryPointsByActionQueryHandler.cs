@@ -19,7 +19,7 @@ namespace Promotions.Application.DeliveryPoints.Queries
             GetDeliveryPointsByActionQuery request,
             CancellationToken cancellationToken)
         {
-            var entities = await _repository.GetByActionIdAsync(request.IdAction);
+            var entities = await _repository.GetByActionAsync(request.IdAction);
 
             // ENTITY → DTO mapping
             return entities.Select(x => new DeliveryPointDto

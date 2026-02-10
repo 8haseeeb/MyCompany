@@ -5,15 +5,8 @@ using Promotions.Domain.Articles;
 
 namespace Promotions.Application.PromoArticles.Interfaces
 {
-    public interface IPromoArticleRepository
+    public interface IPromoArticleRepository : Promotions.Domain.Shared.IRepository<PromoArticle>
     {
-        Task AddAsync(PromoArticle article);
-        Task UpdateAsync(PromoArticle article);
-        Task DeleteAsync(PromoArticle article);
-
         Task<PromoArticle?> GetByIdAsync(string codDiv, string codNode);
-        Task<List<PromoArticle>> GetAllAsync();
-
-        Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -5,18 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Promotions.Infrastructure.Persistence.Repositories
 {
-    public class PromoMeasureFieldRepository : IPromoMeasureFieldRepository
+    public class PromoMeasureFieldRepository : Repository<PromoMeasureField>, IPromoMeasureFieldRepository
     {
-        private readonly PromotionsDbContext _context;
-
-        public PromoMeasureFieldRepository(PromotionsDbContext context)
+        public PromoMeasureFieldRepository(PromotionsDbContext context) : base(context)
         {
-            _context = context;
-        }
-
-        public async Task AddAsync(PromoMeasureField entity, CancellationToken cancellationToken)
-        {
-            await _context.PromoMeasureFields.AddAsync(entity, cancellationToken);
         }
 
         public async Task<List<PromoMeasureField>> GetByMeasureAsync(
@@ -27,43 +19,20 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                 .Where(x => x.CodMeasure == codMeasure)
                 .ToListAsync(cancellationToken);
         }
-             
-            public async Task<PromoMeasureField?> GetByIdAsync(
+
+        public async Task<PromoMeasureField?> GetByIdAsync(
             string codDiv,
             string codMeasure,
             string fieldName,
             CancellationToken cancellationToken)
-
         {
-           
             return await _context.PromoMeasureFields.FindAsync(
                 new object[] { codDiv, codMeasure, fieldName },
                 cancellationToken);
         }
 
-   
-        public async Task<List<PromoMeasureField>> GetAllAsync(CancellationToken cancellationToken)
-        {
-            return await _context.PromoMeasureFields.ToListAsync(cancellationToken);
-        }
-
-     
-        public Task UpdateAsync(PromoMeasureField entity, CancellationToken cancellationToken)
-        {
-            _context.PromoMeasureFields.Update(entity);
-            return Task.CompletedTask;
-        }
-
-       
-        public Task DeleteAsync(PromoMeasureField entity, CancellationToken cancellationToken)
-        {
-            _context.PromoMeasureFields.Remove(entity);
-            return Task.CompletedTask;
-        }
-
-        public async Task SaveChangesAsync(CancellationToken cancellationToken)
-        {
-            await _context.SaveChangesAsync(cancellationToken);
-        }
+        // Standard CRUD & SaveChangesAsync (with token) are in base class
+        // Note: AddAsync/UpdateAsync in base do not take CancellationToken.
+        // Callers passing tokens to these specific methods will need to be updated.
     }
 }

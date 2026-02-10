@@ -6,33 +6,13 @@ using System.Threading.Tasks;
 
 namespace Promotions.Infrastructure.Persistence.Repositories
 {
-    public class PromoActionRepository : IPromoActionRepository
+    public class PromoActionRepository : Repository<PromoAction>, IPromoActionRepository
     {
-        private readonly PromotionsDbContext _context;
-
-        public PromoActionRepository(PromotionsDbContext context)
+        public PromoActionRepository(PromotionsDbContext context) : base(context)
         {
-            _context = context;
         }
 
-        public async Task AddAsync(PromoAction action)
-        {
-            await _context.PromoActions.AddAsync(action);
-        }
-
-        public Task UpdateAsync(PromoAction action)
-        {
-            _context.PromoActions.Update(action);
-            return Task.CompletedTask;
-        }
-
-        public Task DeleteAsync(PromoAction action)
-        {
-            _context.PromoActions.Remove(action);
-            return Task.CompletedTask;
-        }
-
-        public async Task<PromoAction?> GetByIdAsync(int idAction)
+        public override async Task<PromoAction?> GetByIdAsync(int idAction)
         {
             return await _context.PromoActions
                 .Include(x => x.Participants)
@@ -45,18 +25,12 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                 .FirstOrDefaultAsync(x => x.IdAction == idAction);
         }
 
-        public async Task<List<PromoAction>> GetAllAsync()
-        {
-            return await _context.PromoActions.ToListAsync();
-        }
-
         public async Task<int> GetMaxIdAsync()
         {
             return await _context.PromoActions.AnyAsync() ? await _context.PromoActions.MaxAsync(x => x.IdAction) : 0;
         }
 
-        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
-          => await _context.SaveChangesAsync(cancellationToken);
+        // SaveChangesAsync is now in base class
 
         public async Task<Promotions.Application.Common.Interfaces.IAtomicTransaction> BeginTransactionAsync()
         {

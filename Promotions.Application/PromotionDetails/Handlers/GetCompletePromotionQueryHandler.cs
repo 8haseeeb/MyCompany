@@ -57,10 +57,10 @@ namespace Promotions.Application.PromotionDetails.Handlers
             // Fetch data sequentially to avoid concurrent DbContext usage
             var actionEntity = await _promoActionRepo.GetByIdAsync(idAction);
             var productEntities = await _productRepo.GetByActionAsync(idAction);
-            var participants = await _participantRepo.GetByActionIdAsync(idAction);
-            var deliveryPoints = await _deliveryPointRepo.GetByActionIdAsync(idAction);
+            var participants = await _participantRepo.GetByActionAsync(idAction);
+            var deliveryPoints = await _deliveryPointRepo.GetByActionAsync(idAction);
             var allCustomers = await _customerRepo.GetAllAsync();
-            var allMeasureFields = await _measureFieldRepo.GetAllAsync(cancellationToken);
+            var allMeasureFields = await _measureFieldRepo.GetAllAsync();
 
             // Map Products to DTOs
             var productDtos = productEntities.Select(p => new ProductDto

@@ -28,7 +28,7 @@ namespace Promotions.Application.Measures.Commands
                 throw new Exception("Record not found"); 
 
             // Delete
-            await _repository.DeleteAsync(entity, cancellationToken);
+            await _repository.DeleteAsync(entity);
 
             return Unit.Value;
         }

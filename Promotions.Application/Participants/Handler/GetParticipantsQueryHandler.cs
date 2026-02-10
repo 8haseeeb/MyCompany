@@ -14,7 +14,7 @@ public class GetParticipantsByActionQueryHandler : IRequestHandler<GetParticipan
 
     public async Task<List<ParticipantDto>> Handle(GetParticipantsByActionQuery request, CancellationToken cancellationToken)
     {
-        var participants = await _repository.GetByActionIdAsync(request.IdAction);
+        var participants = await _repository.GetByActionAsync(request.IdAction);
         return participants.Select(p => new ParticipantDto
         {
             IdAction = p.IdAction,

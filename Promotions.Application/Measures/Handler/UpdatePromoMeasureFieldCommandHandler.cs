@@ -29,7 +29,7 @@ namespace Promotions.Application.Measures.Commands
 
             entity.UpdateFormula(request.Formula);
 
-            await _repository.UpdateAsync(entity, cancellationToken);
+            await _repository.UpdateAsync(entity);
 
             return Unit.Value;
         }

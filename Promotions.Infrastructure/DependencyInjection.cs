@@ -27,6 +27,10 @@ namespace Promotions.Infrastructure
             services.AddScoped<IDeliveryPointRepository, DeliveryPointRepository>();
             services.AddScoped<ICustomerRelationRepository, CustomerRelationRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            
+            // Generic Repository
+            services.AddScoped(typeof(Promotions.Domain.Shared.IRepository<>), typeof(Repository<>));
+
             services.AddScoped<IPromoActionRepository, PromoActionRepository>();
             services.AddScoped<IProductDetailRepository, ProductDetailRepository>();
             services.AddScoped<IPromoArticleRepository, PromoArticleRepository>();

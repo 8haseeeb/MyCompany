@@ -22,7 +22,7 @@ public class CreatePromoMeasureFieldHandler
         );
 
 
-        await _repository.AddAsync(entity, cancellationToken);
+        await _repository.AddAsync(entity);
         await _repository.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
