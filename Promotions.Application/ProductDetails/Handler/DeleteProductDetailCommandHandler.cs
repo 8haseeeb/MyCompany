@@ -1,28 +1,35 @@
 ﻿using MediatR;
 using Promotions.Application.ProductDetails.Interfaces;
+using Promotions.Application.ProductDetails.Commands;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
-public class DeleteProductDetailCommandHandler
-    : IRequestHandler<DeleteProductDetailCommand, Unit>
+namespace Promotions.Application.ProductDetails.Handlers
 {
-    private readonly IProductDetailRepository _repo;
-
-    public DeleteProductDetailCommandHandler(IProductDetailRepository repo)
+    public class DeleteProductDetailCommandHandler
+        : IRequestHandler<DeleteProductDetailCommand, Unit>
     {
-        _repo = repo;
-    }
+        private readonly IProductDetailRepository _repo;
 
-    public async Task<Unit> Handle(DeleteProductDetailCommand r, CancellationToken ct)
-    {
-        var entity = await _repo.GetByIdAsync(
-            r.IdAction, r.CodProduct, r.LevProduct,
-            r.CodDisplay, r.CodNode, r.CodDiv);
+        public DeleteProductDetailCommandHandler(IProductDetailRepository repo)
+        {
+            _repo = repo;
+        }
 
-        if (entity == null)
-            throw new KeyNotFoundException("Product Detail not found");
+        public async Task<Unit> Handle(DeleteProductDetailCommand r, CancellationToken ct)
+        {
+            var entity = await _repo.GetByIdAsync(
+                r.IdAction, r.CodProduct, r.LevProduct,
+                r.CodDisplay, r.CodNode, r.CodDiv);
 
-        await _repo.DeleteAsync(entity);
-        await _repo.SaveChangesAsync(ct);
+            if (entity == null)
+                throw new KeyNotFoundException("Product Detail not found");
 
-        return Unit.Value;
+            await _repo.DeleteAsync(entity);
+            await _repo.SaveChangesAsync(ct);
+
+            return Unit.Value;
+        }
     }
 }

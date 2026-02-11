@@ -12,6 +12,8 @@ using Promotions.Infrastructure;
 using Promotions.Infrastructure.Persistence.External;
 using Promotions.Infrastructure.Persistence.Repositories;
 using Serilog;
+using FluentValidation;
+using Promotions.Application.Common.Behaviors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,10 +57,12 @@ builder.Services.AddHostedService<Promotions.Api.Services.HealthMonitoringServic
 
 builder.Services.AddAutoMapper(typeof(AssemblyMarker).Assembly);
 
+builder.Services.AddValidatorsFromAssembly(typeof(AssemblyMarker).Assembly);
+
 builder.Services.AddMediatR(cfg =>
 {
-    cfg.RegisterServicesFromAssembly(typeof(AssemblyMarker).Assembly);
-    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    cfg.RegisterServicesFromAssemblies(typeof(AssemblyMarker).Assembly, typeof(Program).Assembly);
+    cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -90,7 +94,18 @@ app.UseExceptionHandler(errorApp =>
         var exceptionHandlerPathFeature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature>();
         var exception = exceptionHandlerPathFeature?.Error;
 
-        if (exception is System.Collections.Generic.KeyNotFoundException)
+        if (exception is ValidationException validationException)
+        {
+            context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+            context.Response.ContentType = "application/json";
+            var result = System.Text.Json.JsonSerializer.Serialize(new 
+            { 
+                message = "Validation failed", 
+                errors = validationException.Errors.Select(e => new { e.PropertyName, e.ErrorMessage }) 
+            });
+            await context.Response.WriteAsync(result);
+        }
+        else if (exception is System.Collections.Generic.KeyNotFoundException)
         {
             context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
             context.Response.ContentType = "application/json";

@@ -1,30 +1,37 @@
 ﻿using MediatR;
 using Promotions.Application.ProductDetails.Interfaces;
+using Promotions.Application.ProductDetails.Commands;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
-public class UpdateProductDetailCommandHandler
-    : IRequestHandler<UpdateProductDetailCommand, Unit>
+namespace Promotions.Application.ProductDetails.Handlers
 {
-    private readonly IProductDetailRepository _repo;
-
-    public UpdateProductDetailCommandHandler(IProductDetailRepository repo)
+    public class UpdateProductDetailCommandHandler
+        : IRequestHandler<UpdateProductDetailCommand, Unit>
     {
-        _repo = repo;
-    }
+        private readonly IProductDetailRepository _repo;
 
-    public async Task<Unit> Handle(UpdateProductDetailCommand r, CancellationToken ct)
-    {
-        var entity = await _repo.GetByIdAsync(
-            r.IdAction, r.CodProduct, r.LevProduct,
-            r.CodDisplay, r.CodNode, r.CodDiv);
+        public UpdateProductDetailCommandHandler(IProductDetailRepository repo)
+        {
+            _repo = repo;
+        }
 
-        if (entity == null)
-            throw new KeyNotFoundException("Product Detail not found");
+        public async Task<Unit> Handle(UpdateProductDetailCommand r, CancellationToken ct)
+        {
+            var entity = await _repo.GetByIdAsync(
+                r.IdAction, r.CodProduct, r.LevProduct,
+                r.CodDisplay, r.CodNode, r.CodDiv);
 
-        entity.UpdateInclusion(r.FlgInclusion);
+            if (entity == null)
+                throw new KeyNotFoundException("Product Detail not found");
 
-        await _repo.UpdateAsync(entity);
-        await _repo.SaveChangesAsync(ct);
+            entity.UpdateInclusion(r.FlgInclusion);
 
-        return Unit.Value;
+            await _repo.UpdateAsync(entity);
+            await _repo.SaveChangesAsync(ct);
+
+            return Unit.Value;
+        }
     }
 }

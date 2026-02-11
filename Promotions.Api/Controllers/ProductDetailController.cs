@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Promotions.Application.ProductDetails.Dtos;
 using Promotions.Application.ProductDetails.Queries;
+using Promotions.Application.ProductDetails.Commands;
 
 namespace Promotions.Api.Controllers
 {

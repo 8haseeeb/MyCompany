@@ -1,30 +1,35 @@
 ﻿using MediatR;
 using Promotions.Application.Interfaces;
+using Promotions.Application.Measures.Commands;
 using Promotions.Domain.Measures;
+using System.Threading;
+using System.Threading.Tasks;
 
-public class CreatePromoMeasureFieldHandler
-    : IRequestHandler<CreatePromoMeasureFieldCommand, Unit>  // <-- add Unit
+namespace Promotions.Application.Measures.Handlers
 {
-    private readonly IPromoMeasureFieldRepository _repository;
-
-    public CreatePromoMeasureFieldHandler(IPromoMeasureFieldRepository repository)
+    public class CreatePromoMeasureFieldHandler
+        : IRequestHandler<CreatePromoMeasureFieldCommand, Unit>
     {
-        _repository = repository;
-    }
+        private readonly IPromoMeasureFieldRepository _repository;
 
-    public async Task<Unit> Handle(CreatePromoMeasureFieldCommand request, CancellationToken cancellationToken)
-    {
-        var entity = new PromoMeasureField(
-            request.CodDiv,
-            request.CodMeasure,
-            request.FieldName,
-            request.Formula
-        );
+        public CreatePromoMeasureFieldHandler(IPromoMeasureFieldRepository repository)
+        {
+            _repository = repository;
+        }
 
+        public async Task<Unit> Handle(CreatePromoMeasureFieldCommand request, CancellationToken cancellationToken)
+        {
+            var entity = new PromoMeasureField(
+                request.CodDiv,
+                request.CodMeasure,
+                request.FieldName,
+                request.Formula
+            );
 
-        await _repository.AddAsync(entity);
-        await _repository.SaveChangesAsync(cancellationToken);
+            await _repository.AddAsync(entity);
+            await _repository.SaveChangesAsync(cancellationToken);
 
-        return Unit.Value;
+            return Unit.Value;
+        }
     }
 }
