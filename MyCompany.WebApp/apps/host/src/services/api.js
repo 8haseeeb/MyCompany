@@ -15,36 +15,84 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+    failedQueue.forEach(prom => {
+        if (error) {
+            prom.reject(error);
+        } else {
+            prom.resolve(token);
+        }
+    });
+    failedQueue = [];
+};
+
 api.interceptors.response.use(
     (response) => {
-        console.log(`API Success: ${response.config.method.toUpperCase()} ${response.config.url}`, response.data);
         return response;
     },
-    (error) => {
-        // Don't trigger global logout for login attempts or background health checks
-        const url = error.config?.url || '';
+    async (error) => {
+        const originalRequest = error.config;
+        const url = originalRequest?.url || '';
         const isLoginRequest = url.includes('/api/auth/login');
         const isHealthCheck = url.includes('/api/gateway/health');
+        const isRefreshRequest = url.includes('/api/auth/refresh');
 
-        if (error.response?.status === 401 && !isLoginRequest && !isHealthCheck) {
-            // Check if the token sent in the request is the current token.
-            // If they don't match, it's a stale request from a previous session being ignored.
-            const currentToken = localStorage.getItem('token');
-            const requestToken = error.config?.headers?.Authorization?.replace('Bearer ', '');
+        // Response Interceptor (Detecting 401)
+        if (error.response?.status === 401 && !isLoginRequest && !isHealthCheck && !isRefreshRequest && !originalRequest._retry) {
 
-            if (currentToken && requestToken && currentToken !== requestToken) {
-                console.warn(`401 detected for stale token at ${url}. Ignoring logout.`);
+            // Request Queue (Smart Handling)
+            if (isRefreshing) {
+                return new Promise(function (resolve, reject) {
+                    failedQueue.push({ resolve, reject });
+                })
+                    .then(token => {
+                        originalRequest.headers['Authorization'] = 'Bearer ' + token;
+                        return api(originalRequest);
+                    })
+                    .catch(err => {
+                        return Promise.reject(err);
+                    });
+            }
+
+            originalRequest._retry = true;
+            isRefreshing = true;
+
+            const refreshToken = localStorage.getItem('refreshToken');
+
+            if (!refreshToken) {
+                handleLogout();
                 return Promise.reject(error);
             }
 
-            console.error(`Unauthorized (401) at ${url}. Logging out...`);
-            localStorage.removeItem('token');
-            localStorage.removeItem('refreshToken');
-            window.dispatchEvent(new Event("logout"));
 
-            setTimeout(() => {
-                window.location.href = '/login';
-            }, 100);
+            // Refresh Logic
+            try {
+                console.log("Access token expired. Attempting refresh...");
+                // Note: We use a separate axios call or the same api instance but must be careful about infinite loops
+                // Since it's a specific endpoint, our isRefreshRequest check above handles it.
+                const response = await axios.post('/api/auth/refresh', { refreshToken });
+
+                const { accessToken, refreshToken: newRefreshToken } = response.data;
+
+                localStorage.setItem('token', accessToken);
+                localStorage.setItem('refreshToken', newRefreshToken);
+
+                api.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+                originalRequest.headers['Authorization'] = 'Bearer ' + accessToken;
+
+                processQueue(null, accessToken);
+                return api(originalRequest);
+            } catch (refreshError) {
+                console.error("Refresh token failed or expired. Logging out.", refreshError);
+                processQueue(refreshError, null);
+                handleLogout();
+                return Promise.reject(refreshError);
+            } finally {
+                isRefreshing = false;
+            }
         }
 
         console.error(`API Error: ${error.config?.method.toUpperCase()} ${error.config?.url}`, {
@@ -55,5 +103,14 @@ api.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+function handleLogout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    window.dispatchEvent(new Event("logout"));
+    setTimeout(() => {
+        window.location.href = '/login';
+    }, 100);
+}
 
 export default api;
