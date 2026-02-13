@@ -1,28 +1,33 @@
 ﻿using MediatR;
-using Promotions.Application.PromoArticles.Interfaces;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Promotions.Application.Common.Interfaces;
+using Promotions.Application.PromoArticles.Commands;
+
 
 namespace Promotions.Application.PromoArticles.Commands.Handlers
 {
     public class DeletePromoArticleCommandHandler
         : IRequestHandler<DeletePromoArticleCommand, Unit>
     {
-        private readonly IPromoArticleRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeletePromoArticleCommandHandler(IPromoArticleRepository repository)
+        public DeletePromoArticleCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(DeletePromoArticleCommand request, CancellationToken ct)
         {
-            var article = await _repository.GetByIdAsync(
+            var article = await _unitOfWork.PromoArticles.GetByIdAsync(
                 request.CodDiv, request.CodNode);
 
             if (article == null)
                 throw new KeyNotFoundException("PromoArticle not found");
 
-            await _repository.DeleteAsync(article);
-            await _repository.SaveChangesAsync(ct);
+            await _unitOfWork.PromoArticles.DeleteAsync(article);
+            await _unitOfWork.SaveChangesAsync(ct);
 
             return Unit.Value;
         }

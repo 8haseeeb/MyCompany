@@ -1,20 +1,24 @@
 ﻿using MediatR;
-using Promotions.Application.DeliveryPoints.Interfaces;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Promotions.Application.Common.Interfaces;
+
 
 namespace Promotions.Application.DeliveryPoints.Commands
 {
     public class UpdateDeliveryPointCommandHandler : IRequestHandler<UpdateDeliveryPointCommand, Unit>
     {
-        private readonly IDeliveryPointRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateDeliveryPointCommandHandler(IDeliveryPointRepository repository)
+        public UpdateDeliveryPointCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(UpdateDeliveryPointCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _repository.GetByIdAsync(request.IdAction, request.CodDeliveryPoint);
+            var entity = await _unitOfWork.DeliveryPoints.GetByIdAsync(request.IdAction, request.CodDeliveryPoint);
             
             if (entity == null)
                 throw new Exception("Delivery Point not found.");
@@ -24,8 +28,8 @@ namespace Promotions.Application.DeliveryPoints.Commands
             else
                 entity.Exclude();
 
-            await _repository.UpdateAsync(entity);
-            await _repository.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.DeliveryPoints.UpdateAsync(entity);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

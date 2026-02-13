@@ -1,20 +1,27 @@
 ﻿using MediatR;
-using Promotions.Application.Products.Interfaces;
+using Promotions.Application.Products.Commands;
+
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Promotions.Application.Common.Interfaces;
+using Promotions.Application.Products.Commands;
+
 
 namespace Promotions.Application.Products.Commands.Handlers
 {
     public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, Unit> 
     {
-        private readonly IProductRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteProductCommandHandler(IProductRepository repository)
+        public DeleteProductCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(DeleteProductCommand request, CancellationToken cancellationToken) 
         {
-            var product = await _repository.GetByIdAsync(
+            var product = await _unitOfWork.Products.GetByIdAsync(
                 request.IdAction,
                 request.CodProduct,
                 request.LevProduct,
@@ -23,8 +30,8 @@ namespace Promotions.Application.Products.Commands.Handlers
             if (product == null)
                 throw new KeyNotFoundException("Product not found");
 
-            await _repository.DeleteAsync(product);
-            await _repository.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.Products.DeleteAsync(product);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value; 
         }

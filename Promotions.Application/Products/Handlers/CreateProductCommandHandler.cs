@@ -1,22 +1,22 @@
 ﻿using MediatR;
-using Promotions.Application.Products.Interfaces;
+using Promotions.Application.Products.Commands;
+
 using Promotions.Domain.Products;
-using Promotions.Application.Interfaces;
 using Promotions.Domain.ProductDetails;
 using Promotions.Domain.Articles;
 using Promotions.Domain.Measures;
+using Promotions.Application.Common.Interfaces;
+
 
 namespace Promotions.Application.Products.Commands.Handlers
 {
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Unit>
     {
-        private readonly IProductRepository _repository;
-        private readonly IPromoMeasureFieldRepository _measureFieldRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateProductCommandHandler(IProductRepository repository, IPromoMeasureFieldRepository measureFieldRepository)
+        public CreateProductCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
-            _measureFieldRepository = measureFieldRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -65,7 +65,7 @@ namespace Promotions.Application.Products.Commands.Handlers
             try
             {
                 // Check if product already exists
-                var existingProduct = await _repository.GetByIdAsync(
+                var existingProduct = await _unitOfWork.Products.GetByIdAsync(
                     request.IdAction,
                     request.CodProduct,
                     request.LevProduct,
@@ -77,7 +77,7 @@ namespace Promotions.Application.Products.Commands.Handlers
                     return Unit.Value;
                 }
 
-                await _repository.AddAsync(product);
+                await _unitOfWork.Products.AddAsync(product);
 
                 // Handle Measure Fields
                 if (request.MeasureFields != null && request.MeasureFields.Any() && !string.IsNullOrEmpty(request.CodMeasure))
@@ -90,16 +90,14 @@ namespace Promotions.Application.Products.Commands.Handlers
                             field.FieldName,
                             field.Formula
                         );
-                        await _measureFieldRepository.AddAsync(measureField);
+                        await _unitOfWork.MeasureFields.AddAsync(measureField);
                     }
                 }
 
-                await _repository.SaveChangesAsync(cancellationToken);
-                await _measureFieldRepository.SaveChangesAsync(cancellationToken);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
             }
             catch (Exception ex)
             {
-                // This is temporary for debugging 500 errors
                 throw new Exception($"Failed to create Product: {ex.Message} {ex.InnerException?.Message}");
             }
 

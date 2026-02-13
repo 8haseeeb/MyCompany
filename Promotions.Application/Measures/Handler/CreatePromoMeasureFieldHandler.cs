@@ -1,20 +1,21 @@
 ﻿using MediatR;
-using Promotions.Application.Interfaces;
 using Promotions.Application.Measures.Commands;
 using Promotions.Domain.Measures;
+using Promotions.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
+
 
 namespace Promotions.Application.Measures.Handlers
 {
     public class CreatePromoMeasureFieldHandler
         : IRequestHandler<CreatePromoMeasureFieldCommand, Unit>
     {
-        private readonly IPromoMeasureFieldRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreatePromoMeasureFieldHandler(IPromoMeasureFieldRepository repository)
+        public CreatePromoMeasureFieldHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(CreatePromoMeasureFieldCommand request, CancellationToken cancellationToken)
@@ -26,8 +27,8 @@ namespace Promotions.Application.Measures.Handlers
                 request.Formula
             );
 
-            await _repository.AddAsync(entity);
-            await _repository.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.MeasureFields.AddAsync(entity);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

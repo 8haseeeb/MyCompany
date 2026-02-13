@@ -1,33 +1,34 @@
 ﻿using MediatR;
-using Promotions.Application.ProductDetails.Interfaces;
 using Promotions.Application.ProductDetails.Commands;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Promotions.Application.Common.Interfaces;
+
 
 namespace Promotions.Application.ProductDetails.Handlers
 {
     public class DeleteProductDetailCommandHandler
         : IRequestHandler<DeleteProductDetailCommand, Unit>
     {
-        private readonly IProductDetailRepository _repo;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteProductDetailCommandHandler(IProductDetailRepository repo)
+        public DeleteProductDetailCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repo = repo;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(DeleteProductDetailCommand r, CancellationToken ct)
         {
-            var entity = await _repo.GetByIdAsync(
+            var entity = await _unitOfWork.ProductDetails.GetByIdAsync(
                 r.IdAction, r.CodProduct, r.LevProduct,
                 r.CodDisplay, r.CodNode, r.CodDiv);
 
             if (entity == null)
                 throw new KeyNotFoundException("Product Detail not found");
 
-            await _repo.DeleteAsync(entity);
-            await _repo.SaveChangesAsync(ct);
+            await _unitOfWork.ProductDetails.DeleteAsync(entity);
+            await _unitOfWork.SaveChangesAsync(ct);
 
             return Unit.Value;
         }

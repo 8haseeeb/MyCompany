@@ -1,4 +1,6 @@
-﻿namespace Promotions.Domain.Measures
+﻿using System;
+
+namespace Promotions.Domain.Measures
 {
     public class PromoMeasureField
     {

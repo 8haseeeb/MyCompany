@@ -1,21 +1,27 @@
 ﻿using MediatR;
-using Promotions.Application.PromoArticles.Interfaces;
+using Promotions.Application.PromoArticles.Commands;
+
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Promotions.Application.Common.Interfaces;
+
 
 namespace Promotions.Application.PromoArticles.Commands.Handlers
 {
     public class UpdatePromoArticleCommandHandler
         : IRequestHandler<UpdatePromoArticleCommand, Unit>
     {
-        private readonly IPromoArticleRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UpdatePromoArticleCommandHandler(IPromoArticleRepository repository)
+        public UpdatePromoArticleCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(UpdatePromoArticleCommand request, CancellationToken ct)
         {
-            var article = await _repository.GetByIdAsync(
+            var article = await _unitOfWork.PromoArticles.GetByIdAsync(
                 request.CodDiv, request.CodNode);
 
             if (article == null)
@@ -23,8 +29,8 @@ namespace Promotions.Application.PromoArticles.Commands.Handlers
 
             article.UpdateNodes(request.CodNode1, request.CodNode2, request.CodNodeN);
 
-            await _repository.UpdateAsync(article);
-            await _repository.SaveChangesAsync(ct);
+            await _unitOfWork.PromoArticles.UpdateAsync(article);
+            await _unitOfWork.SaveChangesAsync(ct);
 
             return Unit.Value;
         }

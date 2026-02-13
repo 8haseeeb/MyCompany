@@ -1,22 +1,21 @@
 ﻿using MediatR;
-using Promotions.Application.PromoActions.Interfaces;
 using Promotions.Domain.PromoActions;
-using Promotions.Domain.Participants;
-using Promotions.Domain.Products;
-using Promotions.Domain.DeliveryPoints;
+using Promotions.Application.Common.Interfaces;
+using Promotions.Application.PromoActions.Commands;
 using System.Threading;
-using System.Linq;
+using System.Threading.Tasks;
+
 
 namespace Promotions.Application.PromoActions.Commands.Handlers
 {
     public class CreatePromoActionCommandHandler
         : IRequestHandler<CreatePromoActionCommand, Unit>
     {
-        private readonly IPromoActionRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreatePromoActionCommandHandler(IPromoActionRepository repository)
+        public CreatePromoActionCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(CreatePromoActionCommand request, CancellationToken cancellationToken)
@@ -27,8 +26,8 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
             action.UpdateSellOutDates(request.DteStartSellOut, request.DteEndSellOut);
             action.SetHostDate(request.DteToShost);
 
-            await _repository.AddAsync(action);
-            await _repository.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.PromoActions.AddAsync(action);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

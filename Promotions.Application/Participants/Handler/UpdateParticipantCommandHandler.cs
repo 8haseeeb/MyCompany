@@ -1,21 +1,25 @@
 ﻿using MediatR;
-using Promotions.Application.Participant.Interfaces;
 using Promotions.Domain.Participants;
+using Promotions.Application.Common.Interfaces;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
 
 namespace Promotions.Application.Participants.Commands
 {
     public class UpdateParticipantCommandHandler : IRequestHandler<UpdateParticipantCommand, Unit>
     {
-        private readonly IParticipantRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateParticipantCommandHandler(IParticipantRepository repository)
+        public UpdateParticipantCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(UpdateParticipantCommand request, CancellationToken cancellationToken)
         {
-            var participant = await _repository.GetByIdAsync(request.IdAction, request.CodParticipant);
+            var participant = await _unitOfWork.Participants.GetByIdAsync(request.IdAction, request.CodParticipant);
             if (participant == null)
                 throw new Exception("Participant not found");
 
@@ -24,8 +28,8 @@ namespace Promotions.Application.Participants.Commands
             else
                 participant.Exclude();
 
-            await _repository.UpdateAsync(participant);
-            await _repository.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.Participants.UpdateAsync(participant);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

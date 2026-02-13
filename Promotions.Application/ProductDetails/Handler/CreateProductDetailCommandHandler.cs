@@ -1,20 +1,21 @@
 ﻿using MediatR;
-using Promotions.Application.ProductDetails.Interfaces;
 using Promotions.Application.ProductDetails.Commands;
 using Promotions.Domain.ProductDetails;
+using Promotions.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
+
 
 namespace Promotions.Application.ProductDetails.Handlers
 {
     public class CreateProductDetailCommandHandler
         : IRequestHandler<CreateProductDetailCommand, Unit>
     {
-        private readonly IProductDetailRepository _repo;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateProductDetailCommandHandler(IProductDetailRepository repo)
+        public CreateProductDetailCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repo = repo;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(CreateProductDetailCommand r, CancellationToken ct)
@@ -29,8 +30,8 @@ namespace Promotions.Application.ProductDetails.Handlers
                 r.FlgInclusion
             );
 
-            await _repo.AddAsync(entity);
-            await _repo.SaveChangesAsync(ct);
+            await _unitOfWork.ProductDetails.AddAsync(entity);
+            await _unitOfWork.SaveChangesAsync(ct);
 
             return Unit.Value;
         }

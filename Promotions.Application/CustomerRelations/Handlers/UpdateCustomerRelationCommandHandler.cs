@@ -1,24 +1,29 @@
 ﻿using MediatR;
-using Promotions.Application.CustomerRelations.Interfaces;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Promotions.Application.Common.Interfaces;
+using Promotions.Application.CustomerRelations.Commands;
+
 
 namespace Promotions.Application.CustomerRelations.Commands.Handlers
 {
     public class UpdateCustomerRelationCommandHandler
         : IRequestHandler<UpdateCustomerRelationCommand, Unit>
     {
-        private readonly ICustomerRelationRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public UpdateCustomerRelationCommandHandler(
-            ICustomerRelationRepository repository)
+            IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(
             UpdateCustomerRelationCommand request,
             CancellationToken cancellationToken)
         {
-            var entity = await _repository.GetByIdAsync(
+            var entity = await _unitOfWork.CustomerRelations.GetByIdAsync(
                 request.CodHier,
                 request.CodDiv,
                 request.CodNode,
@@ -31,8 +36,8 @@ namespace Promotions.Application.CustomerRelations.Commands.Handlers
             entity.UpdateHierarchy(request.CodParentNode);
             entity.SetEndDate(request.DteEnd);
 
-            await _repository.UpdateAsync(entity);
-            await _repository.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.CustomerRelations.UpdateAsync(entity);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

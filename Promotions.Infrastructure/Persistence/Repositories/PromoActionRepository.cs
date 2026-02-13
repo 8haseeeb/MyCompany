@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Promotions.Application.PromoActions.Interfaces;
 using Promotions.Domain.PromoActions;
+using Promotions.Infrastructure.Persistence;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

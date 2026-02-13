@@ -10,6 +10,8 @@ using Promotions.Application.Interfaces;
 using Promotions.Infrastructure.Persistence;
 using Promotions.Infrastructure.Persistence.Repositories;
 using Promotions.Application.Participant.Interfaces;
+using Promotions.Application.Common.Interfaces;
+
 
 namespace Promotions.Infrastructure
 {
@@ -35,6 +37,7 @@ namespace Promotions.Infrastructure
             services.AddScoped<IProductDetailRepository, ProductDetailRepository>();
             services.AddScoped<IPromoArticleRepository, PromoArticleRepository>();
             services.AddScoped<IParticipantRepository, ParticipantRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

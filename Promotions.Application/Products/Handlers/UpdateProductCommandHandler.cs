@@ -1,26 +1,28 @@
 ﻿using MediatR;
+using Promotions.Application.Products.Commands;
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Promotions.Application.Products.Interfaces;
 using Promotions.Application.Products.Commands;
-using Promotions.Domain.Products;
+using Promotions.Application.Common.Interfaces;
+
 
 namespace Promotions.Application.Products.Commands.Handlers
 {
     public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Unit>
     {
-        private readonly IProductRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateProductCommandHandler(IProductRepository repository)
+        public UpdateProductCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = await _repository.GetByIdAsync(
+            var product = await _unitOfWork.Products.GetByIdAsync(
                 request.IdAction,
                 request.CodProduct,
                 request.LevProduct,
@@ -46,8 +48,8 @@ namespace Promotions.Application.Products.Commands.Handlers
 
             try
             {
-                await _repository.UpdateAsync(product);
-                await _repository.SaveChangesAsync(cancellationToken);
+                await _unitOfWork.Products.UpdateAsync(product);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
             }
             catch (Exception ex)
             {

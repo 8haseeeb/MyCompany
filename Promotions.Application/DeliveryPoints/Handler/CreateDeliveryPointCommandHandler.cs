@@ -1,23 +1,21 @@
 ﻿using MediatR;
-using Promotions.Application.DeliveryPoints.Interfaces;
 using Promotions.Domain.DeliveryPoints;
-using Promotions.Application.CustomerRelations.Interfaces;
 using Promotions.Domain.CustomerRelations;
+using Promotions.Application.Common.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
+
 
 namespace Promotions.Application.DeliveryPoints.Commands
 {
     public class CreateDeliveryPointCommandHandler
         : IRequestHandler<CreateDeliveryPointCommand, Unit>
     {
-        private readonly IDeliveryPointRepository _repository;
-        private readonly ICustomerRelationRepository _customerRelationRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateDeliveryPointCommandHandler(
-            IDeliveryPointRepository repository,
-            ICustomerRelationRepository customerRelationRepository)
+        public CreateDeliveryPointCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
-            _customerRelationRepository = customerRelationRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(
@@ -25,7 +23,7 @@ namespace Promotions.Application.DeliveryPoints.Commands
             CancellationToken cancellationToken)
         {
             // Auto-create CustomerRelation if it doesn't exist
-            var exists = await _customerRelationRepository.ExistsAsync(
+            var exists = await _unitOfWork.CustomerRelations.ExistsAsync(
                 request.CodHier,
                 request.CodDiv,
                 request.CodNode,
@@ -42,8 +40,7 @@ namespace Promotions.Application.DeliveryPoints.Commands
                     request.DteStart,
                     "ROOT"
                 );
-                await _customerRelationRepository.AddAsync(newRelation);
-                await _customerRelationRepository.SaveChangesAsync(cancellationToken);
+                await _unitOfWork.CustomerRelations.AddAsync(newRelation);
             }
 
             var entity = new PromoDeliveryPoint(
@@ -57,8 +54,8 @@ namespace Promotions.Application.DeliveryPoints.Commands
                 request.DteStart
             );
 
-            await _repository.AddAsync(entity);
-            await _repository.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.DeliveryPoints.AddAsync(entity);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

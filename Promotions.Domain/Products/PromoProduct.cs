@@ -1,4 +1,6 @@
-﻿namespace Promotions.Domain.Products
+﻿using System;
+
+namespace Promotions.Domain.Products
 {
     public class PromoProduct
     {

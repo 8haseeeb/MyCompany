@@ -1,17 +1,22 @@
 ﻿using MediatR;
-using Promotions.Application.DeliveryPoints.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Promotions.Application.Common.Interfaces;
+
 
 namespace Promotions.Application.DeliveryPoints.Commands
 {
     public class DeleteDeliveryPointCommandHandler
         : IRequestHandler<DeleteDeliveryPointCommand, Unit>
     {
-        private readonly IDeliveryPointRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public DeleteDeliveryPointCommandHandler(
-            IDeliveryPointRepository repository)
+            IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(
@@ -20,7 +25,7 @@ namespace Promotions.Application.DeliveryPoints.Commands
         {
             try
             {
-                var entity = await _repository.GetByIdAsync(
+                var entity = await _unitOfWork.DeliveryPoints.GetByIdAsync(
                     request.IdAction,
                     request.CodDeliveryPoint);
 
@@ -29,8 +34,8 @@ namespace Promotions.Application.DeliveryPoints.Commands
                     throw new KeyNotFoundException($"Delivery Point with IdAction {request.IdAction} and CodDeliveryPoint '{request.CodDeliveryPoint}' not found.");
                 }
 
-                await _repository.DeleteAsync(entity);
-                await _repository.SaveChangesAsync(cancellationToken);
+                await _unitOfWork.DeliveryPoints.DeleteAsync(entity);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }
             catch (Exception ex)

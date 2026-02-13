@@ -1,44 +1,38 @@
 using AutoMapper;
 using MediatR;
-using Promotions.Application.PromoActions.Interfaces;
 using Promotions.Domain.PromoActions;
 using Promotions.Domain.Measures;
+using Promotions.Application.Common.Interfaces;
+using Promotions.Application.PromoActions.Commands;
 using System;
 using System.Threading;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
+using Promotions.Application.Common.Interfaces;
+
 namespace Promotions.Application.PromoActions.Commands.Handlers
 {
     public class CreateAtomicPromoActionCommandHandler : IRequestHandler<CreateAtomicPromoActionCommand, Unit>
     {
-        private readonly IPromoActionRepository _repository;
-        private readonly CustomerRelations.Interfaces.ICustomerRelationRepository _relationRepository;
-        private readonly Participant.Interfaces.IParticipantRepository _participantRepository;
-        private readonly DeliveryPoints.Interfaces.IDeliveryPointRepository _dpRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public CreateAtomicPromoActionCommandHandler(
-            IPromoActionRepository repository,
-            CustomerRelations.Interfaces.ICustomerRelationRepository relationRepository,
-            Participant.Interfaces.IParticipantRepository participantRepository,
-            DeliveryPoints.Interfaces.IDeliveryPointRepository dpRepository,
+            IUnitOfWork unitOfWork,
             IMapper mapper)
         {
-            _repository = repository;
-            _relationRepository = relationRepository;
-            _participantRepository = participantRepository;
-            _dpRepository = dpRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         public async Task<Unit> Handle(CreateAtomicPromoActionCommand request, CancellationToken cancellationToken)
         {
             var dto = request.Dto;
-            var allRelations = await _relationRepository.GetAllAsync();
-            var allParticipants = await _participantRepository.GetAllAsync();
-            var allDps = await _dpRepository.GetAllAsync();
+            var allRelations = await _unitOfWork.CustomerRelations.GetAllAsync();
+            var allParticipants = await _unitOfWork.Participants.GetAllAsync();
+            var allDps = await _unitOfWork.DeliveryPoints.GetAllAsync();
 
             // Resolve missing hierarchy data for Participants
             foreach (var p in dto.Participants)
@@ -133,7 +127,7 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
             // Generate an IdAction if 0 (Needed for Rich Domain Model construction)
             if (dto.IdAction == 0)
             {
-                var maxId = await _repository.GetMaxIdAsync();
+                var maxId = await _unitOfWork.PromoActions.GetMaxIdAsync();
                 dto.IdAction = maxId + 1;
             }
 
@@ -153,26 +147,16 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                 .Select(g => g.First())
                 .ToList();
 
-            using var transaction = await _repository.BeginTransactionAsync();
-            try
+            foreach (var mf in measureFields)
             {
-                foreach (var mf in measureFields)
+                if (!await _unitOfWork.PromoActions.ExistsMeasureFieldAsync(mf.CodDiv, mf.CodMeasure, mf.FieldName))
                 {
-                    if (!await _repository.ExistsMeasureFieldAsync(mf.CodDiv, mf.CodMeasure, mf.FieldName))
-                    {
-                        await _repository.AddMeasureFieldAsync(mf);
-                    }
+                    await _unitOfWork.PromoActions.AddMeasureFieldAsync(mf);
                 }
+            }
 
-                await _repository.AddAsync(action);
-                await _repository.SaveChangesAsync(cancellationToken);
-                await transaction.CommitAsync(cancellationToken);
-            }
-            catch
-            {
-                await transaction.RollbackAsync(cancellationToken);
-                throw;
-            }
+            await _unitOfWork.PromoActions.AddAsync(action);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

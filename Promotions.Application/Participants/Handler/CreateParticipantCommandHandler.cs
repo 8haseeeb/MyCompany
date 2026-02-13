@@ -1,28 +1,24 @@
 ﻿using MediatR;
 using Promotions.Domain.Participants;
-using Promotions.Application.Participant.Interfaces;
-using Promotions.Application.CustomerRelations.Interfaces;
 using Promotions.Domain.CustomerRelations;
+using Promotions.Application.Common.Interfaces;
+
 
 namespace Promotions.Application.Participants.Commands
 {
     public class CreateParticipantCommandHandler : IRequestHandler<CreateParticipantCommand, Unit>
     {
-        private readonly IParticipantRepository _repository;
-        private readonly ICustomerRelationRepository _customerRelationRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateParticipantCommandHandler(
-            IParticipantRepository repository,
-            ICustomerRelationRepository customerRelationRepository)
+        public CreateParticipantCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
-            _customerRelationRepository = customerRelationRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(CreateParticipantCommand request, CancellationToken cancellationToken)
         {
             // Auto-create CustomerRelation if it doesn't exist
-            var exists = await _customerRelationRepository.ExistsAsync(
+            var exists = await _unitOfWork.CustomerRelations.ExistsAsync(
                 request.CodHier,
                 request.CodDiv,
                 request.CodNode,
@@ -39,8 +35,7 @@ namespace Promotions.Application.Participants.Commands
                     request.DteStart,
                     "ROOT"
                 );
-                await _customerRelationRepository.AddAsync(newRelation);
-                await _customerRelationRepository.SaveChangesAsync(cancellationToken);
+                await _unitOfWork.CustomerRelations.AddAsync(newRelation);
             }
 
             var participant = new PromoParticipants(
@@ -54,8 +49,8 @@ namespace Promotions.Application.Participants.Commands
                 request.DteStart
             );
 
-            await _repository.AddAsync(participant);
-            await _repository.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.Participants.AddAsync(participant);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

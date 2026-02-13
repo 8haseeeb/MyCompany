@@ -1,31 +1,35 @@
 ﻿using MediatR;
-using Promotions.Application.Participant.Interfaces;
-using Promotions.Domain.Participants;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Promotions.Application.Common.Interfaces;
+
 
 namespace Promotions.Application.Participants.Commands
 {
     public class DeleteParticipantCommandHandler : IRequestHandler<DeleteParticipantCommand, Unit>
     {
-        private readonly IParticipantRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteParticipantCommandHandler(IParticipantRepository repository)
+        public DeleteParticipantCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(DeleteParticipantCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var participant = await _repository.GetByIdAsync(request.IdAction, request.CodParticipant);
+                var participant = await _unitOfWork.Participants.GetByIdAsync(request.IdAction, request.CodParticipant);
                 if (participant == null)
                 {
                     // Using a more specific message that might help identify if it's a lookup issue
                     throw new KeyNotFoundException($"Participant with IdAction {request.IdAction} and CodParticipant '{request.CodParticipant}' not found.");
                 }
 
-                await _repository.DeleteAsync(participant);
-                await _repository.SaveChangesAsync(cancellationToken);
+                await _unitOfWork.Participants.DeleteAsync(participant);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 return Unit.Value;
             }

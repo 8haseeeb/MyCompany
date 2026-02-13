@@ -1,23 +1,28 @@
 ﻿using MediatR;
-using Promotions.Application.Interfaces;
-using Promotions.Domain.Measures;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Promotions.Application.Common.Interfaces;
+using Promotions.Application.Measures.Commands;
+
 
 namespace Promotions.Application.Measures.Commands
 {
     public class DeletePromoMeasureFieldHandler
         : IRequestHandler<DeletePromoMeasureFieldCommand, Unit>
     {
-        private readonly IPromoMeasureFieldRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeletePromoMeasureFieldHandler(IPromoMeasureFieldRepository repository)
+        public DeletePromoMeasureFieldHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(DeletePromoMeasureFieldCommand request, CancellationToken cancellationToken)
         {
            
-            var entity = await _repository.GetByIdAsync(
+            var entity = await _unitOfWork.MeasureFields.GetByIdAsync(
                 request.CodDiv,
                 request.CodMeasure,
                 request.FieldName,
@@ -28,7 +33,8 @@ namespace Promotions.Application.Measures.Commands
                 throw new Exception("Record not found"); 
 
             // Delete
-            await _repository.DeleteAsync(entity);
+            await _unitOfWork.MeasureFields.DeleteAsync(entity);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

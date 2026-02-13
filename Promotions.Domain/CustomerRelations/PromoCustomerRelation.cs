@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using Promotions.Domain.Participants;
+using Promotions.Domain.DeliveryPoints;
 
 namespace Promotions.Domain.CustomerRelations
 {
@@ -14,8 +17,8 @@ namespace Promotions.Domain.CustomerRelations
         public DateTime? DteEnd { get; private set; }
 
         // Navigation Properties
-        public virtual ICollection<Domain.Participants.PromoParticipants> Participants { get; private set; } = new List<Domain.Participants.PromoParticipants>();
-        public virtual ICollection<Domain.DeliveryPoints.PromoDeliveryPoint> DeliveryPoints { get; private set; } = new List<Domain.DeliveryPoints.PromoDeliveryPoint>();
+        public virtual ICollection<PromoParticipants> Participants { get; private set; } = new List<PromoParticipants>();
+        public virtual ICollection<PromoDeliveryPoint> DeliveryPoints { get; private set; } = new List<PromoDeliveryPoint>();
         
         private CustomerRelation() { }
 
