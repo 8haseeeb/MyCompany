@@ -14,8 +14,8 @@ namespace Promotions.UnitTests.PromoActions.Handler
 {
     public class DeletePromoActionCommandHandlerTests
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly DeletePromoActionCommandHandler _handler;
+        private readonly IUnitOfWork _unitOfWork; //Fake DB (mocked)
+        private readonly DeletePromoActionCommandHandler _handler; //delete logic
 
         public DeletePromoActionCommandHandlerTests()
         {
