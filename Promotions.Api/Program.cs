@@ -12,6 +12,7 @@ using Promotions.Infrastructure;
 using Promotions.Infrastructure.Persistence.External;
 using Promotions.Infrastructure.Persistence.Repositories;
 using Serilog;
+using Promotions.Infrastructure.Persistence;
 using FluentValidation;
 using Promotions.Application.Common.Behaviors;
 
@@ -76,6 +77,26 @@ builder.Services.AddDbContext<SsoDbContext>(options =>
 
 
 var app = builder.Build();
+
+// --- DATABASE AUTO-MIGRATION ---
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<PromotionsDbContext>();
+        if (context.Database.IsSqlServer())
+        {
+            Log.Information("Applying Promotions database migrations...");
+            await context.Database.MigrateAsync();
+        }
+    }
+    catch (Exception ex)
+    {
+        Log.Error(ex, "An error occurred while migrating the database.");
+    }
+}
+// -------------------------------
 
 app.UseSerilogRequestLogging();
 app.UseMiddleware<RequestLoggingMiddleware>(); 
