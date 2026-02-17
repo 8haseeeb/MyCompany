@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong@Password
+    ports:
+      - "1433:1433"
+
+  sso-api:
+    build:
+      context: .
+      dockerfile: SSO.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sql-server;Database=SSODb;User Id=sa;Password=YourStrong@Password;TrustServerCertificate=True
+    ports:
+      - "5253:8080"
+    depends_on:
+      - sql-server
+
+  promotions-api:
+    build:
+      context: .
+      dockerfile: Promotions.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sql-server;Database=PromotionsDb;User Id=sa;Password=YourStrong@Password;TrustServerCertificate=True
+    ports:
+      - "5137:8080"
+    depends_on:
+      - sql-server
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: MyCompany.ApiGateway/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - SSO_URL=http://sso-api:8080
+      - PROMOTIONS_URL=http://promotions-api:8080
+    ports:
+      - "5000:8080"
+    depends_on:
+      - sso-api
+      - promotions-api
+
+  webapp:
+    build:
+      context: MyCompany.WebApp
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "5002:5002"
+    depends_on:
+      - api-gateway

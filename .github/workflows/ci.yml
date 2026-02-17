@@ -1,0 +1,49 @@
+name: CI - Build and Test
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore MyCompany.sln
+
+    - name: Build
+      run: dotnet build MyCompany.sln --no-restore --configuration Release
+
+    - name: Run Promotions Unit Tests
+      run: dotnet test tests/Promotions.UnitTests/Promotions.UnitTests.csproj --no-build --configuration Release --verbosity normal
+
+    - name: Run ApiGateway Unit Tests
+      run: dotnet test tests/MyCompany.ApiGateway.UnitTests/MyCompany.ApiGateway.UnitTests.csproj --no-build --configuration Release --verbosity normal
+
+    - name: Run SSO Unit Tests
+      run: dotnet test tests/SSO.UnitTests/SSO.UnitTests.csproj --no-build --configuration Release --verbosity normal
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build Promotions Docker Image
+      run: docker build -t promotions-api:latest -f Promotions.Api/Dockerfile .
+
+    - name: Build SSO Docker Image
+      run: docker build -t sso-api:latest -f SSO.Api/Dockerfile .
+
+    - name: Build Gateway Docker Image
+      run: docker build -t api-gateway:latest -f MyCompany.ApiGateway/Dockerfile .
