@@ -23,8 +23,8 @@ namespace MyCompany.ApiGateway.Controllers
         {
             var services = new[]
             {
-                new { Name = "Promotions API", Url = "http://localhost:5137/api/health" },
-                new { Name = "SSO API", Url = "http://localhost:5253/api/health" }
+                new { Name = "Promotions API", Url = (Environment.GetEnvironmentVariable("PROMOTIONS_URL") ?? "http://localhost:5137") + "/api/health" },
+                new { Name = "SSO API", Url = (Environment.GetEnvironmentVariable("SSO_URL") ?? "http://localhost:5253") + "/api/health" }
             };
 
             var results = new List<object>();

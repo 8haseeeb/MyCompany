@@ -56,6 +56,27 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// --- DATABASE AUTO-MIGRATION ---
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<IdentityDbContext>();
+        if (context.Database.IsSqlServer())
+        {
+            // Note: Use Serilog if configured, otherwise falls back to default logging
+            Console.WriteLine("Applying SSO database migrations...");
+            await context.Database.MigrateAsync();
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred while migrating the database: {ex.Message}");
+    }
+}
+// -------------------------------
+
 app.UseCors("AllowReactApp");
 if (app.Environment.IsDevelopment())
 {
