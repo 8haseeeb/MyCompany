@@ -121,4 +121,6 @@ jobs:
             --ingress external \
             --registry-server "${{ env.ACR_NAME }}.azurecr.io" \
             --registry-username "${{ env.ACR_NAME }}" \
-            --registry-password "$ACR_PWD"
+            --registry-password "$ACR_PWD" \
+            --env-vars GATEWAY_URL="https://api-gateway.${{ env.DOMAIN }}"
+
