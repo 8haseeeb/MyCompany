@@ -56,7 +56,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// --- DATABASE AUTO-MIGRATION WITH RETRY ---
+// --- DATABASE AUTO-MIGRATION WITH RETRY (DISABLED FOR COMPATIBILITY) ---
+/*
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -90,7 +91,9 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
+*/
 // -------------------------------
+
 
 app.UseCors("AllowReactApp");
 if (app.Environment.IsDevelopment())
