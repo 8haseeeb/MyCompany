@@ -29,93 +29,84 @@ jobs:
         run: |
           az acr login --name ${{ env.ACR_NAME }}
 
-      # Build and push SSO API
-      - name: Build and push SSO API
-        run: |
-          docker build -t ${{ env.ACR_NAME }}.azurecr.io/sso-api:${{ github.sha }} -f SSO.Api/Dockerfile .
-          docker push ${{ env.ACR_NAME }}.azurecr.io/sso-api:${{ github.sha }}
+      # Build and push labels
+      - name: Set Image Tag
+        run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
 
-      # Build and push Promotions API
-      - name: Build and push Promotions API
+      # Build and push images
+      - name: Build and push images
         run: |
-          docker build -t ${{ env.ACR_NAME }}.azurecr.io/promotions-api:${{ github.sha }} -f Promotions.Api/Dockerfile .
-          docker push ${{ env.ACR_NAME }}.azurecr.io/promotions-api:${{ github.sha }}
-
-      # Build and push API Gateway
-      - name: Build and push API Gateway
-        run: |
-          docker build -t ${{ env.ACR_NAME }}.azurecr.io/api-gateway:${{ github.sha }} -f MyCompany.ApiGateway/Dockerfile .
-          docker push ${{ env.ACR_NAME }}.azurecr.io/api-gateway:${{ github.sha }}
-
-      # Build and push WebApp
-      - name: Build and push WebApp
-        run: |
-          docker build -t ${{ env.ACR_NAME }}.azurecr.io/webapp:${{ github.sha }} -f MyCompany.WebApp/Dockerfile MyCompany.WebApp
-          docker push ${{ env.ACR_NAME }}.azurecr.io/webapp:${{ github.sha }}
+          # SSO API
+          docker build -t ${{ env.ACR_NAME }}.azurecr.io/sso-api:${{ env.IMAGE_TAG }} -f SSO.Api/Dockerfile .
+          docker push ${{ env.ACR_NAME }}.azurecr.io/sso-api:${{ env.IMAGE_TAG }}
+          
+          # Promotions API
+          docker build -t ${{ env.ACR_NAME }}.azurecr.io/promotions-api:${{ env.IMAGE_TAG }} -f Promotions.Api/Dockerfile .
+          docker push ${{ env.ACR_NAME }}.azurecr.io/promotions-api:${{ env.IMAGE_TAG }}
+          
+          # API Gateway
+          docker build -t ${{ env.ACR_NAME }}.azurecr.io/api-gateway:${{ env.IMAGE_TAG }} -f MyCompany.ApiGateway/Dockerfile .
+          docker push ${{ env.ACR_NAME }}.azurecr.io/api-gateway:${{ env.IMAGE_TAG }}
+          
+          # WebApp
+          docker build -t ${{ env.ACR_NAME }}.azurecr.io/webapp:${{ env.IMAGE_TAG }} -f MyCompany.WebApp/Dockerfile MyCompany.WebApp
+          docker push ${{ env.ACR_NAME }}.azurecr.io/webapp:${{ env.IMAGE_TAG }}
 
       # Deploy SSO API
-      - name: Deploy SSO API to ACA
-        uses: azure/container-apps-deploy-action@v1
-        with:
-          acrName: ${{ env.ACR_NAME }}
-          acrUsername: ${{ env.ACR_NAME }}
-          acrPassword: ${{ secrets.ACR_PASSWORD }}
-          resourceGroup: ${{ env.RESOURCE_GROUP }}
-          containerAppEnvironment: ${{ env.ACA_ENV }}
-          containerAppName: sso-api
-          imageToDeploy: ${{ env.ACR_NAME }}.azurecr.io/sso-api:${{ github.sha }}
-          targetPort: 8080
-          ingress: external
-          environmentVariables: |
-            ASPNETCORE_ENVIRONMENT=Production
-            ConnectionStrings__DefaultConnection=${{ secrets.SQL_CONNECTION_STRING_SSO }}
+      - name: Deploy SSO API
+        run: |
+          az containerapp up \
+            --name sso-api \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --environment ${{ env.ACA_ENV }} \
+            --image ${{ env.ACR_NAME }}.azurecr.io/sso-api:${{ env.IMAGE_TAG }} \
+            --target-port 8080 \
+            --ingress external \
+            --registry-server ${{ env.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ env.ACR_NAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --env-vars ASPNETCORE_ENVIRONMENT=Production ConnectionStrings__DefaultConnection="${{ secrets.SQL_CONNECTION_STRING_SSO }}"
 
       # Deploy Promotions API
-      - name: Deploy Promotions API to ACA
-        uses: azure/container-apps-deploy-action@v1
-        with:
-          acrName: ${{ env.ACR_NAME }}
-          acrUsername: ${{ env.ACR_NAME }}
-          acrPassword: ${{ secrets.ACR_PASSWORD }}
-          resourceGroup: ${{ env.RESOURCE_GROUP }}
-          containerAppEnvironment: ${{ env.ACA_ENV }}
-          containerAppName: promotions-api
-          imageToDeploy: ${{ env.ACR_NAME }}.azurecr.io/promotions-api:${{ github.sha }}
-          targetPort: 8080
-          ingress: external
-          environmentVariables: |
-            ASPNETCORE_ENVIRONMENT=Production
-            ConnectionStrings__DefaultConnection=${{ secrets.SQL_CONNECTION_STRING_PROMOTIONS }}
-            ConnectionStrings__SsoConnection=${{ secrets.SQL_CONNECTION_STRING_SSO }}
+      - name: Deploy Promotions API
+        run: |
+          az containerapp up \
+            --name promotions-api \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --environment ${{ env.ACA_ENV }} \
+            --image ${{ env.ACR_NAME }}.azurecr.io/promotions-api:${{ env.IMAGE_TAG }} \
+            --target-port 8080 \
+            --ingress external \
+            --registry-server ${{ env.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ env.ACR_NAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --env-vars ASPNETCORE_ENVIRONMENT=Production ConnectionStrings__DefaultConnection="${{ secrets.SQL_CONNECTION_STRING_PROMOTIONS }}" ConnectionStrings__SsoConnection="${{ secrets.SQL_CONNECTION_STRING_SSO }}"
 
       # Deploy API Gateway
-      - name: Deploy API Gateway to ACA
-        uses: azure/container-apps-deploy-action@v1
-        with:
-          acrName: ${{ env.ACR_NAME }}
-          acrUsername: ${{ env.ACR_NAME }}
-          acrPassword: ${{ secrets.ACR_PASSWORD }}
-          resourceGroup: ${{ env.RESOURCE_GROUP }}
-          containerAppEnvironment: ${{ env.ACA_ENV }}
-          containerAppName: api-gateway
-          imageToDeploy: ${{ env.ACR_NAME }}.azurecr.io/api-gateway:${{ github.sha }}
-          targetPort: 8080
-          ingress: external
-          environmentVariables: |
-            ASPNETCORE_ENVIRONMENT=Production
-            SSO_URL=https://sso-api.${{ env.DOMAIN }}
-            PROMOTIONS_URL=https://promotions-api.${{ env.DOMAIN }}
+      - name: Deploy API Gateway
+        run: |
+          az containerapp up \
+            --name api-gateway \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --environment ${{ env.ACA_ENV }} \
+            --image ${{ env.ACR_NAME }}.azurecr.io/api-gateway:${{ env.IMAGE_TAG }} \
+            --target-port 8080 \
+            --ingress external \
+            --registry-server ${{ env.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ env.ACR_NAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
+            --env-vars ASPNETCORE_ENVIRONMENT=Production SSO_URL=https://sso-api.${{ env.DOMAIN }} PROMOTIONS_URL=https://promotions-api.${{ env.DOMAIN }}
 
       # Deploy WebApp
-      - name: Deploy WebApp to ACA
-        uses: azure/container-apps-deploy-action@v1
-        with:
-          acrName: ${{ env.ACR_NAME }}
-          acrUsername: ${{ env.ACR_NAME }}
-          acrPassword: ${{ secrets.ACR_PASSWORD }}
-          resourceGroup: ${{ env.RESOURCE_GROUP }}
-          containerAppEnvironment: ${{ env.ACA_ENV }}
-          containerAppName: webapp
-          imageToDeploy: ${{ env.ACR_NAME }}.azurecr.io/webapp:${{ github.sha }}
-          targetPort: 80
-          ingress: external
+      - name: Deploy WebApp
+        run: |
+          az containerapp up \
+            --name webapp \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --environment ${{ env.ACA_ENV }} \
+            --image ${{ env.ACR_NAME }}.azurecr.io/webapp:${{ env.IMAGE_TAG }} \
+            --target-port 80 \
+            --ingress external \
+            --registry-server ${{ env.ACR_NAME }}.azurecr.io \
+            --registry-username ${{ env.ACR_NAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }}
