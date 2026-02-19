@@ -56,13 +56,16 @@ jobs:
       - name: Deploy SSO API to ACA
         uses: azure/container-apps-deploy-action@v1
         with:
+          acrName: ${{ env.ACR_NAME }}
+          acrUsername: ${{ env.ACR_NAME }}
+          acrPassword: ${{ secrets.ACR_PASSWORD }}
           resourceGroup: ${{ env.RESOURCE_GROUP }}
           containerAppEnvironment: ${{ env.ACA_ENV }}
           containerAppName: sso-api
           imageToDeploy: ${{ env.ACR_NAME }}.azurecr.io/sso-api:${{ github.sha }}
           targetPort: 8080
           ingress: external
-          envVars: |
+          environmentVariables: |
             ASPNETCORE_ENVIRONMENT=Production
             ConnectionStrings__DefaultConnection=${{ secrets.SQL_CONNECTION_STRING_SSO }}
 
@@ -70,13 +73,16 @@ jobs:
       - name: Deploy Promotions API to ACA
         uses: azure/container-apps-deploy-action@v1
         with:
+          acrName: ${{ env.ACR_NAME }}
+          acrUsername: ${{ env.ACR_NAME }}
+          acrPassword: ${{ secrets.ACR_PASSWORD }}
           resourceGroup: ${{ env.RESOURCE_GROUP }}
           containerAppEnvironment: ${{ env.ACA_ENV }}
           containerAppName: promotions-api
           imageToDeploy: ${{ env.ACR_NAME }}.azurecr.io/promotions-api:${{ github.sha }}
           targetPort: 8080
           ingress: external
-          envVars: |
+          environmentVariables: |
             ASPNETCORE_ENVIRONMENT=Production
             ConnectionStrings__DefaultConnection=${{ secrets.SQL_CONNECTION_STRING_PROMOTIONS }}
             ConnectionStrings__SsoConnection=${{ secrets.SQL_CONNECTION_STRING_SSO }}
@@ -85,21 +91,27 @@ jobs:
       - name: Deploy API Gateway to ACA
         uses: azure/container-apps-deploy-action@v1
         with:
+          acrName: ${{ env.ACR_NAME }}
+          acrUsername: ${{ env.ACR_NAME }}
+          acrPassword: ${{ secrets.ACR_PASSWORD }}
           resourceGroup: ${{ env.RESOURCE_GROUP }}
           containerAppEnvironment: ${{ env.ACA_ENV }}
           containerAppName: api-gateway
           imageToDeploy: ${{ env.ACR_NAME }}.azurecr.io/api-gateway:${{ github.sha }}
           targetPort: 8080
           ingress: external
-          envVars: |
+          environmentVariables: |
             ASPNETCORE_ENVIRONMENT=Production
-            SSO_URL=https://sso-api.yellowplant-40f27ff8.southeastasia.azurecontainerapps.io
-            PROMOTIONS_URL=https://promotions-api.yellowplant-40f27ff8.southeastasia.azurecontainerapps.io
+            SSO_URL=https://sso-api.${{ env.ACA_ENV }}.southeastasia.azurecontainerapps.io
+            PROMOTIONS_URL=https://promotions-api.${{ env.ACA_ENV }}.southeastasia.azurecontainerapps.io
 
       # Deploy WebApp
       - name: Deploy WebApp to ACA
         uses: azure/container-apps-deploy-action@v1
         with:
+          acrName: ${{ env.ACR_NAME }}
+          acrUsername: ${{ env.ACR_NAME }}
+          acrPassword: ${{ secrets.ACR_PASSWORD }}
           resourceGroup: ${{ env.RESOURCE_GROUP }}
           containerAppEnvironment: ${{ env.ACA_ENV }}
           containerAppName: webapp
