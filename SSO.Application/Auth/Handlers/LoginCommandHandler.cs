@@ -48,9 +48,10 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResultDto>
         var newSessionId = Guid.NewGuid().ToString();
         var accessToken = _jwt.GenerateToken(user, newSessionId);
 
-        // 4️⃣ Update Session ID in DB and Generate Refresh Token
-        user.UpdateSession(newSessionId);
-        _context.Users.Update(user);
+        // 4️⃣ Generate Refresh Token (Session ID update disabled due to schema mismatch)
+        // user.UpdateSession(newSessionId);
+        // _context.Users.Update(user);
+
 
         var refreshToken = new RefreshToken
         {

@@ -1,0 +1,20 @@
+2026-02-19 14:18:42.494 +05:00 [ERR] Failed executing DbCommand (173ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [SSOIdentityDb];
+2026-02-19 14:18:46.107 +05:00 [ERR] Failed executing DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [SSOIdentityDb];
+2026-02-19 14:18:49.790 +05:00 [ERR] Failed executing DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [SSOIdentityDb];
+2026-02-19 14:18:53.281 +05:00 [ERR] Failed executing DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [SSOIdentityDb];
+2026-02-19 14:18:56.547 +05:00 [ERR] Failed executing DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [SSOIdentityDb];
+2026-02-19 14:18:59.678 +05:00 [ERR] Failed executing DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [SSOIdentityDb];
+2026-02-19 14:19:02.854 +05:00 [ERR] Failed executing DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [SSOIdentityDb];
+2026-02-19 14:19:06.000 +05:00 [ERR] Failed executing DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [SSOIdentityDb];
+2026-02-19 14:19:09.156 +05:00 [ERR] Failed executing DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [SSOIdentityDb];
+2026-02-19 14:19:12.281 +05:00 [ERR] Failed executing DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [SSOIdentityDb];

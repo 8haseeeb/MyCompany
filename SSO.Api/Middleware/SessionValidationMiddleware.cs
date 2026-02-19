@@ -29,6 +29,7 @@ namespace SSO.Api.Middleware
 
                 if (!string.IsNullOrEmpty(sessionIdClaim) && !string.IsNullOrEmpty(userIdClaim) && int.TryParse(userIdClaim, out int userId))
                 {
+                    /* 
                     var user = await dbContext.Users.FindAsync(userId);
                     
                     if (user != null)
@@ -43,7 +44,9 @@ namespace SSO.Api.Middleware
                             return; 
                         }
                     }
+                    */
                 }
+
             }
 
             await _next(context);

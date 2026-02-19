@@ -1,0 +1,2 @@
+2026-02-19 14:18:54.637 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 380.3946 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-02-19 14:18:54.990 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 756.9113 ms
