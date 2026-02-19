@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SSO.Application.Interfaces;
-using SSO.Domain.Users;
-using SSO.Domain.RefreshTokens;
-using SSO.Infrastructure.Persistence.Configurations;
+﻿using SSO.Domain.Users;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SSO.Infrastructure.Persistence.Configurations; // Keep this as UserConfiguration is used
 
 namespace SSO.Infrastructure.Persistence
 {
@@ -16,7 +14,7 @@ namespace SSO.Infrastructure.Persistence
         }
 
         public DbSet<User> Users { get; set; } = null!;
-        // public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
+        // Removed: // public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
 
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)

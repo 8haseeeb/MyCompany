@@ -1,6 +1,4 @@
-﻿using SSO.Domain.RefreshTokens;
-
-namespace SSO.Domain.Users
+﻿namespace SSO.Domain.Users
 {
     public class User
     {
@@ -15,7 +13,6 @@ namespace SSO.Domain.Users
         public string? RefreshToken { get; private set; }
         public DateTime? RefreshTokenExpiry { get; private set; }
 
-        public ICollection<RefreshToken> RefreshTokens { get; private set; } = new List<RefreshToken>();
 
 
         // EF Core requirement

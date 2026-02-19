@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SSO.Application.Auth.Commands;
 using SSO.Application.Dtos;
 using SSO.Application.Interfaces;
-using SSO.Domain.RefreshTokens;
+
 
 namespace SSO.Application.Auth.Handlers;
 
@@ -20,42 +20,32 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, R
 
     public async Task<RefreshTokenResponseDto> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
-        // Get token with user
-        var tokenEntity = await _context.RefreshTokens
-            .Include(rt => rt.User) // User navigation property must exist
-            .FirstOrDefaultAsync(rt => rt.Token == request.RefreshToken, cancellationToken);
+        // Search for user with this refresh token
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.RefreshToken == request.RefreshToken, cancellationToken);
 
-        if (tokenEntity == null || tokenEntity.IsRevoked || tokenEntity.ExpiresAt < DateTime.UtcNow)
+        if (user == null || user.RefreshTokenExpiry < DateTime.UtcNow)
             throw new Exception("Invalid or expired refresh token");
 
-        // Revoke old refresh token
-        tokenEntity.IsRevoked = true;
+        // Generate new token
+        var newRefreshToken = Guid.NewGuid().ToString();
+        var newExpiry = DateTime.UtcNow.AddDays(30);
 
-        // Create new refresh token
-        var newRefreshToken = new RefreshToken
-        {
-            Token = Guid.NewGuid().ToString(),
-            UserId = tokenEntity.UserId,
-            ExpiresAt = DateTime.UtcNow.AddDays(30),
-            IsRevoked = false
-        };
-
-        _context.RefreshTokens.Add(newRefreshToken);
+        // Update user
+        user.UpdateRefreshToken(newRefreshToken, newExpiry);
+        
+        _context.Users.Update(user);
         await _context.SaveChangesAsync(cancellationToken);
 
-
-        var sessionId = tokenEntity.User.CurrentSessionId ?? Guid.NewGuid().ToString(); 
-        if (tokenEntity.User.CurrentSessionId == null) 
-        {
-             tokenEntity.User.UpdateSession(sessionId);
-        }
-
-        var newAccessToken = _jwtTokenService.GenerateToken(tokenEntity.User, sessionId);
+        // Generate new access token
+        var sessionId = user.CurrentSessionId ?? Guid.NewGuid().ToString(); 
+        var newAccessToken = _jwtTokenService.GenerateToken(user, sessionId);
 
         return new RefreshTokenResponseDto
         {
             AccessToken = newAccessToken,
-            RefreshToken = newRefreshToken.Token
+            RefreshToken = newRefreshToken
         };
     }
+
 }
