@@ -37,5 +37,6 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf.template
 EXPOSE 80 5002
 
 # Use envsubst to replace variables in nginx config at startup
-CMD ["/bin/sh", "-c", "envsubst '${GATEWAY_URL}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+CMD ["/bin/sh", "-c", "envsubst '${GATEWAY_URL} ${GATEWAY_HOST}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+
 
