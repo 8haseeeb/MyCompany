@@ -105,7 +105,8 @@ jobs:
             --registry-server "${{ env.ACR_NAME }}.azurecr.io" \
             --registry-username "${{ env.ACR_NAME }}" \
             --registry-password "$ACR_PWD" \
-            --env-vars ASPNETCORE_ENVIRONMENT=Production SSO_URL=http://sso-api:8080 PROMOTIONS_URL=http://promotions-api:8080
+            --env-vars ASPNETCORE_ENVIRONMENT=Production SSO_URL="https://sso-api.${{ env.DOMAIN }}" PROMOTIONS_URL="https://promotions-api.${{ env.DOMAIN }}"
+
 
 
       # Deploy WebApp
@@ -123,7 +124,8 @@ jobs:
             --registry-server "${{ env.ACR_NAME }}.azurecr.io" \
             --registry-username "${{ env.ACR_NAME }}" \
             --registry-password "$ACR_PWD" \
-            --env-vars GATEWAY_URL=http://api-gateway:8080
+            --env-vars GATEWAY_URL="https://api-gateway.${{ env.DOMAIN }}" GATEWAY_HOST="api-gateway.${{ env.DOMAIN }}"
+
 
 
 

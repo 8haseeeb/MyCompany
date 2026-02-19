@@ -89,9 +89,17 @@ namespace MyCompany.ApiGateway.Routing
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "ERROR Proxying to {TargetUrl}", targetUrl);
-                throw; // Rethrow to let ExceptionHandlingMiddleware handle it
+                Log.Error(ex, "❌ PROXY ERROR: Could not reach {TargetUrl}. Message: {Message}", targetUrl, ex.Message);
+                
+                // If it's a timeout, log it specifically
+                if (ex is TaskCanceledException || ex is OperationCanceledException)
+                {
+                    Log.Error("⚠️ PROXY TIMEOUT: The request to {TargetUrl} took too long and was canceled.", targetUrl);
+                }
+
+                throw;
             }
+
         }
     }
 }

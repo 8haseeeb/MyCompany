@@ -80,7 +80,7 @@ app.Map("/{**catch-all}", async context =>
         return;
     }
 
-    var isAuthPath = path != null && path.Contains("/api/auth");
+    var isAuthPath = path != null && (path.Contains("/api/auth") || path.Contains("/api/gateway/health"));
 
     if (!isAuthPath && context.User?.Identity?.IsAuthenticated != true)
     {
