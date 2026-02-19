@@ -12,8 +12,11 @@ namespace SSO.Domain.Users
         public string Role { get; private set; } = "User"; // Default Role
         
         public string? CurrentSessionId { get; private set; }
+        public string? RefreshToken { get; private set; }
+        public DateTime? RefreshTokenExpiry { get; private set; }
 
         public ICollection<RefreshToken> RefreshTokens { get; private set; } = new List<RefreshToken>();
+
 
         // EF Core requirement
         private User() { }
@@ -42,7 +45,14 @@ namespace SSO.Domain.Users
             Role = newRole;
         }
 
+        public void UpdateRefreshToken(string? token, DateTime? expiry)
+        {
+            RefreshToken = token;
+            RefreshTokenExpiry = expiry;
+        }
+
         public void UpdatePassword(string newPasswordHash)
+
         {
             if (string.IsNullOrWhiteSpace(newPasswordHash)) throw new ArgumentException("Password hash cannot be empty.");
             PasswordHash = newPasswordHash;

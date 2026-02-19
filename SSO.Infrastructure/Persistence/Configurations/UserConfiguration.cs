@@ -13,6 +13,8 @@ namespace SSO.Infrastructure.Persistence.Configurations
             builder.Property(u => u.Email).IsRequired();
             builder.Property(u => u.UserName).HasColumnName("Name").IsRequired();
             builder.Property(u => u.PasswordHash).IsRequired();
+            builder.Property(u => u.RefreshToken).HasColumnName("RefreshToken");
+            builder.Property(u => u.RefreshTokenExpiry).HasColumnName("RefreshTokenExpiry");
 
             
             // Ignore columns and relationships that don't exist in the migrated database

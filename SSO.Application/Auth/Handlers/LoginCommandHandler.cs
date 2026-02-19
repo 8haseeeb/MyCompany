@@ -53,15 +53,13 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResultDto>
         // _context.Users.Update(user);
 
 
-        var refreshToken = new RefreshToken
-        {
-            Token = Guid.NewGuid().ToString(),
-            UserId = user.Id,
-            ExpiresAt = DateTime.UtcNow.AddDays(30),
-            IsRevoked = false
-        };
-        await _context.RefreshTokens.AddAsync(refreshToken, cancellationToken);
+        var refreshTokenString = Guid.NewGuid().ToString();
+        var expiry = DateTime.UtcNow.AddDays(30);
+        
+        user.UpdateRefreshToken(refreshTokenString, expiry);
+        _context.Users.Update(user);
         await _context.SaveChangesAsync(cancellationToken);
+
 
         // 5️⃣ Return both tokens
         Log.Information("User {Email} logged in successfully. UserId: {UserId}", user.Email, user.Id);
@@ -69,8 +67,9 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResultDto>
         return new LoginResultDto
         {
             AccessToken = accessToken,
-            RefreshToken = refreshToken.Token,
+            RefreshToken = refreshTokenString,
             UserName = user.UserName
         };
+
     }
 }
