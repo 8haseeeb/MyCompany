@@ -11,8 +11,9 @@ namespace SSO.Infrastructure.Persistence.Configurations
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Id).ValueGeneratedOnAdd();
             builder.Property(u => u.Email).IsRequired();
-            builder.Property(u => u.UserName).HasColumnName("UserName").IsRequired();
-            builder.Property(u => u.PasswordHash).HasColumnName("Password").IsRequired();
+            builder.Property(u => u.UserName).HasColumnName("Name").IsRequired();
+            builder.Property(u => u.PasswordHash).IsRequired();
+
             
             // Ignore columns and relationships that don't exist in the migrated database
             builder.Ignore(u => u.Role);
