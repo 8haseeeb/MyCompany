@@ -54,59 +54,71 @@ jobs:
 
       # Deploy SSO API
       - name: Deploy SSO API
+        env:
+          ACR_PWD: ${{ secrets.ACR_PASSWORD }}
+          SQL_SSO: ${{ secrets.SQL_CONNECTION_STRING_SSO }}
         run: |
+          if [ -z "$ACR_PWD" ]; then echo "Error: ACR_PASSWORD secret is empty"; exit 1; fi
           az containerapp up \
             --name sso-api \
-            --resource-group ${{ env.RESOURCE_GROUP }} \
-            --environment ${{ env.ACA_ENV }} \
-            --image ${{ env.ACR_NAME }}.azurecr.io/sso-api:${{ env.IMAGE_TAG }} \
+            --resource-group "${{ env.RESOURCE_GROUP }}" \
+            --environment "${{ env.ACA_ENV }}" \
+            --image "${{ env.ACR_NAME }}.azurecr.io/sso-api:${{ env.IMAGE_TAG }}" \
             --target-port 8080 \
             --ingress external \
-            --registry-server ${{ env.ACR_NAME }}.azurecr.io \
-            --registry-username ${{ env.ACR_NAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --env-vars ASPNETCORE_ENVIRONMENT=Production ConnectionStrings__DefaultConnection="${{ secrets.SQL_CONNECTION_STRING_SSO }}"
+            --registry-server "${{ env.ACR_NAME }}.azurecr.io" \
+            --registry-username "${{ env.ACR_NAME }}" \
+            --registry-password "$ACR_PWD" \
+            --env-vars ASPNETCORE_ENVIRONMENT=Production ConnectionStrings__DefaultConnection="$SQL_SSO"
 
       # Deploy Promotions API
       - name: Deploy Promotions API
+        env:
+          ACR_PWD: ${{ secrets.ACR_PASSWORD }}
+          SQL_PROMO: ${{ secrets.SQL_CONNECTION_STRING_PROMOTIONS }}
+          SQL_SSO: ${{ secrets.SQL_CONNECTION_STRING_SSO }}
         run: |
           az containerapp up \
             --name promotions-api \
-            --resource-group ${{ env.RESOURCE_GROUP }} \
-            --environment ${{ env.ACA_ENV }} \
-            --image ${{ env.ACR_NAME }}.azurecr.io/promotions-api:${{ env.IMAGE_TAG }} \
+            --resource-group "${{ env.RESOURCE_GROUP }}" \
+            --environment "${{ env.ACA_ENV }}" \
+            --image "${{ env.ACR_NAME }}.azurecr.io/promotions-api:${{ env.IMAGE_TAG }}" \
             --target-port 8080 \
             --ingress external \
-            --registry-server ${{ env.ACR_NAME }}.azurecr.io \
-            --registry-username ${{ env.ACR_NAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --env-vars ASPNETCORE_ENVIRONMENT=Production ConnectionStrings__DefaultConnection="${{ secrets.SQL_CONNECTION_STRING_PROMOTIONS }}" ConnectionStrings__SsoConnection="${{ secrets.SQL_CONNECTION_STRING_SSO }}"
+            --registry-server "${{ env.ACR_NAME }}.azurecr.io" \
+            --registry-username "${{ env.ACR_NAME }}" \
+            --registry-password "$ACR_PWD" \
+            --env-vars ASPNETCORE_ENVIRONMENT=Production ConnectionStrings__DefaultConnection="$SQL_PROMO" ConnectionStrings__SsoConnection="$SQL_SSO"
 
       # Deploy API Gateway
       - name: Deploy API Gateway
+        env:
+          ACR_PWD: ${{ secrets.ACR_PASSWORD }}
         run: |
           az containerapp up \
             --name api-gateway \
-            --resource-group ${{ env.RESOURCE_GROUP }} \
-            --environment ${{ env.ACA_ENV }} \
-            --image ${{ env.ACR_NAME }}.azurecr.io/api-gateway:${{ env.IMAGE_TAG }} \
+            --resource-group "${{ env.RESOURCE_GROUP }}" \
+            --environment "${{ env.ACA_ENV }}" \
+            --image "${{ env.ACR_NAME }}.azurecr.io/api-gateway:${{ env.IMAGE_TAG }}" \
             --target-port 8080 \
             --ingress external \
-            --registry-server ${{ env.ACR_NAME }}.azurecr.io \
-            --registry-username ${{ env.ACR_NAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }} \
-            --env-vars ASPNETCORE_ENVIRONMENT=Production SSO_URL=https://sso-api.${{ env.DOMAIN }} PROMOTIONS_URL=https://promotions-api.${{ env.DOMAIN }}
+            --registry-server "${{ env.ACR_NAME }}.azurecr.io" \
+            --registry-username "${{ env.ACR_NAME }}" \
+            --registry-password "$ACR_PWD" \
+            --env-vars ASPNETCORE_ENVIRONMENT=Production SSO_URL="https://sso-api.${{ env.DOMAIN }}" PROMOTIONS_URL="https://promotions-api.${{ env.DOMAIN }}"
 
       # Deploy WebApp
       - name: Deploy WebApp
+        env:
+          ACR_PWD: ${{ secrets.ACR_PASSWORD }}
         run: |
           az containerapp up \
             --name webapp \
-            --resource-group ${{ env.RESOURCE_GROUP }} \
-            --environment ${{ env.ACA_ENV }} \
-            --image ${{ env.ACR_NAME }}.azurecr.io/webapp:${{ env.IMAGE_TAG }} \
+            --resource-group "${{ env.RESOURCE_GROUP }}" \
+            --environment "${{ env.ACA_ENV }}" \
+            --image "${{ env.ACR_NAME }}.azurecr.io/webapp:${{ env.IMAGE_TAG }}" \
             --target-port 80 \
             --ingress external \
-            --registry-server ${{ env.ACR_NAME }}.azurecr.io \
-            --registry-username ${{ env.ACR_NAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }}
+            --registry-server "${{ env.ACR_NAME }}.azurecr.io" \
+            --registry-username "${{ env.ACR_NAME }}" \
+            --registry-password "$ACR_PWD"
