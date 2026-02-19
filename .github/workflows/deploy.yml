@@ -11,6 +11,7 @@ env:
   RESOURCE_GROUP: xtel-promo-rg
   ACA_ENV: xtel-promo-env
   LOCATION: southeastasia
+  DOMAIN: yellowplant-40f27ff8.southeastasia.azurecontainerapps.io
 
 jobs:
   build-and-deploy:
@@ -102,8 +103,8 @@ jobs:
           ingress: external
           environmentVariables: |
             ASPNETCORE_ENVIRONMENT=Production
-            SSO_URL=https://sso-api.${{ env.ACA_ENV }}.southeastasia.azurecontainerapps.io
-            PROMOTIONS_URL=https://promotions-api.${{ env.ACA_ENV }}.southeastasia.azurecontainerapps.io
+            SSO_URL=https://sso-api.${{ env.DOMAIN }}
+            PROMOTIONS_URL=https://promotions-api.${{ env.DOMAIN }}
 
       # Deploy WebApp
       - name: Deploy WebApp to ACA
