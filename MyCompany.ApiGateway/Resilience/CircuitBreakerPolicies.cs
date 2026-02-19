@@ -1,4 +1,5 @@
 ﻿using Polly;
+using Polly.Extensions.Http;
 using System;
 
 namespace MyCompany.ApiGateway.Resilience
@@ -7,8 +8,9 @@ namespace MyCompany.ApiGateway.Resilience
     {
         public static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
         {
-            return Policy.HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
-                         .CircuitBreakerAsync(2, TimeSpan.FromSeconds(30));
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
         }
     }
 }

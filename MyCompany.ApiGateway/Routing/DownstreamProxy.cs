@@ -44,15 +44,18 @@ namespace MyCompany.ApiGateway.Routing
             //  COPY BODY (POST / PUT / PATCH) 
             if (!HttpMethods.IsGet(context.Request.Method) &&
                 !HttpMethods.IsHead(context.Request.Method) &&
-                !HttpMethods.IsDelete(context.Request.Method))
+                !HttpMethods.IsDelete(context.Request.Method) &&
+                context.Request.ContentLength > 0)
             {
                 context.Request.EnableBuffering();
                 context.Request.Body.Position = 0;
 
-                var streamContent = new StreamContent(context.Request.Body);
-                streamContent.Headers.ContentType =
-                    MediaTypeHeaderValue.Parse(context.Request.ContentType ?? "application/json");
+                var memoryStream = new MemoryStream();
+                await context.Request.Body.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
 
+                var streamContent = new StreamContent(memoryStream);
+                streamContent.Headers.ContentType = MediaTypeHeaderValue.Parse(context.Request.ContentType ?? "application/json");
                 requestMessage.Content = streamContent;
             }
 

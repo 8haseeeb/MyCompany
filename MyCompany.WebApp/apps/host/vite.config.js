@@ -9,7 +9,7 @@ export default defineConfig({
     federation({
       name: 'host_app',
       remotes: {
-        'promotions_app': 'http://localhost:5002/assets/remoteEntry.js',
+        'promotions_app': 'http://127.0.0.1:5003/remoteEntry.js',
       },
       shared: {
         react: { singleton: true },

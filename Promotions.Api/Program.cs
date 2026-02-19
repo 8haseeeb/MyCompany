@@ -78,22 +78,39 @@ builder.Services.AddDbContext<SsoDbContext>(options =>
 
 var app = builder.Build();
 
-// --- DATABASE AUTO-MIGRATION ---
+// --- DATABASE AUTO-MIGRATION WITH RETRY ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    try
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    var context = services.GetRequiredService<PromotionsDbContext>();
+
+    int retries = 10;
+    while (retries > 0)
     {
-        var context = services.GetRequiredService<PromotionsDbContext>();
-        if (context.Database.IsSqlServer())
+        try
         {
-            Log.Information("Applying Promotions database migrations...");
-            await context.Database.MigrateAsync();
+            if (context.Database.IsSqlServer())
+            {
+                logger.LogInformation("Applying Promotions database migrations...");
+                await context.Database.MigrateAsync();
+                logger.LogInformation("Promotions database migrated successfully.");
+
+                break; // Success
+            }
         }
-    }
-    catch (Exception ex)
-    {
-        Log.Error(ex, "An error occurred while migrating the database.");
+        catch (Microsoft.Data.SqlClient.SqlException ex)
+        {
+            retries--;
+            logger.LogWarning(ex, "Failed to connect to database. Retrying in 3 seconds... ({Retries} attempts left)", retries);
+            if (retries == 0) throw; // Fail eventually
+            await Task.Delay(3000);
+        }
+        catch (Exception ex)
+        {
+             logger.LogError(ex, "An error occurred while migrating the database.");
+             throw; // Non-transient error
+        }
     }
 }
 // -------------------------------

@@ -1,0 +1,108 @@
+name: Deploy to Azure Container Apps
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  ACR_NAME: xtelpromoacr
+  RESOURCE_GROUP: xtel-promo-rg
+  ACA_ENV: xtel-promo-env
+  LOCATION: southeastasia
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Log in to ACR
+        run: |
+          az acr login --name ${{ env.ACR_NAME }}
+
+      # Build and push SSO API
+      - name: Build and push SSO API
+        run: |
+          docker build -t ${{ env.ACR_NAME }}.azurecr.io/sso-api:${{ github.sha }} -f SSO.Api/Dockerfile .
+          docker push ${{ env.ACR_NAME }}.azurecr.io/sso-api:${{ github.sha }}
+
+      # Build and push Promotions API
+      - name: Build and push Promotions API
+        run: |
+          docker build -t ${{ env.ACR_NAME }}.azurecr.io/promotions-api:${{ github.sha }} -f Promotions.Api/Dockerfile .
+          docker push ${{ env.ACR_NAME }}.azurecr.io/promotions-api:${{ github.sha }}
+
+      # Build and push API Gateway
+      - name: Build and push API Gateway
+        run: |
+          docker build -t ${{ env.ACR_NAME }}.azurecr.io/api-gateway:${{ github.sha }} -f MyCompany.ApiGateway/Dockerfile .
+          docker push ${{ env.ACR_NAME }}.azurecr.io/api-gateway:${{ github.sha }}
+
+      # Build and push WebApp
+      - name: Build and push WebApp
+        run: |
+          docker build -t ${{ env.ACR_NAME }}.azurecr.io/webapp:${{ github.sha }} -f MyCompany.WebApp/Dockerfile MyCompany.WebApp
+          docker push ${{ env.ACR_NAME }}.azurecr.io/webapp:${{ github.sha }}
+
+      # Deploy SSO API
+      - name: Deploy SSO API to ACA
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          resourceGroup: ${{ env.RESOURCE_GROUP }}
+          containerAppEnvironment: ${{ env.ACA_ENV }}
+          containerAppName: sso-api
+          imageToDeploy: ${{ env.ACR_NAME }}.azurecr.io/sso-api:${{ github.sha }}
+          targetPort: 8080
+          ingress: external
+          envVars: |
+            ASPNETCORE_ENVIRONMENT=Production
+            ConnectionStrings__DefaultConnection=${{ secrets.SQL_CONNECTION_STRING_SSO }}
+
+      # Deploy Promotions API
+      - name: Deploy Promotions API to ACA
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          resourceGroup: ${{ env.RESOURCE_GROUP }}
+          containerAppEnvironment: ${{ env.ACA_ENV }}
+          containerAppName: promotions-api
+          imageToDeploy: ${{ env.ACR_NAME }}.azurecr.io/promotions-api:${{ github.sha }}
+          targetPort: 8080
+          ingress: external
+          envVars: |
+            ASPNETCORE_ENVIRONMENT=Production
+            ConnectionStrings__DefaultConnection=${{ secrets.SQL_CONNECTION_STRING_PROMOTIONS }}
+            ConnectionStrings__SsoConnection=${{ secrets.SQL_CONNECTION_STRING_SSO }}
+
+      # Deploy API Gateway
+      - name: Deploy API Gateway to ACA
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          resourceGroup: ${{ env.RESOURCE_GROUP }}
+          containerAppEnvironment: ${{ env.ACA_ENV }}
+          containerAppName: api-gateway
+          imageToDeploy: ${{ env.ACR_NAME }}.azurecr.io/api-gateway:${{ github.sha }}
+          targetPort: 8080
+          ingress: external
+          envVars: |
+            ASPNETCORE_ENVIRONMENT=Production
+            SSO_URL=https://sso-api.yellowplant-40f27ff8.southeastasia.azurecontainerapps.io
+            PROMOTIONS_URL=https://promotions-api.yellowplant-40f27ff8.southeastasia.azurecontainerapps.io
+
+      # Deploy WebApp
+      - name: Deploy WebApp to ACA
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          resourceGroup: ${{ env.RESOURCE_GROUP }}
+          containerAppEnvironment: ${{ env.ACA_ENV }}
+          containerAppName: webapp
+          imageToDeploy: ${{ env.ACR_NAME }}.azurecr.io/webapp:${{ github.sha }}
+          targetPort: 80
+          ingress: external

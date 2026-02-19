@@ -12,8 +12,8 @@ using SSO.Infrastructure.Persistence;
 namespace SSO.Infrastructure.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20260204122818_AddSessionIdToUser")]
-    partial class AddSessionIdToUser
+    [Migration("20260217092621_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

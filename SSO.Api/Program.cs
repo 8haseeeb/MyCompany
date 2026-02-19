@@ -56,23 +56,38 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// --- DATABASE AUTO-MIGRATION ---
+// --- DATABASE AUTO-MIGRATION WITH RETRY ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    try
+    var context = services.GetRequiredService<IdentityDbContext>();
+
+    int retries = 10;
+    while (retries > 0)
     {
-        var context = services.GetRequiredService<IdentityDbContext>();
-        if (context.Database.IsSqlServer())
+        try
         {
-            // Note: Use Serilog if configured, otherwise falls back to default logging
-            Console.WriteLine("Applying SSO database migrations...");
-            await context.Database.MigrateAsync();
+            if (context.Database.IsSqlServer())
+            {
+                Console.WriteLine("Applying SSO database migrations...");
+                await context.Database.MigrateAsync();
+                Console.WriteLine("SSO database migrated successfully.");
+
+                break; // Success
+            }
         }
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"An error occurred while migrating the database: {ex.Message}");
+        catch (Microsoft.Data.SqlClient.SqlException ex)
+        {
+            retries--;
+            Console.WriteLine($"Failed to connect to database. Retrying in 3 seconds... ({retries} attempts left). Error: {ex.Message}");
+            if (retries == 0) throw;
+            await Task.Delay(3000);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while migrating the database: {ex.Message}");
+            throw;
+        }
     }
 }
 // -------------------------------
