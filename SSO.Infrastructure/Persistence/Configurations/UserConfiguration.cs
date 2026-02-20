@@ -18,7 +18,7 @@ namespace SSO.Infrastructure.Persistence.Configurations
 
             
             // Ignore columns and relationships that don't exist in the migrated database
-            builder.Ignore(u => u.Role);
+                        builder.Property(u => u.Role).HasColumnName("Role").IsRequired();
             builder.Ignore(u => u.CurrentSessionId);
             
 
