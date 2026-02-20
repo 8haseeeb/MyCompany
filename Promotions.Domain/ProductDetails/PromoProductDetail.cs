@@ -18,6 +18,7 @@ namespace Promotions.Domain.ProductDetails
 
         // Navigation Properties
         public virtual Products.PromoProduct Product { get; private set; } = null!;
+        public virtual Articles.PromoArticle Article { get; private set; } = null!;
         public virtual ICollection<Articles.PromoArticle> Articles { get; private set; } = new List<Articles.PromoArticle>();
 
         private PromoProductDetail() { }

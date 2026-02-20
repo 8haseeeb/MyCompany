@@ -19,8 +19,13 @@ namespace Promotions.Infrastructure.Persistence.External
             // Minimal configuration to map to the existing SSO database
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("Users"); // Ensure it matches SSO table name
+                entity.ToTable("Users");
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.UserName).HasColumnName("Name");
+                entity.Ignore(e => e.CurrentSessionId);
+                entity.Ignore(e => e.RefreshToken);
+                entity.Ignore(e => e.RefreshTokenExpiry);
+                entity.Ignore(e => e.Role);
             });
         }
     }

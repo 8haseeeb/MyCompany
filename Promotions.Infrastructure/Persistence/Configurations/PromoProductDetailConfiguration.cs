@@ -30,6 +30,11 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             builder.Property(x => x.FlgInclusion).HasColumnName("FLGINCLUSION");
 
 
+            builder.HasOne(x => x.Article)
+                   .WithMany()
+                   .HasForeignKey(x => new { x.CodDiv, x.CodNode })
+                   .OnDelete(DeleteBehavior.Restrict);
+
             builder.HasOne(x => x.Product)
                    .WithMany(p => p.Details)
                    .HasForeignKey(x => new { x.IdAction, x.CodProduct, x.LevProduct, x.CodDisplay })
