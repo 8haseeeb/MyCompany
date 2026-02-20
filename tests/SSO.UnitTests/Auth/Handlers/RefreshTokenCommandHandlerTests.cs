@@ -3,7 +3,6 @@ using NSubstitute;
 using SSO.Application.Auth.Commands;
 using SSO.Application.Auth.Handlers;
 using SSO.Application.Interfaces;
-using SSO.Domain.RefreshTokens;
 using SSO.Domain.Users;
 using SSO.Infrastructure.Persistence;
 using System;

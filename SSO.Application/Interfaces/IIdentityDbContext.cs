@@ -10,7 +10,6 @@ namespace SSO.Application.Interfaces
     {
         DbSet<User> Users { get; }
 
-        // DbSet<RefreshToken> RefreshTokens { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

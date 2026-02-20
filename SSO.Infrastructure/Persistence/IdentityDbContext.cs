@@ -15,7 +15,6 @@ namespace SSO.Infrastructure.Persistence
         }
 
         public DbSet<User> Users { get; set; } = null!;
-        // Removed: // public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
 
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
@@ -29,7 +28,6 @@ namespace SSO.Infrastructure.Persistence
 
             // Apply all configurations from Configurations folder
             modelBuilder.ApplyConfiguration(new UserConfiguration());
-            // modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
 
         }
     }
