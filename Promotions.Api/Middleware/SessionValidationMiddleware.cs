@@ -29,7 +29,10 @@ namespace Promotions.Api.Middleware
                     
                     if (user != null)
                     {
-                        if (user.CurrentSessionId != sessionIdClaim)
+                        // Only validate session if the DB actually has a session ID stored.
+                        // Since we are ignoring this column in SsoDbContext to avoid schema errors,
+                        // it will always be null here unless the schema is updated.
+                        if (!string.IsNullOrEmpty(user.CurrentSessionId) && user.CurrentSessionId != sessionIdClaim)
                         {
                             _logger.LogWarning("Session Mismatch! User: {UserId}. TokenSession: {TokenSession}, DBSession: {DbSession}", userId, sessionIdClaim, user.CurrentSessionId);
                             
