@@ -9,7 +9,7 @@ namespace Promotions.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<PromoArticle> builder)
         {
-            builder.ToTable("TA5150PROMOARTICLE");
+            builder.ToTable("TA5150PROMOARTICLES");
 
             builder.HasKey(x => new { x.IdAction, x.CodProduct, x.LevProduct, x.CodDisplay, x.CodDiv, x.CodNode });
 
@@ -18,10 +18,11 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             builder.Property(x => x.LevProduct).HasColumnType("int");
             builder.Property(x => x.CodDisplay).HasMaxLength(50);
             builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasMaxLength(50);
-            builder.Property(x => x.CodNode).HasColumnName("CODNODE").HasMaxLength(50);
+            builder.Property(x => x.CodNode).HasColumnName("CODNODEO").HasMaxLength(50);
             builder.Property(x => x.CodNode1).HasColumnName("CODNODE1").HasMaxLength(50);
             builder.Property(x => x.CodNode2).HasColumnName("CODNODE2").HasMaxLength(50);
-            builder.Property(x => x.CodNodeN).HasColumnName("CODNODE_N").HasMaxLength(50);
+            builder.Property(x => x.CodNodeN).HasColumnName("FROMNODEFIN").HasMaxLength(50);
+
 
             builder.HasOne(x => x.ProductDetail)
                    .WithMany(x => x.Articles)

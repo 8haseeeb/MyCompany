@@ -10,12 +10,9 @@ public class PromoActionConfiguration : IEntityTypeConfiguration<PromoAction>
 
         builder.HasKey(x => x.IdAction);
 
-        builder.Property(x => x.IdAction)
-            .HasColumnName("ID_ACTION")
-            .ValueGeneratedNever();
+        builder.Property(x => x.IdAction).HasColumnName("IDACTION").ValueGeneratedNever();
         builder.Property(x => x.Name).HasColumnName("DESACTION");
         builder.Property(x => x.CodDiv).HasColumnName("CODDIV");
-
 
         builder.Property(x => x.DteStartSellIn).HasColumnName("DTESTARTSELLIN");
         builder.Property(x => x.DteEndSellIn).HasColumnName("DTEENDSELLIN");
@@ -23,8 +20,9 @@ public class PromoActionConfiguration : IEntityTypeConfiguration<PromoAction>
         builder.Property(x => x.DteEndSellOut).HasColumnName("DTEENDSELLOUT");
 
         builder.Property(x => x.DocumentKey).HasColumnName("DOCUMENTKEY");
-        builder.Property(x => x.DteToShost).HasColumnName("DTETOSHOST");
+        builder.Property(x => x.DteToShost).HasColumnName("DTEHOST");
         builder.Property(x => x.LevParticipants).HasColumnName("LEVPARTICIPANTS");
+
 
         // Relationships
 

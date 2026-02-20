@@ -21,12 +21,14 @@ namespace Promotions.Infrastructure.Persistence.Configurations
                 x.CodDiv
             });
 
-            builder.Property(x => x.IdAction).HasColumnType("int");
-            builder.Property(x => x.CodProduct).HasMaxLength(50);
-            builder.Property(x => x.LevProduct).HasColumnType("int");
-            builder.Property(x => x.CodDisplay).HasMaxLength(50);
-            builder.Property(x => x.CodNode).HasMaxLength(50);
-            builder.Property(x => x.CodDiv).HasMaxLength(50);
+            builder.Property(x => x.IdAction).HasColumnName("IDACTION").HasColumnType("int");
+            builder.Property(x => x.CodProduct).HasColumnName("CODPRODUCT").HasMaxLength(50);
+            builder.Property(x => x.LevProduct).HasColumnName("LEVPRODUCT").HasColumnType("int");
+            builder.Property(x => x.CodDisplay).HasColumnName("CODDISPLAY").HasMaxLength(50);
+            builder.Property(x => x.CodNode).HasColumnName("CODNODEO").HasMaxLength(50);
+            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasMaxLength(50);
+            builder.Property(x => x.FlgInclusion).HasColumnName("FLGINCLUSION");
+
 
             builder.HasOne(x => x.Product)
                    .WithMany(p => p.Details)

@@ -8,7 +8,7 @@ namespace Promotions.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<PromoParticipants> builder)
         {
-            builder.ToTable("TA5012PARTICIPANTS");
+            builder.ToTable("TA8012PARTICIPANTS");
 
             builder.HasKey(p => new { p.IdAction, p.CodParticipant });
 

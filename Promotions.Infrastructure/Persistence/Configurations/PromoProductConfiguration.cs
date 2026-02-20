@@ -8,7 +8,7 @@ namespace Promotions.Infrastructure.Products.Configurations
     {
         public void Configure(EntityTypeBuilder<PromoProduct> builder)
         {
-            builder.ToTable("TA5020PRODUCTS");
+            builder.ToTable("TA502PRODUCTS");
 
             builder.HasKey(x => new
             {
@@ -18,12 +18,16 @@ namespace Promotions.Infrastructure.Products.Configurations
                 x.CodDisplay
             });
 
-            builder.Property(x => x.IdAction).HasColumnType("int");
-            builder.Property(x => x.CodProduct).HasMaxLength(50);
-            builder.Property(x => x.LevProduct).HasColumnType("int");
-            builder.Property(x => x.CodDisplay).HasMaxLength(50);
-            builder.Property(x => x.CodDiv).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.CodMeasure).HasMaxLength(20);
+            builder.Property(x => x.IdAction).HasColumnName("IDACTION").HasColumnType("int");
+            builder.Property(x => x.CodProduct).HasColumnName("CODPRODUCT").HasMaxLength(50);
+            builder.Property(x => x.LevProduct).HasColumnName("LEVPRODUCT").HasColumnType("int");
+            builder.Property(x => x.CodDisplay).HasColumnName("CODDISPLAY").HasMaxLength(50);
+            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").IsRequired().HasMaxLength(50);
+            builder.Property(x => x.QtyEstimated).HasColumnName("QTYESTIMATED");
+            builder.Property(x => x.PerceDiscount1).HasColumnName("PERCDISCOUNT1");
+            builder.Property(x => x.PerceDiscount2).HasColumnName("PERCDISCOUNT2");
+            builder.Property(x => x.NumMeasure).HasColumnName("NUMMEASUREA");
+            builder.Property(x => x.CodMeasure).HasColumnName("CODMEASURE").HasMaxLength(20);
 
             builder.HasOne(x => x.Action)
                    .WithMany(a => a.Products)

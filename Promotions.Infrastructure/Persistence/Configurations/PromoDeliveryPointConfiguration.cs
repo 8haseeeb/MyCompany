@@ -9,7 +9,7 @@ namespace Promotions.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<PromoDeliveryPoint> builder)
         {
-            builder.ToTable("TA5014DELIVERYPOINTS");
+            builder.ToTable("TA501DELIVERYPOINTS");
 
             builder.HasKey(x => new
             {
