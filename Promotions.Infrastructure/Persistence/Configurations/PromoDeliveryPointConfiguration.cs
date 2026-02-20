@@ -18,7 +18,7 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             });
 
             builder.Property(x => x.IdAction)
-                .HasColumnName("ID_ACTION")
+                .HasColumnName("IDACTION")
                 .IsRequired();
 
             builder.Property(x => x.CodDeliveryPoint)
@@ -29,11 +29,11 @@ namespace Promotions.Infrastructure.Persistence.Configurations
                 .HasColumnName("FLGINCLUSION")
                 .IsRequired();
 
-            builder.Property(x => x.CodHier).HasMaxLength(10).IsRequired();
-            builder.Property(x => x.CodDiv).HasMaxLength(10).IsRequired();
-            builder.Property(x => x.CodNode).HasMaxLength(30).IsRequired();
-            builder.Property(x => x.IdLevel).IsRequired();
-            builder.Property(x => x.DteStart).IsRequired();
+            builder.Property(x => x.CodHier).HasColumnName("CODHER").HasMaxLength(10).IsRequired();
+            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasMaxLength(10).IsRequired();
+            builder.Property(x => x.CodNode).HasColumnName("CODNODE").HasMaxLength(30).IsRequired();
+            builder.Property(x => x.IdLevel).HasColumnName("IDLEVEL").IsRequired();
+            builder.Property(x => x.DteStart).HasColumnName("DTESTART").IsRequired();
 
             builder.HasOne(x => x.Action)
                    .WithMany(a => a.DeliveryPoints)

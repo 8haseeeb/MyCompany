@@ -27,7 +27,7 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             builder.Property(x => x.DteStart).HasColumnName("DTESTART");
             
             builder.Property(x => x.CodParentNode).HasColumnName("COOPAREANTNODE").HasMaxLength(30);
-            builder.Property(x => x.DteEnd).HasColumnName("DteEnd");
+            builder.Property(x => x.DteEnd).HasColumnName("DTEEND");
         }
     }
 }

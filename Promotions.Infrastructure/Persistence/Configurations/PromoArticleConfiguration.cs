@@ -13,10 +13,10 @@ namespace Promotions.Infrastructure.Persistence.Configurations
 
             builder.HasKey(x => new { x.IdAction, x.CodProduct, x.LevProduct, x.CodDisplay, x.CodDiv, x.CodNode });
 
-            builder.Property(x => x.IdAction).HasColumnType("int");
-            builder.Property(x => x.CodProduct).HasMaxLength(50);
-            builder.Property(x => x.LevProduct).HasColumnType("int");
-            builder.Property(x => x.CodDisplay).HasMaxLength(50);
+            builder.Property(x => x.IdAction).HasColumnName("IDACTION").HasColumnType("int");
+            builder.Property(x => x.CodProduct).HasColumnName("CODPRODUCT").HasMaxLength(50);
+            builder.Property(x => x.LevProduct).HasColumnName("LEVPRODUCT").HasColumnType("int");
+            builder.Property(x => x.CodDisplay).HasColumnName("CODDISPLAY").HasMaxLength(50);
             builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasMaxLength(50);
             builder.Property(x => x.CodNode).HasColumnName("CODNODEO").HasMaxLength(50);
             builder.Property(x => x.CodNode1).HasColumnName("CODNODE1").HasMaxLength(50);
