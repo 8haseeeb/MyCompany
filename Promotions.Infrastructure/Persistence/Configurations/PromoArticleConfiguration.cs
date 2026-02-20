@@ -17,10 +17,10 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             builder.Property(x => x.CodProduct).HasColumnName("CODPRODUCT").HasMaxLength(50);
             builder.Property(x => x.LevProduct).HasColumnName("LEVPRODUCT").HasColumnType("int");
             builder.Property(x => x.CodDisplay).HasColumnName("CODDISPLAY").HasMaxLength(50);
-            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasMaxLength(50);
-            builder.Property(x => x.CodNode).HasColumnName("CODNODEO").HasMaxLength(50);
-            builder.Property(x => x.CodNode1).HasColumnName("CODNODE1").HasMaxLength(50);
-            builder.Property(x => x.CodNode2).HasColumnName("CODNODE2").HasMaxLength(50);
+            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasConversion<int>().HasMaxLength(50);
+            builder.Property(x => x.CodNode).HasColumnName("CODNODEO").HasConversion<int>().HasMaxLength(50);
+            builder.Property(x => x.CodNode1).HasColumnName("CODNODE1").HasConversion<int>().HasMaxLength(50);
+            builder.Property(x => x.CodNode2).HasColumnName("CODNODE2").HasConversion<int>().HasMaxLength(50);
             builder.Property(x => x.CodNodeN).HasColumnName("FROMNODEFIN").HasMaxLength(50);
 
 

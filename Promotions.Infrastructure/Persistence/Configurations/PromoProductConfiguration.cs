@@ -19,10 +19,10 @@ namespace Promotions.Infrastructure.Products.Configurations
             });
 
             builder.Property(x => x.IdAction).HasColumnName("IDACTION").HasColumnType("int");
-            builder.Property(x => x.CodProduct).HasColumnName("CODPRODUCT").HasMaxLength(50);
+            builder.Property(x => x.CodProduct).HasColumnName("CODPRODUCT").HasConversion<long>().HasMaxLength(50);
             builder.Property(x => x.LevProduct).HasColumnName("LEVPRODUCT").HasColumnType("int");
             builder.Property(x => x.CodDisplay).HasColumnName("CODDISPLAY").HasMaxLength(50);
-            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").IsRequired().HasMaxLength(50);
+            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasConversion<int>().IsRequired().HasMaxLength(50);
             builder.Property(x => x.QtyEstimated).HasColumnName("QTYESTIMATED");
             builder.Property(x => x.PerceDiscount1).HasColumnName("PERCDISCOUNT1");
             builder.Property(x => x.PerceDiscount2).HasColumnName("PERCDISCOUNT2");
