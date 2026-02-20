@@ -56,8 +56,9 @@ namespace SSO.UnitTests.Auth.Handlers
             Assert.NotNull(result.RefreshToken);
             Assert.Equal("testuser", result.UserName);
             
-            var refreshTokenInDb = await _context.RefreshTokens.AnyAsync(rt => rt.UserId == user.Id);
-            Assert.True(refreshTokenInDb);
+            var userInDb = await _context.Users.FirstAsync(u => u.Id == user.Id);
+            Assert.NotNull(userInDb.RefreshToken);
+            Assert.True(userInDb.RefreshTokenExpiry > DateTime.UtcNow);
         }
 
         [Fact]

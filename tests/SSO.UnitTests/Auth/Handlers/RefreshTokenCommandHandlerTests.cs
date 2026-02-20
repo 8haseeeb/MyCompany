@@ -33,82 +33,56 @@ namespace SSO.UnitTests.Auth.Handlers
         public async Task Handle_Should_ReturnNewTokens_WhenRefreshTokenIsValid()
         {
             // --- ARRANGE ---
+            var oldRefreshToken = "old_refresh_token";
             var user = new User("testuser", "test@example.com", "hash");
+            user.UpdateRefreshToken(oldRefreshToken, DateTime.UtcNow.AddDays(1));
+            
             _context.Users.Add(user);
-            await _context.SaveChangesAsync(CancellationToken.None);
-
-            var oldToken = new RefreshToken
-            {
-                Token = "old_refresh_token",
-                UserId = user.Id,
-                ExpiresAt = DateTime.UtcNow.AddDays(1),
-                IsRevoked = false
-            };
-            _context.RefreshTokens.Add(oldToken);
             await _context.SaveChangesAsync(CancellationToken.None);
 
             _jwtTokenService.GenerateToken(Arg.Any<User>(), Arg.Any<string>()).Returns("new_access_token");
 
-            var command = new RefreshTokenCommand("old_refresh_token");
+            var command = new RefreshTokenCommand(oldRefreshToken);
 
             // --- ACT ---
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // --- ASSERT ---
             Assert.Equal("new_access_token", result.AccessToken);
-            Assert.NotEqual("old_refresh_token", result.RefreshToken);
+            Assert.NotEqual(oldRefreshToken, result.RefreshToken);
             
-            var updatedOldToken = await _context.RefreshTokens.FirstAsync(rt => rt.Token == "old_refresh_token");
-            Assert.True(updatedOldToken.IsRevoked);
-            
-            var newTokenInDb = await _context.RefreshTokens.AnyAsync(rt => rt.Token == result.RefreshToken);
-            Assert.True(newTokenInDb);
+            var userInDb = await _context.Users.FirstAsync(u => u.Id == user.Id);
+            Assert.Equal(result.RefreshToken, userInDb.RefreshToken);
+            Assert.True(userInDb.RefreshTokenExpiry > DateTime.UtcNow);
         }
 
         [Fact]
         public async Task Handle_Should_ThrowException_WhenTokenIsExpired()
         {
             // --- ARRANGE ---
+            var expiredToken = "expired_token";
             var user = new User("testuser", "test@example.com", "hash");
-            _context.Users.Add(user);
+            user.UpdateRefreshToken(expiredToken, DateTime.UtcNow.AddDays(-1));
             
-            var expiredToken = new RefreshToken
-            {
-                Token = "expired_token",
-                UserId = user.Id,
-                ExpiresAt = DateTime.UtcNow.AddDays(-1),
-                IsRevoked = false
-            };
-            _context.RefreshTokens.Add(expiredToken);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync(CancellationToken.None);
 
-            var command = new RefreshTokenCommand("expired_token");
+            var command = new RefreshTokenCommand(expiredToken);
 
             // --- ACT & ASSERT ---
-            await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command, CancellationToken.None));
+            var ex = await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command, CancellationToken.None));
+            Assert.Equal("Invalid or expired refresh token", ex.Message);
         }
 
         [Fact]
-        public async Task Handle_Should_ThrowException_WhenTokenIsRevoked()
+        public async Task Handle_Should_ThrowException_WhenTokenNotFound()
         {
             // --- ARRANGE ---
-            var user = new User("testuser", "test@example.com", "hash");
-            _context.Users.Add(user);
-            
-            var revokedToken = new RefreshToken
-            {
-                Token = "revoked_token",
-                UserId = user.Id,
-                ExpiresAt = DateTime.UtcNow.AddDays(1),
-                IsRevoked = true
-            };
-            _context.RefreshTokens.Add(revokedToken);
-            await _context.SaveChangesAsync(CancellationToken.None);
-
-            var command = new RefreshTokenCommand("revoked_token");
+            var command = new RefreshTokenCommand("non_existent_token");
 
             // --- ACT & ASSERT ---
-            await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command, CancellationToken.None));
+            var ex = await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command, CancellationToken.None));
+            Assert.Equal("Invalid or expired refresh token", ex.Message);
         }
 
         public void Dispose()
