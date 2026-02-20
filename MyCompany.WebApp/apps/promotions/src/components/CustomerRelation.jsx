@@ -96,8 +96,8 @@ const CustomerRelation = ({ userRole }) => {
     };
 
     const handleSubmit = async () => {
-        alert("Frontend: Submit Clicked! Starting API call...");
-        debugger;
+
+      
         try {
             await customerService.createCustomer(formData);
             alert("Customer Created Successfully!");
