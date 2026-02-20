@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SSO.Application.Auth.Commands;
 using SSO.Application.Dtos;
 using SSO.Application.Interfaces;
-using SSO.Domain.RefreshTokens;
+
 using Serilog;
 
 namespace SSO.Application.Auth.Handlers;
