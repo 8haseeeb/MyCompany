@@ -1,4 +1,5 @@
 ﻿using SSO.Domain.Users;
+using SSO.Application.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
