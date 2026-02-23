@@ -181,8 +181,7 @@ namespace Promotions.Application.Common.Mappings
             CreateMap<AtomicCreateProductDetailDto, PromoProductDetail>()
                 .ConstructUsing((src, context) => new PromoProductDetail(
                     (src.IdAction ?? 0) > 0 ? (src.IdAction ?? 0) : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
-                    src.CodProduct ?? "", src.LevProduct ?? 0, src.CodDisplay ?? "", src.CodNode ?? "", src.CodDiv ?? "", src.FlgInclusion))
-                .ForMember(dest => dest.Articles, opt => opt.MapFrom(src => src.Articles));
+                    src.CodProduct ?? "", src.LevProduct ?? 0, src.CodDisplay ?? "", src.CodNode ?? "", src.CodDiv ?? "", src.FlgInclusion));
 
             CreateMap<PromoProductDetail, ProductDetailDto>();
             CreateMap<PromoProductDetail, ProductDetailHierarchyDto>();

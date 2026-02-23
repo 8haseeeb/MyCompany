@@ -57,7 +57,7 @@ namespace Promotions.Application.Products.Commands.Handlers
                         codNode2: articleDto.CodNode2,
                         codNodeN: articleDto.CodNodeN
                     );
-                    detail.AddArticle(article);
+                    await _unitOfWork.PromoArticles.AddAsync(article);
                 }
                 product.AddDetail(detail);
             }

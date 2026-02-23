@@ -84,18 +84,21 @@ namespace Promotions.Application.PromotionDetails.Handlers
                     CodNode = d.CodNode,
                     CodDiv = d.CodDiv,
                     FlgInclusion = d.FlgInclusion,
-                    Articles = d.Articles.Select(a => new global::Promotions.Application.PromoArticles.Dtos.PromoArticleDto
+                    Articles = d.Article != null ? new List<global::Promotions.Application.PromoArticles.Dtos.PromoArticleDto>
                     {
-                        IdAction = a.IdAction,
-                        CodProduct = a.CodProduct,
-                        LevProduct = a.LevProduct,
-                        CodDisplay = a.CodDisplay,
-                        CodDiv = a.CodDiv,
-                        CodNode = a.CodNode,
-                        CodNode1 = a.CodNode1,
-                        CodNode2 = a.CodNode2,
-                        CodNodeN = a.CodNodeN
-                    }).ToList()
+                        new global::Promotions.Application.PromoArticles.Dtos.PromoArticleDto
+                        {
+                            IdAction = d.Article.IdAction,
+                            CodProduct = d.Article.CodProduct,
+                            LevProduct = d.Article.LevProduct,
+                            CodDisplay = d.Article.CodDisplay,
+                            CodDiv = d.Article.CodDiv,
+                            CodNode = d.Article.CodNode,
+                            CodNode1 = d.Article.CodNode1,
+                            CodNode2 = d.Article.CodNode2,
+                            CodNodeN = d.Article.CodNodeN
+                        }
+                    } : new List<global::Promotions.Application.PromoArticles.Dtos.PromoArticleDto>()
                 }).ToList(),
                 // Filter measure fields that match this product's division and measure code
                 MeasureFields = allMeasureFields

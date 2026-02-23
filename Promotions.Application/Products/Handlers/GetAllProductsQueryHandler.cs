@@ -45,18 +45,21 @@ namespace Promotions.Application.Products.Handlers
                     CodNode = d.CodNode,
                     CodDiv = d.CodDiv,
                     FlgInclusion = d.FlgInclusion,
-                    Articles = d.Articles.Select(a => new PromoArticleDto
+                    Articles = d.Article != null ? new List<PromoArticleDto>
                     {
-                        IdAction = a.IdAction,
-                        CodProduct = a.CodProduct,
-                        LevProduct = a.LevProduct,
-                        CodDisplay = a.CodDisplay,
-                        CodDiv = a.CodDiv,
-                        CodNode = a.CodNode,
-                        CodNode1 = a.CodNode1,
-                        CodNode2 = a.CodNode2,
-                        CodNodeN = a.CodNodeN
-                    }).ToList()
+                        new PromoArticleDto
+                        {
+                            IdAction = d.Article.IdAction,
+                            CodProduct = d.Article.CodProduct,
+                            LevProduct = d.Article.LevProduct,
+                            CodDisplay = d.Article.CodDisplay,
+                            CodDiv = d.Article.CodDiv,
+                            CodNode = d.Article.CodNode,
+                            CodNode1 = d.Article.CodNode1,
+                            CodNode2 = d.Article.CodNode2,
+                            CodNodeN = d.Article.CodNodeN
+                        }
+                    } : new List<PromoArticleDto>()
                 }).ToList()
             }).ToList();
         }

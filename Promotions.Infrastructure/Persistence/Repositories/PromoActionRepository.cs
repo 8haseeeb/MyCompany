@@ -19,10 +19,8 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                 .Include(x => x.Participants)
                 .Include(x => x.DeliveryPoints)
                 .Include(x => x.Products)
-
-                .Include(x => x.Products)
                     .ThenInclude(p => p.Details)
-                        .ThenInclude(d => d.Articles)
+                        .ThenInclude(d => d.Article)
                 .FirstOrDefaultAsync(x => x.IdAction == idAction);
         }
 

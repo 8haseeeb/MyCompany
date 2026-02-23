@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Promotions.Application.Common.Interfaces;
-using Promotions.Application.Products.Commands;
+
 
 
 namespace Promotions.Application.Products.Commands.Handlers

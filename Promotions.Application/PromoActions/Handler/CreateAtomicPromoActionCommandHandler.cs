@@ -10,7 +10,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-using Promotions.Application.Common.Interfaces;
 
 namespace Promotions.Application.PromoActions.Commands.Handlers
 {
