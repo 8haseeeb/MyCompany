@@ -10,7 +10,7 @@ namespace Promotions.Domain.PromoActions
     {
         public int IdAction { get; private set; }
         public string Name { get; private set; } = null!;
-        public string CodDiv { get; private set; } = null!;
+        public string? CodDiv { get; private set; }
         
         public DateTime DteStartSellIn { get; private set; }
         public DateTime DteEndSellIn { get; private set; }
@@ -30,7 +30,7 @@ namespace Promotions.Domain.PromoActions
 
         private PromoAction() { }
 
-        public PromoAction(int idAction, string name, string codDiv)
+        public PromoAction(int idAction, string name, string? codDiv)
         {
             if (idAction <= 0) throw new ArgumentException("IdAction must be positive.");
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required.");
@@ -41,7 +41,7 @@ namespace Promotions.Domain.PromoActions
             CodDiv = codDiv;
         }
 
-        public void UpdateBasicInfo(string name, string codDiv, string? documentKey, int? levParticipants)
+        public void UpdateBasicInfo(string name, string? codDiv, string? documentKey, int? levParticipants)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name is required.");
             Name = name;

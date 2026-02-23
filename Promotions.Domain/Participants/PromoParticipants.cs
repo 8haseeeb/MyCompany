@@ -9,9 +9,9 @@ namespace Promotions.Domain.Participants
         public bool FlgInclusion { get; private set; }
 
         // Foreign Keys for CustomerRelation
-        public string CodHier { get; private set; } = null!;
-        public string CodDiv { get; private set; } = null!;
-        public string CodNode { get; private set; } = null!;
+        public string? CodHier { get; private set; }
+        public string? CodDiv { get; private set; }
+        public string? CodNode { get; private set; }
         public int IdLevel { get; private set; }
         public DateTime DteStart { get; private set; }
 
@@ -24,7 +24,7 @@ namespace Promotions.Domain.Participants
 
         private PromoParticipants() { }
 
-        public PromoParticipants(int idAction, string codParticipant, bool flgInclusion, string codHier, string codDiv, string codNode, int idLevel, DateTime dteStart)
+        public PromoParticipants(int idAction, string codParticipant, bool flgInclusion, string? codHier, string? codDiv, string? codNode, int idLevel, DateTime dteStart)
         {
             IdAction = idAction;
             CodParticipant = codParticipant;

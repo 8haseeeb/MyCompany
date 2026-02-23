@@ -8,7 +8,7 @@ namespace Promotions.Domain.Products
         public string CodProduct { get; private set; } = null!;
         public int LevProduct { get; private set; }
         public string CodDisplay { get; private set; } = null!;
-        public string CodDiv { get; private set; } = null!;
+        public string? CodDiv { get; private set; }
         public decimal QtyEstimated { get; private set; }
         public decimal? PerceDiscount1 { get; private set; }
         public decimal? PerceDiscount2 { get; private set; }
@@ -20,7 +20,7 @@ namespace Promotions.Domain.Products
 
         private PromoProduct() { }
 
-        public PromoProduct(int idAction, string codProduct, int levProduct, string codDisplay, string codDiv)
+        public PromoProduct(int idAction, string codProduct, int levProduct, string codDisplay, string? codDiv)
         {
             if (idAction <= 0) throw new ArgumentException("IdAction must be positive.");
             if (string.IsNullOrWhiteSpace(codProduct)) throw new ArgumentException("CodProduct is required.");
@@ -50,7 +50,7 @@ namespace Promotions.Domain.Products
             PerceDiscount2 = discount2;
         }
 
-        public void UpdateDivision(string codDiv)
+        public void UpdateDivision(string? codDiv)
         {
             if (string.IsNullOrWhiteSpace(codDiv)) throw new ArgumentException("CodDiv is required.");
             CodDiv = codDiv;

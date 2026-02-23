@@ -7,13 +7,13 @@ namespace Promotions.Domain.CustomerRelations
 {
     public class CustomerRelation
     {
-        public string CodHier { get; private set; } = null!;
-        public string CodDiv { get; private set; } = null!;
-        public string CodNode { get; private set; } = null!;
+        public string? CodHier { get; private set; }
+        public string? CodDiv { get; private set; }
+        public string? CodNode { get; private set; }
         public int IdLevel { get; private set; }
         public DateTime DteStart { get; private set; }
 
-        public string CodParentNode { get; private set; } = null!;
+        public string? CodParentNode { get; private set; }
         public DateTime? DteEnd { get; private set; }
 
         // Navigation Properties
@@ -22,7 +22,7 @@ namespace Promotions.Domain.CustomerRelations
         
         private CustomerRelation() { }
 
-        public CustomerRelation(string codHier, string codDiv, string codNode, int idLevel, DateTime dteStart, string codParentNode = "ROOT")
+        public CustomerRelation(string? codHier, string? codDiv, string? codNode, int idLevel, DateTime dteStart, string? codParentNode = null)
         {
             if (string.IsNullOrWhiteSpace(codHier)) throw new ArgumentException("CodHier is required.");
             if (string.IsNullOrWhiteSpace(codDiv)) throw new ArgumentException("CodDiv is required.");
