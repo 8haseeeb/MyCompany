@@ -22,9 +22,7 @@ namespace Promotions.Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(x => x.CodDeliveryPoint)
-                .HasColumnName("CODDELIVERYPOINT")
-                .HasConversion<int>()
-            builder.Property(d => d.CodDeliveryPoint).HasColumnName("CODDELIVERYPOINT");
+                .HasColumnName("CODDELIVERYPOINT");
 
             builder.Property(x => x.FlgInclusion)
                 .HasColumnName("FLGINCLUSION")

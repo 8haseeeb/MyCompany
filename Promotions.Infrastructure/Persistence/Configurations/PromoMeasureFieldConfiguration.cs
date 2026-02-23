@@ -26,4 +26,4 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             builder.Property(x => x.Formula).HasColumnName("FORMULA").HasMaxLength(500);
         }
     }
-
+}
