@@ -72,7 +72,8 @@ namespace Promotions.Application.Common.Mappings
                 .AfterMap((src, dest) => {
                     dest.UpdateQuantities(src.QtyEstimated, src.NumMeasure, src.CodMeasure);
                     dest.UpdateDiscounts(src.PerceDiscount1, src.PerceDiscount2);
-                });
+                })
+                .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.Details));
             
             CreateMap<CreateProductDto, PromoProduct>()
                 .ConstructUsing((src, context) => new PromoProduct(
@@ -81,7 +82,8 @@ namespace Promotions.Application.Common.Mappings
                 .AfterMap((src, dest) => {
                     dest.UpdateQuantities(src.QtyEstimated, src.NumMeasure, src.CodMeasure);
                     dest.UpdateDiscounts(src.PerceDiscount1, src.PerceDiscount2);
-                });
+                })
+                .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.Details));
 
             CreateMap<AtomicCreateProductDto, PromoProduct>()
                 .ConstructUsing((src, context) => new PromoProduct(
@@ -90,7 +92,8 @@ namespace Promotions.Application.Common.Mappings
                 .AfterMap((src, dest) => {
                     dest.UpdateQuantities(src.QtyEstimated, src.NumMeasure, src.CodMeasure);
                     dest.UpdateDiscounts(src.PerceDiscount1, src.PerceDiscount2);
-                });
+                })
+                .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.Details));
 
             CreateMap<PromoProduct, ProductDto>();
             CreateMap<PromoProduct, CreateProductDto>();
