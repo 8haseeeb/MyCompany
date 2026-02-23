@@ -19,7 +19,7 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             // Mapping hierarchy fields explicitly to match screenshot exactly, 
             // even if snapshot defaults to property name.
             builder.Property(p => p.CodHier).HasColumnName("CODHER").HasMaxLength(10);
-            builder.Property(p => p.CodDiv).HasColumnName("CODDIV").HasMaxLength(10);
+            builder.Property(d => d.CodDiv).HasColumnName("CODDIV").HasMaxLength(50).IsRequired();
             builder.Property(p => p.CodNode).HasColumnName("CODNODE").HasMaxLength(30);
             builder.Property(p => p.IdLevel).HasColumnName("IDLEVEL").IsRequired();
             builder.Property(p => p.DteStart).HasColumnName("DTESTART").IsRequired();

@@ -5,7 +5,7 @@
 namespace Promotions.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class FixCodDivSchema : Migration
+    public partial class FixCodDivSchemaFinal : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -305,6 +305,16 @@ namespace Promotions.Infrastructure.Migrations
                 newName: "IX_TA8012PARTICIPANTS_CODHER_CODDIV_CODNODE_IDLEVEL_DTESTART");
 
             migrationBuilder.AlterColumn<string>(
+                name: "CODDIV",
+                table: "TB0042RELATIONS_CUST",
+                type: "nvarchar(50)",
+                maxLength: 50,
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(10)",
+                oldMaxLength: 10);
+
+            migrationBuilder.AlterColumn<string>(
                 name: "COOPAREANTNODE",
                 table: "TB0042RELATIONS_CUST",
                 type: "nvarchar(30)",
@@ -407,6 +417,16 @@ namespace Promotions.Infrastructure.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
+                name: "CODDIV",
+                table: "TA501DELIVERYPOINTS",
+                type: "nvarchar(50)",
+                maxLength: 50,
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(10)",
+                oldMaxLength: 10);
+
+            migrationBuilder.AlterColumn<string>(
                 name: "CODDELIVERYPOINT",
                 table: "TA501DELIVERYPOINTS",
                 type: "nvarchar(450)",
@@ -428,9 +448,9 @@ namespace Promotions.Infrastructure.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "CODDIV",
                 table: "TA8012PARTICIPANTS",
-                type: "nvarchar(10)",
-                maxLength: 10,
-                nullable: true,
+                type: "nvarchar(50)",
+                maxLength: 50,
+                nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(10)",
                 oldMaxLength: 10);
@@ -803,6 +823,16 @@ namespace Promotions.Infrastructure.Migrations
                 newName: "IX_TA5014DELIVERYPOINTS_CodHier_CodDiv_CodNode_IdLevel_DteStart");
 
             migrationBuilder.AlterColumn<string>(
+                name: "CodDiv",
+                table: "TB0042RELATIONS_CUST",
+                type: "nvarchar(10)",
+                maxLength: 10,
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(50)",
+                oldMaxLength: 50);
+
+            migrationBuilder.AlterColumn<string>(
                 name: "CodParentNode",
                 table: "TB0042RELATIONS_CUST",
                 type: "nvarchar(30)",
@@ -863,11 +893,9 @@ namespace Promotions.Infrastructure.Migrations
                 type: "nvarchar(10)",
                 maxLength: 10,
                 nullable: false,
-                defaultValue: "",
                 oldClrType: typeof(string),
-                oldType: "nvarchar(10)",
-                oldMaxLength: 10,
-                oldNullable: true);
+                oldType: "nvarchar(50)",
+                oldMaxLength: 50);
 
             migrationBuilder.AlterColumn<string>(
                 name: "CodHier",
@@ -975,6 +1003,16 @@ namespace Promotions.Infrastructure.Migrations
                 oldPrecision: 18,
                 oldScale: 3,
                 oldNullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "CodDiv",
+                table: "TA5014DELIVERYPOINTS",
+                type: "nvarchar(10)",
+                maxLength: 10,
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(50)",
+                oldMaxLength: 50);
 
             migrationBuilder.AlterColumn<string>(
                 name: "CODDELIVERYPOINT",

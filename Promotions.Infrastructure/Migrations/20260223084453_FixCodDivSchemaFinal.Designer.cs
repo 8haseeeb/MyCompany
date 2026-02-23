@@ -12,8 +12,8 @@ using Promotions.Infrastructure.Persistence;
 namespace Promotions.Infrastructure.Migrations
 {
     [DbContext(typeof(PromotionsDbContext))]
-    [Migration("20260223080656_FixCodDivSchema")]
-    partial class FixCodDivSchema
+    [Migration("20260223084453_FixCodDivSchemaFinal")]
+    partial class FixCodDivSchemaFinal
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,8 +64,8 @@ namespace Promotions.Infrastructure.Migrations
                         .HasColumnName("CODHER");
 
                     b.Property<string>("CodDiv")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("CODDIV");
 
                     b.Property<string>("CodNode")
@@ -107,8 +107,8 @@ namespace Promotions.Infrastructure.Migrations
 
                     b.Property<string>("CodDiv")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("CODDIV");
 
                     b.Property<string>("CodHier")
@@ -181,8 +181,9 @@ namespace Promotions.Infrastructure.Migrations
                         .HasColumnName("CODPARTICIPANT");
 
                     b.Property<string>("CodDiv")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("CODDIV");
 
                     b.Property<string>("CodHier")

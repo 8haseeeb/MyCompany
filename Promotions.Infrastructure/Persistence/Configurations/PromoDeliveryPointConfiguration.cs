@@ -29,7 +29,7 @@ namespace Promotions.Infrastructure.Persistence.Configurations
                 .IsRequired();
             
             builder.Property(d => d.CodHier).HasColumnName("CODHER").HasMaxLength(10);
-            builder.Property(d => d.CodDiv).HasColumnName("CODDIV").HasMaxLength(10).IsRequired();
+            builder.Property(d => d.CodDiv).HasColumnName("CODDIV").HasMaxLength(50).IsRequired();
             builder.Property(x => x.CodNode).HasColumnName("CODNODE").HasMaxLength(30).IsRequired();
             builder.Property(x => x.IdLevel).HasColumnName("IDLEVEL").IsRequired();
             builder.Property(x => x.DteStart).HasColumnName("DTESTART").IsRequired();

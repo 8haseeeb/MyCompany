@@ -21,7 +21,7 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             });
 
             builder.Property(x => x.CodHier).HasColumnName("CODHER").HasMaxLength(10);
-            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasMaxLength(10);
+            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasMaxLength(50);
             builder.Property(x => x.CodNode).HasColumnName("CODNODE").HasMaxLength(30);
             builder.Property(x => x.IdLevel).HasColumnName("IDLEVEL");
             builder.Property(x => x.DteStart).HasColumnName("DTESTART");
