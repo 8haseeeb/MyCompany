@@ -20,11 +20,10 @@ namespace Promotions.Infrastructure.Persistence.Configurations
 
 
 
-            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasConversion<int>().HasMaxLength(20).IsRequired();
+            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasMaxLength(10).IsRequired();
             builder.Property(x => x.CodMeasure).HasColumnName("CODMEASURE").HasMaxLength(50).IsRequired();
             builder.Property(x => x.FieldName).HasColumnName("FIELDNAME").HasMaxLength(100).IsRequired();
             builder.Property(x => x.Formula).HasColumnName("FORMULA").HasMaxLength(500);
         }
     }
-}
 

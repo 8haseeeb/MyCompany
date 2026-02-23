@@ -20,13 +20,13 @@ namespace Promotions.Infrastructure.Persistence.Configurations
                 x.DteStart
             });
 
-            builder.Property(x => x.CodHier).HasColumnName("CODHER").HasConversion<int>().HasMaxLength(10);
-            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasConversion<int>().HasMaxLength(10);
-            builder.Property(x => x.CodNode).HasColumnName("CODNODE").HasConversion<int>().HasMaxLength(30);
+            builder.Property(x => x.CodHier).HasColumnName("CODHER").HasMaxLength(10);
+            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasMaxLength(10);
+            builder.Property(x => x.CodNode).HasColumnName("CODNODE").HasMaxLength(30);
             builder.Property(x => x.IdLevel).HasColumnName("IDLEVEL");
             builder.Property(x => x.DteStart).HasColumnName("DTESTART");
             
-            builder.Property(x => x.CodParentNode).HasColumnName("COOPAREANTNODE").HasConversion<int>().HasMaxLength(30);
+            builder.Property(x => x.CodParentNode).HasColumnName("COOPAREANTNODE").HasMaxLength(30);
             builder.Property(x => x.DteEnd).HasColumnName("DTEEND");
         }
     }

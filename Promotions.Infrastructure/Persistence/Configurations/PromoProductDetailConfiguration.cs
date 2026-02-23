@@ -22,11 +22,11 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             });
 
             builder.Property(x => x.IdAction).HasColumnName("IDACTION").HasColumnType("int");
-            builder.Property(x => x.CodProduct).HasColumnName("CODPRODUCT").HasConversion<long>().HasMaxLength(50);
+            builder.Property(x => x.CodProduct).HasColumnName("CODPRODUCT").HasMaxLength(50);
             builder.Property(x => x.LevProduct).HasColumnName("LEVPRODUCT").HasColumnType("int");
             builder.Property(x => x.CodDisplay).HasColumnName("CODDISPLAY").HasMaxLength(50);
-            builder.Property(x => x.CodNode).HasColumnName("CODNODEO").HasConversion<int>().HasMaxLength(50);
-            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasConversion<int>().HasMaxLength(50);
+            builder.Property(x => x.CodNode).HasColumnName("CODNODEO").HasMaxLength(30);
+            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasMaxLength(10);
             builder.Property(x => x.FlgInclusion).HasColumnName("FLGINCLUSION");
 
 

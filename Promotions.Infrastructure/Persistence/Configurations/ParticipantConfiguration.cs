@@ -13,14 +13,14 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             builder.HasKey(p => new { p.IdAction, p.CodParticipant });
 
             builder.Property(p => p.IdAction).HasColumnName("IDACTION");
-            builder.Property(p => p.CodParticipant).HasColumnName("CODPARTICIPANT").HasConversion<long>();
+            builder.Property(p => p.CodParticipant).HasColumnName("CODPARTICIPANT");
             builder.Property(p => p.FlgInclusion).HasColumnName("FLGINCLUSION");
 
             // Mapping hierarchy fields explicitly to match screenshot exactly, 
             // even if snapshot defaults to property name.
-            builder.Property(p => p.CodHier).HasColumnName("CODHER").HasConversion<int>().HasMaxLength(10).IsRequired();
-            builder.Property(p => p.CodDiv).HasColumnName("CODDIV").HasConversion<int>().HasMaxLength(10).IsRequired();
-            builder.Property(p => p.CodNode).HasColumnName("CODNODE").HasConversion<int>().HasMaxLength(30).IsRequired();
+            builder.Property(p => p.CodHier).HasColumnName("CODHER").HasMaxLength(10);
+            builder.Property(p => p.CodDiv).HasColumnName("CODDIV").HasMaxLength(10);
+            builder.Property(p => p.CodNode).HasColumnName("CODNODE").HasMaxLength(30);
             builder.Property(p => p.IdLevel).HasColumnName("IDLEVEL").IsRequired();
             builder.Property(p => p.DteStart).HasColumnName("DTESTART").IsRequired();
 

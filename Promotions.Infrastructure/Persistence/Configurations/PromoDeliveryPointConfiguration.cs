@@ -24,15 +24,15 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             builder.Property(x => x.CodDeliveryPoint)
                 .HasColumnName("CODDELIVERYPOINT")
                 .HasConversion<int>()
-                .HasMaxLength(50);
+            builder.Property(d => d.CodDeliveryPoint).HasColumnName("CODDELIVERYPOINT");
 
             builder.Property(x => x.FlgInclusion)
                 .HasColumnName("FLGINCLUSION")
                 .IsRequired();
             
-            builder.Property(x => x.CodHier).HasColumnName("CODHER").HasConversion<int>().HasMaxLength(10).IsRequired();
-            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasConversion<int>().HasMaxLength(10).IsRequired();
-            builder.Property(x => x.CodNode).HasColumnName("CODNODE").HasConversion<int>().HasMaxLength(30).IsRequired();
+            builder.Property(d => d.CodHier).HasColumnName("CODHER").HasMaxLength(10);
+            builder.Property(d => d.CodDiv).HasColumnName("CODDIV").HasMaxLength(10).IsRequired();
+            builder.Property(x => x.CodNode).HasColumnName("CODNODE").HasMaxLength(30).IsRequired();
             builder.Property(x => x.IdLevel).HasColumnName("IDLEVEL").IsRequired();
             builder.Property(x => x.DteStart).HasColumnName("DTESTART").IsRequired();
 
