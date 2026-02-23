@@ -20,7 +20,6 @@ namespace Promotions.Infrastructure.Persistence.Repositories
             return await _context.Products
                 .Include(x => x.Action)
                 .Include(x => x.Details)
-                .ThenInclude(d => d.Article)
                 .FirstOrDefaultAsync(x =>
                     x.IdAction == idAction &&
                     x.CodProduct == codProduct &&
@@ -33,7 +32,6 @@ namespace Promotions.Infrastructure.Persistence.Repositories
             return await _context.Products
                 .Include(x => x.Action)
                 .Include(x => x.Details)
-                .ThenInclude(d => d.Article)
                 .Where(x => x.IdAction == idAction)
                 .ToListAsync();
         }
@@ -43,7 +41,6 @@ namespace Promotions.Infrastructure.Persistence.Repositories
             return await _context.Products
                 .Include(x => x.Action)
                 .Include(x => x.Details)
-                .ThenInclude(d => d.Article)
                 .ToListAsync();
         }
 
