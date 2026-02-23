@@ -3,7 +3,7 @@
     [CODPRODUCT]    BIGINT          NOT NULL,
     [LEVPRODUCT]    INT             NOT NULL,
     [CODDISPLAY]    NVARCHAR (50)   NOT NULL,
-    [CODDIV]        INT             NULL,
+    [CODDIV]        NVARCHAR (50)   NULL,
     [QTYESTIMATED]  DECIMAL (18, 3) NULL,
     [PERCDISCOUNT1] DECIMAL (5, 2)  NULL,
     [PERCDISCOUNT2] DECIMAL (5, 2)  NULL,

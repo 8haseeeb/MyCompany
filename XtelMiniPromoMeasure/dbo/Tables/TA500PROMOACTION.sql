@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[TA500PROMOACTION] (
     [IDACTION]        INT            NOT NULL,
     [DESACTION]       NVARCHAR (100) NULL,
-    [CODDIV]          INT            NULL,
+    [CODDIV]          NVARCHAR (50)  NULL,
     [CODCONTRACTOR]   INT            NULL,
     [LEVCONTRACTOR]   INT            NULL,
     [DTESTARTSELLIN]  DATETIME       NULL,
