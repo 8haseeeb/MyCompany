@@ -30,10 +30,9 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             builder.Property(x => x.FlgInclusion).HasColumnName("FLGINCLUSION");
 
 
-            builder.HasOne(x => x.Article)
-                   .WithMany()
-                   .HasForeignKey(x => new { x.CodDiv, x.CodNode })
-                   .OnDelete(DeleteBehavior.Restrict);
+            // The FK to TA5150PROMOARTICLES is intentionally not enforced at the EF level.
+            // PromoArticles are master/catalog data managed externally and are not
+            // created as part of the atomic promotion creation flow.
 
             builder.HasOne(x => x.Product)
                    .WithMany(p => p.Details)
