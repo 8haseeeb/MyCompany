@@ -1,0 +1,302 @@
+﻿{"TimeStamp": "2026-02-23T07:24:52.10439", "Log": "Connecting to the container 'promotions-api'..."}
+{"TimeStamp": "2026-02-23T07:24:52.13348", "Log": "Successfully Connected to container: 'promotions-api' [Revision: 'promotions-api--0000024', Replica: 'promotions-api--0000024-8487bf78d6-ckf58']"}
+{"TimeStamp": "2026-02-23T07:18:25.2107657+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)"}
+{"TimeStamp": "2026-02-23T07:18:25.210768+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)"}
+{"TimeStamp": "2026-02-23T07:18:25.2107701+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)"}
+{"TimeStamp": "2026-02-23T07:18:25.2107727+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)"}
+{"TimeStamp": "2026-02-23T07:18:25.2107748+00:00", "Log": "F --- End of stack trace from previous location ---"}
+{"TimeStamp": "2026-02-23T07:18:25.2107772+00:00", "Log": "F    at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()"}
+{"TimeStamp": "2026-02-23T07:18:25.2107794+00:00", "Log": "F ClientConnectionId:75a8b8c3-d51b-4eec-8d2a-367faa467c48"}
+{"TimeStamp": "2026-02-23T07:18:25.2108528+00:00", "Log": "F Error Number:245,State:1,Class:16"}
+{"TimeStamp": "2026-02-23T07:18:25.2108605+00:00", "Log": "F ClientConnectionId before routing:0c9de470-2357-4b86-89ef-ca08990a64ef"}
+{"TimeStamp": "2026-02-23T07:18:25.210863+00:00", "Log": "F Routing Destination:f7b62bcaaa33.tr6442.southeastasia1-a.worker.database.windows.net,11014"}
+{"TimeStamp": "2026-02-23T07:18:25.2108653+00:00", "Log": "F [07:18:25 INF] HTTP POST /api/promotions/actions/atomic responded 500 in 12.8500 ms | User: zzz (6) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"error\":\"An error occurred while creating the atomic promotion.\",\"details\":[\"Conversion failed when converting the nvarchar value 'DIV_1' to data type int.\"]}"}
+{"TimeStamp": "2026-02-23T07:18:25.2108695+00:00", "Log": "F [07:18:25 ERR] HTTP POST /api/promotions/actions/atomic responded 500 in 13.0272 ms"}
+{"TimeStamp": "2026-02-23T07:18:25.2145265+00:00", "Log": "F [07:18:25 INF] Downstream JWT validated for zzz"}
+{"TimeStamp": "2026-02-23T07:18:25.2280467+00:00", "Log": "F [07:18:25 ERR] An exception occurred while iterating over the results of a query for context type 'Promotions.Infrastructure.Persistence.PromotionsDbContext'."}
+{"TimeStamp": "2026-02-23T07:18:25.2280874+00:00", "Log": "F Microsoft.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value 'DIV_1' to data type int."}
+{"TimeStamp": "2026-02-23T07:18:25.2281093+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:18:25.2281127+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:18:25.228115+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)"}
+{"TimeStamp": "2026-02-23T07:18:25.2281173+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)"}
+{"TimeStamp": "2026-02-23T07:18:25.2281195+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)"}
+{"TimeStamp": "2026-02-23T07:18:25.2281808+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)"}
+{"TimeStamp": "2026-02-23T07:18:25.2281894+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)"}
+{"TimeStamp": "2026-02-23T07:18:25.228197+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)"}
+{"TimeStamp": "2026-02-23T07:18:25.2281997+00:00", "Log": "F --- End of stack trace from previous location ---"}
+{"TimeStamp": "2026-02-23T07:18:25.228202+00:00", "Log": "F    at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()"}
+{"TimeStamp": "2026-02-23T07:18:25.2282043+00:00", "Log": "F ClientConnectionId:75a8b8c3-d51b-4eec-8d2a-367faa467c48"}
+{"TimeStamp": "2026-02-23T07:18:25.228264+00:00", "Log": "F Error Number:245,State:1,Class:16"}
+{"TimeStamp": "2026-02-23T07:18:25.2282685+00:00", "Log": "F ClientConnectionId before routing:0c9de470-2357-4b86-89ef-ca08990a64ef"}
+{"TimeStamp": "2026-02-23T07:18:25.2282724+00:00", "Log": "F Routing Destination:f7b62bcaaa33.tr6442.southeastasia1-a.worker.database.windows.net,11014"}
+{"TimeStamp": "2026-02-23T07:18:25.2282747+00:00", "Log": "F Microsoft.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value 'DIV_1' to data type int."}
+{"TimeStamp": "2026-02-23T07:18:25.2282768+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:18:25.2282976+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:18:25.2283016+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)"}
+{"TimeStamp": "2026-02-23T07:18:25.2283047+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)"}
+{"TimeStamp": "2026-02-23T07:18:25.228307+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)"}
+{"TimeStamp": "2026-02-23T07:18:25.2283093+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)"}
+{"TimeStamp": "2026-02-23T07:18:25.2283132+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)"}
+{"TimeStamp": "2026-02-23T07:18:25.2283154+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)"}
+{"TimeStamp": "2026-02-23T07:18:25.2283176+00:00", "Log": "F --- End of stack trace from previous location ---"}
+{"TimeStamp": "2026-02-23T07:18:25.2283198+00:00", "Log": "F    at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()"}
+{"TimeStamp": "2026-02-23T07:18:25.228322+00:00", "Log": "F ClientConnectionId:75a8b8c3-d51b-4eec-8d2a-367faa467c48"}
+{"TimeStamp": "2026-02-23T07:18:25.2283323+00:00", "Log": "F Error Number:245,State:1,Class:16"}
+{"TimeStamp": "2026-02-23T07:18:25.2283376+00:00", "Log": "F ClientConnectionId before routing:0c9de470-2357-4b86-89ef-ca08990a64ef"}
+{"TimeStamp": "2026-02-23T07:18:25.2283415+00:00", "Log": "F Routing Destination:f7b62bcaaa33.tr6442.southeastasia1-a.worker.database.windows.net,11014"}
+{"TimeStamp": "2026-02-23T07:18:25.2287036+00:00", "Log": "F [07:18:25 INF] HTTP POST /api/promotions/actions/atomic responded 500 in 14.3799 ms | User: zzz (6) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"error\":\"An error occurred while creating the atomic promotion.\",\"details\":[\"Conversion failed when converting the nvarchar value 'DIV_1' to data type int.\"]}"}
+{"TimeStamp": "2026-02-23T07:18:25.2287738+00:00", "Log": "F [07:18:25 ERR] HTTP POST /api/promotions/actions/atomic responded 500 in 14.5232 ms"}
+{"TimeStamp": "2026-02-23T07:18:25.2333058+00:00", "Log": "F [07:18:25 INF] Downstream JWT validated for zzz"}
+{"TimeStamp": "2026-02-23T07:18:25.2456514+00:00", "Log": "F [07:18:25 ERR] An exception occurred while iterating over the results of a query for context type 'Promotions.Infrastructure.Persistence.PromotionsDbContext'."}
+{"TimeStamp": "2026-02-23T07:18:25.2456891+00:00", "Log": "F Microsoft.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value 'DIV_1' to data type int."}
+{"TimeStamp": "2026-02-23T07:18:25.2457084+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:18:25.2457106+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:18:25.2457126+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)"}
+{"TimeStamp": "2026-02-23T07:18:25.2457149+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)"}
+{"TimeStamp": "2026-02-23T07:18:25.2457173+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)"}
+{"TimeStamp": "2026-02-23T07:18:25.2458477+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)"}
+{"TimeStamp": "2026-02-23T07:18:25.2458542+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)"}
+{"TimeStamp": "2026-02-23T07:18:25.2458583+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)"}
+{"TimeStamp": "2026-02-23T07:18:25.2458631+00:00", "Log": "F --- End of stack trace from previous location ---"}
+{"TimeStamp": "2026-02-23T07:18:25.2458654+00:00", "Log": "F    at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()"}
+{"TimeStamp": "2026-02-23T07:18:25.2458676+00:00", "Log": "F ClientConnectionId:75a8b8c3-d51b-4eec-8d2a-367faa467c48"}
+{"TimeStamp": "2026-02-23T07:18:25.2458698+00:00", "Log": "F Error Number:245,State:1,Class:16"}
+{"TimeStamp": "2026-02-23T07:18:25.245872+00:00", "Log": "F ClientConnectionId before routing:0c9de470-2357-4b86-89ef-ca08990a64ef"}
+{"TimeStamp": "2026-02-23T07:18:25.2458743+00:00", "Log": "F Routing Destination:f7b62bcaaa33.tr6442.southeastasia1-a.worker.database.windows.net,11014"}
+{"TimeStamp": "2026-02-23T07:18:25.2458766+00:00", "Log": "F Microsoft.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value 'DIV_1' to data type int."}
+{"TimeStamp": "2026-02-23T07:18:25.2458788+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:18:25.2458898+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:18:25.2458968+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)"}
+{"TimeStamp": "2026-02-23T07:18:25.2459011+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)"}
+{"TimeStamp": "2026-02-23T07:18:25.2459035+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)"}
+{"TimeStamp": "2026-02-23T07:18:25.2459058+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)"}
+{"TimeStamp": "2026-02-23T07:18:25.2459099+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)"}
+{"TimeStamp": "2026-02-23T07:18:25.2459119+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)"}
+{"TimeStamp": "2026-02-23T07:18:25.245914+00:00", "Log": "F --- End of stack trace from previous location ---"}
+{"TimeStamp": "2026-02-23T07:18:25.2459159+00:00", "Log": "F    at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()"}
+{"TimeStamp": "2026-02-23T07:18:25.245918+00:00", "Log": "F ClientConnectionId:75a8b8c3-d51b-4eec-8d2a-367faa467c48"}
+{"TimeStamp": "2026-02-23T07:18:25.245932+00:00", "Log": "F Error Number:245,State:1,Class:16"}
+{"TimeStamp": "2026-02-23T07:18:25.2459344+00:00", "Log": "F ClientConnectionId before routing:0c9de470-2357-4b86-89ef-ca08990a64ef"}
+{"TimeStamp": "2026-02-23T07:18:25.245937+00:00", "Log": "F Routing Destination:f7b62bcaaa33.tr6442.southeastasia1-a.worker.database.windows.net,11014"}
+{"TimeStamp": "2026-02-23T07:18:25.2467635+00:00", "Log": "F [07:18:25 INF] HTTP POST /api/promotions/actions/atomic responded 500 in 13.6515 ms | User: zzz (6) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"error\":\"An error occurred while creating the atomic promotion.\",\"details\":[\"Conversion failed when converting the nvarchar value 'DIV_1' to data type int.\"]}"}
+{"TimeStamp": "2026-02-23T07:18:25.246788+00:00", "Log": "F [07:18:25 ERR] HTTP POST /api/promotions/actions/atomic responded 500 in 13.7937 ms"}
+{"TimeStamp": "2026-02-23T07:18:26.8096231+00:00", "Log": "F [07:18:26 INF] HTTP GET /api/health responded 200 in 0.3042 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:18:26.8092699Z\",\"uptime\":\"0d 0h 4m 40s\"}"}
+{"TimeStamp": "2026-02-23T07:18:26.8097459+00:00", "Log": "F [07:18:26 INF] HTTP GET /api/health responded 200 in 0.5040 ms"}
+{"TimeStamp": "2026-02-23T07:18:47.0484276+00:00", "Log": "F [07:18:47 INF] Downstream JWT validated for zzz"}
+{"TimeStamp": "2026-02-23T07:18:47.0582705+00:00", "Log": "F [07:18:47 INF] HTTP GET /api/health responded 200 in 0.2733 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:18:47.0579574Z\",\"uptime\":\"0d 0h 5m 0s\"}"}
+{"TimeStamp": "2026-02-23T07:18:47.0584531+00:00", "Log": "F [07:18:47 INF] HTTP GET /api/health responded 200 in 0.4053 ms"}
+{"TimeStamp": "2026-02-23T07:18:47.0611205+00:00", "Log": "F [07:18:47 ERR] An exception occurred while iterating over the results of a query for context type 'Promotions.Infrastructure.Persistence.PromotionsDbContext'."}
+{"TimeStamp": "2026-02-23T07:18:47.0611448+00:00", "Log": "F Microsoft.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value 'DIV_1' to data type int."}
+{"TimeStamp": "2026-02-23T07:18:47.061157+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:18:47.0611591+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:18:47.0611609+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)"}
+{"TimeStamp": "2026-02-23T07:18:47.0611656+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)"}
+{"TimeStamp": "2026-02-23T07:18:47.0611671+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)"}
+{"TimeStamp": "2026-02-23T07:18:47.061227+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)"}
+{"TimeStamp": "2026-02-23T07:18:47.0612312+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)"}
+{"TimeStamp": "2026-02-23T07:18:47.0612337+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)"}
+{"TimeStamp": "2026-02-23T07:18:47.0612352+00:00", "Log": "F --- End of stack trace from previous location ---"}
+{"TimeStamp": "2026-02-23T07:18:47.0612367+00:00", "Log": "F    at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()"}
+{"TimeStamp": "2026-02-23T07:18:47.0612381+00:00", "Log": "F ClientConnectionId:75a8b8c3-d51b-4eec-8d2a-367faa467c48"}
+{"TimeStamp": "2026-02-23T07:18:47.0612415+00:00", "Log": "F Error Number:245,State:1,Class:16"}
+{"TimeStamp": "2026-02-23T07:18:47.0612429+00:00", "Log": "F ClientConnectionId before routing:0c9de470-2357-4b86-89ef-ca08990a64ef"}
+{"TimeStamp": "2026-02-23T07:18:47.0612444+00:00", "Log": "F Routing Destination:f7b62bcaaa33.tr6442.southeastasia1-a.worker.database.windows.net,11014"}
+{"TimeStamp": "2026-02-23T07:18:47.0612458+00:00", "Log": "F Microsoft.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value 'DIV_1' to data type int."}
+{"TimeStamp": "2026-02-23T07:18:47.0612473+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:18:47.0614647+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:18:47.0614989+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)"}
+{"TimeStamp": "2026-02-23T07:18:47.0615113+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)"}
+{"TimeStamp": "2026-02-23T07:18:47.0615144+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)"}
+{"TimeStamp": "2026-02-23T07:18:47.0615169+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)"}
+{"TimeStamp": "2026-02-23T07:18:47.0615189+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)"}
+{"TimeStamp": "2026-02-23T07:18:47.0615211+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)"}
+{"TimeStamp": "2026-02-23T07:18:47.0616868+00:00", "Log": "F --- End of stack trace from previous location ---"}
+{"TimeStamp": "2026-02-23T07:18:47.0616964+00:00", "Log": "F    at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()"}
+{"TimeStamp": "2026-02-23T07:18:47.0616989+00:00", "Log": "F ClientConnectionId:75a8b8c3-d51b-4eec-8d2a-367faa467c48"}
+{"TimeStamp": "2026-02-23T07:18:47.0617229+00:00", "Log": "F Error Number:245,State:1,Class:16"}
+{"TimeStamp": "2026-02-23T07:18:47.0617365+00:00", "Log": "F ClientConnectionId before routing:0c9de470-2357-4b86-89ef-ca08990a64ef"}
+{"TimeStamp": "2026-02-23T07:18:47.061743+00:00", "Log": "F Routing Destination:f7b62bcaaa33.tr6442.southeastasia1-a.worker.database.windows.net,11014"}
+{"TimeStamp": "2026-02-23T07:18:47.0619867+00:00", "Log": "F [07:18:47 INF] HTTP POST /api/promotions/actions/atomic responded 500 in 14.3775 ms | User: zzz (6) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"error\":\"An error occurred while creating the atomic promotion.\",\"details\":[\"Conversion failed when converting the nvarchar value 'DIV_1' to data type int.\"]}"}
+{"TimeStamp": "2026-02-23T07:18:47.0622742+00:00", "Log": "F [07:18:47 ERR] HTTP POST /api/promotions/actions/atomic responded 500 in 14.6858 ms"}
+{"TimeStamp": "2026-02-23T07:18:51.8232585+00:00", "Log": "F [07:18:51 INF] HTTP GET /api/health responded 200 in 0.3032 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:18:51.8228972Z\",\"uptime\":\"0d 0h 5m 5s\"}"}
+{"TimeStamp": "2026-02-23T07:18:51.8233058+00:00", "Log": "F [07:18:51 INF] HTTP GET /api/health responded 200 in 0.4793 ms"}
+{"TimeStamp": "2026-02-23T07:18:56.8279995+00:00", "Log": "F [07:18:56 INF] HTTP GET /api/health responded 200 in 0.4016 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:18:56.8275672Z\",\"uptime\":\"0d 0h 5m 10s\"}"}
+{"TimeStamp": "2026-02-23T07:18:56.8281455+00:00", "Log": "F [07:18:56 INF] HTTP GET /api/health responded 200 in 0.6367 ms"}
+{"TimeStamp": "2026-02-23T07:19:01.8185405+00:00", "Log": "F [07:19:01 INF] HTTP GET /api/health responded 200 in 0.3903 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:19:01.818197Z\",\"uptime\":\"0d 0h 5m 15s\"}"}
+{"TimeStamp": "2026-02-23T07:19:01.8185963+00:00", "Log": "F [07:19:01 INF] HTTP GET /api/health responded 200 in 0.5528 ms"}
+{"TimeStamp": "2026-02-23T07:19:06.8213429+00:00", "Log": "F [07:19:06 INF] HTTP GET /api/health responded 200 in 0.3596 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:19:06.8209821Z\",\"uptime\":\"0d 0h 5m 20s\"}"}
+{"TimeStamp": "2026-02-23T07:19:06.8213903+00:00", "Log": "F [07:19:06 INF] HTTP GET /api/health responded 200 in 0.5175 ms"}
+{"TimeStamp": "2026-02-23T07:19:11.8313994+00:00", "Log": "F [07:19:11 INF] HTTP GET /api/health responded 200 in 0.4302 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:19:11.8309651Z\",\"uptime\":\"0d 0h 5m 25s\"}"}
+{"TimeStamp": "2026-02-23T07:19:11.8315783+00:00", "Log": "F [07:19:11 INF] HTTP GET /api/health responded 200 in 0.6912 ms"}
+{"TimeStamp": "2026-02-23T07:19:46.0760953+00:00", "Log": "F [07:19:46 INF] HTTP GET /api/health responded 200 in 0.5838 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:19:46.075705Z\",\"uptime\":\"0d 0h 5m 59s\"}"}
+{"TimeStamp": "2026-02-23T07:19:46.0762647+00:00", "Log": "F [07:19:46 INF] HTTP GET /api/health responded 200 in 0.7593 ms"}
+{"TimeStamp": "2026-02-23T07:19:46.0795549+00:00", "Log": "F [07:19:46 INF] Downstream JWT validated for zzz"}
+{"TimeStamp": "2026-02-23T07:19:46.0932809+00:00", "Log": "F [07:19:46 ERR] An exception occurred while iterating over the results of a query for context type 'Promotions.Infrastructure.Persistence.PromotionsDbContext'."}
+{"TimeStamp": "2026-02-23T07:19:46.093326+00:00", "Log": "F Microsoft.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value 'DIV_1' to data type int."}
+{"TimeStamp": "2026-02-23T07:19:46.0933413+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:19:46.0933435+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:19:46.093349+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)"}
+{"TimeStamp": "2026-02-23T07:19:46.0933505+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)"}
+{"TimeStamp": "2026-02-23T07:19:46.093352+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)"}
+{"TimeStamp": "2026-02-23T07:19:46.0934248+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)"}
+{"TimeStamp": "2026-02-23T07:19:46.0934335+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)"}
+{"TimeStamp": "2026-02-23T07:19:46.0934401+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)"}
+{"TimeStamp": "2026-02-23T07:19:46.093443+00:00", "Log": "F --- End of stack trace from previous location ---"}
+{"TimeStamp": "2026-02-23T07:19:46.0934452+00:00", "Log": "F    at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()"}
+{"TimeStamp": "2026-02-23T07:19:46.0934474+00:00", "Log": "F ClientConnectionId:75a8b8c3-d51b-4eec-8d2a-367faa467c48"}
+{"TimeStamp": "2026-02-23T07:19:46.0934495+00:00", "Log": "F Error Number:245,State:1,Class:16"}
+{"TimeStamp": "2026-02-23T07:19:46.0934515+00:00", "Log": "F ClientConnectionId before routing:0c9de470-2357-4b86-89ef-ca08990a64ef"}
+{"TimeStamp": "2026-02-23T07:19:46.0934537+00:00", "Log": "F Routing Destination:f7b62bcaaa33.tr6442.southeastasia1-a.worker.database.windows.net,11014"}
+{"TimeStamp": "2026-02-23T07:19:46.0934559+00:00", "Log": "F Microsoft.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value 'DIV_1' to data type int."}
+{"TimeStamp": "2026-02-23T07:19:46.0934581+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:19:46.09347+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:19:46.0934749+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)"}
+{"TimeStamp": "2026-02-23T07:19:46.0934785+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)"}
+{"TimeStamp": "2026-02-23T07:19:46.0934822+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)"}
+{"TimeStamp": "2026-02-23T07:19:46.0934845+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)"}
+{"TimeStamp": "2026-02-23T07:19:46.0934866+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)"}
+{"TimeStamp": "2026-02-23T07:19:46.0934887+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)"}
+{"TimeStamp": "2026-02-23T07:19:46.0935422+00:00", "Log": "F --- End of stack trace from previous location ---"}
+{"TimeStamp": "2026-02-23T07:19:46.0935467+00:00", "Log": "F    at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()"}
+{"TimeStamp": "2026-02-23T07:19:46.0935489+00:00", "Log": "F ClientConnectionId:75a8b8c3-d51b-4eec-8d2a-367faa467c48"}
+{"TimeStamp": "2026-02-23T07:19:46.0935579+00:00", "Log": "F Error Number:245,State:1,Class:16"}
+{"TimeStamp": "2026-02-23T07:19:46.0935622+00:00", "Log": "F ClientConnectionId before routing:0c9de470-2357-4b86-89ef-ca08990a64ef"}
+{"TimeStamp": "2026-02-23T07:19:46.0935655+00:00", "Log": "F Routing Destination:f7b62bcaaa33.tr6442.southeastasia1-a.worker.database.windows.net,11014"}
+{"TimeStamp": "2026-02-23T07:19:46.0938375+00:00", "Log": "F [07:19:46 INF] HTTP POST /api/promotions/actions/atomic responded 500 in 14.7289 ms | User: zzz (6) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"error\":\"An error occurred while creating the atomic promotion.\",\"details\":[\"Conversion failed when converting the nvarchar value 'DIV_1' to data type int.\"]}"}
+{"TimeStamp": "2026-02-23T07:19:46.093936+00:00", "Log": "F [07:19:46 ERR] HTTP POST /api/promotions/actions/atomic responded 500 in 14.8723 ms"}
+{"TimeStamp": "2026-02-23T07:19:47.7642339+00:00", "Log": "F [07:19:47 INF] HTTP GET /api/health responded 200 in 0.3041 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:19:47.7638644Z\",\"uptime\":\"0d 0h 6m 1s\"}"}
+{"TimeStamp": "2026-02-23T07:19:47.7642886+00:00", "Log": "F [07:19:47 INF] HTTP GET /api/health responded 200 in 0.4945 ms"}
+{"TimeStamp": "2026-02-23T07:19:50.59952+00:00", "Log": "F [07:19:50 INF] Downstream JWT validated for zzz"}
+{"TimeStamp": "2026-02-23T07:19:50.6137779+00:00", "Log": "F [07:19:50 ERR] An exception occurred while iterating over the results of a query for context type 'Promotions.Infrastructure.Persistence.PromotionsDbContext'."}
+{"TimeStamp": "2026-02-23T07:19:50.6138287+00:00", "Log": "F Microsoft.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value 'DIV_1' to data type int."}
+{"TimeStamp": "2026-02-23T07:19:50.6138497+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:19:50.6138533+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:19:50.6138557+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)"}
+{"TimeStamp": "2026-02-23T07:19:50.6138587+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)"}
+{"TimeStamp": "2026-02-23T07:19:50.6138614+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)"}
+{"TimeStamp": "2026-02-23T07:19:50.6140685+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)"}
+{"TimeStamp": "2026-02-23T07:19:50.6140795+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)"}
+{"TimeStamp": "2026-02-23T07:19:50.6140822+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)"}
+{"TimeStamp": "2026-02-23T07:19:50.614085+00:00", "Log": "F --- End of stack trace from previous location ---"}
+{"TimeStamp": "2026-02-23T07:19:50.6140876+00:00", "Log": "F    at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()"}
+{"TimeStamp": "2026-02-23T07:19:50.6140898+00:00", "Log": "F ClientConnectionId:75a8b8c3-d51b-4eec-8d2a-367faa467c48"}
+{"TimeStamp": "2026-02-23T07:19:50.6140919+00:00", "Log": "F Error Number:245,State:1,Class:16"}
+{"TimeStamp": "2026-02-23T07:19:50.6140943+00:00", "Log": "F ClientConnectionId before routing:0c9de470-2357-4b86-89ef-ca08990a64ef"}
+{"TimeStamp": "2026-02-23T07:19:50.6140966+00:00", "Log": "F Routing Destination:f7b62bcaaa33.tr6442.southeastasia1-a.worker.database.windows.net,11014"}
+{"TimeStamp": "2026-02-23T07:19:50.6140988+00:00", "Log": "F Microsoft.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value 'DIV_1' to data type int."}
+{"TimeStamp": "2026-02-23T07:19:50.6141029+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:19:50.614185+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)"}
+{"TimeStamp": "2026-02-23T07:19:50.6142115+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)"}
+{"TimeStamp": "2026-02-23T07:19:50.6164941+00:00", "Log": "F    at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)"}
+{"TimeStamp": "2026-02-23T07:19:50.6165149+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)"}
+{"TimeStamp": "2026-02-23T07:19:50.6165178+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)"}
+{"TimeStamp": "2026-02-23T07:19:50.6165201+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)"}
+{"TimeStamp": "2026-02-23T07:19:50.6165224+00:00", "Log": "F    at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)"}
+{"TimeStamp": "2026-02-23T07:19:50.6165246+00:00", "Log": "F --- End of stack trace from previous location ---"}
+{"TimeStamp": "2026-02-23T07:19:50.6165267+00:00", "Log": "F    at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()"}
+{"TimeStamp": "2026-02-23T07:19:50.6165288+00:00", "Log": "F ClientConnectionId:75a8b8c3-d51b-4eec-8d2a-367faa467c48"}
+{"TimeStamp": "2026-02-23T07:19:50.6166408+00:00", "Log": "F Error Number:245,State:1,Class:16"}
+{"TimeStamp": "2026-02-23T07:19:50.6166463+00:00", "Log": "F ClientConnectionId before routing:0c9de470-2357-4b86-89ef-ca08990a64ef"}
+{"TimeStamp": "2026-02-23T07:19:50.6166508+00:00", "Log": "F Routing Destination:f7b62bcaaa33.tr6442.southeastasia1-a.worker.database.windows.net,11014"}
+{"TimeStamp": "2026-02-23T07:19:50.6166534+00:00", "Log": "F [07:19:50 INF] HTTP POST /api/promotions/actions/atomic responded 500 in 15.9353 ms | User: zzz (6) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"error\":\"An error occurred while creating the atomic promotion.\",\"details\":[\"Conversion failed when converting the nvarchar value 'DIV_1' to data type int.\"]}"}
+{"TimeStamp": "2026-02-23T07:19:50.6166567+00:00", "Log": "F [07:19:50 ERR] HTTP POST /api/promotions/actions/atomic responded 500 in 16.0580 ms"}
+{"TimeStamp": "2026-02-23T07:19:52.4081045+00:00", "Log": "F [07:19:52 INF] HTTP GET /api/health responded 200 in 0.3594 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:19:52.4077306Z\",\"uptime\":\"0d 0h 6m 6s\"}"}
+{"TimeStamp": "2026-02-23T07:19:52.4082452+00:00", "Log": "F [07:19:52 INF] HTTP GET /api/health responded 200 in 0.5387 ms"}
+{"TimeStamp": "2026-02-23T07:19:56.8250937+00:00", "Log": "F [07:19:56 INF] HTTP GET /api/health responded 200 in 0.3159 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:19:56.8247591Z\",\"uptime\":\"0d 0h 6m 10s\"}"}
+{"TimeStamp": "2026-02-23T07:19:56.8252397+00:00", "Log": "F [07:19:56 INF] HTTP GET /api/health responded 200 in 0.4919 ms"}
+{"TimeStamp": "2026-02-23T07:20:01.8425339+00:00", "Log": "F [07:20:01 INF] HTTP GET /api/health responded 200 in 0.4188 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:20:01.8422087Z\",\"uptime\":\"0d 0h 6m 15s\"}"}
+{"TimeStamp": "2026-02-23T07:20:01.8427066+00:00", "Log": "F [07:20:01 INF] HTTP GET /api/health responded 200 in 0.5956 ms"}
+{"TimeStamp": "2026-02-23T07:20:06.8107653+00:00", "Log": "F [07:20:06 INF] HTTP GET /api/health responded 200 in 0.3097 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:20:06.8103849Z\",\"uptime\":\"0d 0h 6m 20s\"}"}
+{"TimeStamp": "2026-02-23T07:20:06.8108143+00:00", "Log": "F [07:20:06 INF] HTTP GET /api/health responded 200 in 0.5002 ms"}
+{"TimeStamp": "2026-02-23T07:20:09.0830788+00:00", "Log": "F [07:20:09 INF] HTTP GET / responded 404 in 0.2442 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody:"}
+{"TimeStamp": "2026-02-23T07:20:09.0831311+00:00", "Log": "F [07:20:09 INF] HTTP GET / responded 404 in 0.4076 ms"}
+{"TimeStamp": "2026-02-23T07:20:12.3078762+00:00", "Log": "F [07:20:12 INF] HTTP GET /api/health responded 200 in 0.3425 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:20:12.3075585Z\",\"uptime\":\"0d 0h 6m 25s\"}"}
+{"TimeStamp": "2026-02-23T07:20:12.3080151+00:00", "Log": "F [07:20:12 INF] HTTP GET /api/health responded 200 in 0.5212 ms"}
+{"TimeStamp": "2026-02-23T07:20:17.2628426+00:00", "Log": "F [07:20:17 INF] HTTP GET /api/health responded 200 in 0.3180 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:20:17.2623324Z\",\"uptime\":\"0d 0h 6m 30s\"}"}
+{"TimeStamp": "2026-02-23T07:20:17.2628863+00:00", "Log": "F [07:20:17 INF] HTTP GET /api/health responded 200 in 0.4797 ms"}
+{"TimeStamp": "2026-02-23T07:20:22.2699938+00:00", "Log": "F [07:20:22 INF] HTTP GET /api/health responded 200 in 0.2800 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:20:22.2696892Z\",\"uptime\":\"0d 0h 6m 35s\"}"}
+{"TimeStamp": "2026-02-23T07:20:22.2702062+00:00", "Log": "F [07:20:22 INF] HTTP GET /api/health responded 200 in 0.4480 ms"}
+{"TimeStamp": "2026-02-23T07:20:27.2772234+00:00", "Log": "F [07:20:27 INF] HTTP GET /api/health responded 200 in 0.3386 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:20:27.2769012Z\",\"uptime\":\"0d 0h 6m 40s\"}"}
+{"TimeStamp": "2026-02-23T07:20:27.2772711+00:00", "Log": "F [07:20:27 INF] HTTP GET /api/health responded 200 in 0.5051 ms"}
+{"TimeStamp": "2026-02-23T07:20:32.2608081+00:00", "Log": "F [07:20:32 INF] HTTP GET /api/health responded 200 in 0.3485 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:20:32.2603963Z\",\"uptime\":\"0d 0h 6m 45s\"}"}
+{"TimeStamp": "2026-02-23T07:20:32.2609656+00:00", "Log": "F [07:20:32 INF] HTTP GET /api/health responded 200 in 0.5312 ms"}
+{"TimeStamp": "2026-02-23T07:20:37.4864999+00:00", "Log": "F [07:20:37 INF] HTTP GET /api/health responded 200 in 0.2917 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:20:37.4861445Z\",\"uptime\":\"0d 0h 6m 51s\"}"}
+{"TimeStamp": "2026-02-23T07:20:37.4866127+00:00", "Log": "F [07:20:37 INF] HTTP GET /api/health responded 200 in 0.4816 ms"}
+{"TimeStamp": "2026-02-23T07:20:42.3298096+00:00", "Log": "F [07:20:42 INF] HTTP GET /api/health responded 200 in 0.3300 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:20:42.3294243Z\",\"uptime\":\"0d 0h 6m 55s\"}"}
+{"TimeStamp": "2026-02-23T07:20:42.3298643+00:00", "Log": "F [07:20:42 INF] HTTP GET /api/health responded 200 in 0.5033 ms"}
+{"TimeStamp": "2026-02-23T07:20:47.257474+00:00", "Log": "F [07:20:47 INF] HTTP GET /api/health responded 200 in 0.3288 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:20:47.257073Z\",\"uptime\":\"0d 0h 7m 0s\"}"}
+{"TimeStamp": "2026-02-23T07:20:47.2576242+00:00", "Log": "F [07:20:47 INF] HTTP GET /api/health responded 200 in 0.6131 ms"}
+{"TimeStamp": "2026-02-23T07:20:52.3116559+00:00", "Log": "F [07:20:52 INF] HTTP GET /api/health responded 200 in 0.3784 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:20:52.3113154Z\",\"uptime\":\"0d 0h 7m 5s\"}"}
+{"TimeStamp": "2026-02-23T07:20:52.3117934+00:00", "Log": "F [07:20:52 INF] HTTP GET /api/health responded 200 in 0.5707 ms"}
+{"TimeStamp": "2026-02-23T07:20:57.3060086+00:00", "Log": "F [07:20:57 INF] HTTP GET /api/health responded 200 in 0.3627 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:20:57.3055929Z\",\"uptime\":\"0d 0h 7m 10s\"}"}
+{"TimeStamp": "2026-02-23T07:20:57.306061+00:00", "Log": "F [07:20:57 INF] HTTP GET /api/health responded 200 in 0.5482 ms"}
+{"TimeStamp": "2026-02-23T07:21:02.2600398+00:00", "Log": "F [07:21:02 INF] HTTP GET /api/health responded 200 in 0.3300 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:21:02.2596989Z\",\"uptime\":\"0d 0h 7m 15s\"}"}
+{"TimeStamp": "2026-02-23T07:21:02.2600894+00:00", "Log": "F [07:21:02 INF] HTTP GET /api/health responded 200 in 0.4950 ms"}
+{"TimeStamp": "2026-02-23T07:21:07.2929635+00:00", "Log": "F [07:21:07 INF] HTTP GET /api/health responded 200 in 0.3188 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:21:07.2926215Z\",\"uptime\":\"0d 0h 7m 20s\"}"}
+{"TimeStamp": "2026-02-23T07:21:07.2930146+00:00", "Log": "F [07:21:07 INF] HTTP GET /api/health responded 200 in 0.5355 ms"}
+{"TimeStamp": "2026-02-23T07:21:46.2686478+00:00", "Log": "F [07:21:46 INF] HTTP GET /api/health responded 200 in 0.5658 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:21:46.2679238Z\",\"uptime\":\"0d 0h 7m 59s\"}"}
+{"TimeStamp": "2026-02-23T07:21:46.2687961+00:00", "Log": "F [07:21:46 INF] HTTP GET /api/health responded 200 in 0.8739 ms"}
+{"TimeStamp": "2026-02-23T07:22:28.6736945+00:00", "Log": "F [07:22:28 INF] HTTP GET /api/health responded 200 in 0.5387 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:22:28.6732901Z\",\"uptime\":\"0d 0h 8m 42s\"}"}
+{"TimeStamp": "2026-02-23T07:22:28.673934+00:00", "Log": "F [07:22:28 INF] HTTP GET /api/health responded 200 in 0.7185 ms"}
+{"TimeStamp": "2026-02-23T07:22:31.9211137+00:00", "Log": "F [07:22:31 INF] HTTP GET /api/health responded 200 in 0.4365 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:22:31.9206831Z\",\"uptime\":\"0d 0h 8m 45s\"}"}
+{"TimeStamp": "2026-02-23T07:22:31.9211583+00:00", "Log": "F [07:22:31 INF] HTTP GET /api/health responded 200 in 0.5925 ms"}
+{"TimeStamp": "2026-02-23T07:22:36.8127195+00:00", "Log": "F [07:22:36 INF] HTTP GET /api/health responded 200 in 0.3198 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:22:36.8123431Z\",\"uptime\":\"0d 0h 8m 50s\"}"}
+{"TimeStamp": "2026-02-23T07:22:36.8127672+00:00", "Log": "F [07:22:36 INF] HTTP GET /api/health responded 200 in 0.5161 ms"}
+{"TimeStamp": "2026-02-23T07:22:41.8789016+00:00", "Log": "F [07:22:41 INF] HTTP GET /api/health responded 200 in 0.3150 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:22:41.8785521Z\",\"uptime\":\"0d 0h 8m 55s\"}"}
+{"TimeStamp": "2026-02-23T07:22:41.8790531+00:00", "Log": "F [07:22:41 INF] HTTP GET /api/health responded 200 in 0.5301 ms"}
+{"TimeStamp": "2026-02-23T07:22:46.8213074+00:00", "Log": "F [07:22:46 INF] HTTP GET /api/health responded 200 in 0.3055 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:22:46.8209749Z\",\"uptime\":\"0d 0h 9m 0s\"}"}
+{"TimeStamp": "2026-02-23T07:22:46.821447+00:00", "Log": "F [07:22:46 INF] HTTP GET /api/health responded 200 in 0.4900 ms"}
+{"TimeStamp": "2026-02-23T07:22:51.8609477+00:00", "Log": "F [07:22:51 INF] HTTP GET /api/health responded 200 in 0.4342 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:22:51.8605956Z\",\"uptime\":\"0d 0h 9m 5s\"}"}
+{"TimeStamp": "2026-02-23T07:22:51.8610784+00:00", "Log": "F [07:22:51 INF] HTTP GET /api/health responded 200 in 0.6363 ms"}
+{"TimeStamp": "2026-02-23T07:22:56.8174183+00:00", "Log": "F [07:22:56 INF] HTTP GET /api/health responded 200 in 0.2915 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:22:56.8170872Z\",\"uptime\":\"0d 0h 9m 10s\"}"}
+{"TimeStamp": "2026-02-23T07:22:56.8175441+00:00", "Log": "F [07:22:56 INF] HTTP GET /api/health responded 200 in 0.4590 ms"}
+{"TimeStamp": "2026-02-23T07:23:01.816331+00:00", "Log": "F [07:23:01 INF] HTTP GET /api/health responded 200 in 0.3681 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:23:01.8159985Z\",\"uptime\":\"0d 0h 9m 15s\"}"}
+{"TimeStamp": "2026-02-23T07:23:01.8165207+00:00", "Log": "F [07:23:01 INF] HTTP GET /api/health responded 200 in 0.5693 ms"}
+{"TimeStamp": "2026-02-23T07:23:06.8154667+00:00", "Log": "F [07:23:06 INF] HTTP GET /api/health responded 200 in 0.4267 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:23:06.8150886Z\",\"uptime\":\"0d 0h 9m 20s\"}"}
+{"TimeStamp": "2026-02-23T07:23:06.815606+00:00", "Log": "F [07:23:06 INF] HTTP GET /api/health responded 200 in 0.6578 ms"}
+{"TimeStamp": "2026-02-23T07:23:11.8147373+00:00", "Log": "F [07:23:11 INF] HTTP GET /api/health responded 200 in 0.3210 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:23:11.8143734Z\",\"uptime\":\"0d 0h 9m 25s\"}"}
+{"TimeStamp": "2026-02-23T07:23:11.8148612+00:00", "Log": "F [07:23:11 INF] HTTP GET /api/health responded 200 in 0.4873 ms"}
+{"TimeStamp": "2026-02-23T07:23:13.114595+00:00", "Log": "F [07:23:13 INF] HTTP GET / responded 404 in 0.2465 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody:"}
+{"TimeStamp": "2026-02-23T07:23:13.1148085+00:00", "Log": "F [07:23:13 INF] HTTP GET / responded 404 in 0.6464 ms"}
+{"TimeStamp": "2026-02-23T07:23:16.8198582+00:00", "Log": "F [07:23:16 INF] HTTP GET /api/health responded 200 in 0.3312 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:23:16.8195073Z\",\"uptime\":\"0d 0h 9m 30s\"}"}
+{"TimeStamp": "2026-02-23T07:23:16.819934+00:00", "Log": "F [07:23:16 INF] HTTP GET /api/health responded 200 in 0.5150 ms"}
+{"TimeStamp": "2026-02-23T07:23:21.8913714+00:00", "Log": "F [07:23:21 INF] HTTP GET /api/health responded 200 in 0.3531 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:23:21.8910142Z\",\"uptime\":\"0d 0h 9m 35s\"}"}
+{"TimeStamp": "2026-02-23T07:23:21.8915249+00:00", "Log": "F [07:23:21 INF] HTTP GET /api/health responded 200 in 0.5126 ms"}
+{"TimeStamp": "2026-02-23T07:23:26.8189037+00:00", "Log": "F [07:23:26 INF] HTTP GET /api/health responded 200 in 0.3460 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:23:26.8185253Z\",\"uptime\":\"0d 0h 9m 40s\"}"}
+{"TimeStamp": "2026-02-23T07:23:26.8189554+00:00", "Log": "F [07:23:26 INF] HTTP GET /api/health responded 200 in 0.5102 ms"}
+{"TimeStamp": "2026-02-23T07:23:31.8083092+00:00", "Log": "F [07:23:31 INF] HTTP GET /api/health responded 200 in 0.2961 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:23:31.8079366Z\",\"uptime\":\"0d 0h 9m 45s\"}"}
+{"TimeStamp": "2026-02-23T07:23:31.8083561+00:00", "Log": "F [07:23:31 INF] HTTP GET /api/health responded 200 in 0.4625 ms"}
+{"TimeStamp": "2026-02-23T07:23:36.9071008+00:00", "Log": "F [07:23:36 INF] HTTP GET /api/health responded 200 in 0.3126 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:23:36.9067545Z\",\"uptime\":\"0d 0h 9m 50s\"}"}
+{"TimeStamp": "2026-02-23T07:23:36.9072508+00:00", "Log": "F [07:23:36 INF] HTTP GET /api/health responded 200 in 0.4751 ms"}
+{"TimeStamp": "2026-02-23T07:23:41.8401361+00:00", "Log": "F [07:23:41 INF] HTTP GET /api/health responded 200 in 0.2863 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:23:41.8388704Z\",\"uptime\":\"0d 0h 9m 55s\"}"}
+{"TimeStamp": "2026-02-23T07:23:41.8401834+00:00", "Log": "F [07:23:41 INF] HTTP GET /api/health responded 200 in 0.4606 ms"}
+{"TimeStamp": "2026-02-23T07:23:46.8220589+00:00", "Log": "F [07:23:46 INF] HTTP GET /api/health responded 200 in 0.3289 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:23:46.8216396Z\",\"uptime\":\"0d 0h 10m 0s\"}"}
+{"TimeStamp": "2026-02-23T07:23:46.8221026+00:00", "Log": "F [07:23:46 INF] HTTP GET /api/health responded 200 in 0.4928 ms"}
+{"TimeStamp": "2026-02-23T07:23:51.8200889+00:00", "Log": "F [07:23:51 INF] HTTP GET /api/health responded 200 in 0.2922 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:23:51.8196586Z\",\"uptime\":\"0d 0h 10m 5s\"}"}
+{"TimeStamp": "2026-02-23T07:23:51.8201429+00:00", "Log": "F [07:23:51 INF] HTTP GET /api/health responded 200 in 0.4773 ms"}
+{"TimeStamp": "2026-02-23T07:23:56.8123075+00:00", "Log": "F [07:23:56 INF] HTTP GET /api/health responded 200 in 0.3276 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:23:56.8119666Z\",\"uptime\":\"0d 0h 10m 10s\"}"}
+{"TimeStamp": "2026-02-23T07:23:56.8125341+00:00", "Log": "F [07:23:56 INF] HTTP GET /api/health responded 200 in 0.5097 ms"}
+{"TimeStamp": "2026-02-23T07:24:01.8217618+00:00", "Log": "F [07:24:01 INF] HTTP GET /api/health responded 200 in 0.2911 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:24:01.8214456Z\",\"uptime\":\"0d 0h 10m 15s\"}"}
+{"TimeStamp": "2026-02-23T07:24:01.8219095+00:00", "Log": "F [07:24:01 INF] HTTP GET /api/health responded 200 in 0.4621 ms"}
+{"TimeStamp": "2026-02-23T07:24:03.0406332+00:00", "Log": "F [07:24:03 INF] HTTP GET / responded 404 in 0.1905 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody:"}
+{"TimeStamp": "2026-02-23T07:24:03.0407826+00:00", "Log": "F [07:24:03 INF] HTTP GET / responded 404 in 0.3913 ms"}
+{"TimeStamp": "2026-02-23T07:24:06.8304728+00:00", "Log": "F [07:24:06 INF] HTTP GET /api/health responded 200 in 0.4575 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:24:06.8300666Z\",\"uptime\":\"0d 0h 10m 20s\"}"}
+{"TimeStamp": "2026-02-23T07:24:06.8306708+00:00", "Log": "F [07:24:06 INF] HTTP GET /api/health responded 200 in 0.8077 ms"}
+{"TimeStamp": "2026-02-23T07:24:11.8281317+00:00", "Log": "F [07:24:11 INF] HTTP GET /api/health responded 200 in 0.3142 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:24:11.8277928Z\",\"uptime\":\"0d 0h 10m 25s\"}"}
+{"TimeStamp": "2026-02-23T07:24:11.8281789+00:00", "Log": "F [07:24:11 INF] HTTP GET /api/health responded 200 in 0.4827 ms"}
+{"TimeStamp": "2026-02-23T07:24:16.8385906+00:00", "Log": "F [07:24:16 INF] HTTP GET /api/health responded 200 in 0.3361 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:24:16.8382411Z\",\"uptime\":\"0d 0h 10m 30s\"}"}
+{"TimeStamp": "2026-02-23T07:24:16.8387406+00:00", "Log": "F [07:24:16 INF] HTTP GET /api/health responded 200 in 0.5101 ms"}
+{"TimeStamp": "2026-02-23T07:24:21.8851378+00:00", "Log": "F [07:24:21 INF] HTTP GET /api/health responded 200 in 0.6784 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:24:21.8844039Z\",\"uptime\":\"0d 0h 10m 35s\"}"}
+{"TimeStamp": "2026-02-23T07:24:21.8852856+00:00", "Log": "F [07:24:21 INF] HTTP GET /api/health responded 200 in 0.9689 ms"}
+{"TimeStamp": "2026-02-23T07:24:26.8279146+00:00", "Log": "F [07:24:26 INF] HTTP GET /api/health responded 200 in 0.3291 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:24:26.8275687Z\",\"uptime\":\"0d 0h 10m 40s\"}"}
+{"TimeStamp": "2026-02-23T07:24:26.827967+00:00", "Log": "F [07:24:26 INF] HTTP GET /api/health responded 200 in 0.4966 ms"}
+{"TimeStamp": "2026-02-23T07:24:31.8178204+00:00", "Log": "F [07:24:31 INF] HTTP GET /api/health responded 200 in 0.2869 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:24:31.8174866Z\",\"uptime\":\"0d 0h 10m 45s\"}"}
+{"TimeStamp": "2026-02-23T07:24:31.8180102+00:00", "Log": "F [07:24:31 INF] HTTP GET /api/health responded 200 in 0.4515 ms"}
+{"TimeStamp": "2026-02-23T07:24:36.8231587+00:00", "Log": "F [07:24:36 INF] HTTP GET /api/health responded 200 in 0.3301 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:24:36.8227856Z\",\"uptime\":\"0d 0h 10m 50s\"}"}
+{"TimeStamp": "2026-02-23T07:24:36.8233732+00:00", "Log": "F [07:24:36 INF] HTTP GET /api/health responded 200 in 0.5241 ms"}
+{"TimeStamp": "2026-02-23T07:24:37.8457217+00:00", "Log": "F [07:24:37 INF] HTTP GET / responded 404 in 0.1891 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.112 | RequestBody:  | ResponseBody:"}
+{"TimeStamp": "2026-02-23T07:24:37.8457642+00:00", "Log": "F [07:24:37 INF] HTTP GET / responded 404 in 0.3504 ms"}
+{"TimeStamp": "2026-02-23T07:24:41.8298902+00:00", "Log": "F [07:24:41 INF] HTTP GET /api/health responded 200 in 0.3332 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:24:41.8291931Z\",\"uptime\":\"0d 0h 10m 55s\"}"}
+{"TimeStamp": "2026-02-23T07:24:41.8299347+00:00", "Log": "F [07:24:41 INF] HTTP GET /api/health responded 200 in 0.4991 ms"}
+{"TimeStamp": "2026-02-23T07:24:46.815678+00:00", "Log": "F [07:24:46 INF] HTTP GET /api/health responded 200 in 0.3332 ms | User: Anonymous (N/A) | IP: ::ffff:100.100.0.38 | RequestBody:  | ResponseBody: {\"service\":\"Promotions API\",\"status\":\"Healthy\",\"timestamp\":\"2026-02-23T07:24:46.815335Z\",\"uptime\":\"0d 0h 11m 0s\"}"}
+{"TimeStamp": "2026-02-23T07:24:46.8157309+00:00", "Log": "F [07:24:46 INF] HTTP GET /api/health responded 200 in 0.5024 ms"}
