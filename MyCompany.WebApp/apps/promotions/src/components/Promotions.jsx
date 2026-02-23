@@ -344,7 +344,6 @@ const Promotions = ({ userRole }) => {
     };
 
     const handleSubmit = async () => {
-        debugger;
         setIsLoading(true);
         const finalPayload = {
             idAction: parseInt(formData.idAction),

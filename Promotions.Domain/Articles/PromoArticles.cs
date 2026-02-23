@@ -19,8 +19,6 @@ namespace Promotions.Domain.Articles
         public string? CodNode2 { get; private set; }
         public string? CodNodeN { get; private set; }
 
-        public virtual ProductDetails.PromoProductDetail ProductDetail { get; private set; } = null!;
-
         private PromoArticle() { }
 
         public PromoArticle(int idAction, string codProduct, int levProduct, string codDisplay, string codDiv, string codNode, string? codNode1, string? codNode2, string? codNodeN)

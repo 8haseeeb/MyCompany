@@ -12,7 +12,7 @@ public class PromoActionConfiguration : IEntityTypeConfiguration<PromoAction>
 
         builder.Property(x => x.IdAction).HasColumnName("IDACTION").ValueGeneratedNever();
         builder.Property(x => x.Name).HasColumnName("DESACTION");
-        builder.Property(p => p.CodDiv).HasColumnName("CODDIV").HasMaxLength(10);
+        builder.Property(p => p.CodDiv).HasColumnName("CODDIV").HasMaxLength(50);
 
         builder.Property(x => x.DteStartSellIn).HasColumnName("DTESTARTSELLIN");
         builder.Property(x => x.DteEndSellIn).HasColumnName("DTEENDSELLIN");

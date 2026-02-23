@@ -26,7 +26,7 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             builder.Property(x => x.LevProduct).HasColumnName("LEVPRODUCT").HasColumnType("int");
             builder.Property(x => x.CodDisplay).HasColumnName("CODDISPLAY").HasMaxLength(50);
             builder.Property(x => x.CodNode).HasColumnName("CODNODEO").HasMaxLength(30);
-            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasMaxLength(10);
+            builder.Property(x => x.CodDiv).HasColumnName("CODDIV").HasMaxLength(50);
             builder.Property(x => x.FlgInclusion).HasColumnName("FLGINCLUSION");
 
 
