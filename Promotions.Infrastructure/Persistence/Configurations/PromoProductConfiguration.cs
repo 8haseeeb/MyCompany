@@ -27,7 +27,7 @@ namespace Promotions.Infrastructure.Products.Configurations
             builder.Property(x => x.PerceDiscount1).HasColumnName("PERCDISCOUNT1").HasPrecision(5, 2);
             builder.Property(x => x.PerceDiscount2).HasColumnName("PERCDISCOUNT2").HasPrecision(5, 2);
             builder.Property(x => x.NumMeasure).HasColumnName("NUMMEASUREA").HasPrecision(18, 3);
-            builder.Property(x => x.CodMeasure).HasColumnName("CODMEASURE").HasMaxLength(20);
+            builder.Property(x => x.CodMeasure).HasColumnName("CODMEASURE").HasMaxLength(50);
 
             builder.HasOne(x => x.Action)
                    .WithMany(a => a.Products)

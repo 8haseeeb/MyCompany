@@ -139,11 +139,11 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                 .Where(p => p.MeasureFields != null && p.MeasureFields.Any() && !string.IsNullOrWhiteSpace(p.CodMeasure))
                 .SelectMany(p => p.MeasureFields.Select(mf => new PromoMeasureField(
                     p.CodDiv!,
-                    p.CodMeasure!,
+                    p.CodMeasure!.Trim(),
                     mf.FieldName!,
                     mf.Formula!
                 )))
-                .GroupBy(mf => new { mf.CodDiv, mf.CodMeasure, mf.FieldName })
+                .GroupBy(mf => new { mf.CodDiv, CodMeasure = mf.CodMeasure.Trim(), mf.FieldName })
                 .Select(g => g.First())
                 .ToList();
 
