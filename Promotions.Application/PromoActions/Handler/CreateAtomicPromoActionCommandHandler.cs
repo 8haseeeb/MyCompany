@@ -2,6 +2,7 @@ using AutoMapper;
 using MediatR;
 using Promotions.Domain.PromoActions;
 using Promotions.Domain.Measures;
+using Promotions.Domain.Articles;
 using Promotions.Application.Common.Interfaces;
 using Promotions.Application.PromoActions.Commands;
 using System;
@@ -133,12 +134,12 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
             // Map DTO to Entity using AutoMapper with context to pass IdAction down to nested children
             var action = _mapper.Map<PromoAction>(dto, opt => opt.Items["IdAction"] = dto.IdAction);
 
-            // Collect and Map Master Measure Fields
+            // Collect and Map Master Measure Fields (Fix 500 error: filter null measures)
             var measureFields = dto.Products
-                .Where(p => p.MeasureFields != null && p.MeasureFields.Any())
+                .Where(p => p.MeasureFields != null && p.MeasureFields.Any() && !string.IsNullOrWhiteSpace(p.CodMeasure))
                 .SelectMany(p => p.MeasureFields.Select(mf => new PromoMeasureField(
                     p.CodDiv!,
-                    p.CodMeasure ?? string.Empty,
+                    p.CodMeasure!,
                     mf.FieldName!,
                     mf.Formula!
                 )))
@@ -155,6 +156,38 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
             }
 
             await _unitOfWork.PromoActions.AddAsync(action);
+
+            // Manually save standalone articles associated with the promotion (not handled by Aggregate root automatically in this repo pattern)
+            var articlesToSave = new List<PromoArticle>();
+            foreach (var prodDto in dto.Products)
+            {
+                foreach (var detailDto in prodDto.Details)
+                {
+                    if (detailDto.Articles != null)
+                    {
+                        foreach (var artDto in detailDto.Articles)
+                        {
+                            articlesToSave.Add(new PromoArticle(
+                                action.IdAction,
+                                prodDto.CodProduct ?? string.Empty,
+                                prodDto.LevProduct ?? 0,
+                                prodDto.CodDisplay ?? string.Empty,
+                                detailDto.CodDiv ?? action.CodDiv ?? string.Empty,
+                                detailDto.CodNode ?? string.Empty,
+                                artDto.CodNode1,
+                                artDto.CodNode2,
+                                artDto.CodNodeN
+                            ));
+                        }
+                    }
+                }
+            }
+
+            foreach (var art in articlesToSave)
+            {
+                await _unitOfWork.PromoArticles.AddAsync(art);
+            }
+
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
