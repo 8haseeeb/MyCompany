@@ -27,12 +27,18 @@ namespace SSO.Api.Middleware
                 var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value 
                                ?? context.User.FindFirst("sub")?.Value;
 
+                _logger.LogInformation("[SessionCheck] User authenticated. UserIdClaim: {UserIdClaim}, SessionIdClaim: {SessionIdClaim}", 
+                    userIdClaim ?? "NULL", sessionIdClaim ?? "NULL");
+
                 if (!string.IsNullOrEmpty(sessionIdClaim) && !string.IsNullOrEmpty(userIdClaim) && int.TryParse(userIdClaim, out int userId))
                 {
                     var user = await dbContext.Users.FindAsync(userId);
                     
                     if (user != null)
                     {
+                        _logger.LogInformation("[SessionCheck] DB User found. DB Session: {DbSession}, Token Session: {TokenSession}", 
+                            user.CurrentSessionId ?? "NULL", sessionIdClaim);
+
                         if (user.CurrentSessionId != sessionIdClaim)
                         {
                             _logger.LogWarning("Session Mismatch! User: {UserId}. TokenSession: {TokenSession}, DBSession: {DbSession}", userId, sessionIdClaim, user.CurrentSessionId);
@@ -43,8 +49,15 @@ namespace SSO.Api.Middleware
                             return; 
                         }
                     }
+                    else
+                    {
+                        _logger.LogWarning("[SessionCheck] User {UserId} NOT found in SSO database", userId);
+                    }
                 }
-
+                else
+                {
+                    _logger.LogWarning("[SessionCheck] Skipping validation. SessionIdClaim or UserIdClaim is missing or invalid.");
+                }
             }
 
             await _next(context);

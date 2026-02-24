@@ -23,12 +23,18 @@ namespace Promotions.Api.Middleware
                 var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value 
                                ?? context.User.FindFirst("sub")?.Value;
 
+                _logger.LogInformation("[SessionCheck] User authenticated. UserIdClaim: {UserIdClaim}, SessionIdClaim: {SessionIdClaim}", 
+                    userIdClaim ?? "NULL", sessionIdClaim ?? "NULL");
+
                 if (!string.IsNullOrEmpty(sessionIdClaim) && !string.IsNullOrEmpty(userIdClaim) && int.TryParse(userIdClaim, out int userId))
                 {
                     var user = await ssoDbContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId);
                     
                     if (user != null)
                     {
+                        _logger.LogInformation("[SessionCheck] DB User found. DB Session: {DbSession}, Token Session: {TokenSession}", 
+                            user.CurrentSessionId ?? "NULL", sessionIdClaim);
+
                         // Validate session: if the DB has a different session ID than the token, it's an old session.
                         if (user.CurrentSessionId != sessionIdClaim)
                         {
@@ -40,6 +46,14 @@ namespace Promotions.Api.Middleware
                             return; 
                         }
                     }
+                    else
+                    {
+                        _logger.LogWarning("[SessionCheck] User {UserId} NOT found in SSO database", userId);
+                    }
+                }
+                else
+                {
+                     _logger.LogWarning("[SessionCheck] Skipping validation. SessionIdClaim or UserIdClaim is missing or invalid.");
                 }
             }
 
