@@ -334,15 +334,15 @@ namespace Promotions.Infrastructure.Migrations
                 oldType: "nvarchar(20)",
                 oldMaxLength: 20);
 
-            migrationBuilder.AlterColumn<string>(
-                name: "CODNODEO",
-                table: "TA5026PRODUCTDETAILS",
-                type: "nvarchar(30)",
-                maxLength: 30,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(50)",
-                oldMaxLength: 50);
+            // NOTE:
+            // Originally this migration attempted to shrink CODNODEO on
+            // TA5026PRODUCTDETAILS from NVARCHAR(50) to NVARCHAR(30).
+            // That column is part of the primary key (PK_TA5026PRODUCTDETAILS),
+            // so altering it directly causes runtime failures unless the PK is
+            // dropped/recreated in a very specific order. Since the wider size
+            // does not break the application and earlier migrations already
+            // normalise this table, we skip changing CODNODEO here to keep
+            // migrations safe across environments.
 
             migrationBuilder.AlterColumn<string>(
                 name: "CODDIV",
@@ -854,15 +854,8 @@ namespace Promotions.Infrastructure.Migrations
                 oldType: "nvarchar(50)",
                 oldMaxLength: 50);
 
-            migrationBuilder.AlterColumn<string>(
-                name: "CodNode",
-                table: "TA5026PRODUCTDETAILS",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(30)",
-                oldMaxLength: 30);
+            // The Up migration no longer changes CODNODEO, so there is no
+            // corresponding rollback needed for that column here.
 
             migrationBuilder.AlterColumn<string>(
                 name: "CODDIV",

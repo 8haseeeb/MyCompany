@@ -10,71 +10,27 @@ namespace Promotions.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "CODDIV",
-                table: "TB0042RELATIONS_CUST",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(10)",
-                oldMaxLength: 10);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "CODDIV",
-                table: "TA8012PARTICIPANTS",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(10)",
-                oldMaxLength: 10,
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "CODDIV",
-                table: "TA501DELIVERYPOINTS",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(10)",
-                oldMaxLength: 10);
+            // This migration used to alter CODDIV on TB0042RELATIONS_CUST,
+            // TA8012PARTICIPANTS and TA501DELIVERYPOINTS. Those schema changes
+            // are now handled safely in later migrations (especially
+            // FixCodDivSchemaFinal) which drop/recreate the necessary
+            // foreign keys and indexes first.
+            //
+            // Keeping the original operations here causes runtime failures
+            // on databases that have already been renamed or don't yet have
+            // the intermediate table/index names (e.g. TA8012PARTICIPANTS).
+            //
+            // To avoid double-applying the same schema change and to allow
+            // migrations to run cleanly on all environments, this migration
+            // is now intentionally a NO-OP.
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "CODDIV",
-                table: "TB0042RELATIONS_CUST",
-                type: "nvarchar(10)",
-                maxLength: 10,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(50)",
-                oldMaxLength: 50);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "CODDIV",
-                table: "TA8012PARTICIPANTS",
-                type: "nvarchar(10)",
-                maxLength: 10,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(50)",
-                oldMaxLength: 50);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "CODDIV",
-                table: "TA501DELIVERYPOINTS",
-                type: "nvarchar(10)",
-                maxLength: 10,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(50)",
-                oldMaxLength: 50);
+            // No-op: Up no longer performs any schema changes, so there is
+            // nothing to roll back here. The real schema is defined by the
+            // later FixCodDivSchemaFinal migration.
         }
     }
 }
