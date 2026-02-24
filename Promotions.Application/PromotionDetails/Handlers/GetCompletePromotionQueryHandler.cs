@@ -22,6 +22,7 @@ namespace Promotions.Application.PromotionDetails.Handlers
     using global::Promotions.Application.DeliveryPoints.Dtos;
     using global::Promotions.Application.CustomerRelations.Dtos;
     using global::Promotions.Application.PromoArticles.Dtos;
+    using global::Promotions.Application.PromoArticles.Interfaces;
     using global::Promotions.Domain.PromoActions;
     using global::Promotions.Domain.Products;
     using global::Promotions.Domain.Measures;
