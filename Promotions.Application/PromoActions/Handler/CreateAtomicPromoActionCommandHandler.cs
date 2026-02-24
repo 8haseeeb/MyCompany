@@ -45,7 +45,7 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                     
                     if (match == null)
                     {
-                        var pMatch = allParticipants.FirstOrDefault(ap => ap.CodParticipant.Equals(p.CodParticipant, StringComparison.OrdinalIgnoreCase));
+                        var pMatch = allParticipants.FirstOrDefault(ap => ap.CodParticipant != null && ap.CodParticipant.Equals(p.CodParticipant, StringComparison.OrdinalIgnoreCase));
                         if (pMatch != null)
                         {
                             p.CodHier = pMatch.CodHier;
@@ -56,12 +56,10 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                             continue;
                         }
 
-                        var suffix = p.CodParticipant.Contains("-") ? p.CodParticipant.Split('-').Last() : p.CodParticipant;
+                        var suffix = p.CodParticipant != null && p.CodParticipant.Contains("-") ? p.CodParticipant.Split('-').Last() : p.CodParticipant;
                         match = allRelations.FirstOrDefault(r => 
-                            r.CodNode.EndsWith("-" + suffix, StringComparison.OrdinalIgnoreCase) || 
-                            r.CodNode.Equals(suffix, StringComparison.OrdinalIgnoreCase) ||
-                            r.CodHier.EndsWith("-" + suffix, StringComparison.OrdinalIgnoreCase) ||
-                            r.CodHier.Equals(suffix, StringComparison.OrdinalIgnoreCase));
+                            (r.CodNode != null && (r.CodNode.EndsWith("-" + suffix, StringComparison.OrdinalIgnoreCase) || r.CodNode.Equals(suffix, StringComparison.OrdinalIgnoreCase))) ||
+                            (r.CodHier != null && (r.CodHier.EndsWith("-" + suffix, StringComparison.OrdinalIgnoreCase) || r.CodHier.Equals(suffix, StringComparison.OrdinalIgnoreCase))));
                     }
 
                     if (match != null)
@@ -90,7 +88,7 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                     
                     if (match == null)
                     {
-                        var dpMatch = allDps.FirstOrDefault(adp => adp.CodDeliveryPoint.Equals(dp.CodDeliveryPoint, StringComparison.OrdinalIgnoreCase));
+                        var dpMatch = allDps.FirstOrDefault(adp => adp.CodDeliveryPoint != null && adp.CodDeliveryPoint.Equals(dp.CodDeliveryPoint, StringComparison.OrdinalIgnoreCase));
                         if (dpMatch != null)
                         {
                             dp.CodHier = dpMatch.CodHier;
@@ -101,12 +99,10 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                             continue;
                         }
 
-                        var suffix = dp.CodDeliveryPoint.Contains("-") ? dp.CodDeliveryPoint.Split('-').Last() : dp.CodDeliveryPoint;
+                        var suffix = dp.CodDeliveryPoint != null && dp.CodDeliveryPoint.Contains("-") ? dp.CodDeliveryPoint.Split('-').Last() : dp.CodDeliveryPoint;
                         match = allRelations.FirstOrDefault(r => 
-                            r.CodNode.EndsWith("-" + suffix, StringComparison.OrdinalIgnoreCase) || 
-                            r.CodNode.Equals(suffix, StringComparison.OrdinalIgnoreCase) ||
-                            r.CodHier.EndsWith("-" + suffix, StringComparison.OrdinalIgnoreCase) ||
-                            r.CodHier.Equals(suffix, StringComparison.OrdinalIgnoreCase));
+                            (r.CodNode != null && (r.CodNode.EndsWith("-" + suffix, StringComparison.OrdinalIgnoreCase) || r.CodNode.Equals(suffix, StringComparison.OrdinalIgnoreCase))) ||
+                            (r.CodHier != null && (r.CodHier.EndsWith("-" + suffix, StringComparison.OrdinalIgnoreCase) || r.CodHier.Equals(suffix, StringComparison.OrdinalIgnoreCase))));
                     }
 
                     if (match != null)

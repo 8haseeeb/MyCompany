@@ -45,8 +45,10 @@ namespace Promotions.Infrastructure.Persistence.Repositories
 
             // Strict Filter: Division must match AND Level must match EXACTLY the Promo's Target Level
             // AND the customer must be registered as a participant in THIS promotion action.
+            // We use Trim() to handle potential legacy database padding in CodDiv.
             return await _context.CustomerRelations
-                .Where(x => x.CodDiv == action.CodDiv && x.IdLevel == action.LevParticipants.Value)
+                .Where(x => x.CodDiv != null && x.CodDiv.Trim() == action.CodDiv!.Trim())
+                .Where(x => x.IdLevel == action.LevParticipants.Value)
                 .Where(x => x.Participants.Any(p => p.IdAction == idAction))
                 .ToListAsync();
         }
