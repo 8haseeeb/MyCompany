@@ -61,7 +61,16 @@ namespace Promotions.Application.PromotionDetails.Handlers
             // Fetch data sequentially to avoid concurrent DbContext usage
             var actionEntity = await _promoActionRepo.GetByIdAsync(idAction);
             var productEntities = await _productRepo.GetByActionAsync(idAction);
-            var productDetailEntities = await _productDetailRepo.GetByActionAsync(idAction);
+            var productDetailEntitiesFromRepo = await _productDetailRepo.GetByActionAsync(idAction);
+            
+            // Collect all details (repo + those potentially loaded with products)
+            var detailsFromProducts = productEntities.SelectMany(p => p.Details).ToList();
+            var productDetailEntities = productDetailEntitiesFromRepo
+                .Concat(detailsFromProducts)
+                .GroupBy(d => new { d.IdAction, d.CodProduct, d.LevProduct, d.CodDisplay, d.CodNode, d.CodDiv })
+                .Select(g => g.First())
+                .ToList();
+
             var participants = await _participantRepo.GetByActionAsync(idAction);
             var deliveryPoints = await _deliveryPointRepo.GetByActionAsync(idAction);
             var allCustomers = await _customerRepo.GetAllAsync();
