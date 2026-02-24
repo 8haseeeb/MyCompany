@@ -43,13 +43,24 @@ namespace Promotions.Infrastructure.Persistence.Repositories
             if (action.LevParticipants == null || action.LevParticipants == 0)
                 return new List<CustomerRelation>();
 
-            // Strict Filter: Division must match AND Level must match EXACTLY the Promo's Target Level
-            // AND the customer must be registered as a participant in THIS promotion action.
-            // We use Trim() to handle potential legacy database padding in CodDiv.
+            // Strict Filter: 
+            // 1. Join CustomerRelations with Participants to ensure we only get relations actually used in this action.
+            // 2. Filter by the Promotion Header's Target Division (CodDiv) and Target Level (IdLevel).
+            // 3. This resolves the user's issue where all participants/delivery points were showing up.
+            
+            var targetDiv = action.CodDiv?.Trim().ToUpper() ?? string.Empty;
+            var targetLevel = action.LevParticipants ?? 0;
+
             return await _context.CustomerRelations
-                .Where(x => x.CodDiv != null && x.CodDiv.Trim() == action.CodDiv!.Trim())
-                .Where(x => x.IdLevel == action.LevParticipants.Value)
-                .Where(x => x.Participants.Any(p => p.IdAction == idAction))
+                .Join(_context.Participants,
+                    cust => new { cust.CodHier, cust.CodDiv, cust.CodNode, cust.IdLevel, cust.DteStart },
+                    part => new { part.CodHier, part.CodDiv, part.CodNode, part.IdLevel, part.DteStart },
+                    (cust, part) => new { cust, part })
+                .Where(x => x.part.IdAction == idAction)
+                .Where(x => x.cust.CodDiv != null && x.cust.CodDiv.Trim().ToUpper() == targetDiv)
+                .Where(x => x.cust.IdLevel == targetLevel)
+                .Select(x => x.cust)
+                .Distinct()
                 .ToListAsync();
         }
 
