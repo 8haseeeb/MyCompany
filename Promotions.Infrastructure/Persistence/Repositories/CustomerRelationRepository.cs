@@ -35,17 +35,24 @@ namespace Promotions.Infrastructure.Persistence.Repositories
 
         public async Task<List<CustomerRelation>> GetByActionAsync(int idAction)
         {
-            // We want to return only the "primary" customer relation for this promotion.
-            // By convention, this is the relation associated with the first participant added.
-            var firstParticipant = await _context.Participants
-                .Where(p => p.IdAction == idAction)
-                .OrderBy(p => p.CodParticipant) // Assuming the first one created has the lowest/specific code or order
-                .FirstOrDefaultAsync();
+            var action = await _context.PromoActions
+                .FirstOrDefaultAsync(a => a.IdAction == idAction);
 
-            if (firstParticipant == null) return new List<CustomerRelation>();
+            if (action == null) return new List<CustomerRelation>();
 
-            return await _context.CustomerRelations
-                .Where(x => x.CodNode == firstParticipant.CodNode && x.CodDiv == firstParticipant.CodDiv)
+            // We filter relations that match the action's division and participant level
+            // AND are actually associated with this action's participants.
+            var query = _context.CustomerRelations
+                .Where(x => x.CodDiv == action.CodDiv);
+
+            if (action.LevParticipants.HasValue)
+            {
+                query = query.Where(x => x.IdLevel == action.LevParticipants.Value);
+            }
+
+            // Ensure we only return relations linked to this action
+            return await query
+                .Where(x => x.Participants.Any(p => p.IdAction == idAction))
                 .ToListAsync();
         }
 
