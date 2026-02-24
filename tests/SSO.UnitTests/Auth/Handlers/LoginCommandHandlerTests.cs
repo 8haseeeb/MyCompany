@@ -46,6 +46,10 @@ namespace SSO.UnitTests.Auth.Handlers
             _passwordHasher.Verify("hashed_password", password).Returns(true);
             _jwtTokenService.GenerateToken(user, Arg.Any<string>()).Returns("access_token");
 
+            // Seed user into context for realistic login scenario
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
             var command = new LoginCommand(email, password);
 
             // --- ACT ---

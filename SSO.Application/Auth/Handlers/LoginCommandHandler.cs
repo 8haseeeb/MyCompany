@@ -50,13 +50,14 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResultDto>
 
         // 4️⃣ Generate Refresh Token and Update Session ID
         user.UpdateSession(newSessionId);
-        _context.Users.Update(user);
 
 
         var refreshTokenString = Guid.NewGuid().ToString();
         var expiry = DateTime.UtcNow.AddDays(30);
         
         user.UpdateRefreshToken(refreshTokenString, expiry);
+        
+        // Finalize all user updates (Session + Refresh Token)
         _context.Users.Update(user);
         await _context.SaveChangesAsync(cancellationToken);
 
