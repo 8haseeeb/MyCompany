@@ -17,9 +17,9 @@ namespace SSO.Infrastructure.Persistence.Configurations
             builder.Property(u => u.RefreshTokenExpiry).HasColumnName("RefreshTokenExpiry");
 
             
-            // Ignore columns and relationships that don't exist in the migrated database
-                        builder.Property(u => u.Role).HasColumnName("Role").IsRequired();
-            builder.Ignore(u => u.CurrentSessionId);
+            // Relationships and extra properties
+            builder.Property(u => u.Role).HasColumnName("Role").IsRequired();
+            builder.Property(u => u.CurrentSessionId).HasColumnName("CurrentSessionId").HasMaxLength(100);
             
 
 

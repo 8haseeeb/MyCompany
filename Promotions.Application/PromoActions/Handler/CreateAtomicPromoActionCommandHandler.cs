@@ -153,17 +153,19 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
 
             await _unitOfWork.PromoActions.AddAsync(action);
 
-            // Explicitly save ProductDetails as they might not be cascaded through the aggregate root
-            // and ensure IdAction is explicitly set.
+            // Ensure ProductDetails are correctly tracked and saved.
+            // Since they are added through AddDetail in the mapper, EF should track them,
+            // but we explicitly ensure IdAction matches the parent action.
             foreach (var prod in action.Products)
             {
                 foreach (var detail in prod.Details)
                 {
-                    // Ensure IdAction is set from the action (safety check)
-                    var field = detail.GetType().GetField("<IdAction>k__BackingField", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-                    if (field != null) field.SetValue(detail, action.IdAction);
+                    // Ensure IdAction is set correctly (using reflection for private field)
+                    var idField = detail.GetType()
+                        .GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                        .FirstOrDefault(f => f.Name.Contains("<IdAction>"));
                     
-                    await _unitOfWork.ProductDetails.AddAsync(detail);
+                    if (idField != null) idField.SetValue(detail, action.IdAction);
                 }
             }
 

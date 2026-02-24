@@ -51,7 +51,7 @@ namespace Promotions.Infrastructure.Persistence.Repositories
             var targetDiv = action.CodDiv?.Trim().ToUpper() ?? string.Empty;
             var targetLevel = action.LevParticipants ?? 0;
 
-            return await _context.CustomerRelations
+            var primaryCustomer = await _context.CustomerRelations
                 .Join(_context.Participants,
                     cust => new { cust.CodHier, cust.CodDiv, cust.CodNode, cust.IdLevel, cust.DteStart },
                     part => new { part.CodHier, part.CodDiv, part.CodNode, part.IdLevel, part.DteStart },
@@ -60,8 +60,9 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                 .Where(x => x.cust.CodDiv != null && x.cust.CodDiv.Trim().ToUpper() == targetDiv)
                 .Where(x => x.cust.IdLevel == targetLevel)
                 .Select(x => x.cust)
-                .Distinct()
-                .ToListAsync();
+                .FirstOrDefaultAsync();
+
+            return primaryCustomer != null ? new List<CustomerRelation> { primaryCustomer } : new List<CustomerRelation>();
         }
 
         public async Task<bool> ExistsAsync(string codHier, string codDiv, string codNode, int idLevel, DateTime dteStart)
