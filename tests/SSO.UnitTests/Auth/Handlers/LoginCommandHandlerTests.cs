@@ -48,7 +48,7 @@ namespace SSO.UnitTests.Auth.Handlers
 
             // Seed user into context for realistic login scenario
             _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(CancellationToken.None);
 
             var command = new LoginCommand(email, password);
 
