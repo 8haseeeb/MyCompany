@@ -34,9 +34,9 @@ public class CustomerRelationsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] int? idAction)
     {
-        var result = await _mediator.Send(new GetCustomerRelationsQuery());
+        var result = await _mediator.Send(new GetCustomerRelationsQuery(idAction));
         return Ok(result);
     }
 

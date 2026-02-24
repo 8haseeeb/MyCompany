@@ -15,6 +15,7 @@ namespace Promotions.Application.CustomerRelations.Interfaces
             DateTime dteStart);
 
         Task<List<CustomerRelation>> GetByNodeAndDivAsync(string codNode, string codDiv);
+        Task<List<CustomerRelation>> GetByActionAsync(int idAction);
         Task<bool> ExistsAsync(string codHier, string codDiv, string codNode, int idLevel, DateTime dteStart);
     }
 }

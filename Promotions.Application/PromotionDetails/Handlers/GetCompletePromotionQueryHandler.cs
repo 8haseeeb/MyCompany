@@ -34,6 +34,7 @@ namespace Promotions.Application.PromotionDetails.Handlers
         private readonly IParticipantRepository _participantRepo;
         private readonly IDeliveryPointRepository _deliveryPointRepo;
         private readonly ICustomerRelationRepository _customerRepo;
+        private readonly IPromoArticleRepository _articleRepo;
         private readonly IPromoMeasureFieldRepository _measureFieldRepo;
 
         public GetCompletePromotionQueryHandler(
@@ -43,6 +44,7 @@ namespace Promotions.Application.PromotionDetails.Handlers
             IParticipantRepository participantRepo,
             IDeliveryPointRepository deliveryPointRepo,
             ICustomerRelationRepository customerRepo,
+            IPromoArticleRepository articleRepo,
             IPromoMeasureFieldRepository measureFieldRepo)
         {
             _promoActionRepo = promoActionRepo;
@@ -51,6 +53,7 @@ namespace Promotions.Application.PromotionDetails.Handlers
             _participantRepo = participantRepo;
             _deliveryPointRepo = deliveryPointRepo;
             _customerRepo = customerRepo;
+            _articleRepo = articleRepo;
             _measureFieldRepo = measureFieldRepo;
         }
 
@@ -74,9 +77,9 @@ namespace Promotions.Application.PromotionDetails.Handlers
             var participants = await _participantRepo.GetByActionAsync(idAction);
             var deliveryPoints = await _deliveryPointRepo.GetByActionAsync(idAction);
             var allMeasureFields = await _measureFieldRepo.GetAllAsync();
+            var actionSpecificArticles = await _articleRepo.GetByActionAsync(idAction);
 
             // Map ProductDetails to DTOs
-            // Articles are derived from ProductDetails (same row data: CodDiv + CodNode identify the article)
             var productDetailDtos = productDetailEntities.Select(d => new ProductDetailDto
             {
                 IdAction = d.IdAction,
@@ -86,18 +89,7 @@ namespace Promotions.Application.PromotionDetails.Handlers
                 CodNode = d.CodNode,
                 CodDiv = d.CodDiv,
                 FlgInclusion = d.FlgInclusion,
-                // Article data is embedded in the product detail row itself
-                Articles = new List<PromoArticleDto>
-                {
-                    new PromoArticleDto
-                    {
-                        CodDiv = d.CodDiv,
-                        CodNode = d.CodNode,
-                        CodProduct = d.CodProduct,
-                        LevProduct = d.LevProduct,
-                        CodDisplay = d.CodDisplay
-                    }
-                }
+                Articles = new List<PromoArticleDto>() // Will be populated below if matching
             }).ToList();
 
             // Build a lookup of details grouped by (IdAction, CodProduct, LevProduct, CodDisplay) for product mapping
@@ -132,17 +124,19 @@ namespace Promotions.Application.PromotionDetails.Handlers
                         CodNode = d.CodNode,
                         CodDiv = d.CodDiv,
                         FlgInclusion = d.FlgInclusion,
-                        Articles = new List<PromoArticleDto>
-                        {
-                            new PromoArticleDto
+                        Articles = actionSpecificArticles
+                            .Where(a => a.CodDiv == d.CodDiv && a.CodNode == d.CodNode)
+                            .Select(a => new PromoArticleDto
                             {
-                                CodDiv = d.CodDiv,
-                                CodNode = d.CodNode,
-                                CodProduct = d.CodProduct,
-                                LevProduct = d.LevProduct,
-                                CodDisplay = d.CodDisplay
-                            }
-                        }
+                                CodDiv = a.CodDiv,
+                                CodNode = a.CodNode,
+                                CodProduct = a.CodProduct,
+                                LevProduct = a.LevProduct,
+                                CodDisplay = a.CodDisplay,
+                                CodNode1 = a.CodNode1,
+                                CodNode2 = a.CodNode2,
+                                CodNodeN = a.CodNodeN
+                            }).ToList()
                     }).ToList(),
                     // Filter measure fields that match this product's division and measure code
                     MeasureFields = allMeasureFields
@@ -157,47 +151,54 @@ namespace Promotions.Application.PromotionDetails.Handlers
                 };
             }).ToList();
 
-            // Flatten articles from product details (distinct by CodDiv + CodNode)
-            var promoArticles = productDetailDtos
-                .SelectMany(d => d.Articles)
-                .GroupBy(a => new { a.CodDiv, a.CodNode })
-                .Select(g => g.First())
-                .ToList();
+            // Populate Articles list for the CompletePromotionDto
+            var promoArticles = actionSpecificArticles.Select(a => new PromoArticleDto
+            {
+                IdAction = a.IdAction,
+                CodProduct = a.CodProduct,
+                LevProduct = a.LevProduct,
+                CodDisplay = a.CodDisplay,
+                CodDiv = a.CodDiv,
+                CodNode = a.CodNode,
+                CodNode1 = a.CodNode1,
+                CodNode2 = a.CodNode2,
+                CodNodeN = a.CodNodeN
+            }).ToList();
+            
+            // If repository articles are empty, fallback to derived articles from details
+            if (!promoArticles.Any())
+            {
+                promoArticles = productDetailEntities
+                    .GroupBy(d => new { d.CodDiv, d.CodNode })
+                    .Select(g => new PromoArticleDto
+                    {
+                        IdAction = idAction,
+                        CodDiv = g.Key.CodDiv,
+                        CodNode = g.Key.CodNode,
+                        CodProduct = g.First().CodProduct,
+                        LevProduct = g.First().LevProduct,
+                        CodDisplay = g.First().CodDisplay
+                    }).ToList();
+            }
 
             var promoMeasureFields = productDtos
                 .SelectMany(p => p.MeasureFields)
                 .DistinctBy(m => new { m.CodDiv, m.CodMeasure, m.FieldName })
                 .ToList();
 
-            // Customer Resolution:
-            // For the promotion detail view we only want to show the single
-            // customer relation that was originally created/linked for this
-            // promotion – not one row per participant or delivery point.
-            // We mirror the logic from GetPromoActionByIdQueryHandler and
-            // resolve the customer from the first participant's node/div.
-            CustomerRelationDto? resolvedCustomer = null;
-
-            var firstParticipant = participants.FirstOrDefault();
-            if (firstParticipant != null && !string.IsNullOrWhiteSpace(firstParticipant.CodNode) && !string.IsNullOrWhiteSpace(firstParticipant.CodDiv))
+            // Customer Resolution: Filtered by action via the new repository method
+            var customers = await _customerRepo.GetByActionAsync(idAction);
+            var customerDtos = customers.Select(customer => new CustomerRelationDto
             {
-                var relatedCustomers = await _customerRepo.GetByNodeAndDivAsync(firstParticipant.CodNode!, firstParticipant.CodDiv!);
-                var customer = relatedCustomers.FirstOrDefault();
-
-                if (customer != null)
-                {
-                    resolvedCustomer = new CustomerRelationDto
-                    {
-                        IdAction = idAction,
-                        CodHier = customer.CodHier ?? string.Empty,
-                        CodDiv = customer.CodDiv ?? string.Empty,
-                        CodNode = customer.CodNode ?? string.Empty,
-                        IdLevel = customer.IdLevel,
-                        DteStart = customer.DteStart,
-                        CodParentNode = customer.CodParentNode ?? string.Empty,
-                        DteEnd = customer.DteEnd
-                    };
-                }
-            }
+                IdAction = idAction,
+                CodHier = customer.CodHier ?? string.Empty,
+                CodDiv = customer.CodDiv ?? string.Empty,
+                CodNode = customer.CodNode ?? string.Empty,
+                IdLevel = customer.IdLevel,
+                DteStart = customer.DteStart,
+                CodParentNode = customer.CodParentNode ?? string.Empty,
+                DteEnd = customer.DteEnd
+            }).ToList();
 
             return new CompletePromotionDto
             {
@@ -238,9 +239,7 @@ namespace Promotions.Application.PromotionDetails.Handlers
                     IdLevel = d.IdLevel,
                     FlgInclusion = d.FlgInclusion
                 }).ToList(),
-                Customers = resolvedCustomer != null
-                    ? new List<CustomerRelationDto> { resolvedCustomer }
-                    : new List<CustomerRelationDto>()
+                Customers = customerDtos
             };
         }
     }

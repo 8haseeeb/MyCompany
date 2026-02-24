@@ -19,10 +19,13 @@ namespace Promotions.Application.CustomerRelations.Queries
             GetCustomerRelationsQuery request,
             CancellationToken cancellationToken)
         {
-            var entities = await _repository.GetAllAsync();
+            var entities = request.IdAction.HasValue 
+                ? await _repository.GetByActionAsync(request.IdAction.Value)
+                : await _repository.GetAllAsync();
 
             return entities.Select(x => new CustomerRelationDto
             {
+                IdAction = request.IdAction ?? 0,
                 CodHier = x.CodHier,
                 CodDiv = x.CodDiv,
                 CodNode = x.CodNode,

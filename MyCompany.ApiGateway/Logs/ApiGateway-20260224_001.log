@@ -10,3 +10,5 @@
 2026-02-24 14:15:38.266 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 458.1502 ms
 2026-02-24 14:19:32.671 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 198.1994 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
 2026-02-24 14:19:32.860 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 390.6544 ms
+2026-02-24 14:29:12.619 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 388.7630 ms | User: Anonymous (N/A) | IP: ::1 | RequestBody:  | ResponseBody: 
+2026-02-24 14:29:12.895 +05:00 [INF] HTTP GET /swagger/index.html responded 404 in 669.5594 ms
