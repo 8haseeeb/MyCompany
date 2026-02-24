@@ -49,6 +49,16 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
+        public async Task<bool> ExistsAsync(string codHier, string codDiv, string codNode, int idLevel, DateTime dteStart)
+        {
+            return await _context.CustomerRelations.AnyAsync(x =>
+                x.CodHier == codHier &&
+                x.CodDiv == codDiv &&
+                x.CodNode == codNode &&
+                x.IdLevel == idLevel &&
+                x.DteStart == dteStart);
+        }
+
         // Standard CRUD & SaveChangesAsync are in base class
     }
 }
