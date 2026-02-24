@@ -78,7 +78,15 @@ namespace Promotions.Application.PromotionDetails.Handlers
             var participants = await _participantRepo.GetByActionAsync(idAction);
             var deliveryPoints = await _deliveryPointRepo.GetByActionAsync(idAction);
             var allMeasureFields = await _measureFieldRepo.GetAllAsync();
-            var actionSpecificArticles = await _articleRepo.GetByActionAsync(idAction);
+            
+            // Article Fetching Logic: Since IdAction is ignored in TA5150PROMOARTICLES,
+            // we must fetch articles that match the CodDiv/CodNode present in the promotion's ProductDetails.
+            var articleNodes = productDetailEntities
+                .Select(d => (d.CodDiv, d.CodNode))
+                .Distinct()
+                .ToList();
+
+            var actionSpecificArticles = await _articleRepo.GetByNodesAsync(articleNodes);
 
             // Map ProductDetails to DTOs
             var productDetailDtos = productDetailEntities.Select(d => new ProductDetailDto
@@ -136,7 +144,8 @@ namespace Promotions.Application.PromotionDetails.Handlers
                                 CodDisplay = a.CodDisplay,
                                 CodNode1 = a.CodNode1,
                                 CodNode2 = a.CodNode2,
-                                CodNodeN = a.CodNodeN
+                                CodNodeN = a.CodNodeN,
+                                IdAction = idAction
                             }).ToList()
                     }).ToList(),
                     // Filter measure fields that match this product's division and measure code
@@ -163,7 +172,8 @@ namespace Promotions.Application.PromotionDetails.Handlers
                 CodNode = a.CodNode,
                 CodNode1 = a.CodNode1,
                 CodNode2 = a.CodNode2,
-                CodNodeN = a.CodNodeN
+                CodNodeN = a.CodNodeN,
+                IdAction = idAction
             }).ToList();
             
             // If repository articles are empty, fallback to derived articles from details

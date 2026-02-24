@@ -9,5 +9,6 @@ namespace Promotions.Application.PromoArticles.Interfaces
     {
         Task<PromoArticle?> GetByIdAsync(string codDiv, string codNode);
         Task<List<PromoArticle>> GetByActionAsync(int idAction);
+        Task<List<PromoArticle>> GetByNodesAsync(List<(string codDiv, string codNode)> nodes);
     }
 }

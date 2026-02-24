@@ -40,18 +40,13 @@ namespace Promotions.Infrastructure.Persistence.Repositories
 
             if (action == null) return new List<CustomerRelation>();
 
-            // We filter relations that match the action's division and participant level
-            // AND are actually associated with this action's participants.
-            var query = _context.CustomerRelations
-                .Where(x => x.CodDiv == action.CodDiv);
+            if (action.LevParticipants == null || action.LevParticipants == 0)
+                return new List<CustomerRelation>();
 
-            if (action.LevParticipants.HasValue)
-            {
-                query = query.Where(x => x.IdLevel == action.LevParticipants.Value);
-            }
-
-            // Ensure we only return relations linked to this action
-            return await query
+            // Strict Filter: Division must match AND Level must match EXACTLY the Promo's Target Level
+            // AND the customer must be registered as a participant in THIS promotion action.
+            return await _context.CustomerRelations
+                .Where(x => x.CodDiv == action.CodDiv && x.IdLevel == action.LevParticipants.Value)
                 .Where(x => x.Participants.Any(p => p.IdAction == idAction))
                 .ToListAsync();
         }

@@ -157,6 +157,15 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
 
             await _unitOfWork.PromoActions.AddAsync(action);
 
+            // Explicitly save ProductDetails as they might not be cascaded through the aggregate root
+            foreach (var prod in action.Products)
+            {
+                foreach (var detail in prod.Details)
+                {
+                    await _unitOfWork.ProductDetails.AddAsync(detail);
+                }
+            }
+
             // Manually save standalone articles associated with the promotion (not handled by Aggregate root automatically in this repo pattern)
             var articlesToSave = new List<PromoArticle>();
             foreach (var prodDto in dto.Products)
@@ -185,7 +194,11 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
 
             foreach (var art in articlesToSave)
             {
-                await _unitOfWork.PromoArticles.AddAsync(art);
+                // Articles are master data, only add if they don't exist
+                if (await _unitOfWork.PromoArticles.GetByIdAsync(art.CodDiv, art.CodNode) == null)
+                {
+                    await _unitOfWork.PromoArticles.AddAsync(art);
+                }
             }
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
