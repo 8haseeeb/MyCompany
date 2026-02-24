@@ -89,11 +89,28 @@ namespace Promotions.Application.Common.Mappings
                 .ConstructUsing((src, context) => new PromoProduct(
                     (src.IdAction ?? 0) > 0 ? (src.IdAction ?? 0) : (context.Items.ContainsKey("IdAction") ? (int)context.Items["IdAction"] : 0), 
                     src.CodProduct ?? "", src.LevProduct ?? 0, src.CodDisplay ?? "", src.CodDiv))
-                .AfterMap((src, dest) => {
+                .AfterMap((src, dest, context) => {
                     dest.UpdateQuantities(src.QtyEstimated, src.NumMeasure, src.CodMeasure);
                     dest.UpdateDiscounts(src.PerceDiscount1, src.PerceDiscount2);
-                })
-                .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.Details));
+                    
+                    // Manually populate Details since setter is private
+                    if (src.Details != null)
+                    {
+                        foreach (var dDto in src.Details)
+                        {
+                            var detail = new global::Promotions.Domain.ProductDetails.PromoProductDetail(
+                                dest.IdAction,
+                                dDto.CodProduct ?? dest.CodProduct,
+                                (dDto.LevProduct ?? 0) > 0 ? (dDto.LevProduct ?? 0) : dest.LevProduct,
+                                dDto.CodDisplay ?? dest.CodDisplay,
+                                dDto.CodNode ?? "",
+                                dDto.CodDiv ?? dest.CodDiv ?? "",
+                                dDto.FlgInclusion
+                            );
+                            dest.AddDetail(detail);
+                        }
+                    }
+                });
 
             CreateMap<PromoProduct, ProductDto>();
             CreateMap<PromoProduct, CreateProductDto>();

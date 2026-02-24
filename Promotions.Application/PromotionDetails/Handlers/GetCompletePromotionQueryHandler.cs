@@ -176,19 +176,27 @@ namespace Promotions.Application.PromotionDetails.Handlers
                 .Distinct()
                 .ToList();
 
-            var filteredCustomers = allCustomers
-                .Where(c => promoNodes.Any(node => node.CodHier == c.CodHier && node.CodNode == c.CodNode && node.IdLevel == c.IdLevel))
-                .Select(c => new CustomerRelationDto
+            // Refined Customer Filtering: Iterate through all unique nodes from participants/DPs
+            // and find matching relations, showing all even if not found in master list.
+            var filteredCustomers = promoNodes.Select(node => 
+            {
+                var match = allCustomers.FirstOrDefault(c => 
+                    c.CodHier == node.CodHier && 
+                    c.CodNode == node.CodNode && 
+                    c.IdLevel == node.IdLevel);
+
+                return new CustomerRelationDto
                 {
                     IdAction = idAction,
-                    CodHier = c.CodHier,
-                    CodDiv = c.CodDiv,
-                    CodNode = c.CodNode,
-                    IdLevel = c.IdLevel,
-                    DteStart = c.DteStart,
-                    CodParentNode = c.CodParentNode,
-                    DteEnd = c.DteEnd
-                }).ToList();
+                    CodHier = node.CodHier ?? string.Empty,
+                    CodDiv = match?.CodDiv ?? "N/A",
+                    CodNode = node.CodNode ?? string.Empty,
+                    IdLevel = node.IdLevel,
+                    DteStart = match?.DteStart ?? System.DateTime.MinValue,
+                    CodParentNode = match?.CodParentNode ?? "N/A",
+                    DteEnd = match?.DteEnd
+                };
+            }).ToList();
 
             return new CompletePromotionDto
             {
