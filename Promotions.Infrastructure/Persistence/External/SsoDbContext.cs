@@ -22,9 +22,7 @@ namespace Promotions.Infrastructure.Persistence.External
                 entity.ToTable("Users");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.UserName).HasColumnName("Name");
-                entity.Ignore(e => e.CurrentSessionId);
-                entity.Ignore(e => e.RefreshToken);
-                entity.Ignore(e => e.RefreshTokenExpiry);
+                // Removed ignores for session management fields
                 entity.Ignore(e => e.Role);
             });
         }
