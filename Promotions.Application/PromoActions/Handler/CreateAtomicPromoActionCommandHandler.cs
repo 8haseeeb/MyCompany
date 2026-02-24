@@ -40,8 +40,8 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                 if (string.IsNullOrEmpty(p.CodHier) || string.IsNullOrEmpty(p.CodNode))
                 {
                     var match = allRelations.FirstOrDefault(r => 
-                        r.CodNode.Equals(p.CodParticipant, StringComparison.OrdinalIgnoreCase) || 
-                        r.CodHier.Equals(p.CodParticipant, StringComparison.OrdinalIgnoreCase));
+                        (r.CodNode != null && r.CodNode.Equals(p.CodParticipant, StringComparison.OrdinalIgnoreCase)) || 
+                        (r.CodHier != null && r.CodHier.Equals(p.CodParticipant, StringComparison.OrdinalIgnoreCase)));
                     
                     if (match == null)
                     {
@@ -85,8 +85,8 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                 if (string.IsNullOrEmpty(dp.CodHier) || string.IsNullOrEmpty(dp.CodNode))
                 {
                     var match = allRelations.FirstOrDefault(r => 
-                        r.CodNode.Equals(dp.CodDeliveryPoint, StringComparison.OrdinalIgnoreCase) || 
-                        r.CodHier.Equals(dp.CodDeliveryPoint, StringComparison.OrdinalIgnoreCase));
+                        (r.CodNode != null && r.CodNode.Equals(dp.CodDeliveryPoint, StringComparison.OrdinalIgnoreCase)) || 
+                        (r.CodHier != null && r.CodHier.Equals(dp.CodDeliveryPoint, StringComparison.OrdinalIgnoreCase)));
                     
                     if (match == null)
                     {

@@ -137,11 +137,11 @@ namespace Promotions.Application.PromotionDetails.Handlers
                             .Where(a => a.CodDiv == d.CodDiv && a.CodNode == d.CodNode)
                             .Select(a => new PromoArticleDto
                             {
-                                CodDiv = a.CodDiv,
-                                CodNode = a.CodNode,
-                                CodProduct = a.CodProduct,
+                                CodDiv = a.CodDiv ?? string.Empty,
+                                CodNode = a.CodNode ?? string.Empty,
+                                CodProduct = a.CodProduct ?? string.Empty,
                                 LevProduct = a.LevProduct,
-                                CodDisplay = a.CodDisplay,
+                                CodDisplay = a.CodDisplay ?? string.Empty,
                                 CodNode1 = a.CodNode1,
                                 CodNode2 = a.CodNode2,
                                 CodNodeN = a.CodNodeN,
@@ -164,12 +164,11 @@ namespace Promotions.Application.PromotionDetails.Handlers
             // Populate Articles list for the CompletePromotionDto
             var promoArticles = actionSpecificArticles.Select(a => new PromoArticleDto
             {
-                IdAction = a.IdAction,
                 CodProduct = a.CodProduct,
                 LevProduct = a.LevProduct,
                 CodDisplay = a.CodDisplay,
-                CodDiv = a.CodDiv,
-                CodNode = a.CodNode,
+                CodDiv = a.CodDiv ?? string.Empty,
+                CodNode = a.CodNode ?? string.Empty,
                 CodNode1 = a.CodNode1,
                 CodNode2 = a.CodNode2,
                 CodNodeN = a.CodNodeN,
