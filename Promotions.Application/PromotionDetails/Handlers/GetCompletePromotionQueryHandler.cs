@@ -73,7 +73,6 @@ namespace Promotions.Application.PromotionDetails.Handlers
 
             var participants = await _participantRepo.GetByActionAsync(idAction);
             var deliveryPoints = await _deliveryPointRepo.GetByActionAsync(idAction);
-            var allCustomers = await _customerRepo.GetAllAsync();
             var allMeasureFields = await _measureFieldRepo.GetAllAsync();
 
             // Map ProductDetails to DTOs
@@ -170,33 +169,35 @@ namespace Promotions.Application.PromotionDetails.Handlers
                 .DistinctBy(m => new { m.CodDiv, m.CodMeasure, m.FieldName })
                 .ToList();
 
-            // Refined Customer Filtering: Only include customers linked to this promotion's participants or delivery points
-            var promoNodes = participants.Select(p => new { p.CodHier, p.CodNode, p.IdLevel })
-                .Concat(deliveryPoints.Select(d => new { d.CodHier, d.CodNode, d.IdLevel }))
-                .Distinct()
-                .ToList();
+            // Customer Resolution:
+            // For the promotion detail view we only want to show the single
+            // customer relation that was originally created/linked for this
+            // promotion – not one row per participant or delivery point.
+            // We mirror the logic from GetPromoActionByIdQueryHandler and
+            // resolve the customer from the first participant's node/div.
+            CustomerRelationDto? resolvedCustomer = null;
 
-            // Refined Customer Filtering: Iterate through all unique nodes from participants/DPs
-            // and find matching relations, showing all even if not found in master list.
-            var filteredCustomers = promoNodes.Select(node => 
+            var firstParticipant = participants.FirstOrDefault();
+            if (firstParticipant != null && !string.IsNullOrWhiteSpace(firstParticipant.CodNode) && !string.IsNullOrWhiteSpace(firstParticipant.CodDiv))
             {
-                var match = allCustomers.FirstOrDefault(c => 
-                    c.CodHier == node.CodHier && 
-                    c.CodNode == node.CodNode && 
-                    c.IdLevel == node.IdLevel);
+                var relatedCustomers = await _customerRepo.GetByNodeAndDivAsync(firstParticipant.CodNode!, firstParticipant.CodDiv!);
+                var customer = relatedCustomers.FirstOrDefault();
 
-                return new CustomerRelationDto
+                if (customer != null)
                 {
-                    IdAction = idAction,
-                    CodHier = node.CodHier ?? string.Empty,
-                    CodDiv = match?.CodDiv ?? "N/A",
-                    CodNode = node.CodNode ?? string.Empty,
-                    IdLevel = node.IdLevel,
-                    DteStart = match?.DteStart ?? System.DateTime.MinValue,
-                    CodParentNode = match?.CodParentNode ?? "N/A",
-                    DteEnd = match?.DteEnd
-                };
-            }).ToList();
+                    resolvedCustomer = new CustomerRelationDto
+                    {
+                        IdAction = idAction,
+                        CodHier = customer.CodHier ?? string.Empty,
+                        CodDiv = customer.CodDiv ?? string.Empty,
+                        CodNode = customer.CodNode ?? string.Empty,
+                        IdLevel = customer.IdLevel,
+                        DteStart = customer.DteStart,
+                        CodParentNode = customer.CodParentNode ?? string.Empty,
+                        DteEnd = customer.DteEnd
+                    };
+                }
+            }
 
             return new CompletePromotionDto
             {
@@ -237,7 +238,9 @@ namespace Promotions.Application.PromotionDetails.Handlers
                     IdLevel = d.IdLevel,
                     FlgInclusion = d.FlgInclusion
                 }).ToList(),
-                Customers = filteredCustomers
+                Customers = resolvedCustomer != null
+                    ? new List<CustomerRelationDto> { resolvedCustomer }
+                    : new List<CustomerRelationDto>()
             };
         }
     }
