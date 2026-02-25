@@ -27,8 +27,7 @@ namespace SSO.Api.Middleware
                 var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value 
                                ?? context.User.FindFirst("sub")?.Value;
 
-                _logger.LogInformation("[SessionCheck-SSO] Authenticated. UserId: {UserIdClaim}, SessionId: {SessionIdClaim}", 
-                    userIdClaim ?? "NULL", sessionIdClaim ?? "NULL");
+                context.Response.Headers.Append("X-Session-Token", sessionIdClaim ?? "MISSING");
 
                 if (!string.IsNullOrEmpty(sessionIdClaim) && !string.IsNullOrEmpty(userIdClaim) && int.TryParse(userIdClaim, out int userId))
                 {
@@ -37,11 +36,11 @@ namespace SSO.Api.Middleware
                     if (user != null)
                     {
                         var dbSessionId = user.CurrentSessionId;
-                        _logger.LogInformation("[SessionCheck-SSO] DB Match. User: {UserId}, DB Session: {DbSession}, Token Session: {TokenSession}", 
-                            userId, dbSessionId ?? "NULL", sessionIdClaim);
+                        context.Response.Headers.Append("X-Session-DB", dbSessionId ?? "NULL");
 
                         if (dbSessionId != sessionIdClaim)
                         {
+                            context.Response.Headers.Append("X-Session-Status", "MISMATCH");
                             _logger.LogWarning("[SessionCheck-SSO] MISMATCH! Logging out User: {UserId}.", userId);
                             
                             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -49,16 +48,16 @@ namespace SSO.Api.Middleware
                             await context.Response.WriteAsync("{\"message\": \"Session expired. You are logged in on another device.\"}");
                             return; 
                         }
+                        context.Response.Headers.Append("X-Session-Status", "VALID");
                     }
                     else
                     {
-                        _logger.LogWarning("[SessionCheck-SSO] User {UserId} NOT found in DB.", userId);
+                        context.Response.Headers.Append("X-Session-Status", "USER_NOT_FOUND");
                     }
                 }
                 else
                 {
-                    _logger.LogWarning("[SessionCheck-SSO] Skipping. Missing Claims. UserId: {UserIdClaim}, SessionId: {SessionIdClaim}", 
-                        userIdClaim ?? "NULL", sessionIdClaim ?? "NULL");
+                    context.Response.Headers.Append("X-Session-Status", "CLAIMS_MISSING");
                 }
             }
             else

@@ -23,9 +23,8 @@ namespace Promotions.Api.Middleware
                 var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value 
                                ?? context.User.FindFirst("sub")?.Value;
 
-                _logger.LogInformation("[SessionCheck-Promo] Authenticated. UserId: {UserIdClaim}, SessionId: {SessionIdClaim}", 
-                    userIdClaim ?? "NULL", sessionIdClaim ?? "NULL");
-
+                context.Response.Headers.Append("X-Session-Token", sessionIdClaim ?? "MISSING");
+                
                 if (!string.IsNullOrEmpty(sessionIdClaim) && !string.IsNullOrEmpty(userIdClaim) && int.TryParse(userIdClaim, out int userId))
                 {
                     var user = await ssoDbContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId);
@@ -33,12 +32,12 @@ namespace Promotions.Api.Middleware
                     if (user != null)
                     {
                         var dbSessionId = user.CurrentSessionId;
-                        _logger.LogInformation("[SessionCheck-Promo] DB Match. User: {UserId}, DB Session: {DbSession}, Token Session: {TokenSession}", 
-                            userId, dbSessionId ?? "NULL", sessionIdClaim);
+                        context.Response.Headers.Append("X-Session-DB", dbSessionId ?? "NULL");
 
                         // Validate session: if the DB has a different session ID than the token, it's an old session.
                         if (dbSessionId != sessionIdClaim)
                         {
+                            context.Response.Headers.Append("X-Session-Status", "MISMATCH");
                             _logger.LogWarning("[SessionCheck-Promo] MISMATCH! Logging out User: {UserId}", userId);
                             
                             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -46,16 +45,16 @@ namespace Promotions.Api.Middleware
                             await context.Response.WriteAsync("{\"message\": \"Session expired. You are logged in on another device.\"}");
                             return; 
                         }
+                        context.Response.Headers.Append("X-Session-Status", "VALID");
                     }
                     else
                     {
-                        _logger.LogWarning("[SessionCheck-Promo] User {UserId} NOT found in SSO database", userId);
+                        context.Response.Headers.Append("X-Session-Status", "USER_NOT_FOUND");
                     }
                 }
                 else
                 {
-                     _logger.LogWarning("[SessionCheck-Promo] Skipping. Missing Claims. UserId: {UserIdClaim}, SessionId: {SessionIdClaim}", 
-                        userIdClaim ?? "NULL", sessionIdClaim ?? "NULL");
+                     context.Response.Headers.Append("X-Session-Status", "CLAIMS_MISSING");
                 }
             }
 

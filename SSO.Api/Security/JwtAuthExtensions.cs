@@ -15,7 +15,9 @@ public static class JwtAuthExtensions
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                options.RequireHttpsMetadata = false;
+                options.RequireHttpsMetadata = false; // For development
+                options.SaveToken = true;
+                options.MapInboundClaims = false; // Fix: Add this to match Promotions.Api
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
