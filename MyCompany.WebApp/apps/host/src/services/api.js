@@ -36,12 +36,25 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
         const url = originalRequest?.url || '';
+        const status = error.response?.status;
         const isLoginRequest = url.includes('/api/auth/login');
         const isHealthCheck = url.includes('/api/gateway/health');
         const isRefreshRequest = url.includes('/api/auth/refresh');
 
-        // Response Interceptor (Detecting 401)
-        if (error.response?.status === 401 && !isLoginRequest && !isHealthCheck && !isRefreshRequest && !originalRequest._retry) {
+        // 401 after retry = session invalidated (e.g. logged in elsewhere). Do NOT try refresh again.
+        const is401AfterRetry = status === 401 && originalRequest._retry;
+
+        // 503 = session validation failed (DB unreachable). Force logout.
+        if (status === 503 || is401AfterRetry) {
+            console.warn("Session invalid or service unavailable. Logging out.", { status, url });
+            processQueue(error, null);
+            isRefreshing = false;
+            handleLogout();
+            return Promise.reject(error);
+        }
+
+        // Response Interceptor (Detecting 401) - try refresh for token expiry
+        if (status === 401 && !isLoginRequest && !isHealthCheck && !isRefreshRequest) {
 
             // Request Queue (Smart Handling)
             if (isRefreshing) {
@@ -67,12 +80,9 @@ api.interceptors.response.use(
                 return Promise.reject(error);
             }
 
-
             // Refresh Logic
             try {
                 console.log("Access token expired. Attempting refresh...");
-                // Note: We use a separate axios call or the same api instance but must be careful about infinite loops
-                // Since it's a specific endpoint, our isRefreshRequest check above handles it.
                 const response = await axios.post('/api/auth/refresh', { refreshToken });
 
                 const { accessToken, refreshToken: newRefreshToken } = response.data;
@@ -86,6 +96,7 @@ api.interceptors.response.use(
                 processQueue(null, accessToken);
                 return api(originalRequest);
             } catch (refreshError) {
+                // Refresh failed (401/503) = session invalid, force logout
                 console.error("Refresh token failed or expired. Logging out.", refreshError);
                 processQueue(refreshError, null);
                 handleLogout();
@@ -95,7 +106,7 @@ api.interceptors.response.use(
             }
         }
 
-        console.error(`API Error: ${error.config?.method.toUpperCase()} ${error.config?.url}`, {
+        console.error(`API Error: ${error.config?.method?.toUpperCase()} ${error.config?.url}`, {
             status: error.response?.status,
             data: error.response?.data,
             message: error.message
@@ -108,9 +119,22 @@ function handleLogout() {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
     window.dispatchEvent(new Event("logout"));
+    try { new BroadcastChannel('session').postMessage({ type: 'LOGOUT' }); } catch { /* BroadcastChannel not supported */ }
     setTimeout(() => {
         window.location.href = '/login';
     }, 100);
 }
+
+// Multi-tab: when one tab logs out, others follow
+try {
+    const bc = new BroadcastChannel('session');
+    bc.onmessage = (e) => {
+        if (e.data?.type === 'LOGOUT') {
+            localStorage.removeItem('token');
+            localStorage.removeItem('refreshToken');
+            window.location.href = '/login';
+        }
+    };
+} catch { /* BroadcastChannel not supported */ }
 
 export default api;
