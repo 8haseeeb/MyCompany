@@ -27,7 +27,7 @@ namespace SSO.Api.Middleware
                 var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value 
                                ?? context.User.FindFirst("sub")?.Value;
 
-                _logger.LogInformation("[SessionCheck] User authenticated. UserIdClaim: {UserIdClaim}, SessionIdClaim: {SessionIdClaim}", 
+                _logger.LogInformation("[SessionCheck-SSO] Authenticated. UserId: {UserIdClaim}, SessionId: {SessionIdClaim}", 
                     userIdClaim ?? "NULL", sessionIdClaim ?? "NULL");
 
                 if (!string.IsNullOrEmpty(sessionIdClaim) && !string.IsNullOrEmpty(userIdClaim) && int.TryParse(userIdClaim, out int userId))
@@ -36,12 +36,13 @@ namespace SSO.Api.Middleware
                     
                     if (user != null)
                     {
-                        _logger.LogInformation("[SessionCheck] DB User found. DB Session: {DbSession}, Token Session: {TokenSession}", 
-                            user.CurrentSessionId ?? "NULL", sessionIdClaim);
+                        var dbSessionId = user.CurrentSessionId;
+                        _logger.LogInformation("[SessionCheck-SSO] DB Match. User: {UserId}, DB Session: {DbSession}, Token Session: {TokenSession}", 
+                            userId, dbSessionId ?? "NULL", sessionIdClaim);
 
-                        if (user.CurrentSessionId != sessionIdClaim)
+                        if (dbSessionId != sessionIdClaim)
                         {
-                            _logger.LogWarning("Session Mismatch! User: {UserId}. TokenSession: {TokenSession}, DBSession: {DbSession}", userId, sessionIdClaim, user.CurrentSessionId);
+                            _logger.LogWarning("[SessionCheck-SSO] MISMATCH! Logging out User: {UserId}.", userId);
                             
                             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                             context.Response.ContentType = "application/json";
@@ -51,13 +52,19 @@ namespace SSO.Api.Middleware
                     }
                     else
                     {
-                        _logger.LogWarning("[SessionCheck] User {UserId} NOT found in SSO database", userId);
+                        _logger.LogWarning("[SessionCheck-SSO] User {UserId} NOT found in DB.", userId);
                     }
                 }
                 else
                 {
-                    _logger.LogWarning("[SessionCheck] Skipping validation. SessionIdClaim or UserIdClaim is missing or invalid.");
+                    _logger.LogWarning("[SessionCheck-SSO] Skipping. Missing Claims. UserId: {UserIdClaim}, SessionId: {SessionIdClaim}", 
+                        userIdClaim ?? "NULL", sessionIdClaim ?? "NULL");
                 }
+            }
+            else
+            {
+                // Optional: Log if we are hitting an endpoint that requires auth but user isn't authenticated yet
+                // _logger.LogInformation("[SessionCheck-SSO] User not authenticated for {Path}", context.Request.Path);
             }
 
             await _next(context);

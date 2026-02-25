@@ -23,7 +23,7 @@ namespace Promotions.Api.Middleware
                 var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value 
                                ?? context.User.FindFirst("sub")?.Value;
 
-                _logger.LogInformation("[SessionCheck] User authenticated. UserIdClaim: {UserIdClaim}, SessionIdClaim: {SessionIdClaim}", 
+                _logger.LogInformation("[SessionCheck-Promo] Authenticated. UserId: {UserIdClaim}, SessionId: {SessionIdClaim}", 
                     userIdClaim ?? "NULL", sessionIdClaim ?? "NULL");
 
                 if (!string.IsNullOrEmpty(sessionIdClaim) && !string.IsNullOrEmpty(userIdClaim) && int.TryParse(userIdClaim, out int userId))
@@ -32,13 +32,14 @@ namespace Promotions.Api.Middleware
                     
                     if (user != null)
                     {
-                        _logger.LogInformation("[SessionCheck] DB User found. DB Session: {DbSession}, Token Session: {TokenSession}", 
-                            user.CurrentSessionId ?? "NULL", sessionIdClaim);
+                        var dbSessionId = user.CurrentSessionId;
+                        _logger.LogInformation("[SessionCheck-Promo] DB Match. User: {UserId}, DB Session: {DbSession}, Token Session: {TokenSession}", 
+                            userId, dbSessionId ?? "NULL", sessionIdClaim);
 
                         // Validate session: if the DB has a different session ID than the token, it's an old session.
-                        if (user.CurrentSessionId != sessionIdClaim)
+                        if (dbSessionId != sessionIdClaim)
                         {
-                            _logger.LogWarning("Session Mismatch! User: {UserId}. TokenSession: {TokenSession}, DBSession: {DbSession}", userId, sessionIdClaim, user.CurrentSessionId);
+                            _logger.LogWarning("[SessionCheck-Promo] MISMATCH! Logging out User: {UserId}", userId);
                             
                             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                             context.Response.ContentType = "application/json";
@@ -48,12 +49,13 @@ namespace Promotions.Api.Middleware
                     }
                     else
                     {
-                        _logger.LogWarning("[SessionCheck] User {UserId} NOT found in SSO database", userId);
+                        _logger.LogWarning("[SessionCheck-Promo] User {UserId} NOT found in SSO database", userId);
                     }
                 }
                 else
                 {
-                     _logger.LogWarning("[SessionCheck] Skipping validation. SessionIdClaim or UserIdClaim is missing or invalid.");
+                     _logger.LogWarning("[SessionCheck-Promo] Skipping. Missing Claims. UserId: {UserIdClaim}, SessionId: {SessionIdClaim}", 
+                        userIdClaim ?? "NULL", sessionIdClaim ?? "NULL");
                 }
             }
 
