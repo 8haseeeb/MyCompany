@@ -2,11 +2,16 @@ import axios from 'axios';
 
 // Multi-tab: when one tab logs out, others follow
 try {
-    const bc = new BroadcastChannel('session');
+    const bc = new BroadcastChannel('session-channel');
     bc.onmessage = (e) => {
-        if (e.data?.type === 'LOGOUT') {
+        if (e.data === 'logout') {
             localStorage.removeItem('token');
             localStorage.removeItem('refreshToken');
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userRole');
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('authToken');
             window.location.href = '/login';
         }
     };
@@ -38,10 +43,10 @@ api.interceptors.response.use(
         // 401 = session invalid/expired, 503 = session validation failed (DB unreachable)
         if (status === 401 || status === 503) {
             console.warn("Session invalid or service unavailable. Logging out...", { status });
-            localStorage.removeItem('token');
-            localStorage.removeItem('refreshToken');
+            ['token', 'refreshToken', 'authToken', 'userName', 'userRole'].forEach(k => localStorage.removeItem(k));
+            ['token', 'authToken'].forEach(k => sessionStorage.removeItem(k));
             window.dispatchEvent(new Event("logout"));
-            try { new BroadcastChannel('session').postMessage({ type: 'LOGOUT' }); } catch { /* BroadcastChannel not supported */ }
+            try { new BroadcastChannel('session-channel').postMessage('logout'); } catch { /* BroadcastChannel not supported */ }
 
             setTimeout(() => {
                 window.location.href = '/login';

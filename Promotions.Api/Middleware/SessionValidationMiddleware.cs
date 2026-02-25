@@ -20,9 +20,9 @@ namespace Promotions.Api.Middleware
             // Always stamp that this middleware ran
             context.Response.Headers["X-Middleware-Reached"] = "SESSION_VALIDATOR_V3";
 
-            // Skip session check for health and login endpoints
+            // Skip session check only for health. Auth/login has no token so passes early; refresh MUST be validated.
             var path = context.Request.Path.Value?.ToLower() ?? "";
-            if (path.Contains("/api/health") || path.Contains("/api/auth"))
+            if (path.Contains("/api/health"))
             {
                 await _next(context);
                 return;
