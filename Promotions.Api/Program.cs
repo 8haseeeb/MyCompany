@@ -72,8 +72,19 @@ var ssoConnectionString = builder.Configuration.GetConnectionString("SsoConnecti
 builder.Services.AddInfrastructure(connectionString!);
 
 // Add SsoDbContext for Session Validation
-builder.Services.AddDbContext<SsoDbContext>(options =>
-    options.UseSqlServer(ssoConnectionString));
+if (!string.IsNullOrEmpty(ssoConnectionString))
+{
+    builder.Services.AddDbContext<SsoDbContext>(options =>
+        options.UseSqlServer(ssoConnectionString));
+}
+else
+{
+    // If SsoConnection not configured, register a no-op to avoid DI crash
+    // The middleware will block all authenticated requests with DB_ERROR
+    builder.Services.AddDbContext<SsoDbContext>(options =>
+        options.UseSqlServer("Server=localhost;Database=MISSING_SSO_CONNECTION_PLACEHOLDER;Trusted_Connection=True;"));
+    Log.Warning("[STARTUP] SsoConnection is NULL - session validation will block all requests!");
+}
 
 
 var app = builder.Build();
@@ -112,8 +123,8 @@ using (var scope = app.Services.CreateScope())
         }
         catch (Exception ex)
         {
-             logger.LogError(ex, "An error occurred while migrating the database.");
-             throw; // Non-transient error
+            logger.LogError(ex, "An error occurred while migrating the database. Continuing startup...");
+            break; // Don't crash the container on migration errors — app can still start
         }
     }
 }
