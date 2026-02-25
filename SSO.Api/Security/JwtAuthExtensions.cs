@@ -11,28 +11,30 @@ public static class JwtAuthExtensions
         IConfiguration configuration)
     {
         var jwtSettings = configuration.GetSection("JwtSettings");
-
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false; // For development
                 options.SaveToken = true;
-                options.MapInboundClaims = false; // Fix: Add this to match Promotions.Api
+                options.MapInboundClaims = false; 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidIssuer = configuration["JwtSettings:Issuer"],
 
                     ValidateAudience = true,
-                    ValidAudience = jwtSettings["Audience"],
+                    ValidAudience = configuration["JwtSettings:Audience"],
 
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero,
 
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(jwtSettings["Secret"]!)
-                    )
+                        Encoding.UTF8.GetBytes(configuration["JwtSettings:Secret"]!)
+                    ),
+
+                    NameClaimType = "unique_name",
+                    RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
                 };
             });
 

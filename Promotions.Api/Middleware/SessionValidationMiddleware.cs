@@ -20,10 +20,13 @@ namespace Promotions.Api.Middleware
             if (context.User.Identity?.IsAuthenticated == true)
             {
                 var sessionIdClaim = context.User.FindFirst("SessionId")?.Value;
-                var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value 
-                               ?? context.User.FindFirst("sub")?.Value;
+                var subClaim = context.User.FindFirst("sub")?.Value;
+                var nameIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                
+                var userIdClaim = subClaim ?? nameIdClaim;
 
                 context.Response.Headers.Append("X-Session-Token", sessionIdClaim ?? "MISSING");
+                context.Response.Headers.Append("X-Session-UserClaim", userIdClaim ?? "MISSING");
                 
                 if (!string.IsNullOrEmpty(sessionIdClaim) && !string.IsNullOrEmpty(userIdClaim) && int.TryParse(userIdClaim, out int userId))
                 {
@@ -38,7 +41,7 @@ namespace Promotions.Api.Middleware
                         if (dbSessionId != sessionIdClaim)
                         {
                             context.Response.Headers.Append("X-Session-Status", "MISMATCH");
-                            _logger.LogWarning("[SessionCheck-Promo] MISMATCH! Logging out User: {UserId}", userId);
+                            _logger.LogWarning("[SessionCheck-Promo] MISMATCH! User: {UserId}, DB: {DbSession}, Token: {TokenSession}", userId, dbSessionId, sessionIdClaim);
                             
                             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                             context.Response.ContentType = "application/json";
@@ -49,12 +52,12 @@ namespace Promotions.Api.Middleware
                     }
                     else
                     {
-                        context.Response.Headers.Append("X-Session-Status", "USER_NOT_FOUND");
+                        context.Response.Headers.Append("X-Session-Status", "USER_NOT_FOUND_IN_DB");
                     }
                 }
                 else
                 {
-                     context.Response.Headers.Append("X-Session-Status", "CLAIMS_MISSING");
+                     context.Response.Headers.Append("X-Session-Status", $"CLAIMS_INVALID_OR_MISSING_SUB_{subClaim ?? "NULL"}_ID_{nameIdClaim ?? "NULL"}");
                 }
             }
 
