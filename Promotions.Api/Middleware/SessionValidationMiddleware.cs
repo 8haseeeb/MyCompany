@@ -18,7 +18,7 @@ namespace Promotions.Api.Middleware
         public async Task InvokeAsync(HttpContext context, SsoDbContext ssoDbContext)
         {
             // Always stamp that this middleware ran
-            context.Response.Headers["X-Middleware-Reached"] = "SESSION_VALIDATOR_V2";
+            context.Response.Headers["X-Middleware-Reached"] = "SESSION_VALIDATOR_V3";
 
             // Skip session check for health and login endpoints
             var path = context.Request.Path.Value?.ToLower() ?? "";
@@ -112,6 +112,7 @@ namespace Promotions.Api.Middleware
                 return;  // <-- CRITICAL: do NOT call _next on error
             }
 
+            // ✅ Only allow request if session is valid
             await _next(context);
         }
     }
