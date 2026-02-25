@@ -21,10 +21,10 @@ namespace Promotions.Api.Middleware
                 return;
 
             var path = context.Request.Path.Value?.ToLower() ?? "";
-            context.Response.Headers["X-Middleware-Reached"] = "SESSION_VALIDATOR_V4";
+            context.Response.Headers["X-Middleware-Reached"] = "SESSION_VALIDATOR_V5";
             context.Response.Headers["X-Session-Middleware"] = "PROMO_RAN";
 
-            // Skip session check only for health. Auth/login has no token so passes early; refresh MUST be validated.
+            // Skip only for health; auth/login/refresh must validate session
             if (path.Contains("/health"))
             {
                 context.Response.Headers["X-Session-Status"] = "SKIPPED_HEALTH";
@@ -39,7 +39,7 @@ namespace Promotions.Api.Middleware
                 return;
             }
 
-            // --- EXTRACT CLAIMS ---
+            // --- Extract claims ---
             var sessionIdClaim = context.User.FindFirst("SessionId")?.Value;
             var subClaim = context.User.FindFirst("sub")?.Value;
             var nameIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -48,7 +48,6 @@ namespace Promotions.Api.Middleware
             context.Response.Headers["X-Session-Token"] = sessionIdClaim ?? "MISSING";
             context.Response.Headers["X-Session-UserClaim"] = userIdRaw ?? "MISSING";
 
-            // If no session claim in token — block immediately
             if (string.IsNullOrEmpty(sessionIdClaim))
             {
                 _logger.LogWarning("[SessionCheck-Promo] No SessionId claim in token. Blocking.");
@@ -69,7 +68,7 @@ namespace Promotions.Api.Middleware
                 return;
             }
 
-            // --- DB CHECK (fail-safe: deny if DB unreachable) ---
+            // --- DB Check ---
             try
             {
                 var user = await ssoDbContext.Users
@@ -107,13 +106,12 @@ namespace Promotions.Api.Middleware
             }
             catch (Exception ex)
             {
-                // FAIL-SAFE: DB unreachable → block the request, do NOT let it through
                 _logger.LogError(ex, "[SessionCheck-Promo] DB check failed for User={UserId}. Blocking request.", userId);
                 context.Response.Headers["X-Session-Status"] = $"DB_ERROR:{ex.GetType().Name}";
                 context.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
                 context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync("{\"message\": \"Session validation failed. Please try again.\"}");
-                return;  // <-- CRITICAL: do NOT call _next on error
+                return; // Do NOT call _next on DB error
             }
 
             // ✅ Only allow request if session is valid
