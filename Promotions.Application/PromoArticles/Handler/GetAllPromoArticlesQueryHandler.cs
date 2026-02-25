@@ -65,11 +65,35 @@ namespace Promotions.Application.PromoArticles.Queries.Handlers
                 });
 
             // Combine and return unique articles (by CodDiv + CodNode)
+            // We merge data: prefer IdAction/Product info from Details, hierarchy info from Articles
             return articleDtos
                 .Concat(derivedArticleDtos)
                 .GroupBy(a => new { a.CodDiv, a.CodNode })
-                .Select(g => g.First())
+                .Select(g => 
+                {
+                    // Find a record that has IdAction (derived from details)
+                    var derived = g.FirstOrDefault(x => x.IdAction > 0);
+                    // Find a record that has master hierarchy data
+                    var master = g.FirstOrDefault(x => x.CodNode1 != null || x.CodNode2 != null);
+                    // Fallback to first available
+                    var fallback = g.First();
+
+                    return new PromoArticleDto
+                    {
+                        IdAction = derived?.IdAction ?? fallback.IdAction,
+                        CodProduct = derived?.CodProduct ?? fallback.CodProduct,
+                        LevProduct = derived != null ? derived.LevProduct : fallback.LevProduct,
+                        CodDisplay = derived?.CodDisplay ?? fallback.CodDisplay,
+                        CodDiv = fallback.CodDiv,
+                        CodNode = fallback.CodNode,
+                        CodNode1 = master?.CodNode1,
+                        CodNode2 = master?.CodNode2,
+                        CodNodeN = master?.CodNodeN ?? fallback.CodNodeN
+                    };
+                })
+                .OrderByDescending(a => a.IdAction)
                 .ToList();
         }
     }
 }
+
