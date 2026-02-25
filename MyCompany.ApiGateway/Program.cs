@@ -1,4 +1,4 @@
-﻿ using Microsoft.AspNetCore.Http;
+ using Microsoft.AspNetCore.Http;
 using MyCompany.ApiGateway.Middlewares;
 using MyCompany.ApiGateway.Routing;
 using MyCompany.ApiGateway.Security;
@@ -38,7 +38,8 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins("http://localhost:5173")
                   .AllowAnyHeader()
-                  .AllowAnyMethod();
+                  .AllowAnyMethod()
+                  .WithExposedHeaders("X-Session-Status", "X-Session-DB", "X-Session-Token", "X-Session-Middleware", "X-Middleware-Reached");
         });
 });
 

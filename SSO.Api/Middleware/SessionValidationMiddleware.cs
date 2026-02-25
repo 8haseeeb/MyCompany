@@ -20,16 +20,23 @@ namespace SSO.Api.Middleware
 
         public async Task InvokeAsync(HttpContext context, IIdentityDbContext dbContext)
         {
-            // Skip session check only for health. Login has no/invalid token so passes early; refresh MUST be validated.
+            if (context.Response.HasStarted)
+                return;
+
             var path = context.Request.Path.Value?.ToLower() ?? "";
+            context.Response.Headers["X-Session-Middleware"] = "SSO_RAN";
+
+            // Skip session check only for health. Login has no/invalid token so passes early; refresh MUST be validated.
             if (path.Contains("/health"))
             {
+                context.Response.Headers["X-Session-Status"] = "SKIPPED_HEALTH";
                 await _next(context);
                 return;
             }
 
-            if (context.User.Identity?.IsAuthenticated != true)
+            if (context.User?.Identity?.IsAuthenticated != true)
             {
+                context.Response.Headers["X-Session-Status"] = "SKIPPED_UNAUTH";
                 await _next(context);
                 return;
             }

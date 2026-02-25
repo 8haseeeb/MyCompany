@@ -43,9 +43,12 @@ api.interceptors.response.use(
 
         // 401 after retry = session invalidated (e.g. logged in elsewhere). Do NOT try refresh again.
         const is401AfterRetry = status === 401 && originalRequest._retry;
+        // X-Session-Status: MISMATCH = logged in elsewhere, skip refresh and logout immediately
+        const sessionStatus = (error.response?.headers?.['x-session-status'] || error.response?.headers?.['x-echo-x-session-status'] || '').toUpperCase();
+        const isSessionMismatch = status === 401 && sessionStatus.includes('MISMATCH');
 
         // 503 = session validation failed (DB unreachable). Force logout.
-        if (status === 503 || is401AfterRetry) {
+        if (status === 503 || is401AfterRetry || isSessionMismatch) {
             console.warn("Session invalid or service unavailable. Logging out.", { status, url });
             processQueue(error, null);
             isRefreshing = false;

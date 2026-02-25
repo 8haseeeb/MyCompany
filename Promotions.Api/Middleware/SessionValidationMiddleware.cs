@@ -17,20 +17,24 @@ namespace Promotions.Api.Middleware
 
         public async Task InvokeAsync(HttpContext context, SsoDbContext ssoDbContext)
         {
-            // Always stamp that this middleware ran
-            context.Response.Headers["X-Middleware-Reached"] = "SESSION_VALIDATOR_V3";
+            if (context.Response.HasStarted)
+                return;
+
+            var path = context.Request.Path.Value?.ToLower() ?? "";
+            context.Response.Headers["X-Middleware-Reached"] = "SESSION_VALIDATOR_V4";
+            context.Response.Headers["X-Session-Middleware"] = "PROMO_RAN";
 
             // Skip session check only for health. Auth/login has no token so passes early; refresh MUST be validated.
-            var path = context.Request.Path.Value?.ToLower() ?? "";
-            if (path.Contains("/api/health"))
+            if (path.Contains("/health"))
             {
+                context.Response.Headers["X-Session-Status"] = "SKIPPED_HEALTH";
                 await _next(context);
                 return;
             }
 
-            if (context.User.Identity?.IsAuthenticated != true)
+            if (context.User?.Identity?.IsAuthenticated != true)
             {
-                // Not authenticated — let authorization middleware handle it
+                context.Response.Headers["X-Session-Status"] = "SKIPPED_UNAUTH";
                 await _next(context);
                 return;
             }
