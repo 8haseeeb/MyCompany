@@ -153,21 +153,8 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
 
             await _unitOfWork.PromoActions.AddAsync(action);
 
-            // Ensure ProductDetails are correctly tracked and saved.
-            // Since they are added through AddDetail in the mapper, EF should track them,
-            // but we explicitly ensure IdAction matches the parent action.
-            foreach (var prod in action.Products)
-            {
-                foreach (var detail in prod.Details)
-                {
-                    // Ensure IdAction is set correctly (using reflection for private field)
-                    var idField = detail.GetType()
-                        .GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
-                        .FirstOrDefault(f => f.Name.Contains("<IdAction>"));
-                    
-                    if (idField != null) idField.SetValue(detail, action.IdAction);
-                }
-            }
+            // ProductDetails are already correctly mapped and parented by AutoMapper
+            // with IdAction passed via context.Items["IdAction"].
 
             // Manually save standalone articles associated with the promotion (not handled by Aggregate root automatically in this repo pattern)
             var articlesToSave = new List<PromoArticle>();

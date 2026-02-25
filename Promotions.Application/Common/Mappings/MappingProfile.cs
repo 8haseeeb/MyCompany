@@ -92,25 +92,8 @@ namespace Promotions.Application.Common.Mappings
                 .AfterMap((src, dest, context) => {
                     dest.UpdateQuantities(src.QtyEstimated, src.NumMeasure, src.CodMeasure);
                     dest.UpdateDiscounts(src.PerceDiscount1, src.PerceDiscount2);
-                    
-                    // Manually populate Details since setter is private
-                    if (src.Details != null)
-                    {
-                        foreach (var dDto in src.Details)
-                        {
-                            var detail = new global::Promotions.Domain.ProductDetails.PromoProductDetail(
-                                dest.IdAction,
-                                dDto.CodProduct ?? dest.CodProduct,
-                                (dDto.LevProduct ?? 0) > 0 ? (dDto.LevProduct ?? 0) : dest.LevProduct,
-                                dDto.CodDisplay ?? dest.CodDisplay,
-                                dDto.CodNode ?? "",
-                                dDto.CodDiv ?? dest.CodDiv ?? "",
-                                dDto.FlgInclusion
-                            );
-                            dest.AddDetail(detail);
-                        }
-                    }
-                });
+                })
+                .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.Details));
 
             CreateMap<PromoProduct, ProductDto>();
             CreateMap<PromoProduct, CreateProductDto>();
