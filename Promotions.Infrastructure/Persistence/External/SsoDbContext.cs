@@ -16,13 +16,20 @@ namespace Promotions.Infrastructure.Persistence.External
         {
             base.OnModelCreating(modelBuilder);
             
-            // Minimal configuration to map to the existing SSO database
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("Users");
                 entity.HasKey(e => e.Id);
+
+                // Map the column name differences
                 entity.Property(e => e.UserName).HasColumnName("Name");
-                // Removed ignores for session management fields
+                entity.Property(e => e.Email).HasColumnName("Email");
+                entity.Property(e => e.PasswordHash).HasColumnName("PasswordHash");
+                entity.Property(e => e.CurrentSessionId).HasColumnName("CurrentSessionId").HasMaxLength(100);
+                entity.Property(e => e.RefreshToken).HasColumnName("RefreshToken");
+                entity.Property(e => e.RefreshTokenExpiry).HasColumnName("RefreshTokenExpiry");
+
+                // Ignore non-DB properties
                 entity.Ignore(e => e.Role);
             });
         }
