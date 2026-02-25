@@ -78,6 +78,16 @@ builder.Services.AddDbContext<SsoDbContext>(options =>
 
 var app = builder.Build();
 
+// --- LOG CONNECTION STRINGS AT STARTUP (to diagnose Azure env var issues) ---
+{
+    var startupLogger = app.Services.GetRequiredService<ILogger<Program>>();
+    var ssoConnCheck = (ssoConnectionString ?? "NULL");
+    var ssoConnMasked = ssoConnCheck.Length > 30 ? ssoConnCheck.Substring(0, 30) + "..." : ssoConnCheck;
+    startupLogger.LogInformation("[STARTUP] SsoConnection = {SsoConn}", ssoConnMasked);
+    startupLogger.LogInformation("[STARTUP] SsoConnection EnvVar(ConnectionStrings__SsoConnection) = {EnvVal}", 
+        Environment.GetEnvironmentVariable("ConnectionStrings__SsoConnection") ?? "NOT SET");
+}
+
 // --- DATABASE AUTO-MIGRATION WITH RETRY ---
 using (var scope = app.Services.CreateScope())
 {
@@ -118,6 +128,8 @@ using (var scope = app.Services.CreateScope())
 app.UseSerilogRequestLogging();
 app.Use(async (context, next) => {
     context.Response.Headers["X-Promotions-Api-Version"] = "LATEST_DEBUG_2026_02_25_V1";
+    var ssoEnv = Environment.GetEnvironmentVariable("ConnectionStrings__SsoConnection");
+    context.Response.Headers["X-Sso-Conn-Source"] = ssoEnv != null ? "ENV_VAR" : "APPSETTINGS_LOCALDB";
     await next();
 });
 app.UseMiddleware<RequestLoggingMiddleware>(); 
