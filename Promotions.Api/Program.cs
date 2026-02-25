@@ -117,8 +117,13 @@ using (var scope = app.Services.CreateScope())
         catch (Microsoft.Data.SqlClient.SqlException ex)
         {
             retries--;
-            logger.LogWarning(ex, "Failed to connect to database. Retrying in 3 seconds... ({Retries} attempts left)", retries);
-            if (retries == 0) throw; // Fail eventually
+            logger.LogWarning(ex, "[Migration] SqlException (Error {Number}). Retries left: {Retries}. Will retry...", ex.Number, retries);
+            if (retries == 0)
+            {
+                // Do NOT crash the container — migrations might already be applied
+                logger.LogError(ex, "[Migration] All retries exhausted. Continuing startup without migration.");
+                break;
+            }
             await Task.Delay(3000);
         }
         catch (Exception ex)
@@ -132,7 +137,7 @@ using (var scope = app.Services.CreateScope())
 
 app.UseSerilogRequestLogging();
 app.Use(async (context, next) => {
-    context.Response.Headers["X-Promotions-Api-Version"] = "V3";
+    context.Response.Headers["X-Promotions-Api-Version"] = "V4_NO_THROW";
     await next();
 });
 app.UseMiddleware<RequestLoggingMiddleware>(); 
