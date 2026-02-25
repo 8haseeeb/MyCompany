@@ -73,6 +73,7 @@ app.MapControllers();
 app.Map("/{**catch-all}", async context =>
 {
     var path = context.Request.Path.Value?.ToLower();
+    context.Response.Headers["X-Proxy-Gateway"] = "ACTIVE";
 
     if (path != null && path.StartsWith("/swagger"))
     {

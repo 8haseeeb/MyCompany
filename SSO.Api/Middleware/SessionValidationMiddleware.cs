@@ -28,8 +28,8 @@ namespace SSO.Api.Middleware
 
                 var userIdClaim = subClaim ?? nameIdClaim;
 
-                context.Response.Headers.Append("X-Session-Token", sessionIdClaim ?? "MISSING");
-                context.Response.Headers.Append("X-Session-UserClaim", userIdClaim ?? "MISSING");
+                context.Response.Headers["X-Session-Token"] = sessionIdClaim ?? "MISSING";
+                context.Response.Headers["X-Session-UserClaim"] = userIdClaim ?? "MISSING";
 
                 if (!string.IsNullOrEmpty(sessionIdClaim) && !string.IsNullOrEmpty(userIdClaim) && int.TryParse(userIdClaim, out int userId))
                 {
@@ -38,11 +38,11 @@ namespace SSO.Api.Middleware
                     if (user != null)
                     {
                         var dbSessionId = user.CurrentSessionId;
-                        context.Response.Headers.Append("X-Session-DB", dbSessionId ?? "NULL");
+                        context.Response.Headers["X-Session-DB"] = dbSessionId ?? "NULL";
 
                         if (dbSessionId != sessionIdClaim)
                         {
-                            context.Response.Headers.Append("X-Session-Status", "MISMATCH");
+                            context.Response.Headers["X-Session-Status"] = "MISMATCH";
                             _logger.LogWarning("[SessionCheck-SSO] MISMATCH! User: {UserId}, DB: {DbSession}, Token: {TokenSession}", userId, dbSessionId, sessionIdClaim);
                             
                             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -50,16 +50,16 @@ namespace SSO.Api.Middleware
                             await context.Response.WriteAsync("{\"message\": \"Session expired. You are logged in on another device.\"}");
                             return; 
                         }
-                        context.Response.Headers.Append("X-Session-Status", "VALID");
+                        context.Response.Headers["X-Session-Status"] = "VALID";
                     }
                     else
                     {
-                        context.Response.Headers.Append("X-Session-Status", "USER_NOT_FOUND_IN_DB");
+                        context.Response.Headers["X-Session-Status"] = "USER_NOT_FOUND_IN_DB";
                     }
                 }
                 else
                 {
-                    context.Response.Headers.Append("X-Session-Status", $"CLAIMS_INVALID_OR_MISSING_SUB_{subClaim ?? "NULL"}_ID_{nameIdClaim ?? "NULL"}");
+                    context.Response.Headers["X-Session-Status"] = $"CLAIMS_INVALID_OR_MISSING_SUB_{subClaim ?? "NULL"}_ID_{nameIdClaim ?? "NULL"}";
                 }
             }
             else
