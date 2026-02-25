@@ -116,6 +116,10 @@ using (var scope = app.Services.CreateScope())
 // -------------------------------
 
 app.UseSerilogRequestLogging();
+app.Use(async (context, next) => {
+    context.Response.Headers["X-Promotions-Api-Version"] = "LATEST_DEBUG_2026_02_25_V1";
+    await next();
+});
 app.UseMiddleware<RequestLoggingMiddleware>(); 
 
 if (app.Environment.IsDevelopment())

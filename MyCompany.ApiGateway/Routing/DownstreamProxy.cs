@@ -69,19 +69,26 @@ namespace MyCompany.ApiGateway.Routing
 
                 //  SERILOG - response info
                 Log.Information(
-                    "Received response {StatusCode} from {TargetUrl}",
+                    "Received response {StatusCode} from {TargetUrl}. Headers: {Headers}",
                     (int)response.StatusCode,
-                    targetUrl
+                    targetUrl,
+                    string.Join(", ", response.Headers.Select(h => $"{h.Key}={string.Join("|", h.Value)}"))
                 );
 
                 //  COPY RESPONSE 
                 context.Response.StatusCode = (int)response.StatusCode;
 
                 foreach (var header in response.Headers)
+                {
                     context.Response.Headers[header.Key] = header.Value.ToArray();
+                    context.Response.Headers["X-Echo-" + header.Key] = header.Value.ToArray();
+                }
 
                 foreach (var header in response.Content.Headers)
+                {
                     context.Response.Headers[header.Key] = header.Value.ToArray();
+                    context.Response.Headers["X-Echo-" + header.Key] = header.Value.ToArray();
+                }
 
                 context.Response.Headers.Remove("transfer-encoding");
 
