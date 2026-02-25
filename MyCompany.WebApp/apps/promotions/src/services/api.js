@@ -51,6 +51,7 @@ api.interceptors.response.use(
             setTimeout(() => {
                 window.location.href = '/login';
             }, 100);
+            return Promise.reject(error);
         }
 
         console.error(`API Error: ${error.config?.method?.toUpperCase?.()} ${error.config?.url}`, {

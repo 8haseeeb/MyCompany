@@ -91,7 +91,11 @@ app.Map("/{**catch-all}", async context =>
             context.User?.Identity?.IsAuthenticated,
             context.User?.Identity?.Name ?? "Anonymous");
 
+        context.Response.Headers["X-Session-Status"] = "GATEWAY_UNAUTH";
+        context.Response.Headers["X-Session-Middleware"] = "GATEWAY_BLOCKED";
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync("{\"message\": \"Unauthorized. Please log in.\"}");
         return;
     }
 
