@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using SSO.Application.Auth.Commands;
 using SSO.Application.Auth.Handlers;
@@ -25,7 +26,7 @@ namespace SSO.UnitTests.Auth.Handlers
 
             _context = new IdentityDbContext(options);
             _passwordHasher = Substitute.For<IPasswordHasher>();
-            _handler = new RegisterCommandHandler(_context, _passwordHasher);
+            _handler = new RegisterCommandHandler(_context, _passwordHasher, NullLogger<RegisterCommandHandler>.Instance);
         }
 
         [Fact]

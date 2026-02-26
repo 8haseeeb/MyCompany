@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using MediatR;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Promotions.UnitTests.Products.Handlers
 {
@@ -21,7 +22,7 @@ namespace Promotions.UnitTests.Products.Handlers
             _unitOfWork = Substitute.For<IUnitOfWork>();
             
             // 2. Arrange: Initialize handler with the mock
-            _handler = new UpdateProductCommandHandler(_unitOfWork);
+            _handler = new UpdateProductCommandHandler(_unitOfWork, NullLogger<UpdateProductCommandHandler>.Instance);
         }
 
         [Fact]

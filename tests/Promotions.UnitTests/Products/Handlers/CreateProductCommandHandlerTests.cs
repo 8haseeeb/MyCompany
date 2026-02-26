@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using MediatR;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Promotions.UnitTests.Products.Handlers
 {
@@ -19,7 +20,7 @@ namespace Promotions.UnitTests.Products.Handlers
         public CreateProductCommandHandlerTests()
         {
             _unitOfWork = Substitute.For<IUnitOfWork>();
-            _handler = new CreateProductCommandHandler(_unitOfWork);
+            _handler = new CreateProductCommandHandler(_unitOfWork, NullLogger<CreateProductCommandHandler>.Instance);
         }
 
         [Fact]

@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using MediatR;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Promotions.UnitTests.Products.Handlers
 {
@@ -19,7 +20,7 @@ namespace Promotions.UnitTests.Products.Handlers
         public DeleteProductCommandHandlerTests()
         {
             _unitOfWork = Substitute.For<IUnitOfWork>();
-            _handler = new DeleteProductCommandHandler(_unitOfWork);
+            _handler = new DeleteProductCommandHandler(_unitOfWork, NullLogger<DeleteProductCommandHandler>.Instance);
         }
 
         [Fact]

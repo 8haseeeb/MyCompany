@@ -1,6 +1,6 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using Promotions.Application.Products.Commands;
-
 using Promotions.Domain.Products;
 using Promotions.Domain.ProductDetails;
 using Promotions.Domain.Articles;
@@ -13,14 +13,19 @@ namespace Promotions.Application.Products.Commands.Handlers
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Unit>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<CreateProductCommandHandler> _logger;
 
-        public CreateProductCommandHandler(IUnitOfWork unitOfWork)
+        public CreateProductCommandHandler(IUnitOfWork unitOfWork, ILogger<CreateProductCommandHandler> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("[CreateProduct] Starting. IdAction: {IdAction}, CodProduct: {CodProduct}",
+                request.IdAction, request.CodProduct);
+
             var product = new PromoProduct(
                 request.IdAction,
                 request.CodProduct,
@@ -73,7 +78,8 @@ namespace Promotions.Application.Products.Commands.Handlers
 
                 if (existingProduct != null)
                 {
-                    // Product already exists for this action, skip creation
+                    _logger.LogWarning("[CreateProduct] Product already exists, skipping. IdAction: {IdAction}, CodProduct: {CodProduct}",
+                        request.IdAction, request.CodProduct);
                     return Unit.Value;
                 }
 
@@ -95,9 +101,13 @@ namespace Promotions.Application.Products.Commands.Handlers
                 }
 
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
+                _logger.LogInformation("[CreateProduct] Product created successfully. IdAction: {IdAction}, CodProduct: {CodProduct}",
+                    request.IdAction, request.CodProduct);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "[CreateProduct] Failed to create product. IdAction: {IdAction}, CodProduct: {CodProduct}. Error: {Error}",
+                    request.IdAction, request.CodProduct, ex.Message);
                 throw new Exception($"Failed to create Product: {ex.Message} {ex.InnerException?.Message}");
             }
 

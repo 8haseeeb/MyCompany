@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Promotions.Domain.PromoActions;
 using Promotions.Domain.Measures;
 using Promotions.Domain.Articles;
@@ -18,18 +19,24 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly ILogger<CreateAtomicPromoActionCommandHandler> _logger;
 
         public CreateAtomicPromoActionCommandHandler(
             IUnitOfWork unitOfWork,
-            IMapper mapper)
+            IMapper mapper,
+            ILogger<CreateAtomicPromoActionCommandHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<Unit> Handle(CreateAtomicPromoActionCommand request, CancellationToken cancellationToken)
         {
             var dto = request.Dto;
+            _logger.LogInformation("[CreateAtomic] Starting atomic promo action creation. IdAction: {IdAction}, Products: {ProductCount}",
+                dto.IdAction, dto.Products?.Count ?? 0);
+
             var allRelations = await _unitOfWork.CustomerRelations.GetAllAsync();
             var allParticipants = await _unitOfWork.Participants.GetAllAsync();
             var allDps = await _unitOfWork.DeliveryPoints.GetAllAsync();
@@ -72,6 +79,7 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                     }
                     else
                     {
+                        _logger.LogError("[CreateAtomic] Participant hierarchy could not be resolved. CodParticipant: {CodParticipant}", p.CodParticipant);
                         throw new KeyNotFoundException($"Participant hierarchy could not be resolved for code: {p.CodParticipant}.");
                     }
                 }
@@ -115,6 +123,7 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                     }
                     else
                     {
+                        _logger.LogError("[CreateAtomic] Delivery Point hierarchy could not be resolved. CodDeliveryPoint: {CodDeliveryPoint}", dp.CodDeliveryPoint);
                         throw new KeyNotFoundException($"Delivery Point hierarchy could not be resolved for code: {dp.CodDeliveryPoint}.");
                     }
                 }
@@ -125,6 +134,7 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
             {
                 var maxId = await _unitOfWork.PromoActions.GetMaxIdAsync();
                 dto.IdAction = maxId + 1;
+                _logger.LogInformation("[CreateAtomic] Auto-generated IdAction: {IdAction}", dto.IdAction);
             }
 
             // Map DTO to Entity using AutoMapper with context to pass IdAction down to nested children
@@ -153,10 +163,7 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
 
             await _unitOfWork.PromoActions.AddAsync(action);
 
-            // ProductDetails are already correctly mapped and parented by AutoMapper
-            // with IdAction passed via context.Items["IdAction"].
-
-            // Manually save standalone articles associated with the promotion (not handled by Aggregate root automatically in this repo pattern)
+            // Manually save standalone articles associated with the promotion
             var articlesToSave = new List<PromoArticle>();
             foreach (var prodDto in dto.Products)
             {
@@ -184,7 +191,6 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
 
             foreach (var art in articlesToSave)
             {
-                // Articles are master data, only add if they don't exist
                 if (await _unitOfWork.PromoArticles.GetByIdAsync(art.CodDiv, art.CodNode) == null)
                 {
                     await _unitOfWork.PromoArticles.AddAsync(art);
@@ -193,6 +199,7 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+            _logger.LogInformation("[CreateAtomic] Promo action created successfully. IdAction: {IdAction}", dto.IdAction);
             return Unit.Value;
         }
     }

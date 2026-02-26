@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SSO.Application.Auth.Commands;
 using SSO.Application.Dtos;
 using SSO.Application.Interfaces;
@@ -11,21 +12,31 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, R
 {
     private readonly IIdentityDbContext _context;
     private readonly IJwtTokenService _jwtTokenService;
+    private readonly ILogger<RefreshTokenCommandHandler> _logger;
 
-    public RefreshTokenCommandHandler(IIdentityDbContext context, IJwtTokenService jwtTokenService)
+    public RefreshTokenCommandHandler(
+        IIdentityDbContext context,
+        IJwtTokenService jwtTokenService,
+        ILogger<RefreshTokenCommandHandler> logger)
     {
         _context = context;
         _jwtTokenService = jwtTokenService;
+        _logger = logger;
     }
 
     public async Task<RefreshTokenResponseDto> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
+        _logger.LogInformation("[RefreshToken] Attempting token refresh.");
+
         // Search for user with this refresh token
         var user = await _context.Users
             .FirstOrDefaultAsync(u => u.RefreshToken == request.RefreshToken, cancellationToken);
 
         if (user == null || user.RefreshTokenExpiry < DateTime.UtcNow)
+        {
+            _logger.LogWarning("[RefreshToken] Invalid or expired refresh token.");
             throw new Exception("Invalid or expired refresh token");
+        }
 
         // Generate new token
         var newRefreshToken = Guid.NewGuid().ToString();
@@ -41,11 +52,11 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, R
         var sessionId = user.CurrentSessionId ?? Guid.NewGuid().ToString(); 
         var newAccessToken = _jwtTokenService.GenerateToken(user, sessionId);
 
+        _logger.LogInformation("[RefreshToken] Token refreshed successfully. UserId: {UserId}", user.Id);
         return new RefreshTokenResponseDto
         {
             AccessToken = newAccessToken,
             RefreshToken = newRefreshToken
         };
     }
-
 }

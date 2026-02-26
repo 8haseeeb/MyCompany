@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using SSO.Application.Auth.Commands;
 using SSO.Application.Auth.Handlers;
@@ -26,7 +27,7 @@ namespace SSO.UnitTests.Auth.Handlers
 
             _context = new IdentityDbContext(options);
             _jwtTokenService = Substitute.For<IJwtTokenService>();
-            _handler = new RefreshTokenCommandHandler(_context, _jwtTokenService);
+            _handler = new RefreshTokenCommandHandler(_context, _jwtTokenService, NullLogger<RefreshTokenCommandHandler>.Instance);
         }
 
         [Fact]
