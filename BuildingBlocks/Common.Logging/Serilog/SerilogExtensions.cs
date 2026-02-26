@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using Serilog.Sinks.ApplicationInsights.TelemetryConverters;
 
 namespace MyCompany.Common.Logging
 {
@@ -18,7 +20,9 @@ namespace MyCompany.Common.Logging
         {
             return host.UseSerilog((context, services, loggerConfig) =>
             {
-                loggerConfig
+                var connectionString = configuration["ApplicationInsights:ConnectionString"];
+
+                var config = loggerConfig
                     .MinimumLevel.ControlledBy(_levelSwitch)
                     .ReadFrom.Configuration(configuration)
                     .Enrich.FromLogContext()
@@ -30,6 +34,18 @@ namespace MyCompany.Common.Logging
                     .WriteTo.File(
                         $"logs/{applicationName}-.log",
                         rollingInterval: RollingInterval.Day);
+
+                // Add Application Insights sink if connection string is available
+                if (!string.IsNullOrEmpty(connectionString))
+                {
+                    var telemetryConfiguration = new TelemetryConfiguration
+                    {
+                        ConnectionString = connectionString
+                    };
+                    config.WriteTo.ApplicationInsights(
+                        telemetryConfiguration,
+                        new TraceTelemetryConverter());
+                }
             });
         }
 
