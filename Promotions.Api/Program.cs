@@ -21,6 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.AddSerilogLogging(builder.Configuration, "Promotions.Api");
 builder.Services.AddLoggingLevelSwitch(); // Enable dynamic logging level control
 builder.Services.AddControllers();
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:ConnectionString"]);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {

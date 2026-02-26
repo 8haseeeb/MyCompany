@@ -15,6 +15,7 @@ using SSO.Api.Security;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.AddSerilogLogging(builder.Configuration, "SSO.Api");
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:ConnectionString"]);
 
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
