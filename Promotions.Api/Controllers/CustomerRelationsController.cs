@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Promotions.Application.CustomerRelations.Commands;
 using Promotions.Application.CustomerRelations.Dtos;
 using Promotions.Application.CustomerRelations.Queries;
@@ -11,26 +12,39 @@ using Promotions.Application.CustomerRelations.Queries;
 public class CustomerRelationsController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly ILogger<CustomerRelationsController> _logger;
 
-    public CustomerRelationsController(IMediator mediator)
+    public CustomerRelationsController(IMediator mediator, ILogger<CustomerRelationsController> logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
 
     [HttpPost]
     public async Task<IActionResult> Create(
         [FromBody] CreateCustomerRelationDto dto)
     {
-        await _mediator.Send(new CreateCustomerRelationCommand(
-            dto.CodHier,
-            dto.CodDiv,
-            dto.CodNode,
-            dto.IdLevel,
-            dto.DteStart,
-            dto.CodParentNode,
-            dto.DteEnd));
+        try
+        {
+            _logger.LogInformation("[CustomerRelation] Creating relation. CodHier: {CodHier}, CodNode: {CodNode}", dto.CodHier, dto.CodNode);
 
-        return Ok();
+            await _mediator.Send(new CreateCustomerRelationCommand(
+                dto.CodHier,
+                dto.CodDiv,
+                dto.CodNode,
+                dto.IdLevel,
+                dto.DteStart,
+                dto.CodParentNode,
+                dto.DteEnd));
+
+            _logger.LogInformation("[CustomerRelation] Created successfully. CodHier: {CodHier}, CodNode: {CodNode}", dto.CodHier, dto.CodNode);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[CustomerRelation] Create failed. CodHier: {CodHier}, CodNode: {CodNode}, Error: {Error}", dto.CodHier, dto.CodNode, ex.Message);
+            return StatusCode(500, new { error = ex.Message });
+        }
     }
 
     [HttpGet]
@@ -69,16 +83,26 @@ public class CustomerRelationsController : ControllerBase
         [FromQuery] int idLevel,
         [FromQuery] DateTime dteStart)
     {
-        await _mediator.Send(new UpdateCustomerRelationCommand(
-            codHier,
-            codDiv,
-            codNode,
-            idLevel,
-            dteStart,
-            dto.CodParentNode,
-            dto.DteEnd));
+        try
+        {
+            _logger.LogInformation("[CustomerRelation] Updating. CodHier: {CodHier}, CodNode: {CodNode}", codHier, codNode);
 
-        return NoContent();
+            await _mediator.Send(new UpdateCustomerRelationCommand(
+                codHier,
+                codDiv,
+                codNode,
+                idLevel,
+                dteStart,
+                dto.CodParentNode,
+                dto.DteEnd));
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[CustomerRelation] Update failed. CodHier: {CodHier}, CodNode: {CodNode}, Error: {Error}", codHier, codNode, ex.Message);
+            return StatusCode(500, new { error = ex.Message });
+        }
     }
 
     [HttpDelete]
@@ -89,13 +113,23 @@ public class CustomerRelationsController : ControllerBase
         [FromQuery] int idLevel,
         [FromQuery] DateTime dteStart)
     {
-        await _mediator.Send(new DeleteCustomerRelationCommand(
-            codHier,
-            codDiv,
-            codNode,
-            idLevel,
-            dteStart));
+        try
+        {
+            _logger.LogInformation("[CustomerRelation] Deleting. CodHier: {CodHier}, CodNode: {CodNode}", codHier, codNode);
 
-        return NoContent();
+            await _mediator.Send(new DeleteCustomerRelationCommand(
+                codHier,
+                codDiv,
+                codNode,
+                idLevel,
+                dteStart));
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "[CustomerRelation] Delete failed. CodHier: {CodHier}, CodNode: {CodNode}, Error: {Error}", codHier, codNode, ex.Message);
+            return StatusCode(500, new { error = ex.Message });
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Promotions.Application.PromoActions.Commands;
 using Promotions.Application.PromoActions.Dtos;
 using Promotions.Application.PromoActions.Queries;
@@ -17,10 +18,12 @@ namespace Promotions.Api.Controllers
     public class PromoActionController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<PromoActionController> _logger;
 
-        public PromoActionController(IMediator mediator)
+        public PromoActionController(IMediator mediator, ILogger<PromoActionController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -55,6 +58,8 @@ namespace Promotions.Api.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "[CreateAtomic] Controller caught exception. Error: {ErrorMessage}", ex.Message);
+
                 var messages = new List<string> { ex.Message };
                 var inner = ex.InnerException;
                 while (inner != null)
