@@ -156,9 +156,14 @@ app.UseExceptionHandler(errorApp =>
     {
         var exceptionHandlerPathFeature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature>();
         var exception = exceptionHandlerPathFeature?.Error;
+        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
 
         if (exception is ValidationException validationException)
         {
+            logger.LogWarning("[ValidationError] Path: {Path}, Errors: {Errors}",
+                exceptionHandlerPathFeature?.Path,
+                string.Join("; ", validationException.Errors.Select(e => $"{e.PropertyName}: {e.ErrorMessage}")));
+
             context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
             context.Response.ContentType = "application/json";
             var result = System.Text.Json.JsonSerializer.Serialize(new 
@@ -170,9 +175,22 @@ app.UseExceptionHandler(errorApp =>
         }
         else if (exception is System.Collections.Generic.KeyNotFoundException)
         {
+            logger.LogWarning("[KeyNotFound] Path: {Path}, Error: {Error}",
+                exceptionHandlerPathFeature?.Path, exception.Message);
+
             context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
             context.Response.ContentType = "application/json";
             var result = System.Text.Json.JsonSerializer.Serialize(new { message = exception.Message });
+            await context.Response.WriteAsync(result);
+        }
+        else if (exception != null)
+        {
+            logger.LogError(exception, "[UnhandledException] Path: {Path}, Error: {Error}",
+                exceptionHandlerPathFeature?.Path, exception.Message);
+
+            context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+            context.Response.ContentType = "application/json";
+            var result = System.Text.Json.JsonSerializer.Serialize(new { message = "An unexpected error occurred." });
             await context.Response.WriteAsync(result);
         }
     });
