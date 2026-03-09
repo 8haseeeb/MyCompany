@@ -143,10 +143,12 @@ app.Use(async (context, next) => {
 });
 app.UseMiddleware<RequestLoggingMiddleware>(); 
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // Additional dev-only settings if needed
 }
 
 // Global Exception Handler for clear API Errors
