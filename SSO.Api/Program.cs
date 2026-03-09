@@ -10,7 +10,6 @@ using MyCompany.Common.Logging.Serilog;
 
 using SSO.Api.Security;
 
-// ... (keep existing usings)
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -97,10 +96,12 @@ using (var scope = app.Services.CreateScope())
 
 
 app.UseCors("AllowReactApp");
+app.UseSwagger();
+app.UseSwaggerUI();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // Additional dev-only settings if needed
 }
 
 app.UseMiddleware<RequestLoggingMiddleware>();
