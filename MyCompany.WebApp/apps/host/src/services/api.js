@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: '',
+    baseURL: 'https://promo.azure-api.net',
     headers: {
         'Content-Type': 'application/json'
     }
@@ -12,6 +12,16 @@ api.interceptors.request.use((config) => {
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // Handle APIM Suffixes based on internal paths
+    if (config.url && !config.url.startsWith('http')) {
+        if (config.url.includes('/api/auth')) {
+            config.url = `/sso${config.url}`;
+        } else if (config.url.includes('/api/')) {
+            config.url = `/promotion${config.url}`;
+        }
+    }
+
     return config;
 });
 
