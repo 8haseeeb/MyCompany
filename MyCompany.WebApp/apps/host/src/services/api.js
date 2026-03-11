@@ -48,7 +48,7 @@ api.interceptors.response.use(
         const url = originalRequest?.url || '';
         const status = error.response?.status;
         const isLoginRequest = url.includes('/api/auth/login');
-        const isHealthCheck = url.includes('/api/gateway/health');
+        const isHealthCheck = url.includes('/api/Health');
         const isRefreshRequest = url.includes('/api/auth/refresh');
 
         // 401 after retry = session invalidated (e.g. logged in elsewhere). Do NOT try refresh again.

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../services/api';
+import axios from 'axios';
 import './ServiceStatusAlert.css';
 
 const ServiceStatusAlert = () => {
@@ -8,7 +8,7 @@ const ServiceStatusAlert = () => {
 
     const checkHealth = async () => {
         try {
-            const response = await api.get(`/api/Health?t=${new Date().getTime()}`);
+            const response = await axios.get(`https://promo.azure-api.net/promotion/api/Health?t=${new Date().getTime()}`);
             const data = response.data;
             console.log("✅ Health Response:", data);
 
