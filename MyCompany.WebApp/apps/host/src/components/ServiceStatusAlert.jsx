@@ -8,23 +8,16 @@ const ServiceStatusAlert = () => {
 
     const checkHealth = async () => {
         try {
-            const response = await api.get(`/api/gateway/health?t=${new Date().getTime()}`);
+            const response = await api.get(`/api/Health?t=${new Date().getTime()}`);
             const data = response.data;
-            console.log("✅ Gateway Health Response:", data);
+            console.log("✅ Health Response:", data);
 
-            if (data.status === 'Unhealthy') {
-                const results = data.services || [];
-                const failed = results.filter(s => s.status === 'Down' || s.status === 'Unhealthy');
-                setDownServices(failed);
-                setIsVisible(true);
-            } else {
-                setDownServices([]);
-                setIsVisible(false);
-            }
+            // If we get a response, services are healthy
+            setDownServices([]);
+            setIsVisible(false);
         } catch (error) {
-            console.error("❌ Gateway Health Connection Error:", error);
-            // This happens if the Gateway itself is unreachable
-            setDownServices([{ service: 'API Gateway (Offline)', status: 'Down' }]);
+            console.error("❌ Health Connection Error:", error);
+            setDownServices([{ service: 'Promotions API (Offline)', status: 'Down' }]);
             setIsVisible(true);
         }
     };
