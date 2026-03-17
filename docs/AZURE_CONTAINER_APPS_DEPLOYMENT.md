@@ -178,3 +178,6 @@ Replace `<DOMAIN>` with your actual domain from the workflow (e.g. `yellowplant-
 
 - **502/503 from gateway to backend**  
   Confirm SSO_URL and PROMOTIONS_URL in the Gateway container point to the correct FQDNs and that the backend apps are running and returning 200 on their health endpoints.
+
+- **405 on login (POST /sso/api/auth/login)**  
+  The WebApp must call the API at `/api/auth/login` (proxied by nginx to the Gateway), not `/sso/api/auth/login`. The host app’s `api.js` only adds the `/sso` and `/promotion` path prefixes when `VITE_APIM_PATH_PREFIX=true` (for Azure API Management). For ACA with nginx proxying `/api/` to the Gateway, leave that env unset so requests use `/api/...` and succeed.

@@ -16,8 +16,9 @@ api.interceptors.request.use((config) => {
         config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // Handle APIM Suffixes based on internal paths
-    if (config.url && !config.url.startsWith('http')) {
+    // When using Azure API Management with path-based backends, set VITE_APIM_PATH_PREFIX=true
+    // to send /sso/api/auth and /promotion/api/... to APIM. For direct Gateway (or dev proxy), use /api/... as-is.
+    if (import.meta.env.VITE_APIM_PATH_PREFIX === 'true' && config.url && !config.url.startsWith('http')) {
         if (config.url.includes('/api/auth')) {
             config.url = `/sso${config.url}`;
         } else if (config.url.includes('/api/')) {
