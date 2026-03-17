@@ -10,6 +10,11 @@ public static class JwtAuthExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        var secret = configuration["JwtSettings:Secret"];
+        const string placeholder = "REPLACE_VIA_ENV_OR_USER_SECRETS";
+        if (string.IsNullOrEmpty(secret) || secret == placeholder)
+            throw new InvalidOperationException("JWT Secret is not configured. Set JwtSettings:Secret via environment variable, User Secrets (dev), or Azure Key Vault (production).");
+
         var jwtSettings = configuration.GetSection("JwtSettings");
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -30,7 +35,7 @@ public static class JwtAuthExtensions
 
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(configuration["JwtSettings:Secret"]!)
+                        Encoding.UTF8.GetBytes(secret)
                     ),
 
                     NameClaimType = "unique_name",

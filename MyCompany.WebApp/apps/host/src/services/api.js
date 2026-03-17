@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+// Use env for API base URL: empty = same origin (dev with Vite proxy); set in production (e.g. VITE_API_BASE_URL=https://promo.azure-api.net)
+const baseURL = import.meta.env.VITE_API_BASE_URL ?? '';
+
 const api = axios.create({
-    baseURL: 'https://promo.azure-api.net',
+    baseURL,
     headers: {
         'Content-Type': 'application/json'
     }
@@ -96,7 +99,7 @@ api.interceptors.response.use(
             // Refresh Logic
             try {
                 console.log("Access token expired. Attempting refresh...");
-                const response = await axios.post('/api/auth/refresh', { refreshToken });
+                const response = await api.post('/api/auth/refresh', { refreshToken });
 
                 const { accessToken, refreshToken: newRefreshToken } = response.data;
 

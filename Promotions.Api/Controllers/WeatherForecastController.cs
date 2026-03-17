@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Promotions.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/weather-forecast")]
+    [ApiVersion("1.0")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

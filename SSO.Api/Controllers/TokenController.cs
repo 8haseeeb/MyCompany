@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SSO.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/tokens")]
     [ApiController]
     public class TokenController : ControllerBase
     {

@@ -1,18 +1,25 @@
 using System.Security.Claims;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Promotions.Infrastructure.Persistence.External;
 
 namespace Promotions.Api.Middleware
 {
     public class SessionValidationMiddleware
     {
+        private const string CacheKeyPrefix = "SessionValidation:";
+        private static readonly TimeSpan CacheTtl = TimeSpan.FromMinutes(2);
+
         private readonly RequestDelegate _next;
         private readonly ILogger<SessionValidationMiddleware> _logger;
+        private readonly IDistributedCache _cache;
 
-        public SessionValidationMiddleware(RequestDelegate next, ILogger<SessionValidationMiddleware> logger)
+        public SessionValidationMiddleware(RequestDelegate next, ILogger<SessionValidationMiddleware> logger, IDistributedCache cache)
         {
             _next = next;
             _logger = logger;
+            _cache = cache;
         }
 
         public async Task InvokeAsync(HttpContext context, SsoDbContext ssoDbContext)
@@ -68,9 +75,30 @@ namespace Promotions.Api.Middleware
                 return;
             }
 
-            // --- DB Check ---
+            // --- Cache or DB Check (IDistributedCache: Redis when configured, else in-memory) ---
             try
             {
+                var cacheKey = CacheKeyPrefix + userId;
+                var cachedBytes = await _cache.GetAsync(cacheKey, context.RequestAborted);
+                var cachedSessionId = cachedBytes != null ? Encoding.UTF8.GetString(cachedBytes) : null;
+                if (cachedSessionId != null)
+                {
+                    context.Response.Headers["X-Session-DB"] = cachedSessionId;
+                    if (cachedSessionId != sessionIdClaim)
+                    {
+                        context.Response.Headers["X-Session-Status"] = "MISMATCH";
+                        _logger.LogWarning("[SessionCheck-Promo] MISMATCH (cached)! User={UserId}", userId);
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        context.Response.ContentType = "application/json";
+                        await context.Response.WriteAsync("{\"message\": \"Session expired. You are logged in on another device.\"}");
+                        return;
+                    }
+                    context.Response.Headers["X-Session-Status"] = "VALID";
+                    _logger.LogDebug("[SessionCheck-Promo] Session VALID (cached) for User={UserId}", userId);
+                    await _next(context);
+                    return;
+                }
+
                 var user = await ssoDbContext.Users
                     .AsNoTracking()
                     .FirstOrDefaultAsync(u => u.Id == userId);
@@ -87,6 +115,8 @@ namespace Promotions.Api.Middleware
 
                 var dbSessionId = user.CurrentSessionId;
                 context.Response.Headers["X-Session-DB"] = dbSessionId ?? "NULL";
+
+                await _cache.SetAsync(cacheKey, Encoding.UTF8.GetBytes(dbSessionId ?? ""), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = CacheTtl }, context.RequestAborted);
 
                 if (dbSessionId != sessionIdClaim)
                 {

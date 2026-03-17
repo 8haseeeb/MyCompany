@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Promotions.Application.DeliveryPoints.Commands;
@@ -8,7 +8,8 @@ using Promotions.Application.DeliveryPoints.Queries;
 namespace Promotions.Api.Controllers
 {
     [ApiController]
-    [Route("api/promotions/delivery-points")]
+    [Route("api/v1/promotions/delivery-points")]
+    [ApiVersion("1.0")]
     [Authorize]
     [Tags("Promotion Delivery Points")]
     public class PromotionDeliveryPointsController : ControllerBase

@@ -1,19 +1,27 @@
-﻿using MediatR;
+using System.Security.Claims;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using SSO.Application.Auth.Commands;
 using SSO.Application.Dtos;
 
 namespace SSO.Api.Controllers;
 
 [ApiController]
-[Route("api/auth")]
+[Route("api/v1/auth")]
 public class AuthController : ControllerBase
 {
-    private readonly IMediator _mediator;
+    /// <summary>Must match Promotions.Api.Middleware.SessionValidationMiddleware cache key prefix.</summary>
+    private const string SessionValidationCacheKeyPrefix = "SessionValidation:";
 
-    public AuthController(IMediator mediator)
+    private readonly IMediator _mediator;
+    private readonly IDistributedCache _cache;
+
+    public AuthController(IMediator mediator, IDistributedCache cache)
     {
         _mediator = mediator;
+        _cache = cache;
     }
 
     [HttpPost("login")]
@@ -34,7 +42,8 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto dto)
     {
-        var message = await _mediator.Send(new RegisterCommand(dto.UserName, dto.Email, dto.Password, dto.Role ?? "User"));
+        // Ignore client-supplied Role for public registration; always assign "User" to prevent privilege escalation.
+        var message = await _mediator.Send(new RegisterCommand(dto.UserName, dto.Email, dto.Password, "User"));
 
         return Ok(new
         {
@@ -49,5 +58,22 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Logout: clears session and refresh token in DB and invalidates session cache (Redis) so Promotions rejects the token immediately.
+    /// </summary>
+    [HttpPost("logout")]
+    [Authorize]
+    public async Task<IActionResult> Logout()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("sub")?.Value;
+        if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+            return Unauthorized(new { message = "Invalid token." });
 
+        await _mediator.Send(new LogoutCommand(userId));
+
+        // Invalidate session cache so Promotions (and any other consumer) rejects this session immediately.
+        await _cache.RemoveAsync(SessionValidationCacheKeyPrefix + userId);
+
+        return Ok(new { message = "Logged out successfully." });
+    }
 }

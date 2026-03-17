@@ -1,3 +1,6 @@
+# Required GitHub Secrets: ACR_PASSWORD, AZURE_CREDENTIALS, SQL_CONNECTION_STRING_SSO,
+# SQL_CONNECTION_STRING_PROMOTIONS, JWT_SECRET (same value for Gateway/SSO/Promotions),
+# APPINSIGHTS_CONNECTION_STRING (Azure Application Insights), REDIS_CONNECTION_STRING (Azure Cache for Redis).
 name: Deploy to Azure Container Apps
 
 on:
@@ -57,8 +60,15 @@ jobs:
         env:
           ACR_PWD: ${{ secrets.ACR_PASSWORD }}
           SQL_SSO: ${{ secrets.SQL_CONNECTION_STRING_SSO }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          APPINSIGHTS: ${{ secrets.APPINSIGHTS_CONNECTION_STRING }}
+          REDIS: ${{ secrets.REDIS_CONNECTION_STRING }}
         run: |
           if [ -z "$ACR_PWD" ]; then echo "Error: ACR_PASSWORD secret is empty"; exit 1; fi
+          if [ -z "$SQL_SSO" ]; then echo "Error: SQL_CONNECTION_STRING_SSO secret is empty"; exit 1; fi
+          if [ -z "$JWT_SECRET" ]; then echo "Error: JWT_SECRET secret is empty"; exit 1; fi
+          if [ -z "$APPINSIGHTS" ]; then echo "Error: APPINSIGHTS_CONNECTION_STRING secret is empty"; exit 1; fi
+          if [ -z "$REDIS" ]; then echo "Error: REDIS_CONNECTION_STRING secret is empty"; exit 1; fi
           az containerapp up \
             --name sso-api \
             --resource-group "${{ env.RESOURCE_GROUP }}" \
@@ -69,7 +79,7 @@ jobs:
             --registry-server "${{ env.ACR_NAME }}.azurecr.io" \
             --registry-username "${{ env.ACR_NAME }}" \
             --registry-password "$ACR_PWD" \
-            --env-vars ASPNETCORE_ENVIRONMENT=Production ConnectionStrings__DefaultConnection="$SQL_SSO"
+            --env-vars ASPNETCORE_ENVIRONMENT=Production ConnectionStrings__DefaultConnection="$SQL_SSO" ConnectionStrings__Redis="$REDIS" JwtSettings__Secret="$JWT_SECRET" ApplicationInsights__ConnectionString="$APPINSIGHTS"
 
       # Deploy Promotions API
       - name: Deploy Promotions API
@@ -77,7 +87,15 @@ jobs:
           ACR_PWD: ${{ secrets.ACR_PASSWORD }}
           SQL_PROMO: ${{ secrets.SQL_CONNECTION_STRING_PROMOTIONS }}
           SQL_SSO: ${{ secrets.SQL_CONNECTION_STRING_SSO }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          APPINSIGHTS: ${{ secrets.APPINSIGHTS_CONNECTION_STRING }}
+          REDIS: ${{ secrets.REDIS_CONNECTION_STRING }}
         run: |
+          if [ -z "$SQL_PROMO" ]; then echo "Error: SQL_CONNECTION_STRING_PROMOTIONS secret is empty"; exit 1; fi
+          if [ -z "$SQL_SSO" ]; then echo "Error: SQL_CONNECTION_STRING_SSO secret is empty"; exit 1; fi
+          if [ -z "$JWT_SECRET" ]; then echo "Error: JWT_SECRET secret is empty"; exit 1; fi
+          if [ -z "$APPINSIGHTS" ]; then echo "Error: APPINSIGHTS_CONNECTION_STRING secret is empty"; exit 1; fi
+          if [ -z "$REDIS" ]; then echo "Error: REDIS_CONNECTION_STRING secret is empty"; exit 1; fi
           az containerapp up \
             --name promotions-api \
             --resource-group "${{ env.RESOURCE_GROUP }}" \
@@ -88,13 +106,17 @@ jobs:
             --registry-server "${{ env.ACR_NAME }}.azurecr.io" \
             --registry-username "${{ env.ACR_NAME }}" \
             --registry-password "$ACR_PWD" \
-            --env-vars ASPNETCORE_ENVIRONMENT=Production ConnectionStrings__DefaultConnection="$SQL_PROMO" ConnectionStrings__SsoConnection="$SQL_SSO"
+            --env-vars ASPNETCORE_ENVIRONMENT=Production ConnectionStrings__DefaultConnection="$SQL_PROMO" ConnectionStrings__SsoConnection="$SQL_SSO" ConnectionStrings__Redis="$REDIS" JwtSettings__Secret="$JWT_SECRET" ApplicationInsights__ConnectionString="$APPINSIGHTS"
 
       # Deploy API Gateway
       - name: Deploy API Gateway
         env:
           ACR_PWD: ${{ secrets.ACR_PASSWORD }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          APPINSIGHTS: ${{ secrets.APPINSIGHTS_CONNECTION_STRING }}
         run: |
+          if [ -z "$JWT_SECRET" ]; then echo "Error: JWT_SECRET secret is empty"; exit 1; fi
+          if [ -z "$APPINSIGHTS" ]; then echo "Error: APPINSIGHTS_CONNECTION_STRING secret is empty"; exit 1; fi
           az containerapp up \
             --name api-gateway \
             --resource-group "${{ env.RESOURCE_GROUP }}" \
@@ -105,7 +127,7 @@ jobs:
             --registry-server "${{ env.ACR_NAME }}.azurecr.io" \
             --registry-username "${{ env.ACR_NAME }}" \
             --registry-password "$ACR_PWD" \
-            --env-vars ASPNETCORE_ENVIRONMENT=Production SSO_URL="https://sso-api.${{ env.DOMAIN }}" PROMOTIONS_URL="https://promotions-api.${{ env.DOMAIN }}"
+            --env-vars ASPNETCORE_ENVIRONMENT=Production SSO_URL="https://sso-api.${{ env.DOMAIN }}" PROMOTIONS_URL="https://promotions-api.${{ env.DOMAIN }}" JwtSettings__Secret="$JWT_SECRET" ApplicationInsights__ConnectionString="$APPINSIGHTS"
 
 
 

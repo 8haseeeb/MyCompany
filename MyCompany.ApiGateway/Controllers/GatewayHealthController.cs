@@ -30,20 +30,15 @@ namespace MyCompany.ApiGateway.Controllers
             var results = new List<object>();
             bool allHealthy = true;
 
-            using var client = _httpClientFactory.CreateClient();
-            // Ignore certificate errors for local development
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-            };
-            using var secureClient = new HttpClient(handler);
+            // Use named client "HealthCheck": TLS validation disabled only in Development (see Program.cs).
+            using var client = _httpClientFactory.CreateClient("HealthCheck");
 
             foreach (var service in services)
             {
                 try
                 {
                     var stopwatch = Stopwatch.StartNew();
-                    var response = await secureClient.GetAsync(service.Url);
+                    var response = await client.GetAsync(service.Url);
                     stopwatch.Stop();
 
                     var status = response.IsSuccessStatusCode ? "Healthy" : "Unhealthy";

@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,7 +12,8 @@ using Promotions.Application.PromotionDetails.Queries;
 namespace Promotions.Api.Controllers
 {
     [ApiController]
-    [Route("api/promotions/actions")]
+    [Route("api/v1/promotions/actions")]
+    [ApiVersion("1.0")]
     [Authorize]
     [Tags("Promotion Actions")]
     public class PromoActionController : ControllerBase

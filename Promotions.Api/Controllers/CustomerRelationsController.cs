@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -7,7 +7,8 @@ using Promotions.Application.CustomerRelations.Dtos;
 using Promotions.Application.CustomerRelations.Queries;
 
 [ApiController]
-[Route("api/promotions/customer-relations")]
+[Route("api/v1/promotions/customer-relations")]
+[ApiVersion("1.0")]
 [Authorize]
 public class CustomerRelationsController : ControllerBase
 {

@@ -6,7 +6,8 @@ using Promotions.Application.Dashboard.Queries;
 namespace Promotions.Api.Controllers;
 
 [ApiController]
-[Route("api/promotions/dashboard")]
+[Route("api/v1/promotions/dashboard")]
+[ApiVersion("1.0")]
 [Authorize]
 public class DashboardController : ControllerBase
 {

@@ -1,12 +1,15 @@
-﻿using MediatR;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Promotions.Application.Participant.Queries;
 using Promotions.Application.Participants.Commands;
 using Promotions.Application.Participants.Dtos;
 
 [ApiController]
-[Route("api/actions/{idAction}/participants")]
+[Route("api/v1/actions/{idAction}/participants")]
+[ApiVersion("1.0")]
 [Tags("Participants")]
+[Authorize]
 public class ParticipantsController : ControllerBase
 {
     private readonly IMediator _mediator;

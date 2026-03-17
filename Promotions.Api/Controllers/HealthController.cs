@@ -7,7 +7,8 @@ using System.Text.Json;
 namespace Promotions.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/health")]
+    [ApiVersion("1.0")]
     [Tags("Health")]
     public class HealthController : ControllerBase
     {

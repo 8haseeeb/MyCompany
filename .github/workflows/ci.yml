@@ -19,31 +19,13 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Restore dependencies
-      run: |
-        dotnet restore Promotions.Api/Promotions.Api.csproj
-        dotnet restore SSO.Api/SSO.Api.csproj
-        dotnet restore MyCompany.ApiGateway/MyCompany.ApiGateway.csproj
-        dotnet restore tests/Promotions.UnitTests/Promotions.UnitTests.csproj
-        dotnet restore tests/MyCompany.ApiGateway.UnitTests/MyCompany.ApiGateway.UnitTests.csproj
-        dotnet restore tests/SSO.UnitTests/SSO.UnitTests.csproj
+      run: dotnet restore MyCompany.sln
 
     - name: Build
-      run: |
-        dotnet build Promotions.Api/Promotions.Api.csproj --no-restore --configuration Release
-        dotnet build SSO.Api/SSO.Api.csproj --no-restore --configuration Release
-        dotnet build MyCompany.ApiGateway/MyCompany.ApiGateway.csproj --no-restore --configuration Release
-        dotnet build tests/Promotions.UnitTests/Promotions.UnitTests.csproj --no-restore --configuration Release
-        dotnet build tests/MyCompany.ApiGateway.UnitTests/MyCompany.ApiGateway.UnitTests.csproj --no-restore --configuration Release
-        dotnet build tests/SSO.UnitTests/SSO.UnitTests.csproj --no-restore --configuration Release
+      run: dotnet build MyCompany.sln --no-restore --configuration Release
 
-    - name: Run Promotions Unit Tests
-      run: dotnet test tests/Promotions.UnitTests/Promotions.UnitTests.csproj --no-build --configuration Release --verbosity normal
-
-    - name: Run ApiGateway Unit Tests
-      run: dotnet test tests/MyCompany.ApiGateway.UnitTests/MyCompany.ApiGateway.UnitTests.csproj --no-build --configuration Release --verbosity normal
-
-    - name: Run SSO Unit Tests
-      run: dotnet test tests/SSO.UnitTests/SSO.UnitTests.csproj --no-build --configuration Release --verbosity normal
+    - name: Run unit tests
+      run: dotnet test MyCompany.sln --no-build --configuration Release --verbosity normal
 
   docker-build:
     runs-on: ubuntu-latest

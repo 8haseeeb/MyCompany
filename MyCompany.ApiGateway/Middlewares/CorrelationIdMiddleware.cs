@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
 namespace MyCompany.ApiGateway.Middlewares
@@ -14,12 +14,14 @@ namespace MyCompany.ApiGateway.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (!context.Request.Headers.ContainsKey("X-Correlation-ID"))
-            {
-                context.Request.Headers["X-Correlation-ID"] = System.Guid.NewGuid().ToString();
-            }
+            var correlationId = context.Request.Headers["X-Correlation-ID"].FirstOrDefault()
+                ?? System.Guid.NewGuid().ToString();
+            context.Request.Headers["X-Correlation-ID"] = correlationId;
 
             await _next(context);
+
+            // Echo back so clients and downstream can correlate requests with logs.
+            context.Response.Headers["X-Correlation-ID"] = correlationId;
         }
     }
 }

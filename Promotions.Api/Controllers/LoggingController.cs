@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog.Core;
 using Serilog.Events;
@@ -5,7 +6,9 @@ using Serilog.Events;
 namespace Promotions.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/logging")]
+    [ApiVersion("1.0")]
+    [Authorize]
     public class LoggingController : ControllerBase
     {
         private readonly LoggingLevelSwitch _levelSwitch;
@@ -37,10 +40,11 @@ namespace Promotions.Api.Controllers
         }
 
         /// <summary>
-        /// Change logging level at runtime
+        /// Change logging level at runtime. Restricted to Admin role.
         /// </summary>
         /// <param name="level">New log level (Verbose, Debug, Information, Warning, Error, Fatal)</param>
         [HttpPost("level")]
+        [Authorize(Roles = "Admin")]
         public IActionResult SetLevel([FromBody] SetLogLevelRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.Level))

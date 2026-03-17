@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Promotions.Application.Measures.Commands;
@@ -8,7 +8,8 @@ using Promotions.Application.Measures.Queries;
 namespace Promotions.Api.Controllers
 {
     [ApiController]
-    [Route("api/promotions/measures")]
+    [Route("api/v1/promotions/measures")]
+    [ApiVersion("1.0")]
     [Authorize]
     [Tags("Promotion Measures")]
     public class PromotionMeasuresController : ControllerBase

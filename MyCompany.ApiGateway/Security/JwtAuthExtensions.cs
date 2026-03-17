@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
@@ -19,8 +19,9 @@ public static class JwtAuthExtensions
         var issuer = jwtSettings["Issuer"];
         var audience = jwtSettings["Audience"];
 
-        if (string.IsNullOrEmpty(secret))
-            throw new Exception("JWT Secret is missing in Gateway configuration");
+        const string placeholder = "REPLACE_VIA_ENV_OR_USER_SECRETS";
+        if (string.IsNullOrEmpty(secret) || secret == placeholder)
+            throw new InvalidOperationException("JWT Secret is not configured. Set JwtSettings:Secret via environment variable, User Secrets (dev), or Azure Key Vault (production).");
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

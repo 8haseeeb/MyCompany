@@ -1,4 +1,4 @@
-﻿using Serilog;
+using Serilog;
 using System.Net.Http.Headers;
 
 namespace MyCompany.ApiGateway.Routing
@@ -75,22 +75,20 @@ namespace MyCompany.ApiGateway.Routing
                     string.Join(", ", response.Headers.Select(h => $"{h.Key}={string.Join("|", h.Value)}"))
                 );
 
-                //  COPY RESPONSE 
+                //  COPY RESPONSE (single copy; no X-Echo duplication to avoid duplicate/confusing headers)
                 context.Response.StatusCode = (int)response.StatusCode;
 
                 foreach (var header in response.Headers)
                 {
-                    context.Response.Headers[header.Key] = header.Value.ToArray();
-                    context.Response.Headers["X-Echo-" + header.Key] = header.Value.ToArray();
+                    if (!header.Key.Equals("Transfer-Encoding", StringComparison.OrdinalIgnoreCase))
+                        context.Response.Headers[header.Key] = header.Value.ToArray();
                 }
 
                 foreach (var header in response.Content.Headers)
                 {
-                    context.Response.Headers[header.Key] = header.Value.ToArray();
-                    context.Response.Headers["X-Echo-" + header.Key] = header.Value.ToArray();
+                    if (!header.Key.Equals("Transfer-Encoding", StringComparison.OrdinalIgnoreCase))
+                        context.Response.Headers[header.Key] = header.Value.ToArray();
                 }
-
-                context.Response.Headers.Remove("transfer-encoding");
 
                 await response.Content.CopyToAsync(context.Response.Body);
             }

@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Promotions.Application.Products.Commands;
@@ -8,7 +8,8 @@ using Promotions.Application.Products.Queries;
 namespace Promotions.Api.Controllers
 {
     [ApiController]
-    [Route("api/promotions/products")]
+    [Route("api/v1/promotions/products")]
+    [ApiVersion("1.0")]
     [Authorize]
     [Tags("Promotion Products")]
     public class ProductsController : ControllerBase

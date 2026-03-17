@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
@@ -14,6 +14,10 @@ public static class JwtAuthExtensions
         IConfiguration configuration)
     {
         var jwtSettings = configuration.GetSection("JwtSettings");
+        var secret = jwtSettings["Secret"];
+        const string placeholder = "REPLACE_VIA_ENV_OR_USER_SECRETS";
+        if (string.IsNullOrEmpty(secret) || secret == placeholder)
+            throw new InvalidOperationException("JWT Secret is not configured. Set JwtSettings:Secret via environment variable, User Secrets (dev), or Azure Key Vault (production).");
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -35,7 +39,7 @@ public static class JwtAuthExtensions
 
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(jwtSettings["Secret"]!)
+                        Encoding.UTF8.GetBytes(secret!)
                     ),
 
                     NameClaimType = "unique_name",

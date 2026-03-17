@@ -1,10 +1,13 @@
- using Microsoft.AspNetCore.Http;
+using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.Http;
 using MyCompany.ApiGateway.Middlewares;
 using MyCompany.ApiGateway.Routing;
 using MyCompany.ApiGateway.Security;
 using MyCompany.ApiGateway.Resilience;
 using MyCompany.Common.Logging;
 using MyCompany.Common.Logging.Serilog;
+using Azure.Monitor.OpenTelemetry.Exporter;
+using OpenTelemetry.Trace;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,36 +15,69 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.AddSerilogLogging(builder.Configuration, "ApiGateway");
 builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:ConnectionString"]);
 
+// OpenTelemetry: W3C trace context flows Gateway → downstream (SSO/Promotions). Export to Application Insights.
+var otelConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
+if (!string.IsNullOrEmpty(otelConnectionString) && !otelConnectionString.StartsWith("REPLACE_"))
+{
+    builder.Services.AddOpenTelemetry()
+        .WithTracing(tracing =>
+        {
+            tracing.AddAspNetCoreInstrumentation()
+                .AddHttpClientInstrumentation();
+            tracing.AddAzureMonitorTraceExporter(o => o.ConnectionString = otelConnectionString);
+        });
+}
+
 
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 
 builder.Services.AddHttpClient();
+var isDevelopment = builder.Environment.IsDevelopment();
 builder.Services.AddHttpClient<DownstreamProxy>()
     .AddPolicyHandler(RetryPolicies.GetRetryPolicy())
     .AddPolicyHandler(CircuitBreakerPolicies.GetCircuitBreakerPolicy())
     .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
     {
-        ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+        // Only disable TLS certificate validation in Development (e.g. self-signed downstream); production uses default validation.
+        ServerCertificateCustomValidationCallback = isDevelopment ? (_, __, ___, ____) => true : null
+    });
+
+// Named client for gateway health checks: same TLS rules (strict in Production, relaxed in Development).
+builder.Services.AddHttpClient("HealthCheck")
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = isDevelopment ? (_, __, ___, ____) => true : null
     });
 
 
 
 builder.Services.AddControllers();
 
-// CORS
-
+// CORS from configuration (no hardcoded production origins)
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+    ?? new[] { "http://localhost:5173" };
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173")
+            policy.WithOrigins(allowedOrigins)
                   .AllowAnyHeader()
                   .AllowAnyMethod()
-                  .WithExposedHeaders("X-Session-Status", "X-Session-DB", "X-Session-Token", "X-Session-Middleware", "X-Middleware-Reached");
+                  .WithExposedHeaders("X-Session-Status", "X-Session-DB", "X-Session-Token", "X-Session-Middleware", "X-Middleware-Reached", "X-Correlation-ID");
         });
+});
+
+// Rate limiting (built-in .NET 8): fixed window per IP at gateway (100 req/min per IP)
+builder.Services.AddRateLimiter(options =>
+{
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            _ => new FixedWindowRateLimiterOptions { Window = TimeSpan.FromMinutes(1), PermitLimit = 100 }));
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 });
 
 var app = builder.Build();
@@ -57,6 +93,12 @@ app.Use(async (context, next) =>
 
 // 2. CORS (Must be early)
 app.UseCors("AllowReactApp");
+
+// 2b. Rate limiting (before heavy middleware)
+app.UseRateLimiter();
+
+// 2c. Security headers (X-Content-Type-Options, X-Frame-Options, HSTS when HTTPS)
+app.UseMiddleware<SecurityHeadersMiddleware>();
 
 // 3. Exception Handling
 app.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -100,10 +142,12 @@ app.Map("/{**catch-all}", async context =>
         return;
     }
 
-    var baseUrl = RouteResolver.Resolve(context);
+    // Backward compatibility: rewrite /api/... to /api/v1/... when no version segment present
+    var downstreamPath = RouteResolver.RewriteToVersionedPath(path ?? "");
+    var baseUrl = RouteResolver.ResolveByPath(downstreamPath);
     var proxy = context.RequestServices.GetRequiredService<DownstreamProxy>();
 
-    await proxy.ProxyAsync(context, $"{baseUrl}{context.Request.Path}");
+    await proxy.ProxyAsync(context, $"{baseUrl}{downstreamPath}");
 });
 
 

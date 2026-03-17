@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace SSO.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/health")]
     [Tags("Health")]
     public class HealthController : ControllerBase
     {

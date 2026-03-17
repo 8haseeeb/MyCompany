@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Promotions.Application.PromoArticles.Commands;
@@ -8,7 +8,8 @@ using Promotions.Application.PromoArticles.Queries;
 namespace Promotions.Api.Controllers
 {
     [ApiController]
-    [Route("api/promotions/promo-articles")]
+    [Route("api/v1/promotions/promo-articles")]
+    [ApiVersion("1.0")]
     [Authorize]
     [Tags("Promotion Articles")]
     public class PromoArticleController : ControllerBase

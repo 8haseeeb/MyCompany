@@ -1,7 +1,9 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MyCompany.Common.Logging;
 using MyCompany.Common.Logging.Serilog; 
+using Azure.Monitor.OpenTelemetry.Exporter;
+using OpenTelemetry.Trace;
 using Promotions.Api.Controllers;
 using Promotions.Api.Middleware;
 using Promotions.Api.Security;
@@ -20,8 +22,32 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.AddSerilogLogging(builder.Configuration, "Promotions.Api");
 builder.Services.AddLoggingLevelSwitch(); // Enable dynamic logging level control
+var redisConnection = builder.Configuration.GetConnectionString("Redis");
+if (!string.IsNullOrEmpty(redisConnection))
+    builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = redisConnection; });
+else
+    builder.Services.AddDistributedMemoryCache(); // Single-node fallback when Redis not configured
 builder.Services.AddControllers();
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+});
 builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:ConnectionString"]);
+
+// OpenTelemetry: receive W3C traceparent from Gateway; export traces to Application Insights.
+var otelConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
+if (!string.IsNullOrEmpty(otelConnectionString) && !otelConnectionString.StartsWith("REPLACE_"))
+{
+    builder.Services.AddOpenTelemetry()
+        .WithTracing(tracing =>
+        {
+            tracing.AddAspNetCoreInstrumentation()
+                .AddHttpClientInstrumentation();
+            tracing.AddAzureMonitorTraceExporter(o => o.ConnectionString = otelConnectionString);
+        });
+}
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -71,6 +97,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 var ssoConnectionString = builder.Configuration.GetConnectionString("SsoConnection");
 
 builder.Services.AddInfrastructure(connectionString!);
+builder.Services.AddHealthChecks()
+    .AddSqlServer(connectionString!, name: "PromotionsDb", tags: new[] { "ready", "db" });
 
 // Add SsoDbContext for Session Validation
 if (!string.IsNullOrEmpty(ssoConnectionString))
@@ -203,6 +231,7 @@ app.UseAuthentication();
 app.UseMiddleware<SessionValidationMiddleware>(); // Added Session Validation Middleware
 app.UseAuthorization();
 app.MapControllers();
+app.MapHealthChecks("/health/ready", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions { Predicate = _ => true });
 
 Log.Information(" Promotion API started successfully");
 
