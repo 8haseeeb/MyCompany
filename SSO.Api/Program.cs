@@ -84,8 +84,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// --- DATABASE AUTO-MIGRATION WITH RETRY (DISABLED FOR COMPATIBILITY) ---
-/*
+// --- DATABASE AUTO-MIGRATION WITH RETRY ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -109,17 +108,20 @@ using (var scope = app.Services.CreateScope())
         {
             retries--;
             Console.WriteLine($"Failed to connect to database. Retrying in 3 seconds... ({retries} attempts left). Error: {ex.Message}");
-            if (retries == 0) throw;
+            if (retries == 0)
+            {
+                Console.WriteLine("All retries exhausted. Continuing startup without migration.");
+                break;
+            }
             await Task.Delay(3000);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"An error occurred while migrating the database: {ex.Message}");
-            throw;
+            Console.WriteLine($"An error occurred while migrating the database: {ex.Message}. Continuing startup...");
+            break;
         }
     }
 }
-*/
 // -------------------------------
 
 
