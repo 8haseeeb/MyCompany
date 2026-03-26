@@ -6,6 +6,9 @@ namespace SSO.Api.Security;
 
 public static class JwtAuthExtensions
 {
+    // JWT uses short claim type "role"; MapInboundClaims=false keeps it — must match RoleClaimType for [Authorize(Roles)].
+    private const string JwtRoleClaimType = "role";
+
     public static IServiceCollection AddJwtAuthentication(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -39,7 +42,7 @@ public static class JwtAuthExtensions
                     ),
 
                     NameClaimType = "unique_name",
-                    RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                    RoleClaimType = JwtRoleClaimType
                 };
             });
 

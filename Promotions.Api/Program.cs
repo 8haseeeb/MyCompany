@@ -17,6 +17,7 @@ using Serilog;
 using Promotions.Infrastructure.Persistence;
 using FluentValidation;
 using Promotions.Application.Common.Behaviors;
+using Promotions.Application.Common.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,11 +35,13 @@ builder.Services.AddApiVersioning(options =>
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.ReportApiVersions = true;
 });
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:ConnectionString"]);
+var promoAiConn = builder.Configuration["ApplicationInsights:ConnectionString"];
+if (!string.IsNullOrWhiteSpace(promoAiConn) && !promoAiConn.StartsWith("REPLACE_", StringComparison.OrdinalIgnoreCase))
+    builder.Services.AddApplicationInsightsTelemetry(o => o.ConnectionString = promoAiConn);
 
 // OpenTelemetry: receive W3C traceparent from Gateway; export traces to Application Insights.
 var otelConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
-if (!string.IsNullOrEmpty(otelConnectionString) && !otelConnectionString.StartsWith("REPLACE_"))
+if (!string.IsNullOrEmpty(otelConnectionString) && !otelConnectionString.StartsWith("REPLACE_", StringComparison.OrdinalIgnoreCase))
 {
     builder.Services.AddOpenTelemetry()
         .WithTracing(tracing =>
@@ -123,42 +126,72 @@ Log.Information("[STARTUP] SsoConnection env var: {SsoEnv}",
     Environment.GetEnvironmentVariable("ConnectionStrings__SsoConnection") ?? "NOT SET - using appsettings");
 
 // --- DATABASE AUTO-MIGRATION WITH RETRY ---
-using (var scope = app.Services.CreateScope())
+// New scope + DbContext per attempt: reusing one context after SqlException can leave connections invalid,
+// causing EF to retry CREATE DATABASE (1801) forever even when PromotionsDb already exists.
 {
-    var services = scope.ServiceProvider;
-    var logger = services.GetRequiredService<ILogger<Program>>();
-    var context = services.GetRequiredService<PromotionsDbContext>();
+    var migrationLogger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("Promotions.Migration");
+    const int maxAttempts = 15;
+    var succeeded = false;
 
-    int retries = 10;
-    while (retries > 0)
+    for (var attempt = 1; attempt <= maxAttempts && !succeeded; attempt++)
     {
+        using var scope = app.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<PromotionsDbContext>();
+
         try
         {
-            if (context.Database.IsSqlServer())
-            {
-                logger.LogInformation("Applying Promotions database migrations...");
-                await context.Database.MigrateAsync();
-                logger.LogInformation("Promotions database migrated successfully.");
+            if (!context.Database.IsSqlServer())
+                break;
 
-                break; // Success
+            migrationLogger.LogInformation("Applying Promotions database migrations (attempt {Attempt}/{Max})...", attempt, maxAttempts);
+            await context.Database.MigrateAsync();
+            migrationLogger.LogInformation("Promotions database migrated successfully.");
+            succeeded = true;
+        }
+        catch (Microsoft.Data.SqlClient.SqlException ex) when (ex.Number == 1801)
+        {
+            // 1801 = Database already exists.
+            // If EF thinks it needs to create it, but it's already there, we check if we can actually use it.
+            migrationLogger.LogWarning("[Migration] SqlException 1801 (database already exists). Attempt {Attempt}/{Max}.", attempt, maxAttempts);
+            
+            var canConnect = await context.Database.CanConnectAsync();
+            if (canConnect)
+            {
+                migrationLogger.LogInformation("[Migration] PromotionsDb already exists and is reachable. Proceeding to apply migrations...");
+                try 
+                {
+                    await context.Database.MigrateAsync();
+                    succeeded = true;
+                    migrationLogger.LogInformation("Promotions database migrated successfully.");
+                }
+                catch (Exception migrateEx)
+                {
+                    migrationLogger.LogError(migrateEx, "[Migration] Connection is OK but MigrateAsync failed. Possibly schema mismatch or history table issue.");
+                    break; // Don't loop endlessly if migration itself fails
+                }
+            }
+            else if (attempt == maxAttempts)
+            {
+                migrationLogger.LogError("[Migration] Giving up after {Max} attempts. Database exists but CanConnect is false. " +
+                                       "Check 'sa' user permissions on PromotionsDb or run BaselineEfHistory_PromotionsDb.sql.", maxAttempts);
+            }
+            else
+            {
+                await Task.Delay(500);
             }
         }
         catch (Microsoft.Data.SqlClient.SqlException ex)
         {
-            retries--;
-            logger.LogWarning(ex, "[Migration] SqlException (Error {Number}). Retries left: {Retries}. Will retry...", ex.Number, retries);
-            if (retries == 0)
-            {
-                // Do NOT crash the container — migrations might already be applied
-                logger.LogError(ex, "[Migration] All retries exhausted. Continuing startup without migration.");
-                break;
-            }
-            await Task.Delay(3000);
+            migrationLogger.LogWarning(ex, "[Migration] SqlException {Number} on attempt {Attempt}/{Max}.", ex.Number, attempt, maxAttempts);
+            if (attempt == maxAttempts)
+                migrationLogger.LogError(ex, "[Migration] All attempts failed. Continuing startup without migration.");
+            else
+                await Task.Delay(3000);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "An error occurred while migrating the database. Continuing startup...");
-            break; // Don't crash the container on migration errors — app can still start
+            migrationLogger.LogError(ex, "[Migration] Unexpected error. Continuing startup without migration.");
+            break;
         }
     }
 }
@@ -201,6 +234,16 @@ app.UseExceptionHandler(errorApp =>
                 message = "Validation failed", 
                 errors = validationException.Errors.Select(e => new { e.PropertyName, e.ErrorMessage }) 
             });
+            await context.Response.WriteAsync(result);
+        }
+        else if (exception is InvalidPromotionReferenceException ipr)
+        {
+            logger.LogWarning(ipr, "[PromoReference] Path: {Path}, Message: {Message}",
+                exceptionHandlerPathFeature?.Path, ipr.Message);
+
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            context.Response.ContentType = "application/json";
+            var result = System.Text.Json.JsonSerializer.Serialize(new { message = ipr.Message });
             await context.Response.WriteAsync(result);
         }
         else if (exception is System.Collections.Generic.KeyNotFoundException)

@@ -3,7 +3,7 @@ import { Users, Plus, UserPlus, Check, X, Eye, ChevronRight, MoreVertical, Edit2
 import './CustomerRelation.css';
 import { customerService } from '../services/customerService';
 
-const CustomerRelation = ({ userRole }) => {
+const CustomerRelation = ({ canEdit = false }) => {
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState({
         codHier: '',
@@ -213,7 +213,7 @@ const CustomerRelation = ({ userRole }) => {
                                 </button>
                             </div>
 
-                            {!showForm && userRole === 'Admin' && (
+                            {!showForm && canEdit && (
                                 <button className="create-btn" onClick={() => setShowForm(true)}>
                                     <Plus size={18} />
                                     Create Customer
@@ -262,7 +262,7 @@ const CustomerRelation = ({ userRole }) => {
 
                                                     {activeActionMenu === idx && (
                                                         <div className="action-menu fade-in">
-                                                            {userRole === 'Admin' ? (
+                                                            {canEdit ? (
                                                                 <>
                                                                     <button className="dropdown-item" onClick={() => handleEdit(customer)}>
                                                                         <Edit2 size={14} style={{ marginRight: '8px' }} /> Edit

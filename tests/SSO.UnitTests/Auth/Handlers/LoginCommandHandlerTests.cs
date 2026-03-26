@@ -1,14 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
+using SSO.Application.Auth;
 using SSO.Application.Auth.Commands;
 using SSO.Application.Auth.Handlers;
 using SSO.Application.Interfaces;
 using SSO.Domain.Users;
 using SSO.Infrastructure.Persistence;
+using SSO.Infrastructure.Security;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace SSO.UnitTests.Auth.Handlers
 {
@@ -29,67 +30,59 @@ namespace SSO.UnitTests.Auth.Handlers
             _context = new IdentityDbContext(options);
             _userRepository = Substitute.For<IUserRepository>();
             _jwtTokenService = Substitute.For<IJwtTokenService>();
+            _jwtTokenService.GenerateToken(Arg.Any<User>(), Arg.Any<string>()).Returns("access_token");
             _passwordHasher = Substitute.For<IPasswordHasher>();
-            
-            _handler = new LoginCommandHandler(_userRepository, _jwtTokenService, _passwordHasher, _context);
+            _passwordHasher.LooksLikeBcryptHash(Arg.Any<string>()).Returns(true);
+
+            var sessionTokens = new UserSessionTokenService(_context, _jwtTokenService);
+            _handler = new LoginCommandHandler(_userRepository, sessionTokens, _passwordHasher);
         }
 
         [Fact]
         public async Task Handle_Should_ReturnTokens_WhenCredentialsAreValid()
         {
-            // --- ARRANGE ---
             var email = "test@example.com";
             var password = "password123";
             var user = new User("testuser", email, "hashed_password");
-            
+
             _userRepository.GetByEmailAsync(email, Arg.Any<CancellationToken>()).Returns(user);
             _passwordHasher.Verify("hashed_password", password).Returns(true);
-            _jwtTokenService.GenerateToken(user, Arg.Any<string>()).Returns("access_token");
 
-            // Seed user into context for realistic login scenario
             _context.Users.Add(user);
             await _context.SaveChangesAsync(CancellationToken.None);
 
             var command = new LoginCommand(email, password);
 
-            // --- ACT ---
             var result = await _handler.Handle(command, CancellationToken.None);
 
-            // --- ASSERT ---
             Assert.Equal("access_token", result.AccessToken);
             Assert.NotNull(result.RefreshToken);
             Assert.Equal("testuser", result.UserName);
-            
+
             var userInDb = await _context.Users.FirstAsync(u => u.Id == user.Id);
             Assert.NotNull(userInDb.RefreshToken);
             Assert.True(userInDb.RefreshTokenExpiry > DateTime.UtcNow);
         }
 
         [Fact]
-        public async Task Handle_Should_ThrowException_WhenUserNotFound()
+        public async Task Handle_Should_ThrowInvalidCredentials_WhenUserNotFound()
         {
-            // --- ARRANGE ---
             _userRepository.GetByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns((User)null!);
             var command = new LoginCommand("wrong@example.com", "password");
 
-            // --- ACT & ASSERT ---
-            var ex = await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command, CancellationToken.None));
-            Assert.Equal("Invalid credentials", ex.Message);
+            await Assert.ThrowsAsync<InvalidCredentialsException>(() => _handler.Handle(command, CancellationToken.None));
         }
 
         [Fact]
-        public async Task Handle_Should_ThrowException_WhenPasswordIsIncorrect()
+        public async Task Handle_Should_ThrowInvalidCredentials_WhenPasswordIsIncorrect()
         {
-            // --- ARRANGE ---
             var user = new User("testuser", "test@example.com", "hashed_password");
             _userRepository.GetByEmailAsync(user.Email, Arg.Any<CancellationToken>()).Returns(user);
             _passwordHasher.Verify("hashed_password", "wrong_password").Returns(false);
 
             var command = new LoginCommand(user.Email, "wrong_password");
 
-            // --- ACT & ASSERT ---
-            var ex = await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command, CancellationToken.None));
-            Assert.Equal("Invalid credentials", ex.Message);
+            await Assert.ThrowsAsync<InvalidCredentialsException>(() => _handler.Handle(command, CancellationToken.None));
         }
 
         public void Dispose()

@@ -1,0 +1,444 @@
+2026-03-25 10:52:16.179 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:16.179 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:16.179 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:16.179 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:16.179 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:16.949 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 792.0995 ms | User: zzz (1) | IP: ::1 | CorrelationId: b728d969-8dcd-486c-a88f-2d75e0f4b6d8 | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:52:16.947 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 789.0776 ms | User: zzz (1) | IP: ::1 | CorrelationId: 61835867-0772-4a2f-a4bb-5084a857bd3e | RequestBody:  | ResponseBody: [{"idAction":1,"name":"PROMO_1","codDiv":"DIV_1","dteStartSellIn":"2026-03-25T17:57:00","dteEndSellIn":"2026-03-26T17:57:00","dteStartSellOut":"2026-03-26T17:57:00","dteEndSellOut":"2026-03-28T17:57:00","documentKey":"KEY_1","dteToShost":"2026-03-24T17:57:00","levParticipants":1}]
+2026-03-25 10:52:16.966 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 810.1004 ms
+2026-03-25 10:52:16.971 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 816.1120 ms
+2026-03-25 10:52:16.982 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 825.5821 ms | User: zzz (1) | IP: ::1 | CorrelationId: bfd02b4c-5aa6-48db-8041-5605bee8e230 | RequestBody:  | ResponseBody: [{"idAction":1,"codDeliveryPoint":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:52:16.984 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 827.5006 ms | User: zzz (1) | IP: ::1 | CorrelationId: e47c3dbb-4a8f-4261-98ac-a7ac2627f813 | RequestBody:  | ResponseBody: [{"idAction":1,"codParticipant":"N_2","flgInclusion":true,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00"},{"idAction":1,"codParticipant":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:52:17.000 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 845.4017 ms
+2026-03-25 10:52:17.013 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 857.9720 ms
+2026-03-25 10:52:17.140 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:17.162 +05:00 [INF] HTTP GET /api/v1/promotions/dashboard/metrics responded 200 in 1005.6272 ms | User: zzz (1) | IP: ::1 | CorrelationId: 71effa7a-90c4-4306-8868-703a834e10b1 | RequestBody:  | ResponseBody: {"totalPromotions":1,"totalProducts":1,"totalParticipants":2,"activeActions":0,"pendingActions":1,"expiredActions":0,"estimatedRevenue":0,"activityTrend":[{"dateLabel":"26","active":0,"pending":1,"failed":0},{"dateLabel":"01","active":0,"pending":1,"failed":0},{"dateLabel":"04","active":0,"pending":1,"failed":0},{"dateLabel":"07","active":0,"pending":1,"failed":0},{"dateLabel":"10","active":0,"pending":1,"failed":0},{"dateLabel":"13","active":0,"pending":1,"failed":0},{"dateLabel":"16","active":0,"pending":1,"failed":0},{"dateLabel":"19","active":0,"pending":1,"failed":0},{"dateLabel":"22","active":0,"pending":1,"failed":0},{"dateLabel":"25","active":0,"pending":1,"failed":0}]}
+2026-03-25 10:52:17.178 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:17.178 +05:00 [INF] HTTP GET /api/v1/promotions/dashboard/metrics responded 200 in 1023.6877 ms
+2026-03-25 10:52:17.184 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 47.7381 ms | User: zzz (1) | IP: ::1 | CorrelationId: 3fcae45f-71bd-4ec7-8960-6bd788cce7f1 | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:52:17.215 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 79.0226 ms
+2026-03-25 10:52:17.219 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:17.228 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 50.9569 ms | User: zzz (1) | IP: ::1 | CorrelationId: 2fc4d842-c6c4-4da5-a8f0-5b4299e5de76 | RequestBody:  | ResponseBody: [{"idAction":1,"name":"PROMO_1","codDiv":"DIV_1","dteStartSellIn":"2026-03-25T17:57:00","dteEndSellIn":"2026-03-26T17:57:00","dteStartSellOut":"2026-03-26T17:57:00","dteEndSellOut":"2026-03-28T17:57:00","documentKey":"KEY_1","dteToShost":"2026-03-24T17:57:00","levParticipants":1}]
+2026-03-25 10:52:17.249 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 71.4498 ms
+2026-03-25 10:52:17.273 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:17.274 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 55.6502 ms | User: zzz (1) | IP: ::1 | CorrelationId: 1bbbfad4-2396-42d0-850b-e3e315e53dd3 | RequestBody:  | ResponseBody: [{"idAction":1,"codDeliveryPoint":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:52:17.292 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 74.4086 ms
+2026-03-25 10:52:17.396 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:17.414 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 142.5864 ms | User: zzz (1) | IP: ::1 | CorrelationId: 86af8401-c320-4263-8f36-9e0a2affa99d | RequestBody:  | ResponseBody: [{"idAction":1,"codParticipant":"N_2","flgInclusion":true,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00"},{"idAction":1,"codParticipant":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:52:17.459 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 187.0649 ms
+2026-03-25 10:52:17.551 +05:00 [INF] HTTP GET /api/v1/promotions/dashboard/metrics responded 200 in 155.7405 ms | User: zzz (1) | IP: ::1 | CorrelationId: 51ff1422-e3a0-4a62-adc1-5edcf0cba762 | RequestBody:  | ResponseBody: {"totalPromotions":1,"totalProducts":1,"totalParticipants":2,"activeActions":0,"pendingActions":1,"expiredActions":0,"estimatedRevenue":0,"activityTrend":[{"dateLabel":"26","active":0,"pending":1,"failed":0},{"dateLabel":"01","active":0,"pending":1,"failed":0},{"dateLabel":"04","active":0,"pending":1,"failed":0},{"dateLabel":"07","active":0,"pending":1,"failed":0},{"dateLabel":"10","active":0,"pending":1,"failed":0},{"dateLabel":"13","active":0,"pending":1,"failed":0},{"dateLabel":"16","active":0,"pending":1,"failed":0},{"dateLabel":"19","active":0,"pending":1,"failed":0},{"dateLabel":"22","active":0,"pending":1,"failed":0},{"dateLabel":"25","active":0,"pending":1,"failed":0}]}
+2026-03-25 10:52:17.560 +05:00 [INF] HTTP GET /api/v1/promotions/dashboard/metrics responded 200 in 164.6673 ms
+2026-03-25 10:52:17.800 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:17.804 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.6016 ms | User: zzz (1) | IP: ::1 | CorrelationId: c2bab373-d061-4754-8190-73c0b0980373 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:52:17.8027781Z","uptime":"0d 17h 2m 43s"}
+2026-03-25 10:52:17.810 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 11.6891 ms
+2026-03-25 10:52:22.809 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:22.815 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 7.3234 ms | User: zzz (1) | IP: ::1 | CorrelationId: 140a3e00-0871-4127-b6e8-6182ae953743 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:52:22.8143365Z","uptime":"0d 17h 2m 48s"}
+2026-03-25 10:52:22.827 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 18.6238 ms
+2026-03-25 10:52:27.794 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:27.798 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 3.7265 ms | User: zzz (1) | IP: ::1 | CorrelationId: 3addd725-628a-44fe-a218-abfeba36d881 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:52:27.7978718Z","uptime":"0d 17h 2m 53s"}
+2026-03-25 10:52:27.804 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 9.6473 ms
+2026-03-25 10:52:32.777 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:32.780 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.6644 ms | User: zzz (1) | IP: ::1 | CorrelationId: ba4291b4-8069-498b-95fd-04825a858c4b | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:52:32.7802267Z","uptime":"0d 17h 2m 58s"}
+2026-03-25 10:52:32.785 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 8.1313 ms
+2026-03-25 10:52:37.775 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:37.777 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.2740 ms | User: zzz (1) | IP: ::1 | CorrelationId: 6b43b680-dfbf-4e9a-a081-a81e7a99fa50 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:52:37.7774836Z","uptime":"0d 17h 3m 3s"}
+2026-03-25 10:52:37.781 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.8178 ms
+2026-03-25 10:52:42.821 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:42.826 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.7356 ms | User: zzz (1) | IP: ::1 | CorrelationId: 4ef99a82-fb7f-4625-8806-2c96a1d0f7fa | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:52:42.8264557Z","uptime":"0d 17h 3m 8s"}
+2026-03-25 10:52:42.838 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 17.6775 ms
+2026-03-25 10:52:47.788 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:47.790 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.4307 ms | User: zzz (1) | IP: ::1 | CorrelationId: cd6538df-aac2-4a83-ba38-a58d1d3a402a | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:52:47.7904179Z","uptime":"0d 17h 3m 13s"}
+2026-03-25 10:52:47.793 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.7998 ms
+2026-03-25 10:52:52.778 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:52.781 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.4648 ms | User: zzz (1) | IP: ::1 | CorrelationId: 5cdfaff0-6ed0-4bc9-84de-7048b65ff61f | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:52:52.780995Z","uptime":"0d 17h 3m 18s"}
+2026-03-25 10:52:52.789 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 11.0989 ms
+2026-03-25 10:52:57.779 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:52:57.781 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.5513 ms | User: zzz (1) | IP: ::1 | CorrelationId: 3b2cda30-031f-46ef-96a0-da890363ee61 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:52:57.7817792Z","uptime":"0d 17h 3m 23s"}
+2026-03-25 10:52:57.788 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 8.8222 ms
+2026-03-25 10:53:02.813 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:02.818 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 6.2055 ms | User: zzz (1) | IP: ::1 | CorrelationId: c4564728-875a-4527-b477-658ba413d541 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:53:02.8186558Z","uptime":"0d 17h 3m 28s"}
+2026-03-25 10:53:02.827 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 14.4201 ms
+2026-03-25 10:53:07.790 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:07.793 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 3.1139 ms | User: zzz (1) | IP: ::1 | CorrelationId: 53be63e7-c965-4b0f-a434-7c8b06cd324b | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:53:07.7930616Z","uptime":"0d 17h 3m 33s"}
+2026-03-25 10:53:07.796 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 6.6438 ms
+2026-03-25 10:53:12.770 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:12.772 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.1638 ms | User: zzz (1) | IP: ::1 | CorrelationId: bcef170a-edf0-45ba-82a3-63baf083bd74 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:53:12.7727442Z","uptime":"0d 17h 3m 38s"}
+2026-03-25 10:53:12.775 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.1021 ms
+2026-03-25 10:53:17.774 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:17.777 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 3.2697 ms | User: zzz (1) | IP: ::1 | CorrelationId: 02487655-b02b-4cb4-84b0-adf610d828bc | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:53:17.7775045Z","uptime":"0d 17h 3m 43s"}
+2026-03-25 10:53:17.783 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 9.0923 ms
+2026-03-25 10:53:22.777 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:22.780 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.6334 ms | User: zzz (1) | IP: ::1 | CorrelationId: ebacd8a7-10c4-411f-81d4-6feb974dad55 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:53:22.7800236Z","uptime":"0d 17h 3m 48s"}
+2026-03-25 10:53:22.784 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 6.8129 ms
+2026-03-25 10:53:27.772 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:27.775 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 3.5374 ms | User: zzz (1) | IP: ::1 | CorrelationId: 7af24a4b-0cf1-4bc2-8ca8-1b4921519f58 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:53:27.7755633Z","uptime":"0d 17h 3m 53s"}
+2026-03-25 10:53:27.781 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 9.0495 ms
+2026-03-25 10:53:32.785 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:32.788 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 3.3557 ms | User: zzz (1) | IP: ::1 | CorrelationId: 59ca0a91-732c-448b-8b54-e9b04a86d46c | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:53:32.7881207Z","uptime":"0d 17h 3m 58s"}
+2026-03-25 10:53:32.792 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 7.7936 ms
+2026-03-25 10:53:37.797 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:37.802 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 4.7598 ms | User: zzz (1) | IP: ::1 | CorrelationId: 671d3f3c-efec-4dac-ad4c-6cada12ac817 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:53:37.801907Z","uptime":"0d 17h 4m 3s"}
+2026-03-25 10:53:37.807 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 10.0637 ms
+2026-03-25 10:53:42.795 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:42.798 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 3.3236 ms | User: zzz (1) | IP: ::1 | CorrelationId: a2ec390d-16d3-4690-8d81-b9da4f6c5089 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:53:42.7982696Z","uptime":"0d 17h 4m 8s"}
+2026-03-25 10:53:42.804 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 9.3446 ms
+2026-03-25 10:53:47.771 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:47.773 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.5730 ms | User: zzz (1) | IP: ::1 | CorrelationId: a10d84dd-a83a-43f4-954d-a61c901375ad | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:53:47.7738291Z","uptime":"0d 17h 4m 13s"}
+2026-03-25 10:53:47.777 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 6.1415 ms
+2026-03-25 10:53:52.786 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:52.788 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.4382 ms | User: zzz (1) | IP: ::1 | CorrelationId: dbe162b6-15f2-4805-8dd0-552915198cab | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:53:52.7885625Z","uptime":"0d 17h 4m 18s"}
+2026-03-25 10:53:52.791 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.6869 ms
+2026-03-25 10:53:55.707 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:55.728 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 21.9203 ms | User: zzz (1) | IP: ::1 | CorrelationId: 43acd240-6d6c-495d-8a37-f495f9d7122b | RequestBody:  | ResponseBody: [{"idAction":1,"name":"PROMO_1","codDiv":"DIV_1","dteStartSellIn":"2026-03-25T17:57:00","dteEndSellIn":"2026-03-26T17:57:00","dteStartSellOut":"2026-03-26T17:57:00","dteEndSellOut":"2026-03-28T17:57:00","documentKey":"KEY_1","dteToShost":"2026-03-24T17:57:00","levParticipants":1}]
+2026-03-25 10:53:55.740 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 33.5282 ms
+2026-03-25 10:53:55.756 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:55.768 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 12.4343 ms | User: zzz (1) | IP: ::1 | CorrelationId: a9532e6a-d389-4654-ba78-2f20a5dca6e0 | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:53:55.774 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 18.4728 ms
+2026-03-25 10:53:55.821 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:55.833 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 13.3509 ms | User: zzz (1) | IP: ::1 | CorrelationId: 04ad7a5d-5d1c-4fcc-8635-62d5b5fd8db3 | RequestBody:  | ResponseBody: [{"idAction":1,"name":"PROMO_1","codDiv":"DIV_1","dteStartSellIn":"2026-03-25T17:57:00","dteEndSellIn":"2026-03-26T17:57:00","dteStartSellOut":"2026-03-26T17:57:00","dteEndSellOut":"2026-03-28T17:57:00","documentKey":"KEY_1","dteToShost":"2026-03-24T17:57:00","levParticipants":1}]
+2026-03-25 10:53:55.842 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 21.4362 ms
+2026-03-25 10:53:55.858 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:55.870 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 12.1119 ms | User: zzz (1) | IP: ::1 | CorrelationId: a0ac5d5a-448b-4638-9b2c-e4a80d14546d | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:53:55.878 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 20.4068 ms
+2026-03-25 10:53:55.895 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:55.912 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 17.6405 ms | User: zzz (1) | IP: ::1 | CorrelationId: f550fc65-9f38-4ba8-b664-f6f538673f7b | RequestBody:  | ResponseBody: [{"idAction":1,"codParticipant":"N_2","flgInclusion":true,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00"},{"idAction":1,"codParticipant":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:53:55.919 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 23.8747 ms
+2026-03-25 10:53:55.971 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:55.983 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 12.0816 ms | User: zzz (1) | IP: ::1 | CorrelationId: eb2fee32-2254-4120-8422-581a3e50b047 | RequestBody:  | ResponseBody: [{"idAction":1,"codParticipant":"N_2","flgInclusion":true,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00"},{"idAction":1,"codParticipant":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:53:55.990 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:55.990 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 18.7643 ms
+2026-03-25 10:53:56.005 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 15.3424 ms | User: zzz (1) | IP: ::1 | CorrelationId: eabfc735-e0bf-4180-b7ce-7fef902ebd30 | RequestBody:  | ResponseBody: [{"idAction":1,"codDeliveryPoint":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:53:56.012 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 22.2931 ms
+2026-03-25 10:53:56.066 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:56.075 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 10.8950 ms | User: zzz (1) | IP: ::1 | CorrelationId: 987f28ad-4eae-4766-ad01-e45e816df421 | RequestBody:  | ResponseBody: [{"idAction":1,"codDeliveryPoint":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:53:56.082 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 17.3180 ms
+2026-03-25 10:53:57.769 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:57.773 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 4.7573 ms | User: zzz (1) | IP: ::1 | CorrelationId: a425a304-63ca-4b69-89a6-75f8e526c82d | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:53:57.7737505Z","uptime":"0d 17h 4m 23s"}
+2026-03-25 10:53:57.779 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 9.9199 ms
+2026-03-25 10:53:59.017 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:59.072 +05:00 [INF] HTTP GET /api/v1/promotions/products responded 200 in 55.7551 ms | User: zzz (1) | IP: ::1 | CorrelationId: c672c379-0f56-4cea-a77f-099c0258f9b6 | RequestBody:  | ResponseBody: [{"idAction":1,"codProduct":"PRD_1","levProduct":1,"codDisplay":"DSP_1","codDiv":"DIV_1","qtyEstimated":1100.000,"perceDiscount1":5.50,"perceDiscount2":2.30,"numMeasure":0.000,"codMeasure":"MEASURE_1","details":[{"idAction":1,"codProduct":"PRD_1","levProduct":1,"codDisplay":"DSP_1","codNode":"NODE_1","codDiv":"DIV_1","flgInclusion":true,"articles":[]}],"measureFields":[]}]
+2026-03-25 10:53:59.077 +05:00 [INF] HTTP GET /api/v1/promotions/products responded 200 in 60.9599 ms
+2026-03-25 10:53:59.129 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:59.143 +05:00 [INF] HTTP GET /api/v1/promotions/products responded 200 in 13.2910 ms | User: zzz (1) | IP: ::1 | CorrelationId: e9afc073-2897-4e70-8412-8bf3d5afbe43 | RequestBody:  | ResponseBody: [{"idAction":1,"codProduct":"PRD_1","levProduct":1,"codDisplay":"DSP_1","codDiv":"DIV_1","qtyEstimated":1100.000,"perceDiscount1":5.50,"perceDiscount2":2.30,"numMeasure":0.000,"codMeasure":"MEASURE_1","details":[{"idAction":1,"codProduct":"PRD_1","levProduct":1,"codDisplay":"DSP_1","codNode":"NODE_1","codDiv":"DIV_1","flgInclusion":true,"articles":[]}],"measureFields":[]}]
+2026-03-25 10:53:59.155 +05:00 [INF] HTTP GET /api/v1/promotions/products responded 200 in 25.6765 ms
+2026-03-25 10:53:59.812 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:59.842 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 31.2943 ms | User: zzz (1) | IP: ::1 | CorrelationId: b0b36f8b-8b92-4310-80c3-14bd3953e5f2 | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:53:59.848 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 37.6084 ms
+2026-03-25 10:53:59.900 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:53:59.915 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 14.4789 ms | User: zzz (1) | IP: ::1 | CorrelationId: 1ccdbac0-38a0-4ae6-954a-0600d89f655a | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:53:59.924 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 24.2968 ms
+2026-03-25 10:54:00.747 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:00.759 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:00.772 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 26.6002 ms | User: zzz (1) | IP: ::1 | CorrelationId: fe95c12a-2697-4e5e-ba47-e4c8151e93c3 | RequestBody:  | ResponseBody: [{"idAction":1,"codParticipant":"N_2","flgInclusion":true,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00"},{"idAction":1,"codParticipant":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:00.786 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 27.4453 ms | User: zzz (1) | IP: ::1 | CorrelationId: 56e7ff45-d7fa-464f-b5dc-0954f242dd9c | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:54:00.790 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 43.7689 ms
+2026-03-25 10:54:00.794 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 35.6067 ms
+2026-03-25 10:54:00.942 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:00.969 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:00.971 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 29.5534 ms | User: zzz (1) | IP: ::1 | CorrelationId: 5f148429-e445-4aeb-9302-594c9a990da5 | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:54:00.987 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 19.9755 ms | User: zzz (1) | IP: ::1 | CorrelationId: 7ee45bb8-bf8b-4f1f-b095-4acf06714489 | RequestBody:  | ResponseBody: [{"idAction":1,"codParticipant":"N_2","flgInclusion":true,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00"},{"idAction":1,"codParticipant":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:00.989 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 48.0354 ms
+2026-03-25 10:54:00.995 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 28.9251 ms
+2026-03-25 10:54:01.407 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:01.416 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:01.431 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 24.5798 ms | User: zzz (1) | IP: ::1 | CorrelationId: 14792bdb-2916-4fd1-b607-83cb38dbea6b | RequestBody:  | ResponseBody: [{"idAction":1,"codDeliveryPoint":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:01.450 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 34.1107 ms | User: zzz (1) | IP: ::1 | CorrelationId: e8169dd7-1acd-421c-8eb9-7222d679b411 | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:54:01.456 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 49.7252 ms
+2026-03-25 10:54:01.462 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 46.6494 ms
+2026-03-25 10:54:01.542 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:01.561 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 20.0311 ms | User: zzz (1) | IP: ::1 | CorrelationId: 1d32a69c-9e0b-4405-94a1-0cb780494c7c | RequestBody:  | ResponseBody: [{"idAction":1,"codDeliveryPoint":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:01.566 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:01.576 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 34.8877 ms
+2026-03-25 10:54:01.590 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 24.6582 ms | User: zzz (1) | IP: ::1 | CorrelationId: d812f273-ff9b-4698-b98d-359fa41feb7f | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:54:01.602 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 36.0824 ms
+2026-03-25 10:54:02.343 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:02.356 +05:00 [INF] HTTP GET /api/v1/promotions/products responded 200 in 13.4150 ms | User: zzz (1) | IP: ::1 | CorrelationId: 5e4fc297-be96-4e6f-9152-dd3a4debde06 | RequestBody:  | ResponseBody: [{"idAction":1,"codProduct":"PRD_1","levProduct":1,"codDisplay":"DSP_1","codDiv":"DIV_1","qtyEstimated":1100.000,"perceDiscount1":5.50,"perceDiscount2":2.30,"numMeasure":0.000,"codMeasure":"MEASURE_1","details":[{"idAction":1,"codProduct":"PRD_1","levProduct":1,"codDisplay":"DSP_1","codNode":"NODE_1","codDiv":"DIV_1","flgInclusion":true,"articles":[]}],"measureFields":[]}]
+2026-03-25 10:54:02.366 +05:00 [INF] HTTP GET /api/v1/promotions/products responded 200 in 23.1008 ms
+2026-03-25 10:54:02.411 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:02.428 +05:00 [INF] HTTP GET /api/v1/promotions/products responded 200 in 17.3928 ms | User: zzz (1) | IP: ::1 | CorrelationId: 3eb3e955-f8f9-42ae-ad2e-9aa166144129 | RequestBody:  | ResponseBody: [{"idAction":1,"codProduct":"PRD_1","levProduct":1,"codDisplay":"DSP_1","codDiv":"DIV_1","qtyEstimated":1100.000,"perceDiscount1":5.50,"perceDiscount2":2.30,"numMeasure":0.000,"codMeasure":"MEASURE_1","details":[{"idAction":1,"codProduct":"PRD_1","levProduct":1,"codDisplay":"DSP_1","codNode":"NODE_1","codDiv":"DIV_1","flgInclusion":true,"articles":[]}],"measureFields":[]}]
+2026-03-25 10:54:02.440 +05:00 [INF] HTTP GET /api/v1/promotions/products responded 200 in 28.7112 ms
+2026-03-25 10:54:02.758 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:02.762 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:02.793 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:02.793 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 35.2746 ms | User: zzz (1) | IP: ::1 | CorrelationId: 02916990-f8a9-4506-9c89-2efa0ba63f54 | RequestBody:  | ResponseBody: [{"idAction":1,"name":"PROMO_1","codDiv":"DIV_1","dteStartSellIn":"2026-03-25T17:57:00","dteEndSellIn":"2026-03-26T17:57:00","dteStartSellOut":"2026-03-26T17:57:00","dteEndSellOut":"2026-03-28T17:57:00","documentKey":"KEY_1","dteToShost":"2026-03-24T17:57:00","levParticipants":1}]
+2026-03-25 10:54:02.802 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 39.2138 ms | User: zzz (1) | IP: ::1 | CorrelationId: 8f7f3a71-8f46-4c0c-b657-3c97c7495a50 | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:54:02.803 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 10.3050 ms | User: zzz (1) | IP: ::1 | CorrelationId: 6ba09e84-b38d-461c-a7ed-a147bef357d1 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:54:02.8030133Z","uptime":"0d 17h 4m 28s"}
+2026-03-25 10:54:02.809 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 50.8922 ms
+2026-03-25 10:54:02.814 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 51.5195 ms
+2026-03-25 10:54:02.824 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 31.2355 ms
+2026-03-25 10:54:02.922 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:02.938 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 15.6523 ms | User: zzz (1) | IP: ::1 | CorrelationId: 4eba7f8b-a507-42ca-964c-20388ae1d9a6 | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:54:02.944 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 21.7680 ms
+2026-03-25 10:54:02.944 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:02.959 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 15.1658 ms | User: zzz (1) | IP: ::1 | CorrelationId: 085f91d5-a7ca-40e6-b2f1-475ad32ff240 | RequestBody:  | ResponseBody: [{"idAction":1,"name":"PROMO_1","codDiv":"DIV_1","dteStartSellIn":"2026-03-25T17:57:00","dteEndSellIn":"2026-03-26T17:57:00","dteStartSellOut":"2026-03-26T17:57:00","dteEndSellOut":"2026-03-28T17:57:00","documentKey":"KEY_1","dteToShost":"2026-03-24T17:57:00","levParticipants":1}]
+2026-03-25 10:54:02.962 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:02.967 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 22.5618 ms
+2026-03-25 10:54:02.976 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 14.6092 ms | User: zzz (1) | IP: ::1 | CorrelationId: be5cb2d1-1782-4477-a973-b6970c4f13c6 | RequestBody:  | ResponseBody: [{"idAction":1,"codParticipant":"N_2","flgInclusion":true,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00"},{"idAction":1,"codParticipant":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:02.981 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 19.5184 ms
+2026-03-25 10:54:03.052 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.067 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 15.4011 ms | User: zzz (1) | IP: ::1 | CorrelationId: 2177dc81-21a7-460e-bc12-b0e1e942e421 | RequestBody:  | ResponseBody: [{"idAction":1,"codParticipant":"N_2","flgInclusion":true,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00"},{"idAction":1,"codParticipant":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:03.073 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.076 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 24.2888 ms
+2026-03-25 10:54:03.088 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 15.0373 ms | User: zzz (1) | IP: ::1 | CorrelationId: 822c0687-45c7-4410-a7cd-45d6741a6d19 | RequestBody:  | ResponseBody: [{"idAction":1,"codDeliveryPoint":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:03.109 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 36.2212 ms
+2026-03-25 10:54:03.192 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.205 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 13.5939 ms | User: zzz (1) | IP: ::1 | CorrelationId: 06dcb23d-a639-4493-9d14-0af81c583a3d | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:54:03.212 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.206 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.224 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 32.2362 ms
+2026-03-25 10:54:03.214 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.264 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.269 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 56.4841 ms | User: zzz (1) | IP: ::1 | CorrelationId: 937291bb-99f8-48c6-8a95-36ae2d511149 | RequestBody:  | ResponseBody: [{"idAction":1,"name":"PROMO_1","codDiv":"DIV_1","dteStartSellIn":"2026-03-25T17:57:00","dteEndSellIn":"2026-03-26T17:57:00","dteStartSellOut":"2026-03-26T17:57:00","dteEndSellOut":"2026-03-28T17:57:00","documentKey":"KEY_1","dteToShost":"2026-03-24T17:57:00","levParticipants":1}]
+2026-03-25 10:54:03.330 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 116.6841 ms | User: zzz (1) | IP: ::1 | CorrelationId: 2c5941f5-0504-45f4-96bf-1206cd324c47 | RequestBody:  | ResponseBody: [{"idAction":1,"codParticipant":"N_2","flgInclusion":true,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00"},{"idAction":1,"codParticipant":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:03.363 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 151.0491 ms
+2026-03-25 10:54:03.377 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 164.3286 ms
+2026-03-25 10:54:03.269 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 64.3384 ms | User: zzz (1) | IP: ::1 | CorrelationId: 8080e259-f013-4005-96eb-ea830d8ae7e6 | RequestBody:  | ResponseBody: [{"idAction":1,"codDeliveryPoint":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:03.382 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.380 +05:00 [INF] HTTP GET /api/v1/promotions/dashboard/metrics responded 200 in 117.9607 ms | User: zzz (1) | IP: ::1 | CorrelationId: cb0027eb-29d0-4e37-8e2c-c9fbd97583ba | RequestBody:  | ResponseBody: {"totalPromotions":1,"totalProducts":1,"totalParticipants":2,"activeActions":0,"pendingActions":1,"expiredActions":0,"estimatedRevenue":0,"activityTrend":[{"dateLabel":"26","active":0,"pending":1,"failed":0},{"dateLabel":"01","active":0,"pending":1,"failed":0},{"dateLabel":"04","active":0,"pending":1,"failed":0},{"dateLabel":"07","active":0,"pending":1,"failed":0},{"dateLabel":"10","active":0,"pending":1,"failed":0},{"dateLabel":"13","active":0,"pending":1,"failed":0},{"dateLabel":"16","active":0,"pending":1,"failed":0},{"dateLabel":"19","active":0,"pending":1,"failed":0},{"dateLabel":"22","active":0,"pending":1,"failed":0},{"dateLabel":"25","active":0,"pending":1,"failed":0}]}
+2026-03-25 10:54:03.401 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 196.0895 ms
+2026-03-25 10:54:03.425 +05:00 [INF] HTTP GET /api/v1/promotions/dashboard/metrics responded 200 in 163.0067 ms
+2026-03-25 10:54:03.427 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 46.3255 ms | User: zzz (1) | IP: ::1 | CorrelationId: 64d1c7f2-9cab-4842-b7b8-84ff98cf0027 | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:54:03.451 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 70.6963 ms
+2026-03-25 10:54:03.540 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.551 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 11.7970 ms | User: zzz (1) | IP: ::1 | CorrelationId: 7601db0f-0961-4eea-9425-aabeef66d404 | RequestBody:  | ResponseBody: [{"idAction":1,"name":"PROMO_1","codDiv":"DIV_1","dteStartSellIn":"2026-03-25T17:57:00","dteEndSellIn":"2026-03-26T17:57:00","dteStartSellOut":"2026-03-26T17:57:00","dteEndSellOut":"2026-03-28T17:57:00","documentKey":"KEY_1","dteToShost":"2026-03-24T17:57:00","levParticipants":1}]
+2026-03-25 10:54:03.561 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 21.1099 ms
+2026-03-25 10:54:03.568 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.578 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 9.8601 ms | User: zzz (1) | IP: ::1 | CorrelationId: e983b46f-cf1a-4c98-b8cb-5f342fa6a610 | RequestBody:  | ResponseBody: [{"idAction":1,"codParticipant":"N_2","flgInclusion":true,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00"},{"idAction":1,"codParticipant":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:03.584 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 15.9773 ms
+2026-03-25 10:54:03.604 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.610 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.621 +05:00 [INF] HTTP GET /api/v1/promotions/dashboard/metrics responded 200 in 17.4540 ms | User: zzz (1) | IP: ::1 | CorrelationId: cefbe3ae-8f23-40e2-ae5b-eb7378dfb87a | RequestBody:  | ResponseBody: {"totalPromotions":1,"totalProducts":1,"totalParticipants":2,"activeActions":0,"pendingActions":1,"expiredActions":0,"estimatedRevenue":0,"activityTrend":[{"dateLabel":"26","active":0,"pending":1,"failed":0},{"dateLabel":"01","active":0,"pending":1,"failed":0},{"dateLabel":"04","active":0,"pending":1,"failed":0},{"dateLabel":"07","active":0,"pending":1,"failed":0},{"dateLabel":"10","active":0,"pending":1,"failed":0},{"dateLabel":"13","active":0,"pending":1,"failed":0},{"dateLabel":"16","active":0,"pending":1,"failed":0},{"dateLabel":"19","active":0,"pending":1,"failed":0},{"dateLabel":"22","active":0,"pending":1,"failed":0},{"dateLabel":"25","active":0,"pending":1,"failed":0}]}
+2026-03-25 10:54:03.622 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 13.4426 ms | User: zzz (1) | IP: ::1 | CorrelationId: 1c2deb22-b5d2-4aa9-82fc-103006a8660b | RequestBody:  | ResponseBody: [{"idAction":1,"codDeliveryPoint":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:03.627 +05:00 [INF] HTTP GET /api/v1/promotions/dashboard/metrics responded 200 in 24.1345 ms
+2026-03-25 10:54:03.633 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 24.2904 ms
+2026-03-25 10:54:03.702 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:03.712 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 10.1670 ms | User: zzz (1) | IP: ::1 | CorrelationId: 3de557a1-e86a-4b33-b89b-b4b01e258c58 | RequestBody:  | ResponseBody: [{"idAction":1,"codDeliveryPoint":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:03.720 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 17.6251 ms
+2026-03-25 10:54:07.807 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:07.811 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.1059 ms | User: zzz (1) | IP: ::1 | CorrelationId: b7fb0159-7fb6-49e0-b197-2173e8e45a51 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:54:07.8115073Z","uptime":"0d 17h 4m 33s"}
+2026-03-25 10:54:07.824 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 17.7726 ms
+2026-03-25 10:54:12.201 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:12.218 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:12.218 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:12.222 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 21.1879 ms | User: zzz (1) | IP: ::1 | CorrelationId: 595e5d41-b216-4960-ad5f-effaa4a8d581 | RequestBody:  | ResponseBody: [{"idAction":1,"codDeliveryPoint":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:12.235 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:12.236 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 18.0850 ms | User: zzz (1) | IP: ::1 | CorrelationId: b3dc2025-9b20-452e-a369-145cb1895487 | RequestBody:  | ResponseBody: [{"idAction":0,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00","codParentNode":"ROOT_1","dteEnd":"2026-03-26T17:25:00"},{"idAction":0,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00","codParentNode":"ROOT","dteEnd":null}]
+2026-03-25 10:54:12.239 +05:00 [INF] HTTP GET /api/v1/promotions/delivery-points responded 200 in 38.1712 ms
+2026-03-25 10:54:12.240 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:12.250 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 17.3395 ms | User: zzz (1) | IP: ::1 | CorrelationId: a1b4fad2-85a0-4546-8e3c-3fff4ce5b837 | RequestBody:  | ResponseBody: [{"idAction":1,"name":"PROMO_1","codDiv":"DIV_1","dteStartSellIn":"2026-03-25T17:57:00","dteEndSellIn":"2026-03-26T17:57:00","dteStartSellOut":"2026-03-26T17:57:00","dteEndSellOut":"2026-03-28T17:57:00","documentKey":"KEY_1","dteToShost":"2026-03-24T17:57:00","levParticipants":1}]
+2026-03-25 10:54:12.251 +05:00 [INF] HTTP GET /api/v1/promotions/customer-relations responded 200 in 33.6367 ms
+2026-03-25 10:54:12.236 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 20.9600 ms | User: zzz (1) | IP: ::1 | CorrelationId: 4407546d-5112-494f-83b8-a5534ce59157 | RequestBody:  | ResponseBody: [{"idAction":1,"codParticipant":"N_2","flgInclusion":true,"codHier":"H_2","codDiv":"DIV_2","codNode":"NODE_2","idLevel":2,"dteStart":"2026-03-26T00:00:00"},{"idAction":1,"codParticipant":"NODE_1","flgInclusion":true,"codHier":"H_1","codDiv":"DIV_1","codNode":"NODE_1","idLevel":1,"dteStart":"2026-03-24T17:25:00"}]
+2026-03-25 10:54:12.276 +05:00 [INF] HTTP GET /api/v1/promotions/dashboard/metrics responded 200 in 35.8306 ms | User: zzz (1) | IP: ::1 | CorrelationId: 6b639739-2c8e-45b7-be70-d141701f20bc | RequestBody:  | ResponseBody: {"totalPromotions":1,"totalProducts":1,"totalParticipants":2,"activeActions":0,"pendingActions":1,"expiredActions":0,"estimatedRevenue":0,"activityTrend":[{"dateLabel":"26","active":0,"pending":1,"failed":0},{"dateLabel":"01","active":0,"pending":1,"failed":0},{"dateLabel":"04","active":0,"pending":1,"failed":0},{"dateLabel":"07","active":0,"pending":1,"failed":0},{"dateLabel":"10","active":0,"pending":1,"failed":0},{"dateLabel":"13","active":0,"pending":1,"failed":0},{"dateLabel":"16","active":0,"pending":1,"failed":0},{"dateLabel":"19","active":0,"pending":1,"failed":0},{"dateLabel":"22","active":0,"pending":1,"failed":0},{"dateLabel":"25","active":0,"pending":1,"failed":0}]}
+2026-03-25 10:54:12.266 +05:00 [INF] HTTP GET /api/v1/promotions/actions responded 200 in 33.9085 ms
+2026-03-25 10:54:12.276 +05:00 [INF] HTTP GET /api/v1/participants/all responded 200 in 60.7749 ms
+2026-03-25 10:54:12.281 +05:00 [INF] HTTP GET /api/v1/promotions/dashboard/metrics responded 200 in 41.3096 ms
+2026-03-25 10:54:12.769 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:12.773 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 4.2735 ms | User: zzz (1) | IP: ::1 | CorrelationId: a056d671-2468-4dca-844d-1c1556a1326e | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:54:12.7730261Z","uptime":"0d 17h 4m 38s"}
+2026-03-25 10:54:12.778 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 9.5725 ms
+2026-03-25 10:54:17.780 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:17.784 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 4.2446 ms | User: zzz (1) | IP: ::1 | CorrelationId: f4456c8a-a796-4770-8b09-4ee80a9a4517 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:54:17.7841604Z","uptime":"0d 17h 4m 43s"}
+2026-03-25 10:54:17.789 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 9.3855 ms
+2026-03-25 10:54:22.786 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:22.791 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.0216 ms | User: zzz (1) | IP: ::1 | CorrelationId: dd5f5b3f-e473-4f12-990b-61bf71a98f6b | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:54:22.7907078Z","uptime":"0d 17h 4m 48s"}
+2026-03-25 10:54:22.796 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 10.1364 ms
+2026-03-25 10:54:27.776 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:27.780 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 4.0106 ms | User: zzz (1) | IP: ::1 | CorrelationId: bcbc9bdd-007b-41c7-892c-4419d6c0f12f | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:54:27.7792148Z","uptime":"0d 17h 4m 53s"}
+2026-03-25 10:54:27.787 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 11.3031 ms
+2026-03-25 10:54:32.784 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:32.786 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.8307 ms | User: zzz (1) | IP: ::1 | CorrelationId: bc646cb9-c8b1-4158-9626-7be88ae60010 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:54:32.7866081Z","uptime":"0d 17h 4m 58s"}
+2026-03-25 10:54:32.791 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 7.9339 ms
+2026-03-25 10:54:37.786 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:37.789 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 4.2413 ms | User: zzz (1) | IP: ::1 | CorrelationId: d5b7624e-35e2-43ec-b235-873c4d40f4cc | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:54:37.789334Z","uptime":"0d 17h 5m 3s"}
+2026-03-25 10:54:37.797 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 11.5459 ms
+2026-03-25 10:54:42.775 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:42.778 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.9045 ms | User: zzz (1) | IP: ::1 | CorrelationId: 04469931-0549-4db9-b5fc-82188f0b2e87 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:54:42.7778485Z","uptime":"0d 17h 5m 8s"}
+2026-03-25 10:54:42.785 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 10.0283 ms
+2026-03-25 10:54:47.788 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:47.791 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 3.7960 ms | User: zzz (1) | IP: ::1 | CorrelationId: 75ac3779-cd01-448b-9883-e0b4cf86864e | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:54:47.7914562Z","uptime":"0d 17h 5m 13s"}
+2026-03-25 10:54:47.798 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 10.1104 ms
+2026-03-25 10:54:52.777 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:52.782 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.7583 ms | User: zzz (1) | IP: ::1 | CorrelationId: 9d8d7676-83ab-4422-9cd5-3077bcd81618 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:54:52.7824511Z","uptime":"0d 17h 5m 18s"}
+2026-03-25 10:54:52.787 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 10.7076 ms
+2026-03-25 10:54:57.966 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:54:57.971 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 4.7981 ms | User: zzz (1) | IP: ::1 | CorrelationId: 5e3e71ba-e4bd-453c-94d7-dd8ceb16676f | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:54:57.9709819Z","uptime":"0d 17h 5m 23s"}
+2026-03-25 10:54:57.979 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 12.8592 ms
+2026-03-25 10:55:02.972 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:55:02.976 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 4.5758 ms | User: zzz (1) | IP: ::1 | CorrelationId: 79fdbd1e-82dd-4691-ae5f-07924e40e398 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:55:02.9761023Z","uptime":"0d 17h 5m 28s"}
+2026-03-25 10:55:02.985 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 13.1686 ms
+2026-03-25 10:55:07.954 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:55:07.956 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.9650 ms | User: zzz (1) | IP: ::1 | CorrelationId: 82d75a85-a4e4-42f0-8e61-49b9435b9896 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:55:07.9564526Z","uptime":"0d 17h 5m 33s"}
+2026-03-25 10:55:07.962 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 8.4652 ms
+2026-03-25 10:55:12.972 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:55:12.977 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 6.1248 ms | User: zzz (1) | IP: ::1 | CorrelationId: f0f380c7-157b-4ce1-8b56-f0ac3041a96e | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:55:12.9769273Z","uptime":"0d 17h 5m 38s"}
+2026-03-25 10:55:12.987 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 16.3163 ms
+2026-03-25 10:55:17.955 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:55:17.958 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 3.8641 ms | User: zzz (1) | IP: ::1 | CorrelationId: b09384d1-909e-4902-a007-e69900a775c7 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:55:17.9580605Z","uptime":"0d 17h 5m 43s"}
+2026-03-25 10:55:17.964 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 8.8941 ms
+2026-03-25 10:55:22.994 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:55:22.998 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 4.6248 ms | User: zzz (1) | IP: ::1 | CorrelationId: 6602049f-9dce-4ec7-9520-70b515cb9676 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:55:22.9979601Z","uptime":"0d 17h 5m 48s"}
+2026-03-25 10:55:23.004 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 10.5163 ms
+2026-03-25 10:55:27.971 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:55:27.973 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.0440 ms | User: zzz (1) | IP: ::1 | CorrelationId: 844a9ce2-f193-423b-8d48-356ca2667161 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:55:27.9731311Z","uptime":"0d 17h 5m 53s"}
+2026-03-25 10:55:27.976 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.3914 ms
+2026-03-25 10:55:32.968 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:55:32.971 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.9945 ms | User: zzz (1) | IP: ::1 | CorrelationId: ed022a8c-b81d-443b-b8d9-d120bd853ffd | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:55:32.9709517Z","uptime":"0d 17h 5m 58s"}
+2026-03-25 10:55:32.980 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 12.3701 ms
+2026-03-25 10:55:37.961 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:55:37.963 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.6731 ms | User: zzz (1) | IP: ::1 | CorrelationId: b8ae39c0-5898-4cf7-a399-4874a845557c | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:55:37.9633323Z","uptime":"0d 17h 6m 3s"}
+2026-03-25 10:55:37.967 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 6.6650 ms
+2026-03-25 10:55:42.946 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:55:42.948 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.5286 ms | User: zzz (1) | IP: ::1 | CorrelationId: 4ddec5e4-002e-4af8-ae63-828b6d3f8a57 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:55:42.9483874Z","uptime":"0d 17h 6m 8s"}
+2026-03-25 10:55:42.952 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 6.7241 ms
+2026-03-25 10:55:47.957 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:55:47.959 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 3.5487 ms | User: zzz (1) | IP: ::1 | CorrelationId: 3da881e4-7294-484c-9228-f6fad586feec | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:55:47.9594335Z","uptime":"0d 17h 6m 13s"}
+2026-03-25 10:55:47.965 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 9.5310 ms
+2026-03-25 10:55:52.960 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:55:52.963 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.8358 ms | User: zzz (1) | IP: ::1 | CorrelationId: 7f7717be-b042-479f-a9f8-49364ac2c539 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:55:52.9632962Z","uptime":"0d 17h 6m 18s"}
+2026-03-25 10:55:52.966 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.5408 ms
+2026-03-25 10:56:23.995 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:56:23.999 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 3.6207 ms | User: zzz (1) | IP: ::1 | CorrelationId: 496804ae-34eb-4755-acdb-e23c40404976 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:56:23.9990644Z","uptime":"0d 17h 6m 49s"}
+2026-03-25 10:56:24.003 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 7.4733 ms
+2026-03-25 10:57:24.005 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:57:24.018 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 14.8699 ms | User: zzz (1) | IP: ::1 | CorrelationId: efdebd1e-813d-4d8a-bec1-c51dffc18794 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:57:24.0178502Z","uptime":"0d 17h 7m 49s"}
+2026-03-25 10:57:24.023 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 20.1552 ms
+2026-03-25 10:58:23.958 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:58:23.969 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 13.8763 ms | User: zzz (1) | IP: ::1 | CorrelationId: 5853a314-06ef-4603-b1da-6437e389c4a5 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:58:23.9688329Z","uptime":"0d 17h 8m 49s"}
+2026-03-25 10:58:23.973 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 17.1921 ms
+2026-03-25 10:59:23.963 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 10:59:24.020 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 58.5449 ms | User: zzz (1) | IP: ::1 | CorrelationId: 092153ca-5148-4fc2-a1e9-fa4b970bc924 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T05:59:24.0177757Z","uptime":"0d 17h 9m 49s"}
+2026-03-25 10:59:24.027 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 65.3093 ms
+2026-03-25 11:00:23.968 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:00:23.975 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 11.4168 ms | User: zzz (1) | IP: ::1 | CorrelationId: 07f80d13-3954-4f6f-8504-522041ed8275 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:00:23.9754695Z","uptime":"0d 17h 10m 49s"}
+2026-03-25 11:00:23.979 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 15.6257 ms
+2026-03-25 11:00:27.968 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:00:27.983 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 14.5140 ms | User: zzz (1) | IP: ::1 | CorrelationId: a0d0975a-d60e-47cc-878c-5bb0d8f71ce1 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:00:27.9828662Z","uptime":"0d 17h 10m 53s"}
+2026-03-25 11:00:27.989 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 20.9731 ms
+2026-03-25 11:00:32.973 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:00:32.977 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 4.1669 ms | User: zzz (1) | IP: ::1 | CorrelationId: a28a1f0b-7c98-40f1-b146-286cff6437eb | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:00:32.9767065Z","uptime":"0d 17h 10m 58s"}
+2026-03-25 11:00:32.983 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 11.0625 ms
+2026-03-25 11:00:37.975 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:00:37.989 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 14.2183 ms | User: zzz (1) | IP: ::1 | CorrelationId: c57640e8-da84-457e-9a29-ca9d0e102ad8 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:00:37.9891457Z","uptime":"0d 17h 11m 3s"}
+2026-03-25 11:00:37.999 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 24.1016 ms
+2026-03-25 11:00:42.959 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:00:42.963 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 3.9341 ms | User: zzz (1) | IP: ::1 | CorrelationId: e2c6aac4-050f-4487-be68-5a0098f7b361 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:00:42.963318Z","uptime":"0d 17h 11m 8s"}
+2026-03-25 11:00:42.968 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 9.2688 ms
+2026-03-25 11:00:47.953 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:00:47.955 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.7719 ms | User: zzz (1) | IP: ::1 | CorrelationId: 99eba4bd-1f2f-4b80-a954-914d97b13b92 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:00:47.955696Z","uptime":"0d 17h 11m 13s"}
+2026-03-25 11:00:47.962 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 9.5736 ms
+2026-03-25 11:00:52.972 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:00:52.977 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.1187 ms | User: zzz (1) | IP: ::1 | CorrelationId: 02ab3537-6aa1-40cf-a29d-79b273aaa287 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:00:52.9769858Z","uptime":"0d 17h 11m 18s"}
+2026-03-25 11:00:52.985 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 13.2135 ms
+2026-03-25 11:00:57.973 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:00:57.977 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 5.0600 ms | User: zzz (1) | IP: ::1 | CorrelationId: ff75ab64-03f0-48dd-87a9-987a9da08638 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:00:57.9774551Z","uptime":"0d 17h 11m 23s"}
+2026-03-25 11:00:57.986 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 13.5288 ms
+2026-03-25 11:01:02.970 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:01:02.972 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 2.5044 ms | User: zzz (1) | IP: ::1 | CorrelationId: 8186a9ef-b78d-48a4-a367-928a851727e2 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:01:02.972845Z","uptime":"0d 17h 11m 28s"}
+2026-03-25 11:01:02.980 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 10.0760 ms
+2026-03-25 11:01:09.391 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:01:09.402 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 13.6315 ms | User: zzz (1) | IP: ::1 | CorrelationId: 2e0d9cac-8185-412a-815f-5a001982ab93 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:01:09.4012739Z","uptime":"0d 17h 11m 34s"}
+2026-03-25 11:01:09.409 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 19.9331 ms
+2026-03-25 11:01:13.004 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:01:13.014 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 10.2289 ms | User: zzz (1) | IP: ::1 | CorrelationId: a727ceab-7f1f-4a57-b7f3-b7eb15b044bc | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:01:13.0132204Z","uptime":"0d 17h 11m 38s"}
+2026-03-25 11:01:13.038 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 34.0257 ms
+2026-03-25 11:01:18.118 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:01:18.133 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 18.3601 ms | User: zzz (1) | IP: ::1 | CorrelationId: fb7e0676-7804-415b-8406-9172ab0534ea | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:01:18.1327501Z","uptime":"0d 17h 11m 43s"}
+2026-03-25 11:01:18.191 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 76.1741 ms
+2026-03-25 11:01:24.520 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:01:24.532 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 12.9689 ms | User: zzz (1) | IP: ::1 | CorrelationId: 4f0e7ca9-e729-4724-a633-8af00d0d1df8 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:01:24.5303396Z","uptime":"0d 17h 11m 49s"}
+2026-03-25 11:01:24.551 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 32.9436 ms
+2026-03-25 11:02:24.090 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:02:24.103 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 18.2741 ms | User: zzz (1) | IP: ::1 | CorrelationId: 891eb356-cbfe-4522-bb4c-11ce08b710e0 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:02:24.1013353Z","uptime":"0d 17h 12m 49s"}
+2026-03-25 11:02:24.117 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 32.4183 ms
+2026-03-25 11:03:36.527 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:03:36.802 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 368.7652 ms | User: zzz (1) | IP: ::1 | CorrelationId: 389315e5-a833-4cef-8712-b9a76a348ae2 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:03:36.7496656Z","uptime":"0d 17h 14m 2s"}
+2026-03-25 11:03:37.096 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 652.4414 ms
+2026-03-25 11:11:08.093 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:11:08.133 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 54.8315 ms | User: zzz (1) | IP: ::1 | CorrelationId: e391c45c-b551-4a73-a2a6-c7a33bf6bcfb | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:11:08.1183494Z","uptime":"0d 17h 21m 33s"}
+2026-03-25 11:11:08.152 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 75.5869 ms
+2026-03-25 11:12:28.284 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:12:28.308 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 37.8701 ms | User: zzz (1) | IP: ::1 | CorrelationId: 2f16651d-2bd7-426c-bd9a-9617e252c87c | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:12:28.3013309Z","uptime":"0d 17h 22m 53s"}
+2026-03-25 11:12:28.317 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 48.5586 ms
+2026-03-25 11:13:24.026 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:13:24.034 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 8.4381 ms | User: zzz (1) | IP: ::1 | CorrelationId: abe5d002-5b4c-4f03-896a-62d9023d8922 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:13:24.0329913Z","uptime":"0d 17h 23m 49s"}
+2026-03-25 11:13:24.042 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 16.6182 ms
+2026-03-25 11:14:24.134 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:14:24.144 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 14.9013 ms | User: zzz (1) | IP: ::1 | CorrelationId: 71d3e376-3d63-426a-8e6c-4823089897b7 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:14:24.1428628Z","uptime":"0d 17h 24m 49s"}
+2026-03-25 11:14:24.152 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 23.3448 ms
+2026-03-25 11:15:26.959 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:15:26.995 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 56.9234 ms | User: zzz (1) | IP: ::1 | CorrelationId: 727b1f78-a61d-49ad-aa0d-6e22cec2ee68 | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:15:26.9903493Z","uptime":"0d 17h 25m 52s"}
+2026-03-25 11:15:27.009 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 72.9121 ms
+2026-03-25 11:16:28.301 +05:00 [INF] Downstream JWT validated for zzz
+2026-03-25 11:16:28.363 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 111.7627 ms | User: zzz (1) | IP: ::1 | CorrelationId: 045362e2-e3f1-4a5e-80b4-2e2ce0d3201f | RequestBody:  | ResponseBody: {"service":"Promotions API","status":"Healthy","timestamp":"2026-03-25T06:16:28.3524111Z","uptime":"0d 17h 26m 53s"}
+2026-03-25 11:16:28.378 +05:00 [INF] HTTP GET /api/v1/health responded 200 in 131.1805 ms
+2026-03-25 13:01:13.676 +05:00 [INF] [STARTUP] SsoConnection env var: NOT SET - using appsettings
+2026-03-25 13:01:16.705 +05:00 [INF] Applying Promotions database migrations...
+2026-03-25 13:01:26.547 +05:00 [ERR] Failed executing DbCommand (199ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+                IF EXISTS (
+                    SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+                    WHERE TABLE_SCHEMA = N'dbo' AND TABLE_NAME = N'TA5150PROMOARTICLES' AND COLUMN_NAME = N'FROMNODEFIN' AND DATA_TYPE = N'bit')
+                BEGIN
+                    ALTER TABLE [dbo].[TA5150PROMOARTICLES] ADD [FROMNODEFIN_NEW] NVARCHAR(50) NULL;
+                    UPDATE [dbo].[TA5150PROMOARTICLES]
+                        SET [FROMNODEFIN_NEW] = CASE WHEN [FROMNODEFIN] = CAST(1 AS bit) THEN N'1' ELSE N'0' END
+                        WHERE [FROMNODEFIN] IS NOT NULL;
+                    ALTER TABLE [dbo].[TA5150PROMOARTICLES] DROP COLUMN [FROMNODEFIN];
+                    EXEC sp_rename N'dbo.TA5150PROMOARTICLES.FROMNODEFIN_NEW', N'FROMNODEFIN', 'COLUMN';
+                END
+2026-03-25 13:01:27.466 +05:00 [WRN] [Migration] SqlException (Error 207). Retries left: 9. Will retry...
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'FROMNODEFIN_NEW'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__208_1(IAsyncResult result)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IEnumerable`1 migrationCommands, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IEnumerable`1 migrationCommands, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IEnumerable`1 migrationCommands, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IEnumerable`1 migrationCommands, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in C:\MyCompany\MyCompany\Promotions.Api\Program.cs:line 143
+ClientConnectionId:01d09599-c129-43fd-97ae-65806ae01e17
+Error Number:207,State:1,Class:16
+2026-03-25 13:01:31.276 +05:00 [INF] Applying Promotions database migrations...
+2026-03-25 13:03:59.275 +05:00 [ERR] Failed executing DbCommand (147,417ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+                IF EXISTS (
+                    SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+                    WHERE TABLE_SCHEMA = N'dbo' AND TABLE_NAME = N'TA502PRODUCTS' AND COLUMN_NAME = N'CODMEASURE'
+                      AND DATA_TYPE = N'nvarchar' AND CHARACTER_MAXIMUM_LENGTH > 0 AND CHARACTER_MAXIMUM_LENGTH < 50)
+                BEGIN
+                    ALTER TABLE [dbo].[TA502PRODUCTS] ALTER COLUMN [CODMEASURE] NVARCHAR(50) NULL;
+                END
+2026-03-25 13:03:59.452 +05:00 [WRN] [Migration] SqlException (Error -2). Retries left: 8. Will retry...
+Microsoft.Data.SqlClient.SqlException (0x80131904): Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+ ---> System.ComponentModel.Win32Exception (258): The wait operation timed out.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParserStateObject.ThrowExceptionAndWarning(Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParserStateObject.CheckThrowSNIException()
+   at Microsoft.Data.SqlClient.SqlCommand.CheckThrowSNIException()
+   at Microsoft.Data.SqlClient.SqlCommand.InternalEndExecuteNonQuery(IAsyncResult asyncResult, Boolean isInternal, String endMethod)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryInternal(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.EndExecuteNonQueryAsync(IAsyncResult asyncResult)
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<InternalExecuteNonQueryAsync>b__208_1(IAsyncResult result)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQueryAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IEnumerable`1 migrationCommands, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IEnumerable`1 migrationCommands, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IEnumerable`1 migrationCommands, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQueryAsync(IEnumerable`1 migrationCommands, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at Program.<Main>$(String[] args) in C:\MyCompany\MyCompany\Promotions.Api\Program.cs:line 143
+ClientConnectionId:01d09599-c129-43fd-97ae-65806ae01e17
+Error Number:-2,State:0,Class:11

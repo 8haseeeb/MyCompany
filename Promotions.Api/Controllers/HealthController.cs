@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Promotions.Infrastructure.Persistence;
@@ -21,18 +22,48 @@ namespace Promotions.Api.Controllers
         }
 
         /// <summary>
-        /// Basic health check - Quick service status
+        /// Health including Promotions DB reachability (same connection as real API calls).
+        /// Liveness-only (no DB): use gateway GET /api/health.
         /// </summary>
         [HttpGet]
-        public IActionResult GetHealth()
+        [AllowAnonymous]
+        public async Task<IActionResult> GetHealth(CancellationToken cancellationToken)
         {
-            return Ok(new
+            try
             {
-                service = "Promotions API",
-                status = "Healthy",
-                timestamp = DateTime.UtcNow,
-                uptime = GetUptime()
-            });
+                var canConnect = await _dbContext.Database.CanConnectAsync(cancellationToken);
+                if (!canConnect)
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, new
+                    {
+                        service = "Promotions API",
+                        status = "Unhealthy",
+                        timestamp = DateTime.UtcNow,
+                        uptime = GetUptime(),
+                        message = "Cannot connect to Promotions database."
+                    });
+                }
+
+                return Ok(new
+                {
+                    service = "Promotions API",
+                    status = "Healthy",
+                    timestamp = DateTime.UtcNow,
+                    uptime = GetUptime()
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new
+                {
+                    service = "Promotions API",
+                    status = "Unhealthy",
+                    timestamp = DateTime.UtcNow,
+                    uptime = GetUptime(),
+                    message = "Database check failed.",
+                    error = ex.Message
+                });
+            }
         }
 
         /// <summary>

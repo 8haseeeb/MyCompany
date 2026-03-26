@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MyCompany.ApiGateway.Routing;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -23,8 +24,8 @@ namespace MyCompany.ApiGateway.Controllers
         {
             var services = new[]
             {
-                new { Name = "Promotions API", Url = (Environment.GetEnvironmentVariable("PROMOTIONS_URL") ?? "http://localhost:5137") + "/api/health" },
-                new { Name = "SSO API", Url = (Environment.GetEnvironmentVariable("SSO_URL") ?? "http://localhost:5253") + "/api/health" }
+                new { Name = "Promotions API", Url = $"{RouteResolver.PromotionsBaseUrl}/api/v1/health" },
+                new { Name = "SSO API", Url = $"{RouteResolver.SsoBaseUrl}/api/v1/health" }
             };
 
             var results = new List<object>();

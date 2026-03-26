@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { LayoutDashboard, Tag, Users, ChevronLeft, ChevronRight, LogOut, ChevronDown, ChevronUp, User, MapPin, ShoppingBag } from 'lucide-react';
 import './Sidebar.css';
 
-const Sidebar = ({ isCollapsed, setIsCollapsed, currentView, setView, onLogout, isMobileOpen, setIsMobileOpen, userRole }) => {
+const Sidebar = ({ isCollapsed, setIsCollapsed, currentView, setView, onLogout, isMobileOpen, setIsMobileOpen, userRole, canEdit }) => {
     const [expandedMenus, setExpandedMenus] = useState(['customer_relation']); // Default open like screenshot
 
     const menuItems = [
@@ -99,6 +99,12 @@ const Sidebar = ({ isCollapsed, setIsCollapsed, currentView, setView, onLogout, 
                 </nav>
 
                 <div className="sidebar-footer">
+                    {!isCollapsed && (
+                        <div style={{ padding: '8px 16px', fontSize: '12px', color: '#94a3b8' }}>
+                            Role: <strong style={{ color: '#e2e8f0' }}>{userRole || 'User'}</strong>
+                            {!canEdit && ' · View only'}
+                        </div>
+                    )}
                     <button
                         onClick={onLogout}
                         className="nav-item logout-item"

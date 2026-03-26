@@ -3,7 +3,7 @@ import { MapPin, Eye, Search, ChevronRight, MoreVertical, Edit2, Trash2, Check, 
 import './CustomerRelation.css'; // Reusing established table styles
 import { promotionService } from '../services/promotionService';
 
-const DeliveryPoint = ({ userRole }) => {
+const DeliveryPoint = ({ canEdit = false }) => {
     const [showForm, setShowForm] = useState(false);
     const [deliveryPoints, setDeliveryPoints] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -343,7 +343,7 @@ const DeliveryPoint = ({ userRole }) => {
                                 </button>
                             </div>
 
-                            {userRole === 'Admin' && (
+                            {canEdit && (
                                 <button className="create-btn" onClick={() => setShowForm(true)}>
                                     <Plus size={18} />
                                     Add Delivery Point
@@ -391,7 +391,7 @@ const DeliveryPoint = ({ userRole }) => {
 
                                                     {activeActionMenu === idx && (
                                                         <div className="action-menu fade-in">
-                                                            {userRole === 'Admin' ? (
+                                                            {canEdit ? (
                                                                 <>
                                                                     <button className="dropdown-item" onClick={() => handleEdit(row)}>
                                                                         <Edit2 size={14} style={{ marginRight: '8px' }} /> Edit

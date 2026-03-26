@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using SSO.Application.Auth;
 using SSO.Application.Auth.Commands;
 using SSO.Application.Dtos;
 
@@ -32,6 +33,15 @@ public class AuthController : ControllerBase
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+        catch (InvalidCredentialsException)
+        {
+            return Unauthorized(new { message = "Invalid email or password" });
+        }
+        catch (InvalidOperationException ex)
+        {
+            // Misconfiguration (e.g. JWT secret) — 503 so it is not confused with bad password
+            return StatusCode(StatusCodes.Status503ServiceUnavailable, new { message = ex.Message });
+        }
         catch (Exception ex) when (ex.Message == "Invalid credentials")
         {
             return Unauthorized(new { message = "Invalid email or password" });
@@ -42,13 +52,15 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto dto)
     {
-        // Ignore client-supplied Role for public registration; always assign "User" to prevent privilege escalation.
-        var message = await _mediator.Send(new RegisterCommand(dto.UserName, dto.Email, dto.Password, "User"));
-
-        return Ok(new
+        try
         {
-            message = message
-        });
+            var result = await _mediator.Send(new RegisterCommand(dto.UserName, dto.Email, dto.Password));
+            return StatusCode(StatusCodes.Status201Created, result);
+        }
+        catch (DuplicateUserException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
     }
 
     [HttpPost("refresh")]

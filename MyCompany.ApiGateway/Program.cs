@@ -13,11 +13,14 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.AddSerilogLogging(builder.Configuration, "ApiGateway");
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:ConnectionString"]);
+
+var appInsightsConn = builder.Configuration["ApplicationInsights:ConnectionString"];
+if (!string.IsNullOrWhiteSpace(appInsightsConn) && !appInsightsConn.StartsWith("REPLACE_", StringComparison.OrdinalIgnoreCase))
+    builder.Services.AddApplicationInsightsTelemetry(o => o.ConnectionString = appInsightsConn);
 
 // OpenTelemetry: W3C trace context flows Gateway → downstream (SSO/Promotions). Export to Application Insights.
 var otelConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
-if (!string.IsNullOrEmpty(otelConnectionString) && !otelConnectionString.StartsWith("REPLACE_"))
+if (!string.IsNullOrEmpty(otelConnectionString) && !otelConnectionString.StartsWith("REPLACE_", StringComparison.OrdinalIgnoreCase))
 {
     builder.Services.AddOpenTelemetry()
         .WithTracing(tracing =>
@@ -82,6 +85,8 @@ builder.Services.AddRateLimiter(options =>
 
 var app = builder.Build();
 
+RouteResolver.Configure(app.Configuration);
+
 // Middleware
 
 // 1. Buffering (Important for Proxying)
@@ -125,7 +130,26 @@ app.Map("/{**catch-all}", async context =>
         return;
     }
 
-    var isAuthPath = path != null && (path.Contains("/api/auth") || path.Contains("/api/gateway/health"));
+    // Only /api/* belongs on the gateway. Static or mistaken paths (e.g. __federation_*.js if proxy target
+    // was mis-set to the gateway) should not return 401 — that breaks Module Federation chunk loads.
+    var isApiPath = path != null && path.StartsWith("/api/", StringComparison.OrdinalIgnoreCase);
+    if (!isApiPath)
+    {
+        context.Response.StatusCode = StatusCodes.Status404NotFound;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync("{\"message\":\"Not found. This gateway only proxies /api/* routes.\"}");
+        return;
+    }
+
+    // Promotions basic health (not /detailed): allow without JWT so the shell can show real DB status.
+    var isPromotionsBasicHealth = path != null
+        && path.Equals("/api/v1/health", StringComparison.OrdinalIgnoreCase);
+
+    var isAuthPath = path != null && (
+        path.Contains("/api/auth") ||
+        path.Contains("/api/v1/auth") ||
+        path.Contains("/api/gateway/health")
+        || isPromotionsBasicHealth);
 
     if (!isAuthPath && context.User?.Identity?.IsAuthenticated != true)
     {

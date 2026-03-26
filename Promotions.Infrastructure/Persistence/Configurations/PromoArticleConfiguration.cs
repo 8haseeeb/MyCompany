@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Promotions.Domain.Articles;
 
@@ -23,7 +23,8 @@ namespace Promotions.Infrastructure.Persistence.Configurations
             builder.Property(x => x.CodNode).HasColumnName("CODNODEO").HasMaxLength(50);
             builder.Property(x => x.CodNode1).HasColumnName("CODNODE1").HasMaxLength(50);
             builder.Property(x => x.CodNode2).HasColumnName("CODNODE2").HasMaxLength(50);
-            builder.Property(x => x.CodNodeN).HasColumnName("FROMNODEFIN").HasConversion<bool>(); // BIT column
+            // Legacy column may store codes (nvarchar) or bits; map as string to match domain PromoArticle.CodNodeN.
+            builder.Property(x => x.CodNodeN).HasColumnName("FROMNODEFIN").HasMaxLength(50);
         }
     }
 }

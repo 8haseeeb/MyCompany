@@ -28,6 +28,11 @@ namespace MyCompany.ApiGateway.Routing
                 RequestUri = new Uri(targetUrl + context.Request.QueryString)
             };
 
+            var isPromotionsBasicHealth = string.Equals(
+                context.Request.Path.Value,
+                "/api/v1/health",
+                StringComparison.OrdinalIgnoreCase);
+
             //  COPY HEADERS 
             foreach (var header in context.Request.Headers)
             {
@@ -40,6 +45,10 @@ namespace MyCompany.ApiGateway.Routing
                     requestMessage.Content.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray());
                 }
             }
+
+            // Expired/invalid browser tokens must not block DB health (JWT would return 401 otherwise).
+            if (isPromotionsBasicHealth)
+                requestMessage.Headers.Remove("Authorization");
 
             //  COPY BODY (POST / PUT / PATCH) 
             if (!HttpMethods.IsGet(context.Request.Method) &&
@@ -95,14 +104,33 @@ namespace MyCompany.ApiGateway.Routing
             catch (Exception ex)
             {
                 Log.Error(ex, "❌ PROXY ERROR: Could not reach {TargetUrl}. Message: {Message}", targetUrl, ex.Message);
-                
-                // If it's a timeout, log it specifically
-                if (ex is TaskCanceledException || ex is OperationCanceledException)
+
+                if (context.Response.HasStarted)
+                    throw;
+
+                if (ex is OperationCanceledException)
                 {
-                    Log.Error("⚠️ PROXY TIMEOUT: The request to {TargetUrl} took too long and was canceled.", targetUrl);
+                    Log.Error("⚠️ PROXY TIMEOUT: The request to {TargetUrl} was canceled or timed out.", targetUrl);
+                    context.Response.StatusCode = StatusCodes.Status504GatewayTimeout;
+                    context.Response.ContentType = "application/json";
+                    await context.Response.WriteAsync(
+                        System.Text.Json.JsonSerializer.Serialize(new { message = "Downstream request timed out.", detail = ex.Message }));
+                    return;
                 }
 
-                throw;
+                var isCircuitBroken = ex.GetType().Name.Contains("BrokenCircuit", StringComparison.Ordinal)
+                    || (ex.InnerException?.GetType().Name.Contains("BrokenCircuit", StringComparison.Ordinal) ?? false);
+
+                context.Response.StatusCode = isCircuitBroken
+                    ? StatusCodes.Status503ServiceUnavailable
+                    : StatusCodes.Status502BadGateway;
+                context.Response.ContentType = "application/json";
+                var msg = isCircuitBroken
+                    ? "Downstream service temporarily unavailable (circuit open). Try again shortly."
+                    : "API gateway could not reach the downstream service. Check SSO_URL / PROMOTIONS_URL and that containers are running.";
+                await context.Response.WriteAsync(
+                    System.Text.Json.JsonSerializer.Serialize(new { message = msg, detail = ex.Message }));
+                return;
             }
 
         }

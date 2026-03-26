@@ -4,6 +4,7 @@ using Promotions.Application.Products.Interfaces;
 using Promotions.Application.Products.Queries;
 using Promotions.Application.ProductDetails.Dtos;
 using Promotions.Application.PromoArticles.Dtos;
+using Promotions.Domain.ProductDetails;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -30,13 +31,13 @@ namespace Promotions.Application.Products.Handlers
                 CodProduct = x.CodProduct,
                 LevProduct = x.LevProduct,
                 CodDisplay = x.CodDisplay,
-                CodDiv = x.CodDiv,
+                CodDiv = x.CodDiv ?? string.Empty,
                 QtyEstimated = x.QtyEstimated,
                 PerceDiscount1 = x.PerceDiscount1,
                 PerceDiscount2 = x.PerceDiscount2,
                 NumMeasure = x.NumMeasure,
                 CodMeasure = x.CodMeasure,
-                Details = x.Details.Select(d => new ProductDetailDto
+                Details = (x.Details ?? Enumerable.Empty<PromoProductDetail>()).Select(d => new ProductDetailDto
                 {
                     IdAction = d.IdAction,
                     CodProduct = d.CodProduct,

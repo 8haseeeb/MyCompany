@@ -1,7 +1,26 @@
 import axios from 'axios';
+import { persistRoleFromAccessToken } from '../utils/jwtUtils';
 
-// Use env for API base URL: empty = same origin (dev with Vite proxy); set in production (e.g. VITE_API_BASE_URL=https://promo.azure-api.net)
-const baseURL = import.meta.env.VITE_API_BASE_URL ?? '';
+const LS_ACCESS = 'token';
+const LS_REFRESH = 'refreshToken';
+
+/**
+ * API base URL for axios.
+ * - Production / Docker: set VITE_API_BASE_URL=http://localhost:5089 so calls hit the gateway (NOT the static site port 5001).
+ * - Dev: leave unset for same-origin + Vite proxy to gateway (see vite.config.js).
+ */
+function resolveApiBaseUrl() {
+    const raw = import.meta.env.VITE_API_BASE_URL;
+    if (raw !== undefined && raw !== null && String(raw).trim() !== '') {
+        return String(raw).replace(/\/$/, '');
+    }
+    if (import.meta.env.DEV) {
+        return '';
+    }
+    return '';
+}
+
+const baseURL = resolveApiBaseUrl();
 
 const api = axios.create({
     baseURL,
@@ -11,21 +30,15 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(LS_ACCESS);
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
-
-    // When using Azure API Management with path-based backends, set VITE_APIM_PATH_PREFIX=true
-    // to send /sso/api/auth and /promotion/api/... to APIM. For direct Gateway (or dev proxy), use /api/... as-is.
-    if (import.meta.env.VITE_APIM_PATH_PREFIX === 'true' && config.url && !config.url.startsWith('http')) {
-        if (config.url.includes('/api/auth')) {
-            config.url = `/sso${config.url}`;
-        } else if (config.url.includes('/api/')) {
-            config.url = `/promotion${config.url}`;
-        }
+    if (import.meta.env.DEV) {
+        const auth = config.headers.Authorization;
+        const fullUrl = `${config.baseURL || ""}${config.url || ""}`;
+        console.debug("[api] request", config.method?.toUpperCase(), fullUrl, { hasAuth: Boolean(auth) });
     }
-
     return config;
 });
 
@@ -43,83 +56,150 @@ const processQueue = (error, token = null) => {
     failedQueue = [];
 };
 
+/** Refresh access token; one retry on transient errors (no retry on 401/403 invalid refresh). */
+async function postRefreshWithRetry(refreshTokenValue) {
+    let lastErr;
+    for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+            if (attempt > 0) {
+                await new Promise((r) => setTimeout(r, 500));
+                console.log("[api] refresh retry (attempt 2)");
+            }
+            return await api.post("/api/v1/auth/refresh", { refreshToken: refreshTokenValue });
+        } catch (e) {
+            lastErr = e;
+            const st = e.response?.status;
+            if (st === 401 || st === 403) throw e;
+            if (attempt === 1) throw e;
+        }
+    }
+    throw lastErr;
+}
+
+function requestUrlPath(config) {
+    if (!config?.url) return '';
+    const u = config.url;
+    if (u.startsWith('http')) {
+        try {
+            return new URL(u).pathname;
+        } catch {
+            return u;
+        }
+    }
+    return u;
+}
+
 api.interceptors.response.use(
     (response) => {
         return response;
     },
     async (error) => {
+        if (!error.config) {
+            return Promise.reject(error);
+        }
         const originalRequest = error.config;
-        const url = originalRequest?.url || '';
+        const url = requestUrlPath(originalRequest);
+        const urlLower = url.toLowerCase();
         const status = error.response?.status;
-        const isLoginRequest = url.includes('/api/auth/login');
-        const isHealthCheck = url.includes('/api/Health');
-        const isRefreshRequest = url.includes('/api/auth/refresh');
 
-        // 401 after retry = session invalidated (e.g. logged in elsewhere). Do NOT try refresh again.
-        const is401AfterRetry = status === 401 && originalRequest._retry;
+        const isLoginRequest = urlLower.includes('/auth/login');
+        const isRegisterRequest = urlLower.includes('/auth/register');
+        const isRefreshRequest = urlLower.includes('/auth/refresh');
+        const isHealthCheck =
+            urlLower.includes('/health') || urlLower.includes('/gateway/health');
+
         // X-Session-Status: MISMATCH = logged in elsewhere, skip refresh and logout immediately
         const sessionStatus = (error.response?.headers?.['x-session-status'] || error.response?.headers?.['x-echo-x-session-status'] || '').toUpperCase();
         const isSessionMismatch = status === 401 && sessionStatus.includes('MISMATCH');
 
-        // 503 = session validation failed (DB unreachable). Force logout.
-        if (status === 503 || is401AfterRetry || isSessionMismatch) {
-            console.warn("Session invalid or service unavailable. Logging out.", { status, url });
+        // 503: do not treat Promotions session-check infra failures (DB_ERROR) as "log out" — that causes instant logout after login when SSO DB is misconfigured.
+        // Only treat clear session invalidation signals.
+        const isSessionLike503 =
+            status === 503 &&
+            !isHealthCheck &&
+            (sessionStatus.includes('MISMATCH') ||
+                (sessionStatus.includes('GATEWAY') && sessionStatus.includes('SESSION')));
+
+        if (isSessionLike503 || isSessionMismatch) {
+            console.warn("Session invalid or service unavailable. Logging out.", { status, url, sessionStatus });
             processQueue(error, null);
             isRefreshing = false;
             handleLogout();
             return Promise.reject(error);
         }
 
-        // Response Interceptor (Detecting 401) - try refresh for token expiry
-        if (status === 401 && !isLoginRequest && !isHealthCheck && !isRefreshRequest) {
-
-            // Request Queue (Smart Handling)
-            if (isRefreshing) {
-                return new Promise(function (resolve, reject) {
-                    failedQueue.push({ resolve, reject });
-                })
-                    .then(token => {
-                        originalRequest.headers['Authorization'] = 'Bearer ' + token;
-                        return api(originalRequest);
-                    })
-                    .catch(err => {
-                        return Promise.reject(err);
-                    });
-            }
-
-            originalRequest._retry = true;
-            isRefreshing = true;
-
-            const refreshToken = localStorage.getItem('refreshToken');
-
-            if (!refreshToken) {
+        // 401: refresh once, then retry. _retryAfterRefresh marks "already got new access token"; if still 401 → logout.
+        if (status === 401 && !isLoginRequest && !isRegisterRequest && !isHealthCheck && !isRefreshRequest) {
+            if (originalRequest._retryAfterRefresh) {
+                console.warn("[api] 401 still after token refresh; logging out.", { url });
+                processQueue(error, null);
+                isRefreshing = false;
                 handleLogout();
                 return Promise.reject(error);
             }
 
-            // Refresh Logic
+            if (isRefreshing) {
+                return new Promise(function (resolve, reject) {
+                    failedQueue.push({ resolve, reject });
+                })
+                    .then((token) => {
+                        originalRequest._retryAfterRefresh = true;
+                        originalRequest.headers["Authorization"] = "Bearer " + token;
+                        return api(originalRequest);
+                    })
+                    .catch((err) => Promise.reject(err));
+            }
+
+            isRefreshing = true;
+
+            const refreshToken = localStorage.getItem(LS_REFRESH);
+
+            if (!refreshToken) {
+                console.warn("[api] 401 but no refreshToken; logging out.", { url });
+                isRefreshing = false;
+                handleLogout();
+                return Promise.reject(error);
+            }
+
             try {
-                console.log("Access token expired. Attempting refresh...");
-                const response = await api.post('/api/auth/refresh', { refreshToken });
+                console.log("[api] 401 → attempting token refresh…", { url });
+                const response = await postRefreshWithRetry(refreshToken);
 
-                const { accessToken, refreshToken: newRefreshToken } = response.data;
+                const body = response.data;
+                const accessToken = body.accessToken ?? body.AccessToken;
+                const newRefreshToken = body.refreshToken ?? body.RefreshToken;
+                if (!accessToken) {
+                    const missingTokenErr = new Error('Refresh response missing access token');
+                    processQueue(missingTokenErr, null);
+                    isRefreshing = false;
+                    handleLogout();
+                    return Promise.reject(missingTokenErr);
+                }
 
-                localStorage.setItem('token', accessToken);
-                localStorage.setItem('refreshToken', newRefreshToken);
+                localStorage.setItem(LS_ACCESS, accessToken);
+                localStorage.setItem('accessToken', accessToken);
+                if (newRefreshToken) {
+                    localStorage.setItem(LS_REFRESH, newRefreshToken);
+                }
+                const roleFromRefresh = (body.role ?? body.Role ?? '').toString().trim();
+                persistRoleFromAccessToken(accessToken, roleFromRefresh || undefined);
 
-                api.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-                originalRequest.headers['Authorization'] = 'Bearer ' + accessToken;
+                api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+                originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
 
                 processQueue(null, accessToken);
+                isRefreshing = false;
+                originalRequest._retryAfterRefresh = true;
                 return api(originalRequest);
             } catch (refreshError) {
-                // Refresh failed (401/503) = session invalid, force logout
-                console.error("Refresh token failed or expired. Logging out.", refreshError);
+                const st = refreshError.response?.status;
+                console.error("[api] refresh failed", { status: st, url }, refreshError);
                 processQueue(refreshError, null);
-                handleLogout();
-                return Promise.reject(refreshError);
-            } finally {
                 isRefreshing = false;
+                if (st === 401 || st === 403) {
+                    handleLogout();
+                }
+                return Promise.reject(refreshError);
             }
         }
 
@@ -133,8 +213,9 @@ api.interceptors.response.use(
 );
 
 function handleLogout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem(LS_ACCESS);
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem(LS_REFRESH);
     localStorage.removeItem('authToken');
     localStorage.removeItem('userName');
     localStorage.removeItem('userRole');
@@ -152,8 +233,9 @@ try {
     const bc = new BroadcastChannel('session-channel');
     bc.onmessage = (e) => {
         if (e.data === 'logout') {
-            localStorage.removeItem('token');
-            localStorage.removeItem('refreshToken');
+            localStorage.removeItem(LS_ACCESS);
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem(LS_REFRESH);
             localStorage.removeItem('authToken');
             localStorage.removeItem('userName');
             localStorage.removeItem('userRole');

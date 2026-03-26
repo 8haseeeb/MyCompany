@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
     PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis,
     CartesianGrid, Tooltip, Legend, ResponsiveContainer
@@ -11,7 +11,7 @@ import { promotionService } from '../services/promotionService';
 import { customerService } from '../services/customerService';
 import './Dashboard.css';
 
-const Dashboard = () => {
+const Dashboard = ({ userRole, canEdit = false }) => {
     const [stats, setStats] = useState({
         promotions: 0,
         participants: 0,
@@ -50,15 +50,34 @@ const Dashboard = () => {
         }
     };
 
-    const distributionData = [
-        { name: 'Promotions', value: stats.promotions, color: '#a855f7' },
-        { name: 'Participants', value: stats.participants, color: '#3b82f6' },
-        { name: 'Delivery Points', value: stats.deliveryPoints, color: '#f97316' },
-        { name: 'Customers', value: stats.customers, color: '#eab308' },
-    ];
+    const distributionData = useMemo(() => {
+        const rows = [
+            { name: 'Promotions', value: stats.promotions, color: '#a855f7' },
+            { name: 'Participants', value: stats.participants, color: '#3b82f6' },
+            { name: 'Delivery Points', value: stats.deliveryPoints, color: '#f97316' },
+            { name: 'Customers', value: stats.customers, color: '#eab308' },
+        ];
+        const sum = rows.reduce((a, r) => a + (Number(r.value) || 0), 0);
+        // Recharts Pie renders nothing useful when every slice is 0
+        if (sum === 0) {
+            return [{ name: 'No data yet', value: 1, color: '#e2e8f0' }];
+        }
+        return rows;
+    }, [stats.promotions, stats.participants, stats.deliveryPoints, stats.customers]);
+
+    const barTrend = useMemo(() => {
+        const t = stats.activityTrend || [];
+        if (t.length > 0) return t;
+        return [{ dateLabel: '—', active: 0, pending: 0, failed: 0 }];
+    }, [stats.activityTrend]);
 
     return (
         <div className="dashboard-container fade-in">
+            {!canEdit && (
+                <p style={{ fontSize: '13px', color: '#64748b', marginBottom: '12px' }}>
+                    Signed in as <strong>{userRole || 'User'}</strong> — dashboard is view-only. Editing requires an administrator account.
+                </p>
+            )}
             <div className="dashboard-header">
 
                 <div className="header-actions">
@@ -148,7 +167,7 @@ const Dashboard = () => {
                     <h3 className="chart-title">Activity Trend (30 Days)</h3>
                     <div className="chart-content">
                         <ResponsiveContainer width="100%" height={300}>
-                            <BarChart data={stats.activityTrend || []}>
+                            <BarChart data={barTrend}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                                 <XAxis dataKey="dateLabel" axisLine={false} tickLine={false} />
                                 <YAxis axisLine={false} tickLine={false} />

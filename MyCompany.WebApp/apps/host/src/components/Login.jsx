@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import api from '../services/api';
+import { applyAuthResponse } from '../utils/authStorage';
+import { parseJwtPayload } from '../utils/jwtUtils';
 import { Mail, Lock, LogIn, Loader2, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import xtelLogo from '../assets/xtel-logo.png';
 import dotsCircle from '../assets/dots-circle.png';
@@ -17,36 +19,20 @@ const Login = ({ setToken, setUserName, setUserRole, onToggle }) => {
     const validateForm = () => {
         const errors = {};
 
-        // Email validation
         if (!email) {
-            errors.email = "Email is required";
+            errors.email = 'Email is required';
         } else if (!/\S+@\S+\.\S+/.test(email)) {
-            errors.email = "Please enter a valid email address (e.g. name@example.com)";
+            errors.email = 'Please enter a valid email address (e.g. name@example.com)';
         }
 
-        // Password validation
         if (!password) {
-            errors.password = "Password is required";
+            errors.password = 'Password is required';
         } else if (password.length < 6) {
-            errors.password = "Password must be at least 6 characters";
+            errors.password = 'Password must be at least 6 characters';
         }
 
         setFieldErrors(errors);
         return Object.keys(errors).length === 0;
-    };
-
-    const parseJwt = (token) => {
-        try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-
-            return JSON.parse(jsonPayload);
-        } catch (e) {
-            return null;
-        }
     };
 
     const handleSubmit = async (e) => {
@@ -58,39 +44,41 @@ const Login = ({ setToken, setUserName, setUserRole, onToggle }) => {
         setError('');
 
         try {
-            const response = await api.post('/api/auth/login', {
+            const response = await api.post('/api/v1/auth/login', {
                 Email: email,
                 Password: password
             });
 
-            const token = response.data.accessToken ||
-                response.data.AccessToken ||
-                response.data.access_token;
+            if (import.meta.env.DEV) {
+                const d = response.data || {};
+                console.log('[auth] login response', {
+                    hasAccessToken: Boolean(d.accessToken || d.AccessToken),
+                    hasRefreshToken: Boolean(d.refreshToken || d.RefreshToken),
+                    keys: Object.keys(d),
+                });
+                const at = d.accessToken || d.AccessToken;
+                const payload = at ? parseJwtPayload(at) : null;
+                if (payload) {
+                    console.log('[auth] access token exp (unix):', payload.exp, 'nbf:', payload.nbf);
+                }
+            }
 
-            if (token) {
-                localStorage.setItem('token', token);
-                const userName = response.data.userName || response.data.UserName || "User";
-                localStorage.setItem('userName', userName);
-
-                // Decode Role from Token
-                const decoded = parseJwt(token);
-                // Look for standard .NET claim name for roles
-                const role = decoded?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] ||
-                    decoded?.role ||
-                    "User";
-
-                localStorage.setItem('userRole', role);
-
-                setToken(token);
-                if (setUserName) setUserName(userName);
-                if (setUserRole) setUserRole(role);
+            const applied = applyAuthResponse(response.data);
+            if (applied) {
+                if (import.meta.env.DEV) {
+                    console.log('[auth] TOKEN stored (chars):', applied.token?.length, 'refresh in LS:', Boolean(localStorage.getItem('refreshToken')));
+                }
+                setToken(applied.token);
+                if (setUserName) setUserName(applied.userName);
+                if (setUserRole) setUserRole(applied.role);
             } else {
                 setError("Login worked, but the server didn't send a token correctly.");
             }
         } catch (err) {
-            const msg = err.response?.data?.message ||
+            const msg =
+                err.response?.data?.message ||
                 err.response?.data?.error ||
-                "Service Unavailable. Please check the health status above.";
+                'Service Unavailable. Please check the health status above.';
             setError(msg);
         } finally {
             setLoading(false);
@@ -99,7 +87,6 @@ const Login = ({ setToken, setUserName, setUserRole, onToggle }) => {
 
     return (
         <div className="login-page-wrapper">
-
             <div className="login-container">
                 <img src={dotsSquare} alt="" className="xtel-dots-square" />
                 <img src={dotsCircle} alt="" className="xtel-dots-circle" />
@@ -107,7 +94,6 @@ const Login = ({ setToken, setUserName, setUserRole, onToggle }) => {
                     <img src={xtelLogo} alt="XTEL Logo" className="xtel-logo-img" />
                     <span className="logo-express">PROMO</span>
                 </div>
-
 
                 <div className="login-card-v2">
                     {error && <div className="error-badge-v2">{error}</div>}
@@ -120,7 +106,7 @@ const Login = ({ setToken, setUserName, setUserRole, onToggle }) => {
                                 value={email}
                                 onChange={(e) => {
                                     setEmail(e.target.value);
-                                    if (fieldErrors.email) setFieldErrors(prev => ({ ...prev, email: null }));
+                                    if (fieldErrors.email) setFieldErrors((prev) => ({ ...prev, email: null }));
                                 }}
                             />
                             {fieldErrors.email && <span className="error-text-v2">{fieldErrors.email}</span>}
@@ -130,11 +116,11 @@ const Login = ({ setToken, setUserName, setUserRole, onToggle }) => {
                             <label>Password</label>
                             <div style={{ position: 'relative' }}>
                                 <input
-                                    type={showPassword ? "text" : "password"}
+                                    type={showPassword ? 'text' : 'password'}
                                     value={password}
                                     onChange={(e) => {
                                         setPassword(e.target.value);
-                                        if (fieldErrors.password) setFieldErrors(prev => ({ ...prev, password: null }));
+                                        if (fieldErrors.password) setFieldErrors((prev) => ({ ...prev, password: null }));
                                     }}
                                 />
                                 <div
@@ -167,7 +153,10 @@ const Login = ({ setToken, setUserName, setUserRole, onToggle }) => {
                         <div className="divider-v2">or</div>
 
                         <div className="login-footer-v2">
-                            Don't have an account? <span onClick={onToggle} className="signup-link-v2">Sign up</span>
+                            Don't have an account?{' '}
+                            <span onClick={onToggle} className="signup-link-v2">
+                                Sign up
+                            </span>
                         </div>
                     </form>
                 </div>

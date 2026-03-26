@@ -12,7 +12,9 @@ namespace SSO.Infrastructure.Persistence
         public IdentityDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<IdentityDbContext>();
-            optionsBuilder.UseSqlServer("Server=localhost;Database=SSOIdentityDb;Trusted_Connection=True;TrustServerCertificate=True;");
+            // Docker SQL on host port 1433 (dotnet ef from Windows/Mac against compose-mapped SQL)
+            optionsBuilder.UseSqlServer(
+                "Server=localhost,1433;Database=SSOServiceDb;User Id=sa;Password=MyPass@123;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=true;");
 
             return new IdentityDbContext(optionsBuilder.Options);
         }

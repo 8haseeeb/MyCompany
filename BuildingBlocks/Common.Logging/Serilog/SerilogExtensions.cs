@@ -1,4 +1,4 @@
-﻿using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,8 +35,9 @@ namespace MyCompany.Common.Logging
                         $"logs/{applicationName}-.log",
                         rollingInterval: RollingInterval.Day);
 
-                // Add Application Insights sink if connection string is available
-                if (!string.IsNullOrEmpty(connectionString))
+                // Add Application Insights sink only when a real connection string is configured (skip placeholders / local empty)
+                if (!string.IsNullOrWhiteSpace(connectionString)
+                    && !connectionString.StartsWith("REPLACE_", StringComparison.OrdinalIgnoreCase))
                 {
                     var telemetryConfiguration = new TelemetryConfiguration
                     {

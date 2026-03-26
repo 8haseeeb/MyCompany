@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SSO.Domain.Users;
 
@@ -18,7 +18,8 @@ namespace SSO.Infrastructure.Persistence.Configurations
 
             
             // Relationships and extra properties
-            builder.Property(u => u.Role).HasColumnName("Role").IsRequired();
+            builder.Property(u => u.Role).HasColumnName("Role").IsRequired().HasDefaultValue("User");
+            builder.HasIndex(u => u.Email).IsUnique();
             builder.Property(u => u.CurrentSessionId).HasColumnName("CurrentSessionId").HasMaxLength(100);
             
 

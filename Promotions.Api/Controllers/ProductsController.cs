@@ -22,6 +22,7 @@ namespace Promotions.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(
             [FromBody] CreateProductDto dto)
         {
@@ -102,6 +103,7 @@ namespace Promotions.Api.Controllers
 
         
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(
             [FromQuery] int idAction,
             [FromQuery] string codProduct,

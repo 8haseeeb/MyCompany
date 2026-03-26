@@ -4,7 +4,7 @@ import './Promotions.css';
 import { promotionService } from '../services/promotionService';
 import PromotionDetailView from './PromotionDetailView';
 
-const Promotions = ({ userRole }) => {
+const Promotions = ({ canEdit = false }) => {
     const [showForm, setShowForm] = useState(false);
     const [showViewModal, setShowViewModal] = useState(false);
     const [showDetailView, setShowDetailView] = useState(false);
@@ -816,7 +816,7 @@ const Promotions = ({ userRole }) => {
                             <Search size={18} />
                             Detail View
                         </button>
-                        {userRole === 'Admin' && (
+                        {canEdit && (
                             <button className="create-btn" onClick={() => setShowForm(true)}>
                                 <Plus size={18} />
                                 Create Promotion
@@ -895,7 +895,7 @@ const Promotions = ({ userRole }) => {
 
                                                     {activeActionMenu === idx && (
                                                         <div className="action-dropdown-menu fade-in">
-                                                            {userRole === 'Admin' ? (
+                                                            {canEdit ? (
                                                                 <>
                                                                     <button
                                                                         className="action-item edit"

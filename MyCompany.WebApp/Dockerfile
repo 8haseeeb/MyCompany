@@ -15,7 +15,11 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Build both apps
+# Browser calls the API gateway (docker-compose maps api-gateway → host port 5089).
+ARG VITE_API_BASE_URL=http://localhost:5089
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
+# Build both apps (VITE_* is inlined at build time)
 RUN npm run build --workspace=apps/host
 RUN npm run build --workspace=apps/promotions
 

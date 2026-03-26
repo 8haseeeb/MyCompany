@@ -1,34 +1,44 @@
 import React, { useState } from 'react';
 import api from '../services/api';
-import { Mail, Lock, User, UserPlus, Loader2, ArrowLeft } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import dotsCircle from '../assets/dots-circle.png';
 import dotsSquare from '../assets/dots-square.png';
 import './Auth.css';
 
-const Register = ({ onToggle }) => {
+/**
+ * Public signup: no JWT stored; backend always creates role User. Redirects to login on success.
+ */
+const Register = ({ onSwitchToLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
-    const [role, setRole] = useState('User');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
+        setSuccess('');
 
         try {
-            await api.post('/api/auth/register', {
+            await api.post('/api/v1/auth/register', {
                 userName: username,
                 email,
-                password,
-                role
+                password
             });
-            alert('Registration Successful! Please login.');
-            onToggle();
+            setSuccess('Account created. Please sign in with your email and password.');
+            setTimeout(() => {
+                onSwitchToLogin?.();
+            }, 1500);
         } catch (err) {
-            setError(err.response?.data?.error || 'Registration failed. Please check the health status above.');
+            const body = err.response?.data;
+            setError(
+                body?.message ||
+                    body?.error ||
+                    'Registration failed. Please check the health status above.'
+            );
         } finally {
             setLoading(false);
         }
@@ -36,7 +46,6 @@ const Register = ({ onToggle }) => {
 
     return (
         <div className="login-page-wrapper">
-
             <div className="login-container">
                 <img src={dotsSquare} alt="" className="xtel-dots-square" />
                 <img src={dotsCircle} alt="" className="xtel-dots-circle" />
@@ -51,6 +60,14 @@ const Register = ({ onToggle }) => {
 
                 <div className="login-card-v2">
                     {error && <div className="error-badge-v2">{error}</div>}
+                    {success && (
+                        <div
+                            className="error-badge-v2"
+                            style={{ background: '#dcfce7', color: '#166534', borderColor: '#22c55e' }}
+                        >
+                            {success}
+                        </div>
+                    )}
 
                     <form onSubmit={handleSubmit} className="login-form-v2" noValidate>
                         <div className="input-group-v2">
@@ -86,33 +103,19 @@ const Register = ({ onToggle }) => {
                             />
                         </div>
 
-                        <div className="input-group-v2">
-                            <label>Role</label>
-                            <select
-                                value={role}
-                                onChange={(e) => setRole(e.target.value)}
-                                className="role-select-v2"
-                                style={{
-                                    width: '100%',
-                                    padding: '12px',
-                                    borderRadius: '8px',
-                                    border: '1px solid #e2e8f0',
-                                    backgroundColor: 'white',
-                                    marginTop: '8px',
-                                    fontSize: '14px'
-                                }}
-                            >
-                                <option value="User">User</option>
-                                <option value="Admin">Admin</option>
-                            </select>
-                        </div>
+                        <p style={{ fontSize: '13px', color: '#64748b', marginTop: '4px' }}>
+                            New accounts are created as <strong>User</strong> (view-only). An administrator can change your role if needed.
+                        </p>
 
                         <button type="submit" disabled={loading} className="login-btn-v2" style={{ marginTop: '10px' }}>
                             {loading ? <Loader2 className="animate-spin" /> : 'Sign Up'}
                         </button>
 
                         <div className="login-footer-v2" style={{ marginTop: '24px' }}>
-                            Already have an account? <span onClick={onToggle} className="signup-link-v2">Sign In</span>
+                            Already have an account?{' '}
+                            <span onClick={() => onSwitchToLogin?.()} className="signup-link-v2">
+                                Sign In
+                            </span>
                         </div>
                     </form>
                 </div>

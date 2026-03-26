@@ -3,7 +3,7 @@ import { Package, Plus, Check, X, Eye, ChevronRight, ShoppingBag, Trash2, MoreVe
 import './Products.css';
 import { promotionService } from '../services/promotionService';
 
-const Products = ({ userRole }) => {
+const Products = ({ canEdit = false }) => {
     const [showForm, setShowForm] = useState(false);
 
     // Form Data - Removed single product codes, added common fields
@@ -403,7 +403,7 @@ const Products = ({ userRole }) => {
                                 </button>
                             </div>
 
-                            {userRole === 'Admin' && (
+                            {canEdit && (
                                 <button className="create-btn" onClick={() => setShowForm(true)}>
                                     <Plus size={18} />
                                     Add Product
@@ -457,7 +457,7 @@ const Products = ({ userRole }) => {
 
                                                     {activeActionMenu === idx && (
                                                         <div className="action-menu fade-in">
-                                                            {userRole === 'Admin' ? (
+                                                            {canEdit ? (
                                                                 <>
                                                                     <button className="dropdown-item" onClick={() => handleEdit(product)}>
                                                                         <Edit2 size={14} style={{ marginRight: '8px' }} /> Edit

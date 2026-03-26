@@ -3,12 +3,14 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
 using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace MyCompany.ApiGateway.Security;
 
 public static class JwtAuthExtensions
 {
+    // JWT uses short claim type "role"; MapInboundClaims=false keeps it — must match RoleClaimType for role checks.
+    private const string JwtRoleClaimType = "role";
+
     public static IServiceCollection AddJwtAuthentication(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -46,9 +48,8 @@ public static class JwtAuthExtensions
                         Encoding.UTF8.GetBytes(secret)
                     ),
 
-                    // Map specific claim types to ensure IsAuthenticated is set correctly
                     NameClaimType = "unique_name",
-                    RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                    RoleClaimType = JwtRoleClaimType
                 };
 
                 //  JWT EVENTS + SERILOG
@@ -56,10 +57,14 @@ public static class JwtAuthExtensions
                 {
                     OnTokenValidated = context =>
                     {
+                        var roles = context.Principal?.Claims
+                            .Where(c => c.Type == JwtRoleClaimType || c.Type.EndsWith("/role", StringComparison.Ordinal))
+                            .Select(c => c.Value)
+                            .ToList();
                         Log.Information(
-                            "JWT validated for {User}",
-                            context.Principal?.Identity?.Name ?? "Anonymous"
-                        );
+                            "JWT validated for {User}; role claims: {Roles}",
+                            context.Principal?.Identity?.Name ?? "Anonymous",
+                            roles is { Count: > 0 } ? string.Join(", ", roles) : "(none)");
 
                         return Task.CompletedTask;
                     },

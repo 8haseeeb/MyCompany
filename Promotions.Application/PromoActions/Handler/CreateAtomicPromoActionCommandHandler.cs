@@ -1,11 +1,15 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Promotions.Domain.PromoActions;
 using Promotions.Domain.Measures;
 using Promotions.Domain.Articles;
 using Promotions.Application.Common.Interfaces;
+using Promotions.Application.Common.Exceptions;
 using Promotions.Application.PromoActions.Commands;
+using Promotions.Application.PromoActions.Dtos;
+using Promotions.Application.Products.Dtos;
 using System;
 using System.Threading;
 using System.Linq;
@@ -36,6 +40,8 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
             var dto = request.Dto;
             _logger.LogInformation("[CreateAtomic] Starting atomic promo action creation. IdAction: {IdAction}, Products: {ProductCount}",
                 dto.IdAction, dto.Products?.Count ?? 0);
+
+            await ValidateIdActionAndDivisionsAsync(dto, cancellationToken);
 
             var allRelations = await _unitOfWork.CustomerRelations.GetAllAsync();
             var allParticipants = await _unitOfWork.Participants.GetAllAsync();
@@ -197,10 +203,65 @@ namespace Promotions.Application.PromoActions.Commands.Handlers
                 }
             }
 
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            try
+            {
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateException ex) when (LooksLikeForeignKeyConstraint(ex))
+            {
+                _logger.LogWarning(ex,
+                    "[CreateAtomic] FK violation on SaveChanges (SQL 547). IdAction: {IdAction}, CodDiv: {CodDiv}",
+                    dto.IdAction, dto.CodDiv);
+                throw new InvalidPromotionReferenceException("Invalid IdAction or CodDiv", ex);
+            }
 
             _logger.LogInformation("[CreateAtomic] Promo action created successfully. IdAction: {IdAction}", dto.IdAction);
             return Unit.Value;
+        }
+
+        /// <summary>
+        /// IdAction: for creates, non-zero must not already exist (PK). CodDiv: must appear on TA501DELIVERYPOINTS or customer relations (TB0042).
+        /// </summary>
+        private async Task ValidateIdActionAndDivisionsAsync(AtomicCreatePromoActionDto dto, CancellationToken cancellationToken)
+        {
+            if (dto.IdAction != 0 && await _unitOfWork.PromoActions.ExistsIdActionAsync(dto.IdAction))
+            {
+                _logger.LogWarning("[CreateAtomic] IdAction already exists in TA500PROMOACTION: {IdAction}", dto.IdAction);
+                throw new InvalidPromotionReferenceException("Invalid IdAction or CodDiv");
+            }
+
+            var codDivs = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (!string.IsNullOrWhiteSpace(dto.CodDiv))
+                codDivs.Add(dto.CodDiv.Trim());
+            foreach (var p in dto.Products ?? new List<AtomicCreateProductDto>())
+            {
+                if (!string.IsNullOrWhiteSpace(p.CodDiv))
+                    codDivs.Add(p.CodDiv.Trim());
+            }
+
+            foreach (var codDiv in codDivs)
+            {
+                var inDeliveryPoints = await _unitOfWork.DeliveryPoints.AnyWithCodDivAsync(codDiv);
+                var inRelations = await _unitOfWork.CustomerRelations.AnyWithCodDivAsync(codDiv);
+                if (!inDeliveryPoints && !inRelations)
+                {
+                    _logger.LogWarning(
+                        "[CreateAtomic] CodDiv not referenced in TA501DELIVERYPOINTS or customer relations: {CodDiv}",
+                        codDiv);
+                    throw new InvalidPromotionReferenceException("Invalid IdAction or CodDiv");
+                }
+            }
+        }
+
+        /// <summary>Detect FK failures without referencing SqlClient from Application layer.</summary>
+        private static bool LooksLikeForeignKeyConstraint(DbUpdateException ex)
+        {
+            for (var e = (Exception?)ex; e != null; e = e.InnerException)
+            {
+                if (e.Message.Contains("FOREIGN KEY", StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
         }
     }
 }

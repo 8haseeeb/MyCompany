@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SSO.Application.Auth.Commands;
@@ -52,11 +52,13 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, R
         var sessionId = user.CurrentSessionId ?? Guid.NewGuid().ToString(); 
         var newAccessToken = _jwtTokenService.GenerateToken(user, sessionId);
 
-        _logger.LogInformation("[RefreshToken] Token refreshed successfully. UserId: {UserId}", user.Id);
+        var role = string.IsNullOrWhiteSpace(user.Role) ? "User" : user.Role.Trim();
+        _logger.LogInformation("[RefreshToken] Token refreshed successfully. UserId: {UserId} Role: {Role}", user.Id, role);
         return new RefreshTokenResponseDto
         {
             AccessToken = newAccessToken,
-            RefreshToken = newRefreshToken
+            RefreshToken = newRefreshToken,
+            Role = role
         };
     }
 }

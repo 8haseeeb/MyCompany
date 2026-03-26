@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Promotions.Application.Products.Dtos;
 using Promotions.Application.Products.Interfaces;
 using Promotions.Application.ProductDetails.Dtos;
@@ -30,7 +30,7 @@ namespace Promotions.Application.Products.Queries.Handlers
                 CodProduct = product.CodProduct,
                 LevProduct = product.LevProduct,
                 CodDisplay = product.CodDisplay,
-                CodDiv = product.CodDiv,
+                CodDiv = product.CodDiv ?? string.Empty,
                 QtyEstimated = product.QtyEstimated,
                 PerceDiscount1 = product.PerceDiscount1,
                 PerceDiscount2 = product.PerceDiscount2,

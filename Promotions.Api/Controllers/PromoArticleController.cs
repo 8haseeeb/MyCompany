@@ -23,6 +23,7 @@ namespace Promotions.Api.Controllers
 
        
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(
             [FromBody] CreatePromoArticleDto dto)
         {
@@ -66,6 +67,7 @@ namespace Promotions.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(
             [FromBody] UpdatePromoArticleDto dto,
             [FromQuery] string codDiv,
@@ -83,6 +85,7 @@ namespace Promotions.Api.Controllers
 
        
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(
             [FromQuery] string codDiv,
             [FromQuery] string codNode)

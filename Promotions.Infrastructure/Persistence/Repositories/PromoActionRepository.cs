@@ -29,6 +29,11 @@ namespace Promotions.Infrastructure.Persistence.Repositories
             return await _context.PromoActions.AnyAsync() ? await _context.PromoActions.MaxAsync(x => x.IdAction) : 0;
         }
 
+        public async Task<bool> ExistsIdActionAsync(int idAction)
+        {
+            return await _context.PromoActions.AnyAsync(x => x.IdAction == idAction);
+        }
+
         // SaveChangesAsync is now in base class
 
         public async Task<Promotions.Application.Common.Interfaces.IAtomicTransaction> BeginTransactionAsync()

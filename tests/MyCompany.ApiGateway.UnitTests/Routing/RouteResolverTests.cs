@@ -40,6 +40,7 @@ namespace MyCompany.ApiGateway.UnitTests.Routing
         [InlineData("/api/v1/promotions/dashboard", "/api/v1/promotions/dashboard")]
         [InlineData("/api/v2/auth/login", "/api/v2/auth/login")]
         [InlineData("/api/gateway/health", "/api/gateway/health")]
+        [InlineData("/api/health", "/api/health")]
         [InlineData("/other", "/other")]
         [InlineData("", "")]
         public void RewriteToVersionedPath_Should_AddV1_WhenNoVersion(string path, string expected)

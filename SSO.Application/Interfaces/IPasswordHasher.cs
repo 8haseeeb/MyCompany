@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +12,7 @@ namespace SSO.Application.Interfaces
     {
         string Hash(string password);
         bool Verify(string hash, string password);
+        /// <summary>False for null, empty, or values too short to be a valid BCrypt hash (avoids noisy verify attempts).</summary>
+        bool LooksLikeBcryptHash(string? hash);
     }
 }

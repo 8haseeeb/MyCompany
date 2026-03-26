@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Promotions.Application.DeliveryPoints.Interfaces;
 using Promotions.Domain.DeliveryPoints;
 
@@ -33,6 +33,13 @@ namespace Promotions.Infrastructure.Persistence.Repositories
             return await _context.DeliveryPoints
                 .Include(x => x.Relation)
                 .ToListAsync();
+        }
+
+        public async Task<bool> AnyWithCodDivAsync(string codDiv)
+        {
+            if (string.IsNullOrWhiteSpace(codDiv))
+                return false;
+            return await _context.DeliveryPoints.AnyAsync(d => d.CodDiv == codDiv);
         }
     }
 }

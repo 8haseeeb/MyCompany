@@ -1,8 +1,13 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import federation from "@originjs/vite-plugin-federation";
 
-export default defineConfig({
+// Permissive CORS in dev: avoids 401/CORS edge cases when host is localhost, 127.0.0.1, or ::1.
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+  const apiGatewayTarget = (env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/$/, '')
+
+  return {
     plugins: [
         react(),
         federation({
@@ -22,17 +27,22 @@ export default defineConfig({
         })
     ],
     server: {
+        host: true,
         port: 5002,
+        strictPort: true,
         cors: true,
+        // Use '/api/' not '/api': Vite matches url.startsWith(context). Chunk files like /api-BY_gXMS7.js
+        // would be proxied to the gateway and return 404. Preview inherits this proxy (see Vite resolvePreviewOptions).
         proxy: {
-            '/api': {
-                target: 'http://localhost:5089',
+            '/api/': {
+                target: apiGatewayTarget,
                 changeOrigin: true,
                 secure: false,
             }
         }
     },
     preview: {
+        host: true,
         port: 5002,
         strictPort: true,
         cors: true,
@@ -44,4 +54,5 @@ export default defineConfig({
         cssCodeSplit: false,
         assetsDir: ''
     }
+  }
 })

@@ -1,14 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
+using SSO.Application.Auth;
 using SSO.Application.Auth.Commands;
 using SSO.Application.Auth.Handlers;
-using SSO.Application.Interfaces;
 using SSO.Infrastructure.Persistence;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace SSO.UnitTests.Auth.Handlers
 {
@@ -32,34 +31,31 @@ namespace SSO.UnitTests.Auth.Handlers
         [Fact]
         public async Task Handle_Should_RegisterUser_WhenNotExists()
         {
-            // --- ARRANGE ---
-            var command = new RegisterCommand("testuser", "test@example.com", "password123", "User");
+            var command = new RegisterCommand("testuser", "Test@Example.com", "password123");
             _passwordHasher.Hash("password123").Returns("hashed_password");
 
-            // --- ACT ---
             var result = await _handler.Handle(command, CancellationToken.None);
 
-            // --- ASSERT ---
-            Assert.Equal("User registered successfully", result);
+            Assert.Equal("testuser", result.UserName);
+            Assert.Contains("log in", result.Message, StringComparison.OrdinalIgnoreCase);
+
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == "test@example.com");
             Assert.NotNull(user);
             Assert.Equal("testuser", user.UserName);
             Assert.Equal("hashed_password", user.PasswordHash);
+            Assert.Equal("User", user.Role);
         }
 
         [Fact]
-        public async Task Handle_Should_ThrowException_WhenUserAlreadyExists()
+        public async Task Handle_Should_ThrowDuplicateUserException_WhenUserAlreadyExists()
         {
-            // --- ARRANGE ---
             var existingUser = new SSO.Domain.Users.User("existing", "test@example.com", "hash");
             _context.Users.Add(existingUser);
             await _context.SaveChangesAsync(CancellationToken.None);
 
             var command = new RegisterCommand("newuser", "test@example.com", "password123");
 
-            // --- ACT & ASSERT ---
-            var ex = await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command, CancellationToken.None));
-            Assert.Equal("User already exists", ex.Message);
+            await Assert.ThrowsAsync<DuplicateUserException>(() => _handler.Handle(command, CancellationToken.None));
         }
 
         public void Dispose()

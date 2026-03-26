@@ -23,6 +23,7 @@ namespace Promotions.Api.Controllers
 
        
         [HttpPost("{idAction}/{codDeliveryPoint}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(
             int idAction,
             string codDeliveryPoint,
@@ -84,6 +85,7 @@ namespace Promotions.Api.Controllers
         }
 
         [HttpDelete("{idAction}/{codDeliveryPoint}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(
             int idAction,
             string codDeliveryPoint)

@@ -24,6 +24,7 @@ namespace Promotions.Api.Controllers
 
        
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] PromoMeasureFieldDto dto)
         {
             await _mediator.Send(new CreatePromoMeasureFieldCommand(
@@ -55,6 +56,7 @@ namespace Promotions.Api.Controllers
 
        
         [HttpPut("{codMeasure}/{codDiv}/{fieldName}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(
             string codMeasure,
             string codDiv,
@@ -73,6 +75,7 @@ namespace Promotions.Api.Controllers
 
         
         [HttpDelete("{codMeasure}/{codDiv}/{fieldName}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(
             string codMeasure,
             string codDiv,

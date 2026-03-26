@@ -20,6 +20,7 @@ public class ParticipantsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> CreateParticipant([FromRoute] int idAction, [FromBody] CreateParticipantDto dto)
     {
         var command = new CreateParticipantCommand(
@@ -37,6 +38,7 @@ public class ParticipantsController : ControllerBase
     }
 
     [HttpPut("{codParticipant}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateParticipant([FromRoute] int idAction, [FromRoute] string codParticipant, [FromBody] UpdateParticipantDto request)
     {
         await _mediator.Send(new UpdateParticipantCommand(idAction, codParticipant, request.FlgInclusion));
@@ -44,6 +46,7 @@ public class ParticipantsController : ControllerBase
     }
 
     [HttpDelete("{codParticipant}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteParticipant([FromRoute] int idAction, [FromRoute] string codParticipant)
     {
         await _mediator.Send(new DeleteParticipantCommand(idAction, codParticipant));
@@ -57,7 +60,9 @@ public class ParticipantsController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>Unversioned path (direct Promotions.Api). Gateway rewrites clients using /api/participants/all to /api/v1/participants/all.</summary>
     [HttpGet("/api/participants/all")]
+    [HttpGet("/api/v1/participants/all")]
     public async Task<IActionResult> GetAllParticipants()
     {
         var result = await _mediator.Send(new GetAllParticipantsQuery());

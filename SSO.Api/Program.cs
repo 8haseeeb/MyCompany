@@ -17,11 +17,14 @@ using SSO.Api.Security;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.AddSerilogLogging(builder.Configuration, "SSO.Api");
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:ConnectionString"]);
+
+var ssoAiConn = builder.Configuration["ApplicationInsights:ConnectionString"];
+if (!string.IsNullOrWhiteSpace(ssoAiConn) && !ssoAiConn.StartsWith("REPLACE_", StringComparison.OrdinalIgnoreCase))
+    builder.Services.AddApplicationInsightsTelemetry(o => o.ConnectionString = ssoAiConn);
 
 // OpenTelemetry: receive W3C traceparent from Gateway; export traces to Application Insights.
 var otelConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
-if (!string.IsNullOrEmpty(otelConnectionString) && !otelConnectionString.StartsWith("REPLACE_"))
+if (!string.IsNullOrEmpty(otelConnectionString) && !otelConnectionString.StartsWith("REPLACE_", StringComparison.OrdinalIgnoreCase))
 {
     builder.Services.AddOpenTelemetry()
         .WithTracing(tracing =>
@@ -43,13 +46,14 @@ else
 builder.Services.AddDbContext<IdentityDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddHealthChecks()
-    .AddSqlServer(connectionString!, name: "SSOIdentityDb", tags: new[] { "ready", "db" });
+    .AddSqlServer(connectionString!, name: "SSOServiceDb", tags: new[] { "ready", "db" });
 
 // DI registrations
 builder.Services.AddScoped<IIdentityDbContext>(provider => provider.GetRequiredService<IdentityDbContext>());
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<IUserSessionTokenService, UserSessionTokenService>();
 
 builder.Services.AddJwtAuthentication(builder.Configuration); // Added Auth service
 
@@ -85,35 +89,66 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // --- DATABASE AUTO-MIGRATION WITH RETRY ---
-using (var scope = app.Services.CreateScope())
+// Fresh IdentityDbContext per attempt (same rationale as Promotions.Api — avoid broken connection after SqlException).
 {
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<IdentityDbContext>();
+    const int maxAttempts = 12;
+    var succeeded = false;
 
-    int retries = 10;
-    while (retries > 0)
+    for (var attempt = 1; attempt <= maxAttempts && !succeeded; attempt++)
     {
+        using var scope = app.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
+
         try
         {
-            if (context.Database.IsSqlServer())
-            {
-                Console.WriteLine("Applying SSO database migrations...");
-                await context.Database.MigrateAsync();
-                Console.WriteLine("SSO database migrated successfully.");
+            if (!context.Database.IsSqlServer())
+                break;
 
-                break; // Success
+            Console.WriteLine($"Applying SSO database migrations (attempt {attempt}/{maxAttempts})...");
+            await context.Database.MigrateAsync();
+            Console.WriteLine("SSO database migrated successfully.");
+            succeeded = true;
+        }
+        catch (Microsoft.Data.SqlClient.SqlException ex) when (ex.Number is 2714 or 1913)
+        {
+            // 2714 = Object already exists (e.g. Users table)
+            // 1913 = Index already exists
+            Console.WriteLine($"[Migration] Schema objects already exist in SSOServiceDb (Error {ex.Number}). Verifying connectivity...");
+            if (await context.Database.CanConnectAsync())
+            {
+                Console.WriteLine("Connection to SSOServiceDb is healthy. Assuming baseline schema is present. Proceeding...");
+                succeeded = true; 
+            }
+            else
+            {
+                Console.WriteLine("[Migration] Cannot connect to SSOServiceDb even though objects reported to exist. Check permissions.");
+                break;
+            }
+        }
+        catch (Microsoft.Data.SqlClient.SqlException ex) when (ex.Number == 1801)
+        {
+            Console.WriteLine($"[Migration] SqlException 1801 (database already exists). Verifying if reachable...");
+            if (await context.Database.CanConnectAsync())
+            {
+                Console.WriteLine("SSOServiceDb exists and is reachable. Proceeding...");
+                succeeded = true;
+            }
+            else if (attempt == maxAttempts)
+            {
+                Console.WriteLine("[Migration] Giving up on 1801. Database exists but CanConnect is false.");
+            }
+            else
+            {
+                await Task.Delay(500);
             }
         }
         catch (Microsoft.Data.SqlClient.SqlException ex)
         {
-            retries--;
-            Console.WriteLine($"Failed to connect to database. Retrying in 3 seconds... ({retries} attempts left). Error: {ex.Message}");
-            if (retries == 0)
-            {
-                Console.WriteLine("All retries exhausted. Continuing startup without migration.");
-                break;
-            }
-            await Task.Delay(3000);
+            Console.WriteLine($"[Migration] SqlException {ex.Number} on attempt {attempt}/{maxAttempts}: {ex.Message}");
+            if (attempt == maxAttempts)
+                Console.WriteLine("All attempts exhausted. Continuing startup without migration.");
+            else
+                await Task.Delay(3000);
         }
         catch (Exception ex)
         {
@@ -124,17 +159,7 @@ using (var scope = app.Services.CreateScope())
 }
 // -------------------------------
 
-
-app.UseCors("AllowReactApp");
-app.UseSwagger();
-app.UseSwaggerUI();
-
-if (app.Environment.IsDevelopment())
-{
-    // Additional dev-only settings if needed
-}
-
-// Global exception handler: map ValidationException to 400, others to 500
+// Early so failures in later middleware (including controllers) return JSON bodies reliably.
 app.UseExceptionHandler(errorApp =>
 {
     errorApp.Run(async context =>
@@ -159,6 +184,15 @@ app.UseExceptionHandler(errorApp =>
         }
     });
 });
+
+app.UseCors("AllowReactApp");
+app.UseSwagger();
+app.UseSwaggerUI();
+
+if (app.Environment.IsDevelopment())
+{
+    // Additional dev-only settings if needed
+}
 
 app.UseMiddleware<RequestLoggingMiddleware>();
 

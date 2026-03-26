@@ -1,19 +1,18 @@
-﻿using MediatR;
+using MediatR;
+using SSO.Application.Dtos;
 
 namespace SSO.Application.Auth.Commands;
 
-public class RegisterCommand : IRequest<string>
+public class RegisterCommand : IRequest<RegisterResultDto>
 {
     public string UserName { get; }
     public string Email { get; }
     public string Password { get; }
-    public string Role { get; }
 
-    public RegisterCommand(string userName, string email, string password, string role = "User")
+    public RegisterCommand(string userName, string email, string password)
     {
         UserName = userName;
         Email = email;
         Password = password;
-        Role = role;
     }
 }

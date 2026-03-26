@@ -22,6 +22,7 @@ public class CustomerRelationsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(
         [FromBody] CreateCustomerRelationDto dto)
     {
@@ -107,6 +108,7 @@ public class CustomerRelationsController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(
         [FromQuery] string codHier,
         [FromQuery] string codDiv,

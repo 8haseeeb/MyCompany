@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -73,6 +73,13 @@ namespace Promotions.Infrastructure.Persistence.Repositories
                 x.CodNode == codNode &&
                 x.IdLevel == idLevel &&
                 x.DteStart == dteStart);
+        }
+
+        public async Task<bool> AnyWithCodDivAsync(string codDiv)
+        {
+            if (string.IsNullOrWhiteSpace(codDiv))
+                return false;
+            return await _context.CustomerRelations.AnyAsync(x => x.CodDiv == codDiv);
         }
 
         // Standard CRUD & SaveChangesAsync are in base class

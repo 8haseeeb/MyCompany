@@ -44,8 +44,9 @@ namespace Promotions.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("CODNODE2");
 
-                    b.Property<bool?>("CodNodeN")
-                        .HasColumnType("bit")
+                    b.Property<string>("CodNodeN")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("FROMNODEFIN");
 
                     b.HasKey("CodDiv", "CodNode");
@@ -279,8 +280,8 @@ namespace Promotions.Infrastructure.Migrations
                         .HasColumnName("CODDIV");
 
                     b.Property<string>("CodMeasure")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("CODMEASURE");
 
                     b.Property<decimal?>("NumMeasure")
@@ -399,8 +400,7 @@ namespace Promotions.Infrastructure.Migrations
                     b.HasOne("Promotions.Domain.Articles.PromoArticle", "Article")
                         .WithMany()
                         .HasForeignKey("CodDiv", "CodNode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Promotions.Domain.Products.PromoProduct", "Product")
                         .WithMany("Details")

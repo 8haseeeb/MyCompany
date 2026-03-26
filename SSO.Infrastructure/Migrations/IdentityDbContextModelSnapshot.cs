@@ -37,7 +37,7 @@ namespace SSO.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -53,7 +53,9 @@ namespace SSO.Infrastructure.Migrations
 
                     b.Property<string>("Role")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("User")
                         .HasColumnName("Role");
 
                     b.Property<string>("UserName")
@@ -62,6 +64,9 @@ namespace SSO.Infrastructure.Migrations
                         .HasColumnName("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });

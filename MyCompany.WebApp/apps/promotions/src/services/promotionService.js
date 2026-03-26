@@ -2,62 +2,62 @@ import api from './api';
 
 export const promotionService = {
     getPromotionHistory: async () => {
-        const response = await api.get('/api/promotions/actions');
+        const response = await api.get('/api/v1/promotions/actions');
         return response.data;
     },
 
     getPromoActions: async () => {
-        const response = await api.get('/api/promotions/actions');
+        const response = await api.get('/api/v1/promotions/actions');
         return response.data;
     },
 
     getParticipants: async () => {
-        const response = await api.get('/api/participants/all');
+        const response = await api.get('/api/v1/participants/all');
         return response.data;
     },
 
     getDeliveryPoints: async () => {
-        const response = await api.get('/api/promotions/delivery-points');
+        const response = await api.get('/api/v1/promotions/delivery-points');
         return response.data;
     },
 
     getProducts: async () => {
-        const response = await api.get('/api/promotions/products');
+        const response = await api.get('/api/v1/promotions/products');
         return response.data;
     },
 
     getProductDetails: async () => {
-        const response = await api.get('/api/promotions/product-details');
+        const response = await api.get('/api/v1/promotions/product-details');
         return response.data;
     },
 
     getPromoArticles: async () => {
-        const response = await api.get('/api/promotions/promo-articles');
+        const response = await api.get('/api/v1/promotions/promo-articles');
         return response.data;
     },
 
     getPromoMeasures: async () => {
-        const response = await api.get('/api/promotions/measures');
+        const response = await api.get('/api/v1/promotions/measures');
         return response.data;
     },
 
     deletePromotion: async (idAction) => {
-        const response = await api.delete(`/api/promotions/actions?idAction=${idAction}`);
+        const response = await api.delete(`/api/v1/promotions/actions?idAction=${idAction}`);
         return response.data;
     },
 
     updatePromotion: async (idAction, data) => {
-        const response = await api.put(`/api/promotions/actions?idAction=${idAction}`, data);
+        const response = await api.put(`/api/v1/promotions/actions?idAction=${idAction}`, data);
         return response.data;
     },
 
     createAtomicPromotion: async (payload) => {
-        const response = await api.post('/api/promotions/actions/atomic', payload);
+        const response = await api.post('/api/v1/promotions/actions/atomic', payload);
         return response.data;
     },
 
     addProductsToPromotion: async (products) => {
-        // Endpoint: POST /api/promotions/products
+        // Endpoint: POST /api/v1/promotions/products
         // To "Link" an existing product, we actually CREATE a new record 
         // with the target idAction.
 
@@ -114,7 +114,7 @@ export const promotionService = {
                 formula: m.formula || m.Formula
             }))
         };
-        const response = await api.post('/api/promotions/products', payload);
+        const response = await api.post('/api/v1/promotions/products', payload);
         return response.data;
     },
 
@@ -127,32 +127,32 @@ export const promotionService = {
             numMeasure: Number(data.numMeasure || data.NumMeasure || 0),
             codMeasure: data.codMeasure || data.CodMeasure
         };
-        const response = await api.put(`/api/promotions/products?idAction=${idAction}&codProduct=${codProduct}&levProduct=${levProduct}&codDisplay=${codDisplay}`, payload);
+        const response = await api.put(`/api/v1/promotions/products?idAction=${idAction}&codProduct=${codProduct}&levProduct=${levProduct}&codDisplay=${codDisplay}`, payload);
         return response.data;
     },
 
     deleteProduct: async (idAction, codProduct, levProduct, codDisplay) => {
-        const response = await api.delete(`/api/promotions/products?idAction=${idAction}&codProduct=${codProduct}&levProduct=${levProduct}&codDisplay=${codDisplay}`);
+        const response = await api.delete(`/api/v1/promotions/products?idAction=${idAction}&codProduct=${codProduct}&levProduct=${levProduct}&codDisplay=${codDisplay}`);
         return response.data;
     },
 
     updateParticipant: async (idAction, codParticipant, flgInclusion) => {
-        const response = await api.put(`/api/actions/${idAction}/participants/${codParticipant}`, { flgInclusion });
+        const response = await api.put(`/api/v1/actions/${idAction}/participants/${codParticipant}`, { flgInclusion });
         return response.data;
     },
 
     deleteParticipant: async (idAction, codParticipant) => {
-        const response = await api.delete(`/api/actions/${idAction}/participants/${codParticipant}`);
+        const response = await api.delete(`/api/v1/actions/${idAction}/participants/${codParticipant}`);
         return response.data;
     },
 
     updateDeliveryPoint: async (idAction, codDeliveryPoint, flgInclusion) => {
-        const response = await api.put(`/api/promotions/delivery-points/${idAction}/${codDeliveryPoint}`, { flgInclusion });
+        const response = await api.put(`/api/v1/promotions/delivery-points/${idAction}/${codDeliveryPoint}`, { flgInclusion });
         return response.data;
     },
 
     getCompletePromotion: async (idAction) => {
-        const response = await api.get(`/api/promotions/actions/${idAction}/complete`);
+        const response = await api.get(`/api/v1/promotions/actions/${idAction}/complete`);
         return response.data;
     },
 
@@ -167,7 +167,7 @@ export const promotionService = {
             flgInclusion: participant.flgInclusion ?? true,
             dteStart: participant.dteStart || new Date().toISOString()
         };
-        const response = await api.post(`/api/actions/${payload.idAction}/participants`, payload);
+        const response = await api.post(`/api/v1/actions/${payload.idAction}/participants`, payload);
         return response.data;
     },
 
@@ -183,7 +183,7 @@ export const promotionService = {
                 flgInclusion: p.flgInclusion ?? p.FlgInclusion ?? true,
                 dteStart: p.dteStart || p.DteStart || new Date().toISOString()
             };
-            return api.post(`/api/actions/${payload.idAction}/participants`, payload);
+            return api.post(`/api/v1/actions/${payload.idAction}/participants`, payload);
         });
         return Promise.all(promises);
     },
@@ -200,7 +200,7 @@ export const promotionService = {
             flgInclusion: deliveryPoint.flgInclusion ?? true,
             dteStart: deliveryPoint.dteStart || new Date().toISOString()
         };
-        const response = await api.post(`/api/promotions/delivery-points/${idAction}/${codDeliveryPoint}`, payload);
+        const response = await api.post(`/api/v1/promotions/delivery-points/${idAction}/${codDeliveryPoint}`, payload);
         return response.data;
     },
 
@@ -217,13 +217,13 @@ export const promotionService = {
                 flgInclusion: dp.flgInclusion ?? dp.FlgInclusion ?? true,
                 dteStart: dp.dteStart || dp.DteStart || new Date().toISOString()
             };
-            return api.post(`/api/promotions/delivery-points/${idAction}/${codDeliveryPoint}`, payload);
+            return api.post(`/api/v1/promotions/delivery-points/${idAction}/${codDeliveryPoint}`, payload);
         });
         return Promise.all(promises);
     },
 
     deleteDeliveryPoint: async (idAction, codDeliveryPoint) => {
-        const response = await api.delete(`/api/promotions/delivery-points/${idAction}/${codDeliveryPoint}`);
+        const response = await api.delete(`/api/v1/promotions/delivery-points/${idAction}/${codDeliveryPoint}`);
         return response.data;
     }
 };

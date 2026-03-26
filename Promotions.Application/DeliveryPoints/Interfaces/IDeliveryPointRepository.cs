@@ -1,4 +1,4 @@
-﻿using Promotions.Domain.DeliveryPoints;
+using Promotions.Domain.DeliveryPoints;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +11,8 @@ namespace Promotions.Application.DeliveryPoints.Interfaces
     {
         Task<PromoDeliveryPoint?> GetByIdAsync(int idAction, string codDeliveryPoint);
         Task<List<PromoDeliveryPoint>> GetByActionAsync(int idAction);
+
+        /// <summary>True if any row in TA501DELIVERYPOINTS uses this CodDiv.</summary>
+        Task<bool> AnyWithCodDivAsync(string codDiv);
     }
 }

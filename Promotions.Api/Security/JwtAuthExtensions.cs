@@ -2,13 +2,19 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
 using Serilog;
 
 namespace Promotions.Api.Security;
 
 public static class JwtAuthExtensions
 {
+    /// <summary>
+    /// JWT payloads use the short claim name <c>role</c> (see JwtSecurityTokenHandler outbound map for ClaimTypes.Role).
+    /// With <see cref="JwtBearerOptions.MapInboundClaims"/> = false, that short name is preserved — it must match
+    /// <see cref="TokenValidationParameters.RoleClaimType"/> or <c>[Authorize(Roles = "Admin")]</c> never sees roles.
+    /// </summary>
+    private const string JwtRoleClaimType = "role";
+
     public static IServiceCollection AddJwtAuthentication(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -43,7 +49,7 @@ public static class JwtAuthExtensions
                     ),
 
                     NameClaimType = "unique_name",
-                    RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+                    RoleClaimType = JwtRoleClaimType
                 };
 
                 //  DIAGNOSTIC LOGGING
@@ -51,8 +57,14 @@ public static class JwtAuthExtensions
                 {
                     OnTokenValidated = context =>
                     {
-                        Log.Information("Downstream JWT validated for {User}", 
-                            context.Principal?.Identity?.Name ?? "Anonymous");
+                        var roles = context.Principal?.Claims
+                            .Where(c => c.Type == JwtRoleClaimType || c.Type.EndsWith("/role", StringComparison.Ordinal))
+                            .Select(c => c.Value)
+                            .ToList();
+                        Log.Information(
+                            "Downstream JWT validated for {User}; role claims: {Roles}",
+                            context.Principal?.Identity?.Name ?? "Anonymous",
+                            roles is { Count: > 0 } ? string.Join(", ", roles) : "(none)");
                         return Task.CompletedTask;
                     },
                     OnAuthenticationFailed = context =>

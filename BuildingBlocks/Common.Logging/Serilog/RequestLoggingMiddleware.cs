@@ -46,18 +46,32 @@ namespace MyCompany.Common.Logging.Serilog
                 context.Response.Body = responseBody;
             }
 
-            await _next(context);
-
-            stopwatch.Stop();
-
-            if (_env.IsDevelopment() && responseBody != null && originalBodyStream != null)
+            try
             {
-                context.Response.Body.Seek(0, SeekOrigin.Begin);
-                responseBodyText = await new StreamReader(context.Response.Body).ReadToEndAsync();
-                context.Response.Body.Seek(0, SeekOrigin.Begin);
-                await responseBody.CopyToAsync(originalBodyStream);
-                context.Response.Body = originalBodyStream;
-                responseBody.Dispose();
+                await _next(context);
+
+                if (_env.IsDevelopment() && responseBody != null && originalBodyStream != null)
+                {
+                    context.Response.Body.Seek(0, SeekOrigin.Begin);
+                    responseBodyText = await new StreamReader(context.Response.Body).ReadToEndAsync();
+                    context.Response.Body.Seek(0, SeekOrigin.Begin);
+                    await responseBody.CopyToAsync(originalBodyStream);
+                    context.Response.Body = originalBodyStream;
+                    responseBody.Dispose();
+                    responseBody = null;
+                    originalBodyStream = null;
+                }
+            }
+            finally
+            {
+                // If _next threw, Body still points at MemoryStream; restore so exception handler / host can write to the real stream.
+                if (_env.IsDevelopment() && responseBody != null && originalBodyStream != null)
+                {
+                    context.Response.Body = originalBodyStream;
+                    responseBody.Dispose();
+                }
+
+                stopwatch.Stop();
             }
 
             var userName = context.User?.Identity?.Name ?? "Anonymous";

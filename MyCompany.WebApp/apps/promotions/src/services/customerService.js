@@ -2,12 +2,12 @@ import api from './api';
 
 export const customerService = {
     getCustomers: async () => {
-        const response = await api.get('/api/promotions/customer-relations');
+        const response = await api.get('/api/v1/promotions/customer-relations');
         return response.data;
     },
 
     createCustomer: async (customerData) => {
-        const response = await api.post('/api/promotions/customer-relations', customerData);
+        const response = await api.post('/api/v1/promotions/customer-relations', customerData);
         return response.data;
     },
 
@@ -19,7 +19,7 @@ export const customerService = {
             idLevel,
             dteStart
         }).toString();
-        const response = await api.put(`/api/promotions/customer-relations?${params}`, updateData);
+        const response = await api.put(`/api/v1/promotions/customer-relations?${params}`, updateData);
         return response.data;
     },
 
@@ -31,7 +31,7 @@ export const customerService = {
             idLevel,
             dteStart
         }).toString();
-        const response = await api.delete(`/api/promotions/customer-relations?${params}`);
+        const response = await api.delete(`/api/v1/promotions/customer-relations?${params}`);
         return response.data;
     }
 };

@@ -28,6 +28,7 @@ namespace Promotions.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(
             [FromBody] CreatePromoActionDto dto)
         {
@@ -49,32 +50,12 @@ namespace Promotions.Api.Controllers
         }
 
         [HttpPost("atomic")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateAtomic(
             [FromBody] AtomicCreatePromoActionDto dto)
         {
-            try
-            {
-                await _mediator.Send(new CreateAtomicPromoActionCommand(dto));
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "[CreateAtomic] Controller caught exception. Error: {ErrorMessage}", ex.Message);
-
-                var messages = new List<string> { ex.Message };
-                var inner = ex.InnerException;
-                while (inner != null)
-                {
-                    messages.Add(inner.Message);
-                    inner = inner.InnerException;
-                }
-
-                return StatusCode(500, new
-                {
-                    error = "An error occurred while creating the atomic promotion.",
-                    details = messages
-                });
-            }
+            await _mediator.Send(new CreateAtomicPromoActionCommand(dto));
+            return Ok();
         }
 
 
@@ -132,6 +113,7 @@ namespace Promotions.Api.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(
             [FromQuery] int idAction)
         {

@@ -1,5 +1,5 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
+using MediatR;
+using SSO.Application.Auth;
 using SSO.Application.Auth.Commands;
 using SSO.Application.Dtos;
 using SSO.Application.Interfaces;
@@ -11,66 +11,67 @@ namespace SSO.Application.Auth.Handlers;
 public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResultDto>
 {
     private readonly IUserRepository _users;
-    private readonly IJwtTokenService _jwt;
+    private readonly IUserSessionTokenService _sessionTokens;
     private readonly IPasswordHasher _passwordHasher;
-    private readonly IIdentityDbContext _context;
 
     public LoginCommandHandler(
         IUserRepository users,
-        IJwtTokenService jwt,
-        IPasswordHasher passwordHasher,
-        IIdentityDbContext context)
+        IUserSessionTokenService sessionTokens,
+        IPasswordHasher passwordHasher)
     {
         _users = users;
-        _jwt = jwt;
+        _sessionTokens = sessionTokens;
         _passwordHasher = passwordHasher;
-        _context = context;
     }
 
     public async Task<LoginResultDto> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        // 1️⃣ Get user by email
-        var user = await _users.GetByEmailAsync(request.Email, cancellationToken);
-        if (user == null)
+        var normalizedEmail = AuthEmailNormalizer.Normalize(request.Email);
+        if (string.IsNullOrEmpty(normalizedEmail))
         {
-            Log.Warning("Login failed for unknown user: {Email}", request.Email);
-            throw new Exception("Invalid credentials");
+            Log.Warning("Login failed: empty email after normalization");
+            throw new InvalidCredentialsException();
         }
 
-        // 2️⃣ Verify password
+        var user = await _users.GetByEmailAsync(normalizedEmail, cancellationToken);
+        if (user == null)
+        {
+            Log.Warning("Login failed for unknown user: {Email}", normalizedEmail);
+            throw new InvalidCredentialsException();
+        }
+
+        if (!_passwordHasher.LooksLikeBcryptHash(user.PasswordHash))
+        {
+            Log.Warning("Login failed for user {Email}: password hash missing or not bcrypt-shaped", user.Email);
+            throw new InvalidCredentialsException();
+        }
+
         if (!_passwordHasher.Verify(user.PasswordHash, request.Password))
         {
             Log.Warning("Login failed for user: {Email}. Reason: Invalid password", user.Email);
-            throw new Exception("Invalid credentials");
+            throw new InvalidCredentialsException();
         }
 
-        // 3️⃣ Generate Access Token
-        var newSessionId = Guid.NewGuid().ToString();
-        var accessToken = _jwt.GenerateToken(user, newSessionId);
-
-        // 4️⃣ Generate Refresh Token and Update Session ID
-        user.UpdateSession(newSessionId);
-
-
-        var refreshTokenString = Guid.NewGuid().ToString();
-        var expiry = DateTime.UtcNow.AddDays(30);
-        
-        user.UpdateRefreshToken(refreshTokenString, expiry);
-        
-        // Finalize all user updates (Session + Refresh Token)
-        _context.Users.Update(user);
-        await _context.SaveChangesAsync(cancellationToken);
-
-
-        // 5️⃣ Return both tokens
-        Log.Information("User {Email} logged in successfully. UserId: {UserId}", user.Email, user.Id);
-
-        return new LoginResultDto
+        LoginResultDto result;
+        try
         {
-            AccessToken = accessToken,
-            RefreshToken = refreshTokenString,
-            UserName = user.UserName
-        };
+            result = await _sessionTokens.IssueSessionAndTokensAsync(user, cancellationToken);
+        }
+        catch (InvalidOperationException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Login persistence/token failed for {Email}", user.Email);
+            throw new InvalidOperationException("Login could not be completed. Check JWT configuration and database.", ex);
+        }
 
+        Log.Information(
+            "User {Email} logged in successfully. UserId: {UserId} Role: {Role}",
+            user.Email,
+            user.Id,
+            result.Role);
+        return result;
     }
 }

@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -31,8 +34,14 @@ namespace MyCompany.ApiGateway.Middlewares
                 //  Log full exception with stack trace
                 _logger.LogError(ex, "Unhandled exception occurred while processing request");
 
-                // Ensure CORS headers are present even on error
-                context.Response.Headers.Append("Access-Control-Allow-Origin", "http://localhost:5173");
+                // Ensure CORS headers are present even on error (match AllowReactApp origins)
+                var config = context.RequestServices.GetRequiredService<IConfiguration>();
+                var allowed = config.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
+                var requestOrigin = context.Request.Headers.Origin.FirstOrDefault();
+                var originHeader = !string.IsNullOrEmpty(requestOrigin) && allowed.Contains(requestOrigin, StringComparer.OrdinalIgnoreCase)
+                    ? requestOrigin
+                    : allowed.FirstOrDefault() ?? "http://localhost:5001";
+                context.Response.Headers.Append("Access-Control-Allow-Origin", originHeader);
                 context.Response.Headers.Append("Access-Control-Allow-Headers", "*");
                 context.Response.Headers.Append("Access-Control-Allow-Methods", "*");
 

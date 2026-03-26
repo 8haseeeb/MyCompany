@@ -1,23 +1,26 @@
-version: '3.8'
-
 services:
 
-
+  # ---- SQL Server (all APIs use this; no LocalDB / host SQL) ----
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=MyPass@123
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "MyPass@123"
     ports:
-      - "1433:1433"
+      - "1443:1433"
     volumes:
-      - sqldata:/var/opt/mssql
+      - mssql_data:/var/opt/mssql
     healthcheck:
-      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "MyPass@123" -C -Q "SELECT 1" || exit 1
-      interval: 10s
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q \"SELECT 1\" || exit 1",
+        ]
+      interval: 5s
       timeout: 5s
-      retries: 10
-      start_period: 30s
+      retries: 30
+      start_period: 45s
+    restart: unless-stopped
 
   # ---- SSO API ----
   sso-api:
@@ -25,13 +28,17 @@ services:
       context: .
       dockerfile: SSO.Api/Dockerfile
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=SSOIdentityDb;User Id=sa;Password=MyPass@123;TrustServerCertificate=True;Encrypt=False;
-    ports:
-      - "5253:8080"
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=SSOIdentityDb;User Id=sa;Password=MyPass@123;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=true"
+      JwtSettings__Secret: "LocalDevelopmentSecret_NotForProduction_Min32Chars!!"
+      JwtSettings__Issuer: "MyCompany"
+      JwtSettings__Audience: "MyCompanyUsers"
     depends_on:
       sqlserver:
         condition: service_healthy
+    ports:
+      - "5253:8080"
+    restart: unless-stopped
 
   # ---- Promotions API ----
   promotions-api:
@@ -39,40 +46,57 @@ services:
       context: .
       dockerfile: Promotions.Api/Dockerfile
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=PromotionsDb;User Id=sa;Password=MyPass@123;TrustServerCertificate=True;Encrypt=False;
-      - ConnectionStrings__SsoConnection=Server=sqlserver,1433;Database=SSOIdentityDb;User Id=sa;Password=MyPass@123;TrustServerCertificate=True;Encrypt=False;
-    ports:
-      - "5137:8080"
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=PromotionsDb;User Id=sa;Password=MyPass@123;TrustServerCertificate=True;Encrypt=False;"
+      ConnectionStrings__SsoConnection: "Server=sqlserver,1433;Database=SSOIdentityDb;User Id=sa;Password=MyPass@123;TrustServerCertificate=True;Encrypt=False;MultipleActiveResultSets=true"
+      JwtSettings__Secret: "LocalDevelopmentSecret_NotForProduction_Min32Chars!!"
+      JwtSettings__Issuer: "MyCompany"
+      JwtSettings__Audience: "MyCompanyUsers"
     depends_on:
       sqlserver:
         condition: service_healthy
+    ports:
+      - "5137:8080"
+    restart: unless-stopped
 
-  # ---- API Gateway ----
+  # ---- API Gateway (browser: http://localhost:5089) ----
   api-gateway:
     build:
       context: .
       dockerfile: MyCompany.ApiGateway/Dockerfile
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - SSO_URL=http://sso-api:8080
-      - PROMOTIONS_URL=http://promotions-api:8080
+      ASPNETCORE_ENVIRONMENT: Development
+      SSO_URL: "http://sso-api:8080"
+      PROMOTIONS_URL: "http://promotions-api:8080"
+      JwtSettings__Secret: "LocalDevelopmentSecret_NotForProduction_Min32Chars!!"
+      JwtSettings__Issuer: "MyCompany"
+      JwtSettings__Audience: "MyCompanyUsers"
     ports:
-      - "5000:8080"
+      - "5089:8080"
     depends_on:
-      - sso-api
-      - promotions-api
+      sso-api:
+        condition: service_started
+      promotions-api:
+        condition: service_started
+    restart: unless-stopped
 
-  # ---- Frontend WebApp ----
+  # ---- Frontend (static + nginx → api-gateway:8080 inside the network) ----
   webapp:
     build:
       context: MyCompany.WebApp
       dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: "http://localhost:5089"
+    environment:
+      GATEWAY_URL: "http://api-gateway:8080"
+      GATEWAY_HOST: "api-gateway"
     ports:
       - "5001:80"
       - "5003:5002"
     depends_on:
-      - api-gateway
+      api-gateway:
+        condition: service_started
+    restart: unless-stopped
 
 volumes:
-  sqldata:
+  mssql_data:
